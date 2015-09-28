@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rosetta',
     'hvad',
+    'popit',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,5 +104,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-if os.path.exists(os.path.abspath("settings_local.py")):
+try:
     from settings_local import *
+except:
+    pass
