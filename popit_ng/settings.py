@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rosetta',
     'hvad',
+    'rest_framework',
     'popit',
 )
 
