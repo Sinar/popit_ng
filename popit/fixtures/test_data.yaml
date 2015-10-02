@@ -1,0 +1,66 @@
+- fields: {language_code: en, master: abbd9287ec0b491d6e84dcbfd6f958fc, note: Member
+      of sinar project staff}
+  model: popit.linktranslation
+  pk: 1
+- fields: {language_code: en, master: a4ffa24a9ef3cbcb8cfaa178c9329367, note: github
+      page}
+  model: popit.linktranslation
+  pk: 2
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-02
+    field: ''
+    label: ''
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    updated_at: 2015-10-02
+    url: http://github.com/sweemeng/
+  model: popit.link
+  pk: a4ffa24a9ef3cbcb8cfaa178c9329367
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-02
+    field: ''
+    label: ''
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    updated_at: 2015-10-02
+    url: http://sinarproject.org/en/about/team
+  model: popit.link
+  pk: abbd9287ec0b491d6e84dcbfd6f958fc
+- fields: {additional_name: '', biography: '', family_name: ng, gender: '', given_name: '',
+    honorific_prefix: '', honorific_suffix: '', language_code: ms_my, master: ab1a5788e5bae955c048748fa6af0e97,
+    name: Swee Meng, national_identity: '', patronymic_name: '', sort_name: '', summary: ''}
+  model: popit.persontranslation
+  pk: 3
+- fields: {additional_name: '', biography: '', family_name: ng, gender: '', given_name: '',
+    honorific_prefix: '', honorific_suffix: '', language_code: en-gb, master: ab1a5788e5bae955c048748fa6af0e97,
+    name: Swee Meng, national_identity: '', patronymic_name: '', sort_name: '', summary: ''}
+  model: popit.persontranslation
+  pk: 4
+- fields: {additional_name: '', biography: orang biasa, family_name: ng, gender: '',
+    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: ms_MY,
+    master: ab1a5788e5bae955c048748fa6af0e97, name: swee meng, national_identity: '',
+    patronymic_name: '', sort_name: '', summary: orang biasa}
+  model: popit.persontranslation
+  pk: 5
+- fields: {additional_name: '', biography: ordinary guy, family_name: ng, gender: '',
+    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: en-us,
+    master: ab1a5788e5bae955c048748fa6af0e97, name: Swee Meng, national_identity: '',
+    patronymic_name: '', sort_name: '', summary: ordinary guy}
+  model: popit.persontranslation
+  pk: 6
+- fields: {additional_name: '', biography: ordinary guy, family_name: ng, gender: '',
+    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: en-my,
+    master: ab1a5788e5bae955c048748fa6af0e97, name: Swee Meng, national_identity: '',
+    patronymic_name: '', sort_name: '', summary: ordinary guy}
+  model: popit.persontranslation
+  pk: 7
+- fields: {additional_name: '', biography: an ordinary guy, family_name: ng, gender: '',
+    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: en,
+    master: ab1a5788e5bae955c048748fa6af0e97, name: Swee Meng, national_identity: '',
+    patronymic_name: '', sort_name: '', summary: just an ordinary guy}
+  model: popit.persontranslation
+  pk: 8
+- fields: {birth_date: '', created_at: 2015-10-02, death_date: '', email: sweester@sinarproject.org,
+    image: '', updated_at: 2015-10-02}
+  model: popit.person
+  pk: ab1a5788e5bae955c048748fa6af0e97
