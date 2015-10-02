@@ -1,5 +1,7 @@
 __author__ = 'sweemeng'
-from misc import Links
-from misc import Identifiers
-from misc import Contacts
-from person import Persons
+from misc import Link
+from misc import Identifier
+from misc import Contact
+from misc import OtherName
+from person import Person
+
