@@ -1,0 +1,140 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-02 03:29+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: popit/models/misc.py:15 popit/models/misc.py:32
+msgid "label"
+msgstr ""
+
+#: popit/models/misc.py:17
+msgid "field"
+msgstr ""
+
+#: popit/models/misc.py:18
+msgid "url"
+msgstr ""
+
+#: popit/models/misc.py:20 popit/models/misc.py:33
+msgid "note"
+msgstr ""
+
+#: popit/models/misc.py:25 popit/models/misc.py:42 popit/models/misc.py:57
+#: popit/models/misc.py:88 popit/models/person.py:41
+msgid "created at"
+msgstr ""
+
+#: popit/models/misc.py:26 popit/models/misc.py:43 popit/models/misc.py:58
+#: popit/models/misc.py:89
+msgid "updated at"
+msgstr ""
+
+#: popit/models/misc.py:35
+msgid "type"
+msgstr ""
+
+#: popit/models/misc.py:36
+msgid "value"
+msgstr ""
+
+#: popit/models/misc.py:37
+msgid "valid from"
+msgstr ""
+
+#: popit/models/misc.py:38
+msgid "valid until"
+msgstr ""
+
+#: popit/models/misc.py:48
+msgid "identifier"
+msgstr ""
+
+#: popit/models/misc.py:50
+msgid "scheme"
+msgstr ""
+
+#: popit/models/misc.py:70 popit/models/person.py:16
+msgid "name"
+msgstr ""
+
+#: popit/models/misc.py:72 popit/models/person.py:17
+msgid "family name"
+msgstr ""
+
+#: popit/models/misc.py:73 popit/models/person.py:18
+msgid "given name"
+msgstr ""
+
+#: popit/models/misc.py:74 popit/models/person.py:19
+msgid "additional name"
+msgstr ""
+
+#: popit/models/misc.py:76 popit/models/person.py:21
+msgid "honorific prefix"
+msgstr ""
+
+#: popit/models/misc.py:78 popit/models/person.py:23
+msgid "honorific suffix"
+msgstr ""
+
+#: popit/models/misc.py:79
+msgid "patronymmic name"
+msgstr ""
+
+#: popit/models/person.py:24
+msgid "patronymic name"
+msgstr ""
+
+#: popit/models/person.py:25
+msgid "sort name"
+msgstr ""
+
+#: popit/models/person.py:26
+msgid "gender"
+msgstr ""
+
+#: popit/models/person.py:27
+msgid "summary"
+msgstr ""
+
+#: popit/models/person.py:28
+msgid "biography"
+msgstr ""
+
+#: popit/models/person.py:31
+msgid "national identify"
+msgstr ""
+
+#: popit/models/person.py:35
+msgid "email"
+msgstr ""
+
+#: popit/models/person.py:37
+msgid "birth date"
+msgstr ""
+
+#: popit/models/person.py:38
+msgid "death data"
+msgstr ""
+
+#: popit/models/person.py:39
+msgid "image links"
+msgstr ""
+
+#: popit/models/person.py:42
+msgid "Updated at"
+msgstr ""
