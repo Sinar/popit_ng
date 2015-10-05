@@ -3,7 +3,11 @@ from django.db import models
 from hvad.models import TranslatableModel
 from hvad.models import TranslatedFields
 from django.utils.translation import ugettext_lazy as _
-
+from django.contrib.contenttypes.fields import GenericRelation
+from popit.models.misc import OtherName
+from popit.models.misc import Contact
+from popit.models.misc import Link
+from popit.models.misc import Identifier
 
 
 # TODO: Override save
@@ -37,6 +41,11 @@ class Person(TranslatableModel):
     birth_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("birth date"))
     death_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("death data"))
     image = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("image links")) # Maybe I should have a default image path :-/
+
+    other_names = GenericRelation(OtherName)
+    links = GenericRelation(Link)
+    identifiers = GenericRelation(Identifier)
+    contacts = GenericRelation(Contact)
 
     created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
     updated_at = models.DateField(auto_now=True, verbose_name=_("Updated at"))

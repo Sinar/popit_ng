@@ -78,8 +78,8 @@ class OtherName(TranslatableModel):
         honorific_suffix = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("honorific suffix")),
         patronymic_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("patronymmic name")),
     )
-    start_date = models.DateField(null=True, blank=True) # Sometime we have no idea
-    end_date = models.DateField(null=True, blank=True)
+    start_date = models.CharField(max_length=20, null=True, blank=True) # Sometime we have no idea
+    end_date = models.CharField(max_length=20, null=True, blank=True)
 
     object_id = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType)
