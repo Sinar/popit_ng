@@ -492,3 +492,7 @@ class PersonTestCase(TestCase):
         self.assertEqual(type(contacts.note), str)
         self.assertEqual(type(contacts.valid_from), str)
         self.assertEqual(type(contacts.valid_until), str)
+
+
+class PersonAPITest(TestCase):
+    pass
