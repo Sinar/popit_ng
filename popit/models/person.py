@@ -8,14 +8,13 @@ from popit.models.misc import OtherName
 from popit.models.misc import Contact
 from popit.models.misc import Link
 from popit.models.misc import Identifier
+from popit.models.exception import PopItFieldNotExist
+import uuid
 
 
-# TODO: Override save
-# TODO: Citation table is outside of model. Why? Multiple source of information
-# TODO: Ensure each field have a citation,
-# TODO: Do not save if citation do not exist
+# Citation table is outside of model. Why? Multiple source of information
 class Person(TranslatableModel):
-    id = models.CharField(max_length=255, primary_key=True)
+    id = models.CharField(max_length=255, primary_key=True, blank=True)
     translations = TranslatedFields(
         name = models.CharField(max_length=255, verbose_name=_("name")),
         family_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("family name")),
@@ -50,5 +49,27 @@ class Person(TranslatableModel):
     created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
     updated_at = models.DateField(auto_now=True, verbose_name=_("Updated at"))
 
+    def add_citation(self, field, url, note):
+        if not hasattr(self, field):
+            raise PopItFieldNotExist("%s Does not exist" % field)
+        link = Link.objects.language(self.language_code).create(
+            field = field,
+            url = url,
+            note = note,
+            content_object=self
+        )
+
     def citation_exist(self, field):
-        pass
+        if not hasattr(self, field):
+            raise PopItFieldNotExist("%s Does not exist" % field)
+        links = self.links.language(self.language_code).filter(field=field)
+        if links:
+            return True
+        return False
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = str(uuid.uuid4())
+        super(Person, self).save(*args, **kwargs)
+
+
