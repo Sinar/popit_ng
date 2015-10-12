@@ -22,7 +22,7 @@ class Link(TranslatableModel):
     field = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("field"))
     url = models.URLField(verbose_name=_("url"))
     translation = TranslatedFields(
-        note = models.TextField(verbose_name=_("note"))
+        note = models.TextField(verbose_name=_("note"), blank=True, null=True)
     )
     object_id = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType)
@@ -45,11 +45,14 @@ class Link(TranslatableModel):
             content_object=self
         )
 
+    def __unicode__(self):
+        return self.url
+
 class Contact(TranslatableModel):
     id = models.CharField(max_length=255, primary_key=True, blank=True)
     translation = TranslatedFields(
-        label = models.CharField(max_length=255, verbose_name=_("label")), # hopefully people won't be searching via label :-/
-        note = models.TextField(verbose_name=_("note"))
+        label = models.CharField(max_length=255, verbose_name=_("label"), null=True, blank=True), # hopefully people won't be searching via label :-/
+        note = models.TextField(verbose_name=_("note"), blank=True, null=True)
     )
     type = models.CharField(max_length=255, verbose_name=_("type"))
     value = models.CharField(max_length=255, verbose_name=_("value"))
@@ -84,6 +87,9 @@ class Contact(TranslatableModel):
         if links:
             return True
         return False
+
+    def __unicode__(self):
+        return "%s:%s" % (self.type, self.value)
 
 
 class Identifier(TranslatableModel):
@@ -124,6 +130,9 @@ class Identifier(TranslatableModel):
         if links:
             return True
         return False
+
+    def __unicode__(self):
+        return "%s:%s" % (self.safe_translation_getter('scheme', ""), self.identifier)
 
 
 # In media, only translated name is used not name in original language
@@ -179,3 +188,6 @@ class OtherName(TranslatableModel):
         if links:
             return True
         return False
+
+    def __unicode__(self):
+        return self.safe_translation_getter('name')

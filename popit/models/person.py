@@ -72,4 +72,7 @@ class Person(TranslatableModel):
             self.id = str(uuid.uuid4())
         super(Person, self).save(*args, **kwargs)
 
+    def __unicode__(self):
+        return self.safe_translation_getter('name')
+
 

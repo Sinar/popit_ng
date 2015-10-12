@@ -9,11 +9,9 @@ from popit.models import Identifier
 from popit.models.exception import PopItFieldNotExist
 
 
-# TODO: ensure api conform to popolo standard
 # Unit test only have to test for attribute
 # The reason is a model should map into popolo standard, unittest is a good way to show that
 class PersonTestCase(TestCase):
-    fixtures = [ "test_data.yaml" ]
 
     def test_minimum_fields_to_create_person(self):
             # This is mostly to show people what is the required field
@@ -492,7 +490,3 @@ class PersonTestCase(TestCase):
         self.assertEqual(type(contacts.note), str)
         self.assertEqual(type(contacts.valid_from), str)
         self.assertEqual(type(contacts.valid_until), str)
-
-
-class PersonAPITest(TestCase):
-    pass

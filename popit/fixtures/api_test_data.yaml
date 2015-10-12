@@ -10,6 +10,19 @@
       the github link}
   model: popit.linktranslation
   pk: 3
+- fields: {language_code: en, master: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd, note: ''}
+  model: popit.linktranslation
+  pk: 4
+- fields:
+    content_type: [popit, identifier]
+    created_at: 2015-10-12
+    field: ''
+    label: ''
+    object_id: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
+    updated_at: 2015-10-12
+    url: http://github.com/sinarproject/
+  model: popit.link
+  pk: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd
 - fields:
     content_type: [popit, person]
     created_at: 2015-10-02
