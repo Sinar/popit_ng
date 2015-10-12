@@ -17,26 +17,26 @@ class PersonApiTestCase(TestCase):
         self.factory = APIRequestFactory()
 
     def test_fetch_non_empty_field_person_serializer(self):
-        person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        serializer = PersonSerializer(person)
+        person = Person.objects.untranslated().get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
+        serializer = PersonSerializer(person, language='en')
         data = serializer.data
         self.assertEqual(data["name"], "John")
 
     def test_fetch_empty_field_person_serializer(self):
-        person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        serializer = PersonSerializer(person)
+        person = Person.objects.untranslated().get(id='ab1a5788e5bae955c048748fa6af0e97')
+        serializer = PersonSerializer(person, language='en')
         data = serializer.data
         self.assertEqual(data["given_name"], "")
 
     def test_fetch_not_empty_relation_person_serializer(self):
-        person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        serializer = PersonSerializer(person)
+        person = Person.objects.untranslated().get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
+        serializer = PersonSerializer(person, language='en')
         data = serializer.data
         self.assertTrue(data["other_names"])
 
     def test_fetch_empty_relation_person_serializer(self):
-        person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        serializer = PersonSerializer(person)
+        person = Person.objects.untranslated().get(id='ab1a5788e5bae955c048748fa6af0e97')
+        serializer = PersonSerializer(person, language='en')
         data = serializer.data
         self.assertFalse(data["other_names"])
 
@@ -51,8 +51,7 @@ class PersonApiTestCase(TestCase):
             "summary": "person unit test api",
             "honorific_prefix": "Chief",
             "honorific_suffix": "of the fake people league",
-            "biograph": "He does not exists!!!!",
-            "language_code": "en",
+            "biography": "He does not exists!!!!",
             "birth_date": "1950-01-01",
             "death_data": "2000-01-01",
             "email": "joejambul@sinarproject.org",
@@ -60,20 +59,17 @@ class PersonApiTestCase(TestCase):
                 {
                     "type":"twitter",
                     "value": "sinarproject",
-                    "language_code": "en"
                 }
             ],
             "links":[
                 {
                     "url":"http://sinarproject.org",
-                    "language_code": "en"
                 }
             ],
             "identifiers":[
                 {
                     "identifier": "9089098098",
                     "scheme": "rakyat",
-                    "language_code": "en"
                 }
             ],
             "other_names":[
@@ -82,12 +78,11 @@ class PersonApiTestCase(TestCase):
                     "family_name":"Jambul",
                     "start_date": "1950-01-01",
                     "end_date": "2010-01-01",
-                    "language_code": "en"
                 }
             ]
         }
-        person_serial = PersonSerializer(data=person_data)
-        valid=person_serial.is_valid()
+        person_serial = PersonSerializer(data=person_data, language='en')
+        person_serial.is_valid()
         self.assertEqual(person_serial.errors, {})
         person_serial.save()
         person = Person.objects.language("en").get(name="joe")
@@ -99,7 +94,7 @@ class PersonApiTestCase(TestCase):
         }
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
 
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
@@ -111,13 +106,12 @@ class PersonApiTestCase(TestCase):
             "links": [
                 {
                     "url": "http://twitter.com/sweemeng",
-                    "language_code": "en",
                 }
             ]
         }
 
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
@@ -154,13 +148,12 @@ class PersonApiTestCase(TestCase):
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "links": [{
                         "url": "http://facebook.com",
-                        "language_code": "en",
                     }]
                 }
             ],
         }
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
@@ -179,13 +172,12 @@ class PersonApiTestCase(TestCase):
                     "links": [{
                         "id": "9c9a2093-c3eb-4b51-b869-0d3b4ab281fd",
                         "note": "this is just a test note",
-                        "language_code": "en",
                     }]
                 }
             ],
         }
         person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
@@ -200,12 +192,11 @@ class PersonApiTestCase(TestCase):
                 {
                     "scheme": "IC",
                     "identifier": "129031309",
-                    "language_code": "en", # Do not infer language code
                 }
             ]
         }
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
@@ -220,7 +211,6 @@ class PersonApiTestCase(TestCase):
                 {
                     "id": "34b59cb9-607a-43c7-9d13-dfe258790ebf",
                     "identifier": "53110322",
-                    "language_code": "en",
                 }
             ]
         }
@@ -240,12 +230,11 @@ class PersonApiTestCase(TestCase):
                 {
                     "type":"twitter",
                     "value": "sinarproject",
-                    "language_code": "en",
                 }
             ]
         }
         person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
@@ -259,7 +248,6 @@ class PersonApiTestCase(TestCase):
                 {
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "value": "0123421222",
-                    "language_code": "en",
                 }
             ]
         }
@@ -279,14 +267,13 @@ class PersonApiTestCase(TestCase):
                     "name": "jane",
                     "family_name": "jambul",
                     "given_name": "test person",
-                    "language_code": "en",
                     "start_date": "1950-01-01",
                     "end_date": "2010-01-01",
                 }
             ]
         }
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
@@ -300,12 +287,11 @@ class PersonApiTestCase(TestCase):
                 {
                     "id": "cf93e73f-91b6-4fad-bf76-0782c80297a8",
                     "family_name": "jambul",
-                    "language_code": "en",
                 }
             ]
         }
         person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='en')
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()

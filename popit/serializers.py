@@ -58,11 +58,13 @@ class PersonSerializer(TranslatableModelSerializer):
     contacts = ContactSerializer(many=True, required=False)
 
     def create(self, validated_data):
-        language_code=validated_data.pop("language_code")
+        language_code=self.language
         links = validated_data.pop("links")
         other_names = validated_data.pop("other_names")
         contacts = validated_data.pop('contacts')
         identifiers = validated_data.pop("identifiers")
+        # Where do the language come from inside the create function
+        validated_data.pop("language_code", [])
         person = Person.objects.language(language_code).create(**validated_data)
 
         for other_name in other_names:
@@ -79,13 +81,13 @@ class PersonSerializer(TranslatableModelSerializer):
         return person
 
     def create_links(self, validated_data, entity):
-        language_code = validated_data.pop("language_code")
+        language_code = self.language
         validated_data["content_object"] = entity
         Link.objects.language(language_code).create(**validated_data)
 
     def create_child(self, validated_data, child, parent):
         links = validated_data.pop("links", [])
-        language_code = validated_data.pop("language_code")
+        language_code = self.language
         validated_data["content_object"] = parent
         obj = child.objects.language(language_code).create(**validated_data)
         for link in links:
