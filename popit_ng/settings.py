@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DEFAULT_CHARSET = 'utf-8'
+
 
 # Application definition
 
@@ -41,11 +43,13 @@ INSTALLED_APPS = (
     'rosetta',
     'hvad',
     'rest_framework',
+    'rest_framework.authtoken',
     'popit',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    #'solid_i18n.middleware.SolidLocaleMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -112,11 +116,24 @@ STATIC_URL = '/static/'
 ugettext = lambda s:s
 LANGUAGES = (
     ('en', _('English')),
-    ('ms_MY', _('Malay'))
+    ('ms', _('Malay'))
 )
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, "locale"),
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
 
 try:
     from settings_local import *

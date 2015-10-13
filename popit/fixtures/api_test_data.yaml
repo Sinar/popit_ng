@@ -162,11 +162,16 @@
       test person}
   model: popit.persontranslation
   pk: 9
+- fields: {additional_name: '', biography: '', family_name: '', gender: '', given_name: '',
+    honorific_prefix: '', honorific_suffix: '', language_code: ms, master: ab1a5788e5bae955c048748fa6af0e97,
+    name: Swee Meng, national_identity: '', patronymic_name: '', sort_name: '', summary: ''}
+  model: popit.persontranslation
+  pk: 10
 - fields: {birth_date: '1901-01-01', created_at: 2015-10-06, death_date: '2001-01-01',
     email: johndoe@sinarproject.org, image: '', updated_at: 2015-10-06}
   model: popit.person
   pk: 8497ba86-7485-42d2-9596-2ab14520f1f4
 - fields: {birth_date: '', created_at: 2015-10-02, death_date: '', email: sweester@sinarproject.org,
-    image: '', updated_at: 2015-10-02}
+    image: '', updated_at: 2015-10-12}
   model: popit.person
   pk: ab1a5788e5bae955c048748fa6af0e97

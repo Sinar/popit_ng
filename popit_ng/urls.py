@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.conf import settings
+from rest_framework.urlpatterns import format_suffix_patterns
+from popit.views import PersonDetail
+from popit.views import PersonList
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -25,5 +28,13 @@ if "rosetta" in settings.INSTALLED_APPS:
     urlpatterns += patterns('',
         url(r'rosetta/', include('rosetta.urls'))
     )
+
+api_urls = [
+    url(r'^(?P<language>\w+)/persons/$', PersonList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<pk>[-\w]+)/$', PersonDetail.as_view()),
+ ]
+
+api_urls = format_suffix_patterns(api_urls)
+urlpatterns += api_urls
 
 
