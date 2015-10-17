@@ -6,49 +6,10 @@ from popit.models import Identifier
 from popit.models import OtherName
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
-
-
-class LinkSerializer(TranslatableModelSerializer):
-    id = CharField(max_length=255, required=False)
-
-    class Meta:
-        model = Link
-        exclude = ('object_id', 'content_type')
-        extra_kwargs = {'id': {'read_only': False, 'required': False}}
-
-
-class ContactSerializer(TranslatableModelSerializer):
-
-    id = CharField(max_length=255, required=False)
-    links = LinkSerializer(many=True, required=False)
-
-    class Meta:
-        model = Contact
-        exclude = ('object_id', 'content_type')
-        extra_kwargs = {'id': {'read_only': False, 'required': False}}
-
-
-class IdentifierSerializer(TranslatableModelSerializer):
-
-    id = CharField(max_length=255, required=False)
-    links = LinkSerializer(many=True, required=False)
-
-    class Meta:
-        model = Identifier
-        exclude = ('object_id', 'content_type')
-        extra_kwargs = {'id': {'read_only': False, 'required': False}}
-
-
-class OtherNameSerializer(TranslatableModelSerializer):
-
-    id = CharField(max_length=255, required=False)
-    links = LinkSerializer(many=True, required=False)
-
-    class Meta:
-        model = OtherName
-        exclude = ('object_id', 'content_type')
-        extra_kwargs = {'id': {'read_only': False, 'required': False}}
-
+from popit.serializers.misc import OtherNameSerializer
+from popit.serializers.misc import IdentifierSerializer
+from popit.serializers.misc import LinkSerializer
+from popit.serializers.misc import ContactSerializer
 
 class PersonSerializer(TranslatableModelSerializer):
 
