@@ -191,3 +191,48 @@ class OtherName(TranslatableModel):
 
     def __unicode__(self):
         return self.safe_translation_getter('name')
+
+
+# Chances is this will be sync manually from mapit. That one have proper browsing and a few thing
+# I don't think mapit have push feature, django have it, but mapit is not use it to push data
+# API is still useful for push update, manual update,
+# TODO: Consider a management script to pull from mapit
+# Also this will only have one language. Which can bite.
+class Area(TranslatableModel):
+    id = models.CharField(max_length=255, primary_key=True, blank=True)
+    translations = TranslatedFields(
+        name = models.CharField(max_length=255, verbose_name=_("name")),
+        classification = models.CharField(max_length=20, verbose_name=_("classification"), null=True, blank=True),
+
+    )
+    identifier = models.CharField(max_length=255, verbose_name=_('identifier'), null=True, blank=True)
+
+    parent = models.ForeignKey('self', related_name="children")
+    links = GenericRelation(Link)
+    # TODO: Defer geometry until django 1.9 impement json field in postgresql extension
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.id = str(uuid.uuid4()) # We use id from popolo, but do not assume anyone have mapit setup
+        super(Area, self).save(*args, **kwargs)
+
+    def add_citation(self, field, url, note):
+        if not hasattr(self, field):
+            raise PopItFieldNotExist("%s Does not exist" % field)
+
+        link = Link.objects.language(self.language_code).create(
+            field = field,
+            url = url,
+            note = note,
+            content_object=self
+        )
+
+    def citation_exist(self, field):
+        if not hasattr(self, field):
+            raise PopItFieldNotExist("%s Does not exist" % field)
+        links = self.links.language(self.language_code).filter(field=field)
+        if links:
+            return True
+        return False
+
+

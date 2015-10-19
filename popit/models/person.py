@@ -46,8 +46,8 @@ class Person(TranslatableModel):
     identifiers = GenericRelation(Identifier)
     contacts = GenericRelation(Contact)
 
-    created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateField(auto_now=True, verbose_name=_("Updated at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated at"))
 
     def add_citation(self, field, url, note):
         if not hasattr(self, field):
