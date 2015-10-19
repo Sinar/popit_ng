@@ -209,6 +209,9 @@ class Area(TranslatableModel):
 
     parent = models.ForeignKey('self', related_name="children")
     links = GenericRelation(Link)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     # TODO: Defer geometry until django 1.9 impement json field in postgresql extension
 
     def save(self, *args, **kwargs):
