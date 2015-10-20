@@ -16,10 +16,20 @@ from popit.models import Contact
 from popit.models import Link
 from popit.models import OtherName
 from popit.models import Identifier
-from popit.views.misc import GenericParentChildDetail
-from popit.views.misc import GenericParentChildLinkDetail
-from popit.views.misc import GenericParentChildList
-from popit.views.misc import GenericParentChildLinkList
+from popit.views.misc import GenericContactDetail
+from popit.views.misc import GenericContactLinkDetail
+from popit.views.misc import GenericContactLinkList
+from popit.views.misc import GenericContactList
+from popit.views.misc import GenericIdentifierDetail
+from popit.views.misc import GenericIdentifierLinkDetail
+from popit.views.misc import GenericIdentifierLinkList
+from popit.views.misc import GenericIdentifierList
+from popit.views.misc import GenericOtherNameDetail
+from popit.views.misc import GenericOtherNameLinkDetail
+from popit.views.misc import GenericOtherNameLinkList
+from popit.views.misc import GenericOtherNameList
+from popit.views.misc import GenericLinkDetail
+from popit.views.misc import GenericLinkList
 
 
 # Create your views here.
@@ -73,102 +83,60 @@ class PersonDetail(APIView):
         person.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class PersonContactList(GenericParentChildList):
+
+class PersonContactList(GenericContactList):
     serializer = ContactSerializer
     parent = Person
 
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
 
-        contacts = parent.contacts.untranslated().all()
-        return contacts
-
-
-class PersonContactDetail(GenericParentChildDetail):
+class PersonContactDetail(GenericContactDetail):
     serializer = ContactSerializer
     parent = Person
 
-    def get_object(self, parent, pk):
-        try:
-            return parent.contacts.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
-            return Http404
 
-
-class PersonOtherNameList(GenericParentChildList):
+class PersonOtherNameList(GenericOtherNameList):
 
     serializer = OtherNameSerializer
     parent = Person
 
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
 
-        other_names = parent.other_names.untranslated().all()
-        return other_names
-
-
-class PersonOtherNameDetail(GenericParentChildDetail):
+class PersonOtherNameDetail(GenericOtherNameDetail):
 
     serializer = OtherNameSerializer
     parent = Person
 
-    def get_object(self, parent, pk):
-        try:
-            return parent.other_names.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
-            return Http404
 
-
-class PersonIdentifierList(GenericParentChildList):
+class PersonIdentifierList(GenericIdentifierList):
 
     serializer = IdentifierSerializer
     parent = Person
 
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
 
-        identifiers = parent.identifiers.untranslated().all()
-        return identifiers
-
-
-class PersonIdentifierDetail(GenericParentChildDetail):
+class PersonIdentifierDetail(GenericIdentifierDetail):
 
     serializer = IdentifierSerializer
     parent = Person
 
-    def get_object(self, parent, pk):
-        try:
-            return parent.identifiers.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
-            return Http404
 
-
-class PersonLinkList(GenericParentChildList):
+class PersonLinkList(GenericLinkList):
 
     serializer = LinkSerializer
     parent = Person
 
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
 
-        links = parent.links.untranslated().all()
-        return links
-
-
-class PersonLinkDetail(GenericParentChildDetail):
+class PersonLinkDetail(GenericLinkDetail):
 
     serializer = LinkSerializer
     parent = Person
 
-    def get_object(self, parent, pk):
-        try:
-            return parent.links.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
-            return Http404
+
+class PersonContactLinkList(GenericContactLinkList):
+
+    parent = Person
+    child = Contact
 
 
-class PersonContactLinkList(GenericParentChildLinkList):
-
+class PersonContactLinkDetail(GenericContactLinkDetail):
     parent = Person
     child = Contact
 
@@ -181,66 +149,21 @@ class PersonContactLinkList(GenericParentChildLinkList):
             return Http404
 
 
-class PersonContactLinkDetail(GenericParentChildLinkDetail):
-    parent = Person
-    child = Contact
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.contacts.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            return Http404
-
-
-class PersonIdentifierLinkList(GenericParentChildLinkList):
+class PersonIdentifierLinkList(GenericIdentifierLinkList):
     parent = Person
     child = Identifier
 
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.identifiers.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            return Http404
 
-
-class PersonIdentifierLinkDetail(GenericParentChildLinkDetail):
+class PersonIdentifierLinkDetail(GenericIdentifierLinkDetail):
     parent = Person
     child = Identifier
 
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.identifiers.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            return Http404
 
-
-class PersonOtherNameLinkList(GenericParentChildLinkList):
+class PersonOtherNameLinkList(GenericOtherNameLinkList):
     parent = Person
     child = OtherName
 
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.other_names.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            return Http404
 
-
-class PersonOtherNameLinkDetail(GenericParentChildLinkDetail):
+class PersonOtherNameLinkDetail(GenericOtherNameLinkDetail):
     parent = Person
     child = OtherName
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.other_names.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            return Http404

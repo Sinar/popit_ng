@@ -4,3 +4,4 @@ from misc import LinkSerializer
 from misc import OtherNameSerializer
 from misc import ContactSerializer
 from misc import IdentifierSerializer
+from organization import OrganizationSerializer

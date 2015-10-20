@@ -8,7 +8,9 @@ from popit.serializers import LinkSerializer
 from popit.serializers.exceptions import ContentObjectNotAvailable
 from popit.serializers.exceptions import SerializerNotSetException
 from popit.serializers.exceptions import ParentNotSetException
+from popit.serializers.exceptions import ChildNotSetException
 from popit.models import Person
+from popit.models import Contact
 
 
 class GenericParentChildList(APIView):
@@ -53,6 +55,38 @@ class GenericParentChildList(APIView):
             except ContentObjectNotAvailable as e:
                 return Response({"error": e.message}, status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+
+class GenericContactList(GenericParentChildList):
+    def get_query(self, parent_pk, language):
+        parent = self.get_parent(parent_pk, language)
+
+        contacts = parent.contacts.untranslated().all()
+        return contacts
+
+
+class GenericOtherNameList(GenericParentChildList):
+    def get_query(self, parent_pk, language):
+        parent = self.get_parent(parent_pk, language)
+
+        other_names = parent.other_names.untranslated().all()
+        return other_names
+
+
+class GenericIdentifierList(GenericParentChildList):
+    def get_query(self, parent_pk, language):
+        parent = self.get_parent(parent_pk, language)
+
+        identifiers = parent.identifiers.untranslated().all()
+        return identifiers
+
+
+class GenericLinkList(GenericParentChildList):
+    def get_query(self, parent_pk, language):
+        parent = self.get_parent(parent_pk, language)
+
+        links = parent.links.untranslated().all()
+        return links
 
 
 class GenericParentChildDetail(APIView):
@@ -107,6 +141,39 @@ class GenericParentChildDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class GenericContactDetail(GenericParentChildDetail):
+    def get_object(self, parent, pk):
+        try:
+            return parent.contacts.untranslated().get(id=pk)
+        except Contact.DoesNotExist:
+            return Http404
+
+
+class GenericOtherNameDetail(GenericParentChildDetail):
+    def get_object(self, parent, pk):
+        try:
+            return parent.other_names.untranslated().get(id=pk)
+        except Contact.DoesNotExist:
+            return Http404
+
+
+class GenericIdentifierDetail(GenericParentChildDetail):
+
+    def get_object(self, parent, pk):
+        try:
+            return parent.identifiers.untranslated().get(id=pk)
+        except Contact.DoesNotExist:
+            return Http404
+
+
+class GenericLinkDetail(GenericParentChildDetail):
+    def get_object(self, parent, pk):
+        try:
+            return parent.links.untranslated().get(id=pk)
+        except Contact.DoesNotExist:
+            return Http404
+
+
 class GenericParentChildLinkList(APIView):
 
     permission_classes = (
@@ -147,6 +214,37 @@ class GenericParentChildLinkList(APIView):
                 # Mostly for idiot that forget to set content object
                 return Response({"message": e.message}, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class GenericContactLinkList(GenericParentChildLinkList):
+    def get_child(self, parent, pk, language):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        try:
+            return parent.contacts.language(language).get(id=pk)
+        except self.child.DoesNotExist:
+            return Http404
+
+
+class GenericIdentifierLinkList(GenericParentChildLinkList):
+    def get_child(self, parent, pk, language):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        try:
+            return parent.identifiers.language(language).get(id=pk)
+        except self.child.DoesNotExist:
+            return Http404
+
+
+class GenericOtherNameLinkList(GenericParentChildLinkList):
+    def get_child(self, parent, pk, language):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        try:
+            return parent.other_names.language(language).get(id=pk)
+        except self.child.DoesNotExist:
+            return Http404
+
 
 class GenericParentChildLinkDetail(APIView):
 
@@ -192,3 +290,33 @@ class GenericParentChildLinkDetail(APIView):
         link = child.links.language(language).get(id=link_pk)
         link.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class GenericContactLinkDetail(GenericParentChildLinkDetail):
+    def get_child(self, parent, pk, language):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        try:
+            return parent.contacts.language(language).get(id=pk)
+        except self.child.DoesNotExist:
+            return Http404
+
+
+class GenericIdentifierLinkDetail(GenericParentChildLinkDetail):
+    def get_child(self, parent, pk, language):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        try:
+            return parent.identifiers.language(language).get(id=pk)
+        except self.child.DoesNotExist:
+            return Http404
+
+
+class GenericOtherNameLinkDetail(GenericParentChildLinkDetail):
+    def get_child(self, parent, pk, language):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        try:
+            return parent.other_names.language(language).get(id=pk)
+        except self.child.DoesNotExist:
+            return Http404
