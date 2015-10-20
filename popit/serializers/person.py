@@ -13,6 +13,7 @@ from popit.serializers.misc import ContactSerializer
 
 class PersonSerializer(TranslatableModelSerializer):
 
+    id = CharField(max_length=255, required=False)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)

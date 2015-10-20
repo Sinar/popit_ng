@@ -7,6 +7,7 @@ from popit.models import OtherName
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from popit.serializers.exceptions import ContentObjectNotAvailable
+from popit.models import Area
 
 
 class LinkSerializer(TranslatableModelSerializer):
@@ -217,3 +218,85 @@ class OtherNameSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
+class AreaSerializer(TranslatableModelSerializer):
+    id = CharField(max_length=255, required=False)
+
+    links = LinkSerializer(many=True, required=False)
+
+    # Why create and update? Because we need to create an API endpoint to import data from mapit
+    def create(self, validated_data):
+        language = self.language
+        validated_data.pop("language_code", None)
+        parent_data = validated_data.pop("parent", {})
+        links = validated_data.pop("links", [])
+
+        if parent_data:
+            if not "id" in parent_data:
+                parent = self.create(parent_data)
+            else:
+                parent = self.update_area(parent_data)
+        validated_data["parent"] = parent
+        area = Area.objects.language(language).create(**validated_data)
+        for link in links:
+            self.create_links(link, area)
+
+        return area
+
+    def create_links(self, validated_data, parent):
+        language_code = self.language
+        validated_data["content_object"] = parent
+        Link.objects.language(language_code).create(**validated_data)
+
+    def update(self, instance, data):
+        links = data.pop("links", [])
+        language = self.language
+        data.pop("language", None)
+        instance.name = data.get("name", instance.name)
+        instance.identifier = data.get("identifier", instance.identifier)
+        instance.classification = data.get("classification", instance.classification)
+        instance.save()
+
+        for link in links:
+            self.update_links(link, instance)
+
+    def update_area(self, data):
+        # Raise excception if no id in field, it should be there
+        area_id = data.pop("id")
+        parent_data = data.pop("parent", None)
+        links = data.pop('links', [])
+        area = Area.objects.language(self.language).get(id=area_id)
+
+        area.name = data.get('name', area.name)
+        area.identifier = data.get('identifier', area.identifier)
+        area.classification = data.get('classficiation', area.classification)
+        if parent_data:
+            if "id" in parent_data:
+                parent = self.update_area(parent_data)
+            else:
+                parent = self.create(parent_data)
+            area.parent = parent
+        area.save()
+        for link in links:
+            self.update_links(link, area)
+        return area
+
+    def update_links(self, validated_data, parent):
+        language_code = parent.language_code
+
+        if validated_data.get("id"):
+            links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
+            if not links:
+                self.create_links(validated_data, parent)
+            else:
+                link = links[0]
+                link.label = validated_data.get("label", link.label)
+                link.field = validated_data.get("field", link.field)
+                link.url = validated_data.get("url", link.url)
+                link.note = validated_data.get("note", link.note)
+                link.save()
+        else:
+            self.create_links(validated_data, parent)
+
+    class Meta:
+        model = Area
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
