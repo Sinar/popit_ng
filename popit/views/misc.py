@@ -5,12 +5,18 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.http import Http404
 from popit.serializers import LinkSerializer
+from popit.serializers import ContactSerializer
+from popit.serializers import IdentifierSerializer
+from popit.serializers import OtherNameSerializer
 from popit.serializers.exceptions import ContentObjectNotAvailable
 from popit.serializers.exceptions import SerializerNotSetException
 from popit.serializers.exceptions import ParentNotSetException
 from popit.serializers.exceptions import ChildNotSetException
 from popit.models import Person
 from popit.models import Contact
+from popit.models import Link
+from popit.models import OtherName
+from popit.models import Identifier
 
 
 class GenericParentChildList(APIView):
@@ -58,6 +64,9 @@ class GenericParentChildList(APIView):
 
 
 class GenericContactList(GenericParentChildList):
+
+    serializer = ContactSerializer
+
     def get_query(self, parent_pk, language):
         parent = self.get_parent(parent_pk, language)
 
@@ -66,6 +75,9 @@ class GenericContactList(GenericParentChildList):
 
 
 class GenericOtherNameList(GenericParentChildList):
+
+    serializer = OtherNameSerializer
+
     def get_query(self, parent_pk, language):
         parent = self.get_parent(parent_pk, language)
 
@@ -74,6 +86,9 @@ class GenericOtherNameList(GenericParentChildList):
 
 
 class GenericIdentifierList(GenericParentChildList):
+
+    serializer = IdentifierSerializer
+
     def get_query(self, parent_pk, language):
         parent = self.get_parent(parent_pk, language)
 
@@ -82,6 +97,9 @@ class GenericIdentifierList(GenericParentChildList):
 
 
 class GenericLinkList(GenericParentChildList):
+
+    serializer = LinkSerializer
+
     def get_query(self, parent_pk, language):
         parent = self.get_parent(parent_pk, language)
 
@@ -142,6 +160,9 @@ class GenericParentChildDetail(APIView):
 
 
 class GenericContactDetail(GenericParentChildDetail):
+
+    serializer = ContactSerializer
+
     def get_object(self, parent, pk):
         try:
             return parent.contacts.untranslated().get(id=pk)
@@ -150,6 +171,9 @@ class GenericContactDetail(GenericParentChildDetail):
 
 
 class GenericOtherNameDetail(GenericParentChildDetail):
+
+    serializer = OtherNameSerializer
+
     def get_object(self, parent, pk):
         try:
             return parent.other_names.untranslated().get(id=pk)
@@ -159,6 +183,8 @@ class GenericOtherNameDetail(GenericParentChildDetail):
 
 class GenericIdentifierDetail(GenericParentChildDetail):
 
+    serializer = IdentifierSerializer
+
     def get_object(self, parent, pk):
         try:
             return parent.identifiers.untranslated().get(id=pk)
@@ -167,6 +193,9 @@ class GenericIdentifierDetail(GenericParentChildDetail):
 
 
 class GenericLinkDetail(GenericParentChildDetail):
+
+    serializer = LinkSerializer
+
     def get_object(self, parent, pk):
         try:
             return parent.links.untranslated().get(id=pk)
@@ -217,6 +246,9 @@ class GenericParentChildLinkList(APIView):
 
 
 class GenericContactLinkList(GenericParentChildLinkList):
+
+    child = Contact
+
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")
@@ -227,6 +259,9 @@ class GenericContactLinkList(GenericParentChildLinkList):
 
 
 class GenericIdentifierLinkList(GenericParentChildLinkList):
+
+    child = Identifier
+
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")
@@ -237,6 +272,9 @@ class GenericIdentifierLinkList(GenericParentChildLinkList):
 
 
 class GenericOtherNameLinkList(GenericParentChildLinkList):
+
+    child = OtherName
+
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")
@@ -293,6 +331,9 @@ class GenericParentChildLinkDetail(APIView):
 
 
 class GenericContactLinkDetail(GenericParentChildLinkDetail):
+
+    child = Contact
+
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")
@@ -303,6 +344,9 @@ class GenericContactLinkDetail(GenericParentChildLinkDetail):
 
 
 class GenericIdentifierLinkDetail(GenericParentChildLinkDetail):
+
+    child = Identifier
+
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")
@@ -313,6 +357,9 @@ class GenericIdentifierLinkDetail(GenericParentChildLinkDetail):
 
 
 class GenericOtherNameLinkDetail(GenericParentChildLinkDetail):
+
+    child = OtherName
+
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")

@@ -6,16 +6,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.http import Http404
 from popit.serializers import PersonSerializer
 from popit.models import Person
-from popit.serializers import ContactSerializer
-from popit.serializers import LinkSerializer
-from popit.serializers import IdentifierSerializer
-from popit.serializers import OtherNameSerializer
-from popit.serializers.exceptions import ChildNotSetException
-from popit.models import Person
-from popit.models import Contact
-from popit.models import Link
-from popit.models import OtherName
-from popit.models import Identifier
 from popit.views.misc import GenericContactDetail
 from popit.views.misc import GenericContactLinkDetail
 from popit.views.misc import GenericContactLinkList
@@ -85,85 +75,56 @@ class PersonDetail(APIView):
 
 
 class PersonContactList(GenericContactList):
-    serializer = ContactSerializer
     parent = Person
 
 
 class PersonContactDetail(GenericContactDetail):
-    serializer = ContactSerializer
     parent = Person
 
 
 class PersonOtherNameList(GenericOtherNameList):
-
-    serializer = OtherNameSerializer
     parent = Person
 
 
 class PersonOtherNameDetail(GenericOtherNameDetail):
-
-    serializer = OtherNameSerializer
     parent = Person
 
 
 class PersonIdentifierList(GenericIdentifierList):
-
-    serializer = IdentifierSerializer
     parent = Person
 
 
 class PersonIdentifierDetail(GenericIdentifierDetail):
-
-    serializer = IdentifierSerializer
     parent = Person
 
 
 class PersonLinkList(GenericLinkList):
-
-    serializer = LinkSerializer
     parent = Person
 
 
 class PersonLinkDetail(GenericLinkDetail):
-
-    serializer = LinkSerializer
     parent = Person
 
 
 class PersonContactLinkList(GenericContactLinkList):
-
     parent = Person
-    child = Contact
 
 
 class PersonContactLinkDetail(GenericContactLinkDetail):
     parent = Person
-    child = Contact
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.contacts.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            return Http404
 
 
 class PersonIdentifierLinkList(GenericIdentifierLinkList):
     parent = Person
-    child = Identifier
 
 
 class PersonIdentifierLinkDetail(GenericIdentifierLinkDetail):
     parent = Person
-    child = Identifier
 
 
 class PersonOtherNameLinkList(GenericOtherNameLinkList):
     parent = Person
-    child = OtherName
 
 
 class PersonOtherNameLinkDetail(GenericOtherNameLinkDetail):
     parent = Person
-    child = OtherName
