@@ -207,7 +207,7 @@ class Area(TranslatableModel):
     )
     identifier = models.CharField(max_length=255, verbose_name=_('identifier'), null=True, blank=True)
 
-    parent = models.ForeignKey('self', related_name="children")
+    parent = models.ForeignKey('self', related_name="children", null=True, blank=True)
     links = GenericRelation(Link)
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -238,4 +238,6 @@ class Area(TranslatableModel):
             return True
         return False
 
+    def __unicode__(self):
+        return self.safe_translation_getter('name', self.name)
 

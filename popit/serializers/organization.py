@@ -4,6 +4,7 @@ from popit.models import Contact
 from popit.models import Link
 from popit.models import Identifier
 from popit.models import OtherName
+from popit.models import Area
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from popit.serializers.misc import OtherNameSerializer
@@ -12,15 +13,31 @@ from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactSerializer
 from popit.serializers.misc import AreaSerializer
 
-
-class OrganizationSerializer(TranslatableModelSerializer):
-
+# We make this read only, and we shall show 1 level of parent. Not grand parent
+class ParentOrganizationSerializer(TranslatableModelSerializer):
     id = CharField(max_length=255, required=False)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contacts = ContactSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
+
+    class Meta:
+        model = Organization
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
+class OrganizationSerializer(TranslatableModelSerializer):
+
+    id = CharField(max_length=255, required=False)
+    parent = ParentOrganizationSerializer(required=False)
+    parent_id = CharField(max_length=255, required=False)
+    other_names = OtherNameSerializer(many=True, required=False)
+    identifiers = IdentifierSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+    contacts = ContactSerializer(many=True, required=False)
+    area = AreaSerializer(required=False)
+    area_id = CharField(max_length=255, required=False)
 
     def create(self, validated_data):
         other_names = validated_data.pop('other_names', [])
@@ -29,12 +46,39 @@ class OrganizationSerializer(TranslatableModelSerializer):
         contacts = validated_data.pop('contacts', [])
         language = self.language
         validated_data.pop("language_code", None)
+
+        validated_data.pop("parent", None)
+
+        area_data = validated_data.pop("area", None)
+        area_id = validated_data.pop("area_id", None)
+        # We can only assign parent and area, not create it.
+        # Except there is no area database in popit
+        # Also what if area_id do not exist
+        area = None
+        if area_id:
+            try:
+                area = Area.objects.untranslated().get(id=area_id)
+                validated_data["area"] = area
+            except Area.DoesNotExist:
+                area = None
+
+        if area_data:
+            if not area:
+                area = self.create_area(area_data)
+                validated_data["area"] = area
+
+
+        parent_id = validated_data.pop("parent_id", None)
+
+        if parent_id:
+            parent_org = Organization.objects.untranslated().get(id=parent_id)
+            validated_data["parent"] = parent_org
         organization = Organization.objects.language(language).create(**validated_data)
         for other_name in other_names:
             self.create_child(other_name, OtherName, organization)
 
         for link in links:
-            self.create(link, Link, organization)
+            self.create_links(link, organization)
 
         for identifier in identifiers:
             self.create_child(identifier, Identifier, organization)
@@ -56,6 +100,12 @@ class OrganizationSerializer(TranslatableModelSerializer):
         obj = child.objects.language(language_code).create(**validated_data)
         for link in links:
             self.create_links(link, obj)
+
+    def create_area(self, validated_data):
+        language_code = self.language
+        validated_data.pop("language_code", None)
+        area = Area.objects.language(language_code).create(**validated_data)
+        return area
 
     def update(self, instance, data):
         language = self.language

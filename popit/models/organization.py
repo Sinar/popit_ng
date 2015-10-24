@@ -22,9 +22,9 @@ class Organization(TranslatableModel):
         description = models.TextField(verbose_name=_('description'), null=True, blank=True)
     )
 
-    parent = models.ForeignKey('self', related_name='children')
+    parent = models.ForeignKey('self', related_name='children', null=True, blank=True)
 
-    area = models.ForeignKey(Area)
+    area = models.ForeignKey(Area, null=True, blank=True)
     founding_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('founding date'))
     dissolution_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('dissolution date'))
 
@@ -33,6 +33,7 @@ class Organization(TranslatableModel):
     other_names = GenericRelation(OtherName)
     contacts = GenericRelation(Contact)
     identifiers = GenericRelation(Identifier)
+    links = GenericRelation(Link)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('updated at'))
@@ -61,4 +62,7 @@ class Organization(TranslatableModel):
         super(Organization, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.safe_translation_getter('name')
+        # Why is it that they do not find name, but need self.name
+        # Actually what could go wrong if we switch to bm
+        return self.safe_translation_getter('name', self.name)
+
