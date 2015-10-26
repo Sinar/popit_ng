@@ -108,16 +108,53 @@ class OrganizationSerializer(TranslatableModelSerializer):
         return area
 
     def update(self, instance, data):
-        language = self.language
         other_names = data.pop("other_names", [])
         links = data.pop("links", [])
         identifiers = data.pop("identifiers", [])
         contacts = data.pop("contacts", [])
+        area = data.pop("area", None)
+        area_id = data.pop("area_id", None)
+
+        parent = data.pop("parent", None)
+        parent_id = data.pop("parent_id", None)
 
         instance.name = data.get("name", instance.name)
         instance.classification = data.get("classification", instance.classification)
+        instance.abstract = data.get("abstract", instance.abstract)
+        instance.description = data.get("description", instance.description)
+        instance.founding_date = data.get("founding_date", instance.founding_date)
+        instance.dissolution_date = data.get("dissolution_date", instance.dissolution_date)
 
+        # We only allow pointing to new parent and area not create a new parent and area
+        if area_id:
+            try:
+                area = Area.objects.language(instance.language_code).get(id=area_id)
+                instance.area = area
+            except Area.DoesNotExist:
+                pass
 
+        if parent_id:
+            try:
+                parent = Organization.objects.language(instance.language_code).get(id=parent_id)
+                instance.parent = parent
+            except Organization.DoesNotExist:
+                pass
+
+        instance.save()
+
+        for other_name in other_names:
+            self.update_childs(other_name, OtherName, instance)
+
+        for identifier in identifiers:
+            self.update_childs(identifier, Identifier, instance)
+
+        for contact in contacts:
+            self.update_childs(contact, Contact, instance)
+
+        for link in links:
+            self.update_links(link, instance)
+
+        return instance
 
     def update_childs(self, validated_data, child, parent):
         # parent mostly exist at create,

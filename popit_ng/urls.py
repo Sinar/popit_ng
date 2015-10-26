@@ -33,6 +33,23 @@ from popit.views import PersonContactLinkDetail
 from popit.views import PersonContactLinkList
 from popit.views import PersonOtherNameLinkDetail
 from popit.views import PersonOtherNameLinkList
+from popit.views import OrganizationDetail
+from popit.views import OrganizationList
+from popit.views import OrganizationContactDetail
+from popit.views import OrganizationContactList
+from popit.views import OrganizationLinkDetail
+from popit.views import OrganizationLinkList
+from popit.views import OrganizationOtherNameDetail
+from popit.views import OrganizationOtherNameList
+from popit.views import OrganizationIdentifierDetail
+from popit.views import OrganizationIdentifierList
+from popit.views import OrganizationIdentifierLinkDetail
+from popit.views import OrganizationIdentifierLinkList
+from popit.views import OrganizationContactLinkDetail
+from popit.views import OrganizationContactLinkList
+from popit.views import OrganizationOtherNameLinkDetail
+from popit.views import OrganizationOtherNameLinkList
+
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -65,6 +82,27 @@ api_urls = [
         PersonIdentifierLinkList.as_view()),
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
         PersonIdentifierLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/$', OrganizationList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<pk>[-\w]+)/', OrganizationDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/$', OrganizationContactList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/$', OrganizationContactDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/$', OrganizationLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', OrganizationLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/$', OrganizationOtherNameList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/$', OrganizationOtherNameDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/$', OrganizationIdentifierList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/$', OrganizationIdentifierDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/$', OrganizationContactLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
+        OrganizationContactLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/$',
+        OrganizationOtherNameLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
+        OrganizationOtherNameLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/$',
+        OrganizationIdentifierLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
+        OrganizationIdentifierLinkDetail.as_view()),
  ]
 
 api_urls = format_suffix_patterns(api_urls)

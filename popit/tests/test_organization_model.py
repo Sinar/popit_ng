@@ -10,6 +10,7 @@ from popit.models.exception import PopItFieldNotExist
 
 
 # This mostly server as examples
+# TODO: Add test for setting parent org
 class OrganizationTestCase(TestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
