@@ -51,7 +51,7 @@ class OrganizationDetail(APIView):
         try:
             return Organization.objects.untranslated().get(id=pk)
         except Organization.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, language, pk, format=None):
         organization = self.get_object(pk)

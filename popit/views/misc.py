@@ -36,7 +36,7 @@ class GenericParentChildList(APIView):
         try:
             return self.parent.objects.language(language).get(id=parent_pk)
         except Person.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, language, parent_pk, format=None):
         if not self.serializer:
@@ -126,7 +126,7 @@ class GenericParentChildDetail(APIView):
         try:
             return self.parent.objects.language(language).get(id=parent_pk)
         except Person.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, language, parent_pk, pk, format=None):
         if not self.serializer:
@@ -167,7 +167,7 @@ class GenericContactDetail(GenericParentChildDetail):
         try:
             return parent.contacts.untranslated().get(id=pk)
         except Contact.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericOtherNameDetail(GenericParentChildDetail):
@@ -178,7 +178,7 @@ class GenericOtherNameDetail(GenericParentChildDetail):
         try:
             return parent.other_names.untranslated().get(id=pk)
         except Contact.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericIdentifierDetail(GenericParentChildDetail):
@@ -189,7 +189,7 @@ class GenericIdentifierDetail(GenericParentChildDetail):
         try:
             return parent.identifiers.untranslated().get(id=pk)
         except Contact.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericLinkDetail(GenericParentChildDetail):
@@ -200,7 +200,7 @@ class GenericLinkDetail(GenericParentChildDetail):
         try:
             return parent.links.untranslated().get(id=pk)
         except Contact.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericParentChildLinkList(APIView):
@@ -219,7 +219,7 @@ class GenericParentChildLinkList(APIView):
         try:
             return self.parent.objects.language(language).get(id=parent_pk)
         except self.parent.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get_child(self, parent, pk, language):
         raise NotImplementedError()
@@ -255,7 +255,7 @@ class GenericContactLinkList(GenericParentChildLinkList):
         try:
             return parent.contacts.language(language).get(id=pk)
         except self.child.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericIdentifierLinkList(GenericParentChildLinkList):
@@ -268,7 +268,7 @@ class GenericIdentifierLinkList(GenericParentChildLinkList):
         try:
             return parent.identifiers.language(language).get(id=pk)
         except self.child.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericOtherNameLinkList(GenericParentChildLinkList):
@@ -281,7 +281,7 @@ class GenericOtherNameLinkList(GenericParentChildLinkList):
         try:
             return parent.other_names.language(language).get(id=pk)
         except self.child.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericParentChildLinkDetail(APIView):
@@ -300,7 +300,7 @@ class GenericParentChildLinkDetail(APIView):
         try:
             return self.parent.objects.language(language).get(id=parent_pk)
         except self.parent.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get_child(self, parent, pk, language):
         raise NotImplementedError()
@@ -340,7 +340,7 @@ class GenericContactLinkDetail(GenericParentChildLinkDetail):
         try:
             return parent.contacts.language(language).get(id=pk)
         except self.child.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericIdentifierLinkDetail(GenericParentChildLinkDetail):
@@ -353,7 +353,7 @@ class GenericIdentifierLinkDetail(GenericParentChildLinkDetail):
         try:
             return parent.identifiers.language(language).get(id=pk)
         except self.child.DoesNotExist:
-            return Http404
+            raise Http404
 
 
 class GenericOtherNameLinkDetail(GenericParentChildLinkDetail):
@@ -366,4 +366,4 @@ class GenericOtherNameLinkDetail(GenericParentChildLinkDetail):
         try:
             return parent.other_names.language(language).get(id=pk)
         except self.child.DoesNotExist:
-            return Http404
+            raise Http404

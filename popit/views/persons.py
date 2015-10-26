@@ -52,7 +52,7 @@ class PersonDetail(APIView):
         try:
             return Person.objects.language(language).get(id=pk)
         except Person.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, language, pk, format=None):
         person = self.get_object(pk, language)
