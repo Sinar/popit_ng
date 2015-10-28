@@ -236,37 +236,107 @@ class OrganizationIdentifierAPITestCase(APITestCase):
     fixtures = [ "api_request_test_data.yaml" ]
 
     def test_list_organization_identifier(self):
-        pass
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_show_organization_identifier_not_exist(self):
-        pass
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/not_exists/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_show_organization_identifier(self):
-        pass
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/2d3b8d2c-77b8-42f5-ac62-3e83d4408bda/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_organization_identifier_unauthorized(self):
-        pass
+        data = {
+            "scheme": "testing",
+            "identifier": "12319021390"
+        }
+        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_create_organization_identifier_authorized(self):
-        pass
+        data = {
+            "scheme": "testing",
+            "identifier": "12319021390"
+        }
 
-    def test_update_organization_identifier_not_exist(self):
-        pass
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        identifier = organization.identifiers.language("en").get(identifier="12319021390")
+        self.assertEqual(identifier.scheme, "testing")
+
+    def test_update_organization_identifier_not_exist_unauthorized(self):
+        data = {
+            "identifier": "3131313"
+        }
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_organization_identifier_not_exist_authorized(self):
+        data = {
+            "identifier": "3131313"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_organization_identifier_unauthorized(self):
-        pass
+        data = {
+            "identifier": "3131313"
+        }
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/2d3b8d2c-77b8-42f5-ac62-3e83d4408bda/",
+            data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_update_organization_identifier_authorized(self):
-        pass
+        data = {
+            "identifier": "3131313"
+        }
 
-    def test_delete_organization_identifier_not_exist(self):
-        pass
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/2d3b8d2c-77b8-42f5-ac62-3e83d4408bda/",
+            data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_organization_identifier_not_exist_unauthorized(self):
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_organization_identifier_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_organization_identifier_unauthorized(self):
-        pass
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/2d3b8d2c-77b8-42f5-ac62-3e83d4408bda/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_organization_identifier_authorized(self):
-        pass
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/identifiers/2d3b8d2c-77b8-42f5-ac62-3e83d4408bda/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class OrganizationLinksAPITestCase(APITestCase):
