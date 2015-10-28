@@ -6,3 +6,5 @@ pip install -r requirement.txt
 sudo -u postgres psql -c "create database popit"
 sudo -u postgres psql -c "create user popit with password 'password'" # Change this in production
 sudo -u postgres psql -c "grant all privileges on database popit to popit"
+# DO NOT USE THE LINE BELOW IN PRODUCTION. THIS IS FOR VAGRANT ONLY
+sudo -u postgres psql -c "ALTER USER popit WITH CREATEDB;"

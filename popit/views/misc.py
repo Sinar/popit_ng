@@ -177,7 +177,7 @@ class GenericOtherNameDetail(GenericParentChildDetail):
     def get_object(self, parent, pk):
         try:
             return parent.other_names.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
+        except OtherName.DoesNotExist:
             raise Http404
 
 
@@ -188,7 +188,7 @@ class GenericIdentifierDetail(GenericParentChildDetail):
     def get_object(self, parent, pk):
         try:
             return parent.identifiers.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
+        except Identifier.DoesNotExist:
             raise Http404
 
 
@@ -199,7 +199,7 @@ class GenericLinkDetail(GenericParentChildDetail):
     def get_object(self, parent, pk):
         try:
             return parent.links.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
+        except Link.DoesNotExist:
             raise Http404
 
 

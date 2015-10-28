@@ -189,6 +189,7 @@ class OtherNameSerializer(TranslatableModelSerializer):
         instance.patronymic_name = data.get('patronymic_name', instance.patronymic_name)
         instance.start_date = data.get('start_date', instance.start_date)
         instance.end_date = data.get('end_date', instance.end_date)
+        instance.note = data.get('note', instance.note)
 
         instance.save()
         for link in links:

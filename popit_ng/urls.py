@@ -61,48 +61,64 @@ if "rosetta" in settings.INSTALLED_APPS:
     )
 
 api_urls = [
-    url(r'^(?P<language>\w+)/persons/$', PersonList.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<pk>[-\w]+)/$', PersonDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contacts/$', PersonContactList.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/$', PersonContactDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/links/$', PersonLinkList.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', PersonLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/othernames/$', PersonOtherNameList.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/$', PersonOtherNameDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/$', PersonIdentifierList.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/$', PersonIdentifierDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/$', PersonContactLinkList.as_view()),
+
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
         PersonContactLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/$',
-        PersonOtherNameLinkList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/$', PersonContactLinkList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/$', PersonContactDetail.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contacts/$', PersonContactList.as_view()),
+
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', PersonLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/links/$', PersonLinkList.as_view()),
+
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
         PersonOtherNameLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/$',
-        PersonIdentifierLinkList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/$',
+        PersonOtherNameLinkList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/othernames/$', PersonOtherNameList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/$', PersonOtherNameDetail.as_view()),
+
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
         PersonIdentifierLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/$', OrganizationList.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<pk>[-\w]+)/', OrganizationDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/$', OrganizationContactList.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/$', OrganizationContactDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/$', OrganizationLinkList.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', OrganizationLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/$', OrganizationOtherNameList.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/$', OrganizationOtherNameDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/$', OrganizationIdentifierList.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/$', OrganizationIdentifierDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/$', OrganizationContactLinkList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/$',
+        PersonIdentifierLinkList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/$', PersonIdentifierList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/$', PersonIdentifierDetail.as_view()),
+
+
+
+
+
+
+
+    url(r'^(?P<language>\w+)/persons/(?P<pk>[-\w]+)/$', PersonDetail.as_view()),
+    url(r'^(?P<language>\w+)/persons/$', PersonList.as_view()),
+
     url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
         OrganizationContactLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/$',
-        OrganizationOtherNameLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/links/$', OrganizationContactLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/(?P<pk>[-\w]+)/$', OrganizationContactDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contacts/$', OrganizationContactList.as_view()),
+
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', OrganizationLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/$', OrganizationLinkList.as_view()),
+
     url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
         OrganizationOtherNameLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/$',
-        OrganizationIdentifierLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/$',
+        OrganizationOtherNameLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/$', OrganizationOtherNameDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/othernames/$', OrganizationOtherNameList.as_view()),
+
     url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
         OrganizationIdentifierLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/links/$',
+        OrganizationIdentifierLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/$', OrganizationIdentifierDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/identifiers/$', OrganizationIdentifierList.as_view()),
+
+    url(r'^(?P<language>\w+)/organizations/(?P<pk>[-\w]+)/', OrganizationDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/$', OrganizationList.as_view()),
  ]
 
 api_urls = format_suffix_patterns(api_urls)
