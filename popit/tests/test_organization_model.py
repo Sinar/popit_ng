@@ -114,19 +114,19 @@ class OrganizationTestCase(TestCase):
     def test_create_organization_other_name_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         other_name = organization.other_names.language("en").get(id="53a22b00-1383-4bf5-b4be-4753d8d16062")
-        other_name.add_citation("name", "sinarproject.org", "just another note")
+        other_name.add_citation("family_name", "sinarproject.org", "just another note")
         organization_ = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         other_name = organization_.other_names.language("en").get(id="53a22b00-1383-4bf5-b4be-4753d8d16062")
-        link = other_name.links.language("en").get(field="name")
+        link = other_name.links.language("en").get(field="family_name")
         self.assertEqual(link.url, "sinarproject.org")
 
     def test_create_organization_identifier_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         identifier = organization.identifiers.get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
-        identifier.add_citation("identifier", "sinarproject.org", "random source")
+        identifier.add_citation("scheme", "sinarproject.org", "random source")
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         identifier = organization.identifiers.language("en").get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
-        link = identifier.links.language("en").get(field="identifier")
+        link = identifier.links.language("en").get(field="scheme")
         self.assertEqual(link.url, "sinarproject.org")
 
     def test_create_organization_contact_citation(self):

@@ -142,7 +142,7 @@ class GenericParentChildDetail(APIView):
 
         parent = self.get_parent(parent_pk, language)
         obj = self.get_object(parent, pk)
-        serializer = self.serializer(obj, data=request.data, partial=True)
+        serializer = self.serializer(obj, data=request.data, partial=True, language=language)
         if serializer.is_valid():
             # We do not override where a link is point to.
             serializer.save()

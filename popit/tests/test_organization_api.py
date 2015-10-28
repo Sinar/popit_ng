@@ -132,6 +132,7 @@ class OrganizationAPITestCase(APITestCase):
         data = {
             "contacts": [
                 {
+                    "type": "phone",
                     "value": "01234567",
                     "label": "myphone",
                     "note": "my phone",
@@ -147,6 +148,7 @@ class OrganizationAPITestCase(APITestCase):
         data = {
             "contacts": [
                 {
+                    "type": "phone",
                     "value": "01234567",
                     "label": "myphone",
                     "note": "my phone",
