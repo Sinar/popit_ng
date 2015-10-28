@@ -318,7 +318,10 @@ class GenericParentChildLinkDetail(APIView):
     def put(self, request, language, parent_pk, pk, link_pk):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
-        link = child.links.language(language).get(id=link_pk)
+        try:
+            link = child.links.language(language).get(id=link_pk)
+        except Link.DoesNotExist:
+            raise Http404
         serializer = self.serializer(link, data=request.data, partial=True, language=language)
         if serializer.is_valid():
             serializer.save()
@@ -328,7 +331,10 @@ class GenericParentChildLinkDetail(APIView):
     def delete(self, request, language, parent_pk, pk, link_pk):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
-        link = child.links.language(language).get(id=link_pk)
+        try:
+            link = child.links.language(language).get(id=link_pk)
+        except Link.DoesNotExist:
+            raise Http404
         link.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
