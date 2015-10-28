@@ -344,37 +344,100 @@ class OrganizationLinksAPITestCase(APITestCase):
     fixtures = [ "api_request_test_data.yaml" ]
 
     def test_list_organization_link(self):
-        pass
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_show_organization_link_not_exist(self):
-        pass
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_show_organization_link(self):
-        pass
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/45b0a790-8c9e-4553-844b-431ed34b6b12/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_organization_link_unauthorized(self):
-        pass
+        data = {
+            "url": "http://google.com",
+            "note": "Just a link"
+        }
+        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_create_organization_link_authorized(self):
-        pass
+        data = {
+            "url": "http://google.com",
+            "note": "Just a link"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_update_organization_link_not_exist(self):
-        pass
+    def test_update_organization_link_not_exist_unauthorized(self):
+        data = {
+            "note": "github page of our member"
+        }
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/not_exist",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_organization_link_not_exist_authorized(self):
+        data = {
+            "note": "github page of our member"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_organization_link_unauthorized(self):
-        pass
+        data = {
+            "note": "github page of our member"
+        }
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/45b0a790-8c9e-4553-844b-431ed34b6b12/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_update_organization_link_authorized(self):
-        pass
+        data = {
+            "note": "github page of our member"
+        }
 
-    def test_delete_organization_link_not_exist(self):
-        pass
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/45b0a790-8c9e-4553-844b-431ed34b6b12/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_organization_link_not_exist_unauthorized(self):
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_organization_link_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_organization_link_unauthorized(self):
-        pass
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/45b0a790-8c9e-4553-844b-431ed34b6b12/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_organization_link_authorized(self):
-        pass
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/links/45b0a790-8c9e-4553-844b-431ed34b6b12/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class OrganizationIdentifierLinkAPITestCase(APITestCase):
