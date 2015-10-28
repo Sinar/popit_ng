@@ -567,35 +567,130 @@ class OrganizationContactLinkAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
-    def test_list_organization_contact_link_unauthorized(self):
-        pass
+    def test_list_organization_contact_link(self):
+        response = self.client.get(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_list_organization_contact_link_authorized(self):
-        pass
+    def test_show_organization_contact_link(self):
+        response = self.client.get(
+             "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_show_organization_contact_link_unauthorized(self):
-        pass
-
-    def test_show_organization_contact_link_authorized(self):
-        pass
+    def test_show_organization_contact_link_not_exist(self):
+        response = self.client.get(
+             "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_create_organization_contact_link_unauthorized(self):
-        pass
+        data = {
+            "url": "http://google.com"
+        }
+        response = self.client.post(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_create_organization_contact_link_authorized(self):
-        pass
+        data = {
+            "url": "http://google.com"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/",
+            data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_update_organization_contact_link_not_exist_unauthorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_organization_contact_link_not_exist_authorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
 
     def test_update_organization_contact_link_unauthorized(self):
-        pass
+        data = {
+            "note": "yet another link"
+        }
+
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_update_organization_contact_link_authorized(self):
-        pass
+        data = {
+            "note": "yet another link"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/",
+            data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_organization_contact_link_not_exist_unauthorized(self):
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_organization_contact_link_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_organization_contact_link_unauthorized(self):
-        pass
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_organization_contact_link_authorized(self):
-        pass
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
 class OrganizationOtherNameLinksAPITestCase(APITestCase):
