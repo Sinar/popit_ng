@@ -697,32 +697,126 @@ class OrganizationOtherNameLinksAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
-    def test_list_organization_othername_link_unauthorized(self):
-        pass
+    def test_list_organization_othername_link(self):
+        response = self.client.get(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_list_organization_othername_link_authorized(self):
-        pass
+    def test_show_organization_othername_link_not_exist(self):
+        response = self.client.get(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/not_exists/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_show_organization_othername_link_unauthorized(self):
-        pass
-
-    def test_show_organization_othername_link_authorized(self):
-        pass
+    def test_show_organization_othername_link(self):
+        response = self.client.get(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/fe662497-c24d-4bbb-a72d-feb77319782a/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_organization_othername_link_unauthorized(self):
-        pass
+        data = {
+            "url": "http://google.com",
+        }
+        response = self.client.post(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/",
+            data
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_create_organization_othername_link_authorized(self):
-        pass
+        data = {
+            "url": "http://google.com",
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_update_organization_othername_link_not_exist_unauthorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_organization_othername_link_not_exist_authorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_organization_othername_link_unauthorized(self):
-        pass
+        data = {
+            "id": "fe662497-c24d-4bbb-a72d-feb77319782a",
+            "note": "Just a link"
+        }
+
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/fe662497-c24d-4bbb-a72d-feb77319782a/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_update_organization_othername_link_authorized(self):
-        pass
+        data = {
+            "note": "Just a link"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/fe662497-c24d-4bbb-a72d-feb77319782a/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_organization_othername_link_not_exist_unauthorized(self):
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_organization_othername_link_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_organization_othername_link_unauthorized(self):
-        pass
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/fe662497-c24d-4bbb-a72d-feb77319782a/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_organization_othername_link_authorized(self):
-        pass
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.delete(
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/othernames/53a22b00-1383-4bf5-b4be-4753d8d16062/links/fe662497-c24d-4bbb-a72d-feb77319782a/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
