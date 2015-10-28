@@ -151,6 +151,12 @@ class PersonOtherNameAPITestCase(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_view_person_othername_details_not_exist_unauthorized(self):
+        response = self.client.get(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
     def test_view_person_othername_details_authorized(self):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
@@ -158,6 +164,14 @@ class PersonOtherNameAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/cf93e73f-91b6-4fad-bf76-0782c80297a8/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_view_person_othername_details_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.get(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_create_person_othername_unauthorized(self):
         data = {
@@ -203,6 +217,18 @@ class PersonOtherNameAPITestCase(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_update_person_othername_not_exist_unauthorized(self):
+        data = {
+            "family_name": "jambul",
+        }
+
+        response = self.client.put(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
     def test_update_person_othername_authorized(self):
         data = {
             "family_name": "jambul",
@@ -220,9 +246,28 @@ class PersonOtherNameAPITestCase(APITestCase):
         other_name = person.other_names.language('en').get(id="cf93e73f-91b6-4fad-bf76-0782c80297a8")
         self.assertEqual(other_name.family_name, "jambul")
 
+    def test_update_person_othername_not_exist_authorized(self):
+        data = {
+            "family_name": "jambul",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
     def test_delete_person_othername_unauthorized(self):
         response = self.client.delete(
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/cf93e73f-91b6-4fad-bf76-0782c80297a8/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_person_othername_not_exist_unauthorized(self):
+        response = self.client.delete(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/not_exist/"
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -233,6 +278,15 @@ class PersonOtherNameAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/cf93e73f-91b6-4fad-bf76-0782c80297a8/"
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_person_othername_not_exist_authorized(self):
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
 class PersonIdentifierAPITestCase(APITestCase):
