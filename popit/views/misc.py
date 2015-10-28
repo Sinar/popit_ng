@@ -308,7 +308,10 @@ class GenericParentChildLinkDetail(APIView):
     def get(self, request, language, parent_pk, pk, link_pk):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
-        link = child.links.language(language).get(id=link_pk)
+        try:
+            link = child.links.language(language).get(id=link_pk)
+        except Link.DoesNotExist:
+            raise Http404
         serializer = self.serializer(link, language=language)
         return Response(serializer.data)
 
