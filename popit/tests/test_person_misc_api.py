@@ -886,3 +886,129 @@ class PersonOtherNameLinkAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/cf93e73f-91b6-4fad-bf76-0782c80297a8/links/4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6/"
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class PersonContactLinkAPITestCase(APITestCase):
+
+    fixtures = [ "api_request_test_data.yaml" ]
+
+    def test_list_person_contact_link(self):
+        response = self.client.get(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_show_person_contact_link_not_exist(self):
+        response = self.client.get(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_show_person_contact_link(self):
+        response = self.client.get(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_person_contact_link_unauthorized(self):
+        data = {
+            "url": "http://github.com/sinar"
+        }
+
+        response = self.client.post(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_person_contact_link_authorized(self):
+        data = {
+            "url": "http://github.com/sinar"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_update_person_contact_link_not_exist_unauthorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        response = self.client.put(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_person_contact_link_not_exist_authorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_person_contact_link_unauthorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        response = self.client.put(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_person_contact_link_authorized(self):
+        data = {
+            "note": "Just a link"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/",
+            data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_person_contact_link_not_exist_unauthorized(self):
+        response = self.client.delete(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_person_contact_link_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_person_contact_link_unauthorized(self):
+        response = self.client.delete(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_person_contact_link_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.delete(
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
