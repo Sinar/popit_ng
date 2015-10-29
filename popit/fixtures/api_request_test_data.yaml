@@ -30,6 +30,12 @@
 - fields: {language_code: en, master: 02369098-7b46-4d62-9318-a5f1c2d385bd, note: ''}
   model: popit.linktranslation
   pk: 9
+- fields: {language_code: en, master: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6, note: ''}
+  model: popit.linktranslation
+  pk: 10
+- fields: {language_code: en, master: 6d0afb46-67d4-4708-87c4-4d51ce99767e, note: ''}
+  model: popit.linktranslation
+  pk: 11
 - fields:
     content_type: [popit, identifier]
     created_at: 2015-10-26
@@ -60,6 +66,26 @@
     url: https://github.com/sweemeng/
   model: popit.link
   pk: 45b0a790-8c9e-4553-844b-431ed34b6b12
+- fields:
+    content_type: [popit, othername]
+    created_at: 2015-10-28
+    field: ''
+    label: ''
+    object_id: cf93e73f-91b6-4fad-bf76-0782c80297a8
+    updated_at: 2015-10-28
+    url: http://google.com
+  model: popit.link
+  pk: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6
+- fields:
+    content_type: [popit, contact]
+    created_at: 2015-10-28
+    field: ''
+    label: ''
+    object_id: 2256ec04-2d1d-4994-b1f1-16d3f5245441
+    updated_at: 2015-10-28
+    url: http://google.com
+  model: popit.link
+  pk: 6d0afb46-67d4-4708-87c4-4d51ce99767e
 - fields:
     content_type: [popit, identifier]
     created_at: 2015-10-12
@@ -430,6 +456,21 @@
     name: Can delete session
   model: auth.permission
 - fields:
+    codename: add_token
+    content_type: [authtoken, token]
+    name: Can add token
+  model: auth.permission
+- fields:
+    codename: change_token
+    content_type: [authtoken, token]
+    name: Can change token
+  model: auth.permission
+- fields:
+    codename: delete_token
+    content_type: [authtoken, token]
+    name: Can delete token
+  model: auth.permission
+- fields:
     codename: add_linktranslation
     content_type: [popit, linktranslation]
     name: Can add link translation
@@ -550,51 +591,6 @@
     name: Can delete other name
   model: auth.permission
 - fields:
-    codename: add_persontranslation
-    content_type: [popit, persontranslation]
-    name: Can add person translation
-  model: auth.permission
-- fields:
-    codename: change_persontranslation
-    content_type: [popit, persontranslation]
-    name: Can change person translation
-  model: auth.permission
-- fields:
-    codename: delete_persontranslation
-    content_type: [popit, persontranslation]
-    name: Can delete person translation
-  model: auth.permission
-- fields:
-    codename: add_person
-    content_type: [popit, person]
-    name: Can add person
-  model: auth.permission
-- fields:
-    codename: change_person
-    content_type: [popit, person]
-    name: Can change person
-  model: auth.permission
-- fields:
-    codename: delete_person
-    content_type: [popit, person]
-    name: Can delete person
-  model: auth.permission
-- fields:
-    codename: add_token
-    content_type: [authtoken, token]
-    name: Can add token
-  model: auth.permission
-- fields:
-    codename: change_token
-    content_type: [authtoken, token]
-    name: Can change token
-  model: auth.permission
-- fields:
-    codename: delete_token
-    content_type: [authtoken, token]
-    name: Can delete token
-  model: auth.permission
-- fields:
     codename: add_areatranslation
     content_type: [popit, areatranslation]
     name: Can add area translation
@@ -623,6 +619,36 @@
     codename: delete_area
     content_type: [popit, area]
     name: Can delete area
+  model: auth.permission
+- fields:
+    codename: add_persontranslation
+    content_type: [popit, persontranslation]
+    name: Can add person translation
+  model: auth.permission
+- fields:
+    codename: change_persontranslation
+    content_type: [popit, persontranslation]
+    name: Can change person translation
+  model: auth.permission
+- fields:
+    codename: delete_persontranslation
+    content_type: [popit, persontranslation]
+    name: Can delete person translation
+  model: auth.permission
+- fields:
+    codename: add_person
+    content_type: [popit, person]
+    name: Can add person
+  model: auth.permission
+- fields:
+    codename: change_person
+    content_type: [popit, person]
+    name: Can change person
+  model: auth.permission
+- fields:
+    codename: delete_person
+    content_type: [popit, person]
+    name: Can delete person
   model: auth.permission
 - fields:
     codename: add_organizationtranslation
@@ -662,7 +688,7 @@
     is_active: true
     is_staff: true
     is_superuser: true
-    last_login: 2015-10-22 04:18:59.201437+00:00
+    last_login: 2015-10-28 12:38:13.448870+00:00
     last_name: ''
     password: pbkdf2_sha256$20000$7HQArODZc3cJ$fn4FGXn5RVCS8t/8aJubpQPopg1O2eEpGIaaCNqI0ao=
     user_permissions: []
