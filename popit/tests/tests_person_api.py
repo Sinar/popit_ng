@@ -1,5 +1,4 @@
 __author__ = 'sweemeng'
-from rest_framework.test import APIRequestFactory
 from rest_framework.test import APITestCase
 from django.test import TestCase
 from popit.models import Person
@@ -304,9 +303,6 @@ class PersonAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
-    def setUp(self):
-        self.factory = APIRequestFactory()
-
     def test_view_person_list(self):
         response = self.client.get("/en/persons/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -317,6 +313,10 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.data
         self.assertEqual(data["name"], "John")
+
+    def test_view_person_detail_not_exist(self):
+        response = self.client.get("/en/persons/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_create_person_unauthorized(self):
         person_data = {
@@ -417,6 +417,13 @@ class PersonAPITestCase(APITestCase):
         response = self.client.put("/en/persons/ab1a5788e5bae955c048748fa6af0e97/", person_data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_update_person_not_exist_unauthorized(self):
+        person_data = {
+            "given_name": "jerry jambul",
+        }
+        response = self.client.put("/en/persons/not_exist/", person_data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def test_update_person_authorized(self):
         person_data = {
             "given_name": "jerry jambul",
@@ -427,6 +434,15 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
         self.assertEqual(person_.given_name, "jerry jambul")
+
+    def test_update_person_not_exist_authorized(self):
+        person_data = {
+            "given_name": "jerry jambul",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/en/persons/not_exist/", person_data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_create_person_links_unauthorized(self):
         person_data = {
@@ -754,8 +770,18 @@ class PersonAPITestCase(APITestCase):
         response = self.client.delete("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_delete_person_not_exist_unauthorized(self):
+        response = self.client.delete("/en/persons/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def test_delete_persons_authorized(self):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.delete("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_delete_person_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete("/en/persons/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
