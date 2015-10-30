@@ -7,15 +7,13 @@ from popit.models import Link
 from popit.models import Contact
 from popit.models import Identifier
 from popit.models import OtherName
+from popit.models import Area
 from popit.serializers import LinkSerializer
 from popit.serializers import OtherNameSerializer
 from popit.serializers import IdentifierSerializer
 from popit.serializers import ContactSerializer
-from popit.serializers.exceptions import ParentNotSetException
-from popit.serializers.exceptions import ChildNotSetException
+from popit.serializers import AreaSerializer
 from popit.serializers.exceptions import ContentObjectNotAvailable
-from rest_framework import status
-from rest_framework.authtoken.models import Token
 
 
 class LinkSerializerTestCase(TestCase):
@@ -266,3 +264,80 @@ class PersonContactSerializerTestCase(TestCase):
         contact = person_.contacts.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
         self.assertEqual(contact.value, "0123421222")
 
+
+class AreaSerializerTestCase(TestCase):
+
+    fixtures = [ "api_request_test_data.yaml" ]
+
+    def test_list_area(self):
+        area = Area.objects.language("en").all()
+        print area
+        serializer = AreaSerializer(area, language="en", many=True)
+        self.assertEqual(len(serializer.data), 2)
+
+    def test_view_area(self):
+        area = Area.objects.language("en").get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
+        serializer = AreaSerializer(area, language="en")
+        self.assertEqual(serializer.data["name"], "kuala lumpur")
+
+    def test_create_area(self):
+        data = {
+            "name": "timbuktu"
+        }
+        serializer = AreaSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+
+        serializer.save()
+        area = Area.objects.language("en").get(name="timbuktu")
+        # Just to proof that it save into database
+        self.assertEqual(area.name, "timbuktu")
+
+    def test_update_area(self):
+        data = {
+            "classification": "city"
+        }
+        area = Area.objects.untranslated().get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
+        serializer = AreaSerializer(area, data=data, language="en", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        area = Area.objects.language("en").get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
+        self.assertEqual(area.classification, "city")
+
+    def test_create_area_link(self):
+        data = {
+            "classification": "city",
+            "links": [
+                {
+                    "url": "http://www.google.com",
+                    "note": "just a link"
+                }
+            ]
+        }
+        area = Area.objects.untranslated().get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
+        serializer = AreaSerializer(area, data=data, language="en", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        link = area.links.language("en").get(url="http://www.google.com")
+        self.assertEqual(link.note, "just a link")
+
+    def test_update_area_link(self):
+        data = {
+
+            "links": [
+                {
+                    "id": "ed8a52d8-5503-45aa-a2ad-9931461172d2",
+                    "note": "just a link"
+                }
+
+            ]
+        }
+        area = Area.objects.untranslated().get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
+        serializer = AreaSerializer(area, data=data, language="en", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        link = area.links.language("en").get(id="ed8a52d8-5503-45aa-a2ad-9931461172d2")
+        self.assertEqual(link.note, "just a link")

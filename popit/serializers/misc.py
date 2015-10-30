@@ -221,7 +221,6 @@ class OtherNameSerializer(TranslatableModelSerializer):
 
 class AreaSerializer(TranslatableModelSerializer):
     id = CharField(max_length=255, required=False)
-
     links = LinkSerializer(many=True, required=False)
 
     # Why create and update? Because we need to create an API endpoint to import data from mapit
@@ -236,7 +235,7 @@ class AreaSerializer(TranslatableModelSerializer):
                 parent = self.create(parent_data)
             else:
                 parent = self.update_area(parent_data)
-        validated_data["parent"] = parent
+            validated_data["parent"] = parent
         area = Area.objects.language(language).create(**validated_data)
         for link in links:
             self.create_links(link, area)
@@ -259,6 +258,7 @@ class AreaSerializer(TranslatableModelSerializer):
 
         for link in links:
             self.update_links(link, instance)
+        return instance
 
     def update_area(self, data):
         # Raise excception if no id in field, it should be there
