@@ -36,6 +36,9 @@
 - fields: {language_code: en, master: 6d0afb46-67d4-4708-87c4-4d51ce99767e, note: ''}
   model: popit.linktranslation
   pk: 11
+- fields: {language_code: en, master: ed8a52d8-5503-45aa-a2ad-9931461172d2, note: ''}
+  model: popit.linktranslation
+  pk: 12
 - fields:
     content_type: [popit, identifier]
     created_at: 2015-10-26
@@ -116,6 +119,16 @@
     url: http://sinarproject.org/en/about/team
   model: popit.link
   pk: abbd9287ec0b491d6e84dcbfd6f958fc
+- fields:
+    content_type: [popit, area]
+    created_at: 2015-10-30
+    field: ''
+    label: ''
+    object_id: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
+    updated_at: 2015-10-30
+    url: http://en.wikipedia.com
+  model: popit.link
+  pk: ed8a52d8-5503-45aa-a2ad-9931461172d2
 - fields:
     content_type: [popit, person]
     created_at: 2015-10-06
