@@ -49,6 +49,10 @@ from popit.views import OrganizationContactLinkDetail
 from popit.views import OrganizationContactLinkList
 from popit.views import OrganizationOtherNameLinkDetail
 from popit.views import OrganizationOtherNameLinkList
+from popit.views import AreaLinkList
+from popit.views import AreaLinkDetail
+from popit.views import AreaDetail
+from popit.views import AreaList
 
 
 urlpatterns = [
@@ -85,12 +89,6 @@ api_urls = [
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/$', PersonIdentifierList.as_view()),
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/identifiers/(?P<pk>[-\w]+)/$', PersonIdentifierDetail.as_view()),
 
-
-
-
-
-
-
     url(r'^(?P<language>\w+)/persons/(?P<pk>[-\w]+)/$', PersonDetail.as_view()),
     url(r'^(?P<language>\w+)/persons/$', PersonList.as_view()),
 
@@ -119,6 +117,11 @@ api_urls = [
 
     url(r'^(?P<language>\w+)/organizations/(?P<pk>[-\w]+)/', OrganizationDetail.as_view()),
     url(r'^(?P<language>\w+)/organizations/$', OrganizationList.as_view()),
+
+    url(r'^(?P<language>\w+)/areas/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', AreaLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/areas/(?P<parent_pk>[-\w]+)/links/$', AreaLinkList.as_view()),
+    url(r'^(?P<language>\w+)/areas/(?P<pk>[-\w]+)/$', AreaDetail.as_view()),
+    url(r'^(?P<language>\w+)/areas/$', AreaList.as_view()),
  ]
 
 api_urls = format_suffix_patterns(api_urls)

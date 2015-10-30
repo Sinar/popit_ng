@@ -8,6 +8,7 @@ from popit.serializers import LinkSerializer
 from popit.serializers import ContactSerializer
 from popit.serializers import IdentifierSerializer
 from popit.serializers import OtherNameSerializer
+from popit.serializers import AreaSerializer
 from popit.serializers.exceptions import ContentObjectNotAvailable
 from popit.serializers.exceptions import SerializerNotSetException
 from popit.serializers.exceptions import ParentNotSetException
@@ -17,6 +18,7 @@ from popit.models import Contact
 from popit.models import Link
 from popit.models import OtherName
 from popit.models import Identifier
+from popit.models import Area
 
 
 class GenericParentChildList(APIView):
@@ -224,14 +226,14 @@ class GenericParentChildLinkList(APIView):
     def get_child(self, parent, pk, language):
         raise NotImplementedError()
 
-    def get(self, request, language, parent_pk, pk):
+    def get(self, request, language, parent_pk, pk, format=None):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
         links = child.links.untranslated().all()
         serializer = self.serializer(links, many=True, language=language)
         return Response(serializer.data)
 
-    def post(self, request, language, parent_pk, pk):
+    def post(self, request, language, parent_pk, pk, format=None):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
         serializer = self.serializer(data=request.data, language=language)
@@ -305,7 +307,7 @@ class GenericParentChildLinkDetail(APIView):
     def get_child(self, parent, pk, language):
         raise NotImplementedError()
 
-    def get(self, request, language, parent_pk, pk, link_pk):
+    def get(self, request, language, parent_pk, pk, link_pk, format=None):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
         try:
@@ -315,7 +317,7 @@ class GenericParentChildLinkDetail(APIView):
         serializer = self.serializer(link, language=language)
         return Response(serializer.data)
 
-    def put(self, request, language, parent_pk, pk, link_pk):
+    def put(self, request, language, parent_pk, pk, link_pk, format=None):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
         try:
@@ -328,7 +330,7 @@ class GenericParentChildLinkDetail(APIView):
             return Response(serializer.data, status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, language, parent_pk, pk, link_pk):
+    def delete(self, request, language, parent_pk, pk, link_pk, format=None):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
         try:
@@ -376,3 +378,59 @@ class GenericOtherNameLinkDetail(GenericParentChildLinkDetail):
             return parent.other_names.language(language).get(id=pk)
         except self.child.DoesNotExist:
             raise Http404
+
+
+class AreaList(APIView):
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+    )
+
+    def get(self, request, language, format=None):
+        areas = Area.objects.untranslated().all()
+        serializer = AreaSerializer(areas, language=language, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, language, format=None):
+        serializer = AreaSerializer(data=request.data, language=language)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AreaDetail(APIView):
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+    )
+
+    def get_object(self, pk):
+        try:
+            return Area.objects.untranslated().get(id=pk)
+        except Area.DoesNotExist:
+            raise Http404
+
+    def get(self, request, language, pk, format=None):
+        area = self.get_object(pk)
+        serializer = AreaSerializer(area, language=language)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, language, pk, format=None):
+        area = self.get_object(pk)
+        serializer = AreaSerializer(area, data=request.data, language=language, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, language, pk, format=None):
+        area = self.get_object(pk)
+        area.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AreaLinkList(GenericLinkList):
+    parent = Area
+
+
+class AreaLinkDetail(GenericLinkDetail):
+    parent = Area

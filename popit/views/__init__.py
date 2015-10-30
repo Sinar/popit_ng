@@ -31,3 +31,7 @@ from popit.views.organizations import OrganizationOtherNameLinkDetail
 from popit.views.organizations import OrganizationOtherNameLinkList
 from popit.views.organizations import OrganizationLinkDetail
 from popit.views.organizations import OrganizationLinkList
+from popit.views.misc import AreaDetail
+from popit.views.misc import AreaList
+from popit.views.misc import AreaLinkDetail
+from popit.views.misc import AreaLinkList
