@@ -39,126 +39,15 @@
 - fields: {language_code: en, master: ed8a52d8-5503-45aa-a2ad-9931461172d2, note: ''}
   model: popit.linktranslation
   pk: 12
-- fields:
-    content_type: [popit, identifier]
-    created_at: 2015-10-26
-    field: identifier
-    label: ''
-    object_id: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
-    updated_at: 2015-10-26
-    url: http://ssm.com
-  model: popit.link
-  pk: 02369098-7b46-4d62-9318-a5f1c2d385bd
-- fields:
-    content_type: [popit, contact]
-    created_at: 2015-10-26
-    field: type
-    label: ''
-    object_id: 651da7cd-f109-4aaa-b04c-df835fb6831f
-    updated_at: 2015-10-26
-    url: http://sinarproject.org/about/
-  model: popit.link
-  pk: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf
-- fields:
-    content_type: [popit, organization]
-    created_at: 2015-10-22
-    field: ''
-    label: ''
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-    updated_at: 2015-10-22
-    url: https://github.com/sweemeng/
-  model: popit.link
-  pk: 45b0a790-8c9e-4553-844b-431ed34b6b12
-- fields:
-    content_type: [popit, othername]
-    created_at: 2015-10-28
-    field: ''
-    label: ''
-    object_id: cf93e73f-91b6-4fad-bf76-0782c80297a8
-    updated_at: 2015-10-28
-    url: http://google.com
-  model: popit.link
-  pk: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6
-- fields:
-    content_type: [popit, contact]
-    created_at: 2015-10-28
-    field: ''
-    label: ''
-    object_id: 2256ec04-2d1d-4994-b1f1-16d3f5245441
-    updated_at: 2015-10-28
-    url: http://google.com
-  model: popit.link
-  pk: 6d0afb46-67d4-4708-87c4-4d51ce99767e
-- fields:
-    content_type: [popit, identifier]
-    created_at: 2015-10-12
-    field: ''
-    label: ''
-    object_id: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
-    updated_at: 2015-10-12
-    url: http://github.com/sinarproject/
-  model: popit.link
-  pk: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-02
-    field: ''
-    label: ''
-    object_id: ab1a5788e5bae955c048748fa6af0e97
-    updated_at: 2015-10-02
-    url: http://github.com/sweemeng/
-  model: popit.link
-  pk: a4ffa24a9ef3cbcb8cfaa178c9329367
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-02
-    field: ''
-    label: ''
-    object_id: ab1a5788e5bae955c048748fa6af0e97
-    updated_at: 2015-10-02
-    url: http://sinarproject.org/en/about/team
-  model: popit.link
-  pk: abbd9287ec0b491d6e84dcbfd6f958fc
-- fields:
-    content_type: [popit, area]
-    created_at: 2015-10-30
-    field: ''
-    label: ''
-    object_id: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
-    updated_at: 2015-10-30
-    url: http://en.wikipedia.com
-  model: popit.link
-  pk: ed8a52d8-5503-45aa-a2ad-9931461172d2
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-06
-    field: ''
-    label: ''
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    updated_at: 2015-10-06
-    url: http://github.com/sweemeng/
-  model: popit.link
-  pk: f70854dd-4e2e-4141-a2b8-051a36e5c9ee
-- fields:
-    content_type: [popit, organization]
-    created_at: 2015-10-23
-    field: name
-    label: ''
-    object_id: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
-    updated_at: 2015-10-23
-    url: http://sinarproject.org/
-  model: popit.link
-  pk: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a
-- fields:
-    content_type: [popit, othername]
-    created_at: 2015-10-26
-    field: name
-    label: ''
-    object_id: 53a22b00-1383-4bf5-b4be-4753d8d16062
-    updated_at: 2015-10-26
-    url: http://sinarproject.org
-  model: popit.link
-  pk: fe662497-c24d-4bbb-a72d-feb77319782a
+- fields: {language_code: en, master: ce15a9ee-6742-4467-bbfb-c86459ee685b, note: ''}
+  model: popit.linktranslation
+  pk: 13
+- fields: {language_code: en, master: 10472346-59bf-40f9-95cc-e4cf2dea6e48, note: ''}
+  model: popit.linktranslation
+  pk: 14
+- fields: {language_code: en, master: 6c928027-4813-4770-80a5-ba413a43efae, note: ''}
+  model: popit.linktranslation
+  pk: 15
 - fields: {label: sweemeng phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61,
     note: my phone}
   model: popit.contacttranslation
@@ -171,39 +60,10 @@
     note: just a phone}
   model: popit.contacttranslation
   pk: 3
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-06
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    type: phone
-    updated_at: 2015-10-06
-    valid_from: 2015-10-06
-    valid_until: 2020-10-06
-    value: '0123423424342'
-  model: popit.contact
-  pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
-- fields:
-    content_type: [popit, organization]
-    created_at: 2015-10-22
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-    type: phone
-    updated_at: 2015-10-22
-    valid_from: 2015-10-22
-    valid_until: 2020-10-22
-    value: 0129123132112
-  model: popit.contact
-  pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-05
-    object_id: ab1a5788e5bae955c048748fa6af0e97
-    type: phone
-    updated_at: 2015-10-05
-    valid_from: 2015-10-05
-    valid_until: 2020-10-05
-    value: '0123421221'
-  model: popit.contact
-  pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
+- fields: {label: '', language_code: en, master: 7f3f67c4-6afd-4de9-880e-943560cf56c0,
+    note: ''}
+  model: popit.contacttranslation
+  pk: 4
 - fields: {language_code: en, master: af7c01b5-1c4f-4c08-9174-3de5ff270bdb, scheme: random}
   model: popit.identifiertranslation
   pk: 1
@@ -213,30 +73,6 @@
 - fields: {language_code: en, master: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda, scheme: ssm}
   model: popit.identifiertranslation
   pk: 3
-- fields:
-    content_type: [popit, organization]
-    created_at: 2015-10-22
-    identifier: '3131312'
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-    updated_at: 2015-10-22
-  model: popit.identifier
-  pk: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-06
-    identifier: '53110321'
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    updated_at: 2015-10-06
-  model: popit.identifier
-  pk: 34b59cb9-607a-43c7-9d13-dfe258790ebf
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-06
-    identifier: '12321223'
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    updated_at: 2015-10-06
-  model: popit.identifier
-  pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
 - fields: {additional_name: something, family_name: Doe, given_name: Lucky Jane, honorific_prefix: Datuk,
     honorific_suffix: of Sinar Project, language_code: en, master: cf93e73f-91b6-4fad-bf76-0782c80297a8,
     name: Jane, patronymic_name: ''}
@@ -247,27 +83,11 @@
     name: Not Sinar Project, patronymic_name: ''}
   model: popit.othernametranslation
   pk: 2
-- fields:
-    content_type: [popit, organization]
-    created_at: 2015-10-22
-    end_date: ''
-    note: really othername field don't seems appropriate for organization
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-    start_date: ''
-    updated_at: 2015-10-22
-  model: popit.othername
-  pk: 53a22b00-1383-4bf5-b4be-4753d8d16062
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-06
-    end_date: '2000-01-01'
-    note: Turn out that she had a sex change. People have right to decide their own
-      gender asshole!
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    start_date: '1950-01-01'
-    updated_at: 2015-10-06
-  model: popit.othername
-  pk: cf93e73f-91b6-4fad-bf76-0782c80297a8
+- fields: {additional_name: '', family_name: '', given_name: '', honorific_prefix: '',
+    honorific_suffix: '', language_code: en, master: aee39ddd-6785-4a36-9781-8e745c6359b7,
+    name: bilge rat, patronymic_name: ''}
+  model: popit.othernametranslation
+  pk: 3
 - fields: {classification: '', language_code: en, master: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea,
     name: Malaysia}
   model: popit.areatranslation
@@ -378,6 +198,70 @@
     founding_date: '', image: '', parent: null, updated_at: ! '2015-10-21 23:15:55.262100+00:00'}
   model: popit.organization
   pk: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
+- fields: {label: '', language_code: en, master: c1f0f86b-a491-4986-b48d-861b58a3ef6e,
+    role: member}
+  model: popit.posttranslation
+  pk: 1
+- fields: {label: '', language_code: en, master: 2c6982c2-504a-4e0d-8949-dade5f9e494e,
+    role: Captain}
+  model: popit.posttranslation
+  pk: 2
+- fields: {area: null, created_at: ! '2015-11-03 01:05:47.328900+00:00', end_date: '',
+    organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: '', updated_at: ! '2015-11-03
+      01:05:47.328925+00:00'}
+  model: popit.post
+  pk: 2c6982c2-504a-4e0d-8949-dade5f9e494e
+- fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-03 00:58:25.398456+00:00',
+    end_date: '2013-05-05', organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: '2008-05-08',
+    updated_at: ! '2015-11-03 00:58:25.398478+00:00'}
+  model: popit.post
+  pk: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+- fields: {app_label: admin, model: logentry}
+  model: contenttypes.contenttype
+- fields: {app_label: auth, model: permission}
+  model: contenttypes.contenttype
+- fields: {app_label: auth, model: group}
+  model: contenttypes.contenttype
+- fields: {app_label: auth, model: user}
+  model: contenttypes.contenttype
+- fields: {app_label: contenttypes, model: contenttype}
+  model: contenttypes.contenttype
+- fields: {app_label: sessions, model: session}
+  model: contenttypes.contenttype
+- fields: {app_label: authtoken, model: token}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: linktranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: link}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: contacttranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: contact}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: identifiertranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: identifier}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: othernametranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: othername}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: areatranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: area}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: persontranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: person}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: organizationtranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: organization}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: posttranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: post}
+  model: contenttypes.contenttype
 - fields:
     codename: add_logentry
     content_type: [admin, logentry]
@@ -693,6 +577,285 @@
     content_type: [popit, organization]
     name: Can delete organization
   model: auth.permission
+- fields:
+    codename: add_posttranslation
+    content_type: [popit, posttranslation]
+    name: Can add post translation
+  model: auth.permission
+- fields:
+    codename: change_posttranslation
+    content_type: [popit, posttranslation]
+    name: Can change post translation
+  model: auth.permission
+- fields:
+    codename: delete_posttranslation
+    content_type: [popit, posttranslation]
+    name: Can delete post translation
+  model: auth.permission
+- fields:
+    codename: add_post
+    content_type: [popit, post]
+    name: Can add post
+  model: auth.permission
+- fields:
+    codename: change_post
+    content_type: [popit, post]
+    name: Can change post
+  model: auth.permission
+- fields:
+    codename: delete_post
+    content_type: [popit, post]
+    name: Can delete post
+  model: auth.permission
+- fields:
+    content_type: [popit, organization]
+    created_at: 2015-10-22
+    end_date: ''
+    note: really othername field don't seems appropriate for organization
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    start_date: ''
+    updated_at: 2015-10-22
+  model: popit.othername
+  pk: 53a22b00-1383-4bf5-b4be-4753d8d16062
+- fields:
+    content_type: [popit, post]
+    created_at: 2015-11-03
+    end_date: ''
+    note: ''
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+    start_date: ''
+    updated_at: 2015-11-03
+  model: popit.othername
+  pk: aee39ddd-6785-4a36-9781-8e745c6359b7
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    end_date: '2000-01-01'
+    note: Turn out that she had a sex change. People have right to decide their own
+      gender asshole!
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    start_date: '1950-01-01'
+    updated_at: 2015-10-06
+  model: popit.othername
+  pk: cf93e73f-91b6-4fad-bf76-0782c80297a8
+- fields:
+    content_type: [popit, organization]
+    created_at: 2015-10-22
+    identifier: '3131312'
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    updated_at: 2015-10-22
+  model: popit.identifier
+  pk: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    identifier: '53110321'
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    updated_at: 2015-10-06
+  model: popit.identifier
+  pk: 34b59cb9-607a-43c7-9d13-dfe258790ebf
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    identifier: '12321223'
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    updated_at: 2015-10-06
+  model: popit.identifier
+  pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    type: phone
+    updated_at: 2015-10-06
+    valid_from: 2015-10-06
+    valid_until: 2020-10-06
+    value: '0123423424342'
+  model: popit.contact
+  pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
+- fields:
+    content_type: [popit, organization]
+    created_at: 2015-10-22
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    type: phone
+    updated_at: 2015-10-22
+    valid_from: 2015-10-22
+    valid_until: 2020-10-22
+    value: 0129123132112
+  model: popit.contact
+  pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
+- fields:
+    content_type: [popit, post]
+    created_at: 2015-11-03
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+    type: email
+    updated_at: 2015-11-03
+    valid_from: 2015-11-03
+    valid_until: 2015-11-03
+    value: sweester@sinarproject
+  model: popit.contact
+  pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-05
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    type: phone
+    updated_at: 2015-10-05
+    valid_from: 2015-10-05
+    valid_until: 2020-10-05
+    value: '0123421221'
+  model: popit.contact
+  pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
+- fields:
+    content_type: [popit, identifier]
+    created_at: 2015-10-26
+    field: identifier
+    label: ''
+    object_id: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
+    updated_at: 2015-10-26
+    url: http://ssm.com
+  model: popit.link
+  pk: 02369098-7b46-4d62-9318-a5f1c2d385bd
+- fields:
+    content_type: [popit, contact]
+    created_at: 2015-11-03
+    field: ''
+    label: ''
+    object_id: http://127.0.0.1:8000/admin/popit/contact/7f3f67c4-6afd-4de9-880e-943560cf56c0/
+    updated_at: 2015-11-03
+    url: http://www.facebook.com
+  model: popit.link
+  pk: 10472346-59bf-40f9-95cc-e4cf2dea6e48
+- fields:
+    content_type: [popit, contact]
+    created_at: 2015-10-26
+    field: type
+    label: ''
+    object_id: 651da7cd-f109-4aaa-b04c-df835fb6831f
+    updated_at: 2015-10-26
+    url: http://sinarproject.org/about/
+  model: popit.link
+  pk: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf
+- fields:
+    content_type: [popit, organization]
+    created_at: 2015-10-22
+    field: ''
+    label: ''
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    updated_at: 2015-10-22
+    url: https://github.com/sweemeng/
+  model: popit.link
+  pk: 45b0a790-8c9e-4553-844b-431ed34b6b12
+- fields:
+    content_type: [popit, othername]
+    created_at: 2015-10-28
+    field: ''
+    label: ''
+    object_id: cf93e73f-91b6-4fad-bf76-0782c80297a8
+    updated_at: 2015-10-28
+    url: http://google.com
+  model: popit.link
+  pk: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6
+- fields:
+    content_type: [popit, othername]
+    created_at: 2015-11-03
+    field: ''
+    label: ''
+    object_id: aee39ddd-6785-4a36-9781-8e745c6359b7
+    updated_at: 2015-11-03
+    url: http://www.facebook.com
+  model: popit.link
+  pk: 6c928027-4813-4770-80a5-ba413a43efae
+- fields:
+    content_type: [popit, contact]
+    created_at: 2015-10-28
+    field: ''
+    label: ''
+    object_id: 2256ec04-2d1d-4994-b1f1-16d3f5245441
+    updated_at: 2015-10-28
+    url: http://google.com
+  model: popit.link
+  pk: 6d0afb46-67d4-4708-87c4-4d51ce99767e
+- fields:
+    content_type: [popit, identifier]
+    created_at: 2015-10-12
+    field: ''
+    label: ''
+    object_id: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
+    updated_at: 2015-10-12
+    url: http://github.com/sinarproject/
+  model: popit.link
+  pk: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-02
+    field: ''
+    label: ''
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    updated_at: 2015-10-02
+    url: http://github.com/sweemeng/
+  model: popit.link
+  pk: a4ffa24a9ef3cbcb8cfaa178c9329367
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-02
+    field: ''
+    label: ''
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    updated_at: 2015-10-02
+    url: http://sinarproject.org/en/about/team
+  model: popit.link
+  pk: abbd9287ec0b491d6e84dcbfd6f958fc
+- fields:
+    content_type: [popit, post]
+    created_at: 2015-11-03
+    field: ''
+    label: ''
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+    updated_at: 2015-11-03
+    url: http://www.talklikeapirate.com/howto.html#basic
+  model: popit.link
+  pk: ce15a9ee-6742-4467-bbfb-c86459ee685b
+- fields:
+    content_type: [popit, area]
+    created_at: 2015-10-30
+    field: ''
+    label: ''
+    object_id: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
+    updated_at: 2015-10-30
+    url: http://en.wikipedia.com
+  model: popit.link
+  pk: ed8a52d8-5503-45aa-a2ad-9931461172d2
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    field: ''
+    label: ''
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    updated_at: 2015-10-06
+    url: http://github.com/sweemeng/
+  model: popit.link
+  pk: f70854dd-4e2e-4141-a2b8-051a36e5c9ee
+- fields:
+    content_type: [popit, organization]
+    created_at: 2015-10-23
+    field: name
+    label: ''
+    object_id: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
+    updated_at: 2015-10-23
+    url: http://sinarproject.org/
+  model: popit.link
+  pk: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a
+- fields:
+    content_type: [popit, othername]
+    created_at: 2015-10-26
+    field: name
+    label: ''
+    object_id: 53a22b00-1383-4bf5-b4be-4753d8d16062
+    updated_at: 2015-10-26
+    url: http://sinarproject.org
+  model: popit.link
+  pk: fe662497-c24d-4bbb-a72d-feb77319782a
 - fields:
     date_joined: 2015-10-02 02:01:13.495365+00:00
     email: sweester@sinarproject.org

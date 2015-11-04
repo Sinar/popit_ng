@@ -6,4 +6,6 @@ from misc import OtherName
 from misc import Area
 from person import Person
 from organization import Organization
+from post import Post
+
 
