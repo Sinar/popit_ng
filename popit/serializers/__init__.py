@@ -6,3 +6,4 @@ from misc import ContactSerializer
 from misc import IdentifierSerializer
 from organization import OrganizationSerializer
 from misc import AreaSerializer
+from post import PostSerializer
