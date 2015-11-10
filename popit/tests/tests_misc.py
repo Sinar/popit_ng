@@ -11,7 +11,7 @@ from popit.models import Area
 from popit.serializers import LinkSerializer
 from popit.serializers import OtherNameSerializer
 from popit.serializers import IdentifierSerializer
-from popit.serializers import ContactSerializer
+from popit.serializers import ContactDetailSerializer
 from popit.serializers import AreaSerializer
 from popit.serializers.exceptions import ContentObjectNotAvailable
 
@@ -208,7 +208,7 @@ class PersonContactSerializerTestCase(TestCase):
     def test_view_contact_details_list(self):
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
         contact_details = person.contact_details.untranslated().all()
-        serializers = ContactSerializer(contact_details, language="en", many=True)
+        serializers = ContactDetailSerializer(contact_details, language="en", many=True)
         self.assertEqual(len(serializers.data), 1)
         self.assertEqual(serializers.data[0]["value"], "0123421221")
 
@@ -217,7 +217,7 @@ class PersonContactSerializerTestCase(TestCase):
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
 
         contact_details = person.contact_details.untranslated().get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
-        serializer = ContactSerializer(contact_details, language="en")
+        serializer = ContactDetailSerializer(contact_details, language="en")
         self.assertEqual(serializer.data["value"], "0123421221")
 
     def test_create_contact_details(self):
@@ -226,7 +226,7 @@ class PersonContactSerializerTestCase(TestCase):
             "value": "sinarproject",
         }
         person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        serializer = ContactSerializer(data=data, language="en")
+        serializer = ContactDetailSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
         serializer.save(content_object=person)
@@ -240,7 +240,7 @@ class PersonContactSerializerTestCase(TestCase):
             "value": "sinarproject",
         }
 
-        serializer = ContactSerializer(data=data, language="en")
+        serializer = ContactDetailSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
         with self.assertRaises(ContentObjectNotAvailable):
@@ -255,7 +255,7 @@ class PersonContactSerializerTestCase(TestCase):
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
 
         contact_details = person.contact_details.untranslated().get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
-        serializer = ContactSerializer(contact_details, data=data, language="en", partial=True)
+        serializer = ContactDetailSerializer(contact_details, data=data, language="en", partial=True)
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
         serializer.save()

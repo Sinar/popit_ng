@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.http import Http404
 from popit.serializers import LinkSerializer
-from popit.serializers import ContactSerializer
+from popit.serializers import ContactDetailSerializer
 from popit.serializers import IdentifierSerializer
 from popit.serializers import OtherNameSerializer
 from popit.serializers import AreaSerializer
@@ -65,9 +65,9 @@ class GenericParentChildList(APIView):
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
-class GenericContactList(GenericParentChildList):
+class GenericContactDetailList(GenericParentChildList):
 
-    serializer = ContactSerializer
+    serializer = ContactDetailSerializer
 
     def get_query(self, parent_pk, language):
         parent = self.get_parent(parent_pk, language)
@@ -161,9 +161,10 @@ class GenericParentChildDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class GenericContactDetail(GenericParentChildDetail):
+# Yeah because popolo spec use contact_details, sorry
+class GenericContactDetailDetail(GenericParentChildDetail):
 
-    serializer = ContactSerializer
+    serializer = ContactDetailSerializer
 
     def get_object(self, parent, pk):
         try:
@@ -247,7 +248,7 @@ class GenericParentChildLinkList(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class GenericContactLinkList(GenericParentChildLinkList):
+class GenericContactDetailLinkList(GenericParentChildLinkList):
 
     child = ContactDetail
 
@@ -341,7 +342,7 @@ class GenericParentChildLinkDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class GenericContactLinkDetail(GenericParentChildLinkDetail):
+class GenericContactDetailLinkDetail(GenericParentChildLinkDetail):
 
     child = ContactDetail
 

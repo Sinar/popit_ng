@@ -32,10 +32,10 @@ if "rosetta" in settings.INSTALLED_APPS:
 api_urls = [
 
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
-        PersonContactLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/$', PersonContactLinkList.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/$', PersonContactDetail.as_view()),
-    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contact_details/$', PersonContactList.as_view()),
+        PersonContactDetailLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/$', PersonContactDetailLinkList.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/$', PersonContactDetailDetail.as_view()),
+    url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/contact_details/$', PersonContactDetailList.as_view()),
 
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', PersonLinkDetail.as_view()),
     url(r'^(?P<language>\w+)/persons/(?P<parent_pk>[-\w]+)/links/$', PersonLinkList.as_view()),
@@ -58,10 +58,10 @@ api_urls = [
     url(r'^(?P<language>\w+)/persons/$', PersonList.as_view()),
 
     url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
-        OrganizationContactLinkDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/$', OrganizationContactLinkList.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/$', OrganizationContactDetail.as_view()),
-    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contact_details/$', OrganizationContactList.as_view()),
+        OrganizationContactDetailLinkDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/$', OrganizationContactDetailLinkList.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/$', OrganizationContactDetailDetail.as_view()),
+    url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/contact_details/$', OrganizationContactDetailList.as_view()),
 
     url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', OrganizationLinkDetail.as_view()),
     url(r'^(?P<language>\w+)/organizations/(?P<parent_pk>[-\w]+)/links/$', OrganizationLinkList.as_view()),
@@ -88,10 +88,10 @@ api_urls = [
     url(r'^(?P<language>\w+)/areas/(?P<pk>[-\w]+)/$', AreaDetail.as_view()),
     url(r'^(?P<language>\w+)/areas/$', AreaList.as_view()),
 
-    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/links/(?P<link_pk>[-\w]+)/$', PostContactLinkDetail.as_view()),
-    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/links/$', PostContactLinkList.as_view()),
-    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/$', PostContactDetail.as_view()),
-    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/$', PostContactList.as_view()),
+    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/links/(?P<link_pk>[-\w]+)/$', PostContactDetailLinkDetail.as_view()),
+    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/links/$', PostContactDetailLinkList.as_view()),
+    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/$', PostContactDetailDetail.as_view()),
+    url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/contact_details/$', PostContactDetailList.as_view()),
 
     url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w+])/links/(?P<link_pk>[-\w]+)/$', PostOtherLabelsLinkDetail.as_view()),
     url(r'r^(?P<language>\w+)/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w+])/links/$', PostOtherLabelsLinkList.as_view()),

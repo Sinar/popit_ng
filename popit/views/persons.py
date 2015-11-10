@@ -6,10 +6,10 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.http import Http404
 from popit.serializers import PersonSerializer
 from popit.models import Person
-from popit.views.misc import GenericContactDetail
-from popit.views.misc import GenericContactLinkDetail
-from popit.views.misc import GenericContactLinkList
-from popit.views.misc import GenericContactList
+from popit.views.misc import GenericContactDetailDetail
+from popit.views.misc import GenericContactDetailLinkDetail
+from popit.views.misc import GenericContactDetailLinkList
+from popit.views.misc import GenericContactDetailList
 from popit.views.misc import GenericIdentifierDetail
 from popit.views.misc import GenericIdentifierLinkDetail
 from popit.views.misc import GenericIdentifierLinkList
@@ -74,11 +74,11 @@ class PersonDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class PersonContactList(GenericContactList):
+class PersonContactDetailList(GenericContactDetailList):
     parent = Person
 
 
-class PersonContactDetail(GenericContactDetail):
+class PersonContactDetailDetail(GenericContactDetailDetail):
     parent = Person
 
 
@@ -106,11 +106,11 @@ class PersonLinkDetail(GenericLinkDetail):
     parent = Person
 
 
-class PersonContactLinkList(GenericContactLinkList):
+class PersonContactDetailLinkList(GenericContactDetailLinkList):
     parent = Person
 
 
-class PersonContactLinkDetail(GenericContactLinkDetail):
+class PersonContactDetailLinkDetail(GenericContactDetailLinkDetail):
     parent = Person
 
 

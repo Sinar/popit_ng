@@ -9,7 +9,7 @@ from rest_framework.serializers import CharField
 from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
-from popit.serializers.misc import ContactSerializer
+from popit.serializers.misc import ContactDetailSerializer
 
 
 class PersonSerializer(TranslatableModelSerializer):
@@ -18,7 +18,7 @@ class PersonSerializer(TranslatableModelSerializer):
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    contact_details = ContactSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
 
     def create(self, validated_data):
         language_code=self.language

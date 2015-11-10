@@ -10,7 +10,7 @@ from rest_framework.serializers import CharField
 from popit.serializers.organization import OrganizationSerializer
 from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import LinkSerializer
-from popit.serializers.misc import ContactSerializer
+from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
 
 
@@ -23,7 +23,7 @@ class PostSerializer(TranslatableModelSerializer):
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
 
-    contact_details = ContactSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
 
     def create(self, validated_data):

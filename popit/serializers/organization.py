@@ -10,7 +10,7 @@ from rest_framework.serializers import CharField
 from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
-from popit.serializers.misc import ContactSerializer
+from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
 
 # We make this read only, and we shall show 1 level of parent. Not grand parent
@@ -19,7 +19,7 @@ class ParentOrganizationSerializer(TranslatableModelSerializer):
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    contact_details = ContactSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
 
     class Meta:
@@ -35,7 +35,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    contact_details = ContactSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
 

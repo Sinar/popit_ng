@@ -37,7 +37,7 @@ class LinkSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
-class ContactSerializer(TranslatableModelSerializer):
+class ContactDetailSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     links = LinkSerializer(many=True, required=False)
@@ -93,7 +93,7 @@ class ContactSerializer(TranslatableModelSerializer):
             self.create_links(validated_data, parent)
 
     class Meta:
-        model = Contact
+        model = ContactDetail
         exclude = ('object_id', 'content_type')
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 

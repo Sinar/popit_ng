@@ -6,10 +6,10 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.http import Http404
 from popit.serializers import OrganizationSerializer
 from popit.models import Organization
-from popit.views.misc import GenericContactDetail
-from popit.views.misc import GenericContactLinkDetail
-from popit.views.misc import GenericContactLinkList
-from popit.views.misc import GenericContactList
+from popit.views.misc import GenericContactDetailDetail
+from popit.views.misc import GenericContactDetailLinkDetail
+from popit.views.misc import GenericContactDetailLinkList
+from popit.views.misc import GenericContactDetailList
 from popit.views.misc import GenericIdentifierDetail
 from popit.views.misc import GenericIdentifierLinkDetail
 from popit.views.misc import GenericIdentifierLinkList
@@ -74,19 +74,19 @@ class OrganizationDetail(APIView):
 
 # This might be able to make into the constructor
 # If can't, then we should make a factory for this :-/
-class OrganizationContactList(GenericContactList):
+class OrganizationContactDetailList(GenericContactDetailList):
     parent = Organization
 
 
-class OrganizationContactDetail(GenericContactDetail):
+class OrganizationContactDetailDetail(GenericContactDetailDetail):
     parent = Organization
 
 
-class OrganizationContactLinkList(GenericContactLinkList):
+class OrganizationContactDetailLinkList(GenericContactDetailLinkList):
     parent = Organization
 
 
-class OrganizationContactLinkDetail(GenericContactLinkDetail):
+class OrganizationContactDetailLinkDetail(GenericContactDetailLinkDetail):
     parent = Organization
 
 
