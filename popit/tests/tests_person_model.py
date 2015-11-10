@@ -4,7 +4,7 @@ from rest_framework.test import APIRequestFactory
 from popit.models import Person
 from popit.models import Link
 from popit.models import OtherName
-from popit.models import Contact
+from popit.models import ContactDetail
 from popit.models import Identifier
 from popit.models.exception import PopItFieldNotExist
 
@@ -82,11 +82,11 @@ class PersonTestCase(TestCase):
         self.assertEqual(identifiers_.identifier, "12123123213")
         self.assertNotEqual(identifiers_.id, '')
 
-    def test_create_person_contacts(self):
+    def test_create_person_contact_details(self):
         person = Person.objects.language('en').create(
             name="John Doe"
         )
-        contacts = Contact.objects.language('en').create(
+        contact_details = ContactDetail.objects.language('en').create(
             type='phone',
             value='01234567',
             label='myphone',
@@ -98,9 +98,9 @@ class PersonTestCase(TestCase):
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, "")
-        contacts_ = person_.contacts.language('en').all()[0]
-        self.assertEqual(contacts_.type, 'phone')
-        self.assertNotEqual(contacts_.id, '')
+        contact_details_ = person_.contact_details.language('en').all()[0]
+        self.assertEqual(contact_details_.type, 'phone')
+        self.assertNotEqual(contact_details_.id, '')
 
     def test_create_person_links(self):
         person = Person.objects.language('en').create(
@@ -155,7 +155,7 @@ class PersonTestCase(TestCase):
         person = Person.objects.language('en').create(
             name="John Doe"
         )
-        contacts = Contact.objects.language('en').create(
+        contact_details = ContactDetail.objects.language('en').create(
             type='phone',
             value='01234567',
             label='myphone',
@@ -165,12 +165,12 @@ class PersonTestCase(TestCase):
             content_object=person
         )
 
-        contacts.add_citation('type', 'google.com', 'just search it')
+        contact_details.add_citation('type', 'google.com', 'just search it')
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, "")
-        contacts_ = person_.contacts.language('en').all()[0]
-        links = contacts_.links.language('en').all()
+        contact_details_ = person_.contact_details.language('en').all()[0]
+        links = contact_details_.links.language('en').all()
         self.assertEqual(links[0].url, 'google.com')
 
     def test_create_identifier_citation(self):
@@ -220,7 +220,7 @@ class PersonTestCase(TestCase):
         person = Person.objects.language('en').create(
             name="John Doe"
         )
-        contacts = Contact.objects.language('en').create(
+        contact_details = ContactDetail.objects.language('en').create(
             type='phone',
             value='01234567',
             label='myphone',
@@ -231,7 +231,7 @@ class PersonTestCase(TestCase):
         )
 
         with self.assertRaises(PopItFieldNotExist):
-            contacts.add_citation('handle', 'google.com', 'just search it')
+            contact_details.add_citation('handle', 'google.com', 'just search it')
 
     def test_create_identifier_citation_field_not_exist(self):
         person = Person.objects.language('en').create(
@@ -277,7 +277,7 @@ class PersonTestCase(TestCase):
         person = Person.objects.language('en').create(
             name="John Doe"
         )
-        contacts = Contact.objects.language('en').create(
+        contact_details = ContactDetail.objects.language('en').create(
             type='phone',
             value='01234567',
             label='myphone',
@@ -287,12 +287,12 @@ class PersonTestCase(TestCase):
             content_object=person
         )
 
-        contacts.add_citation('type', 'google.com', 'just search it')
+        contact_details.add_citation('type', 'google.com', 'just search it')
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, "")
-        contacts_ = person_.contacts.language('en').all()[0]
-        self.assertTrue(contacts_.citation_exist('type'))
+        contact_details_ = person_.contact_details.language('en').all()[0]
+        self.assertTrue(contact_details_.citation_exist('type'))
 
     def test_identifier_citation_exist(self):
         person = Person.objects.language('en').create(
@@ -342,7 +342,7 @@ class PersonTestCase(TestCase):
         person = Person.objects.language('en').create(
             name="John Doe"
         )
-        contacts = Contact.objects.language('en').create(
+        contact_details = ContactDetail.objects.language('en').create(
             type='phone',
             value='01234567',
             label='myphone',
@@ -354,8 +354,8 @@ class PersonTestCase(TestCase):
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, "")
-        contacts_ = person_.contacts.language('en').all()[0]
-        self.assertFalse(contacts_.citation_exist('type'))
+        contact_details_ = person_.contact_details.language('en').all()[0]
+        self.assertFalse(contact_details_.citation_exist('type'))
 
     def test_identifier_citation_not_exist(self):
         person = Person.objects.language('en').create(
@@ -471,11 +471,11 @@ class PersonTestCase(TestCase):
         self.assertEqual(type(identifiers.identifier), str)
         self.assertEqual(type(identifiers.scheme), str)
 
-    def test_field_type_correct_contacts(self):
+    def test_field_type_correct_contact_details(self):
         person = Person.objects.language('en').create(
             name="John Doe"
         )
-        contacts = Contact.objects.language('en').create(
+        contact_details = ContactDetail.objects.language('en').create(
             type='phone',
             value='01234567',
             label='myphone',
@@ -484,9 +484,9 @@ class PersonTestCase(TestCase):
             valid_until="2020-01-01",
             content_object=person
         )
-        self.assertEqual(type(contacts.type), str)
-        self.assertEqual(type(contacts.value), str)
-        self.assertEqual(type(contacts.label), str)
-        self.assertEqual(type(contacts.note), str)
-        self.assertEqual(type(contacts.valid_from), str)
-        self.assertEqual(type(contacts.valid_until), str)
+        self.assertEqual(type(contact_details.type), str)
+        self.assertEqual(type(contact_details.value), str)
+        self.assertEqual(type(contact_details.label), str)
+        self.assertEqual(type(contact_details.note), str)
+        self.assertEqual(type(contact_details.valid_from), str)
+        self.assertEqual(type(contact_details.valid_until), str)

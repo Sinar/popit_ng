@@ -5,7 +5,7 @@ from popit.models import Link
 from popit.models import Area
 from popit.models import OtherName
 from popit.models import Organization
-from popit.models import Contact
+from popit.models import ContactDetail
 from rest_framework.serializers import CharField
 from popit.serializers.organization import OrganizationSerializer
 from popit.serializers.misc import OtherNameSerializer
@@ -54,7 +54,7 @@ class PostSerializer(TranslatableModelSerializer):
             self.create_links(link, post)
 
         for contact in contacts:
-            self.create_child(contact, Contact, post)
+            self.create_child(contact, ContactDetail, post)
 
         return post
 
@@ -103,7 +103,7 @@ class PostSerializer(TranslatableModelSerializer):
         contacts_details = data.get("contact_details", [])
 
         for contact_detail in contacts_details:
-            self.update_childs(contact_detail, Contact, instance)
+            self.update_childs(contact_detail, ContactDetail, instance)
 
         links = data.get("links", [])
 

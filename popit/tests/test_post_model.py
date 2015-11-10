@@ -5,7 +5,7 @@ from popit.models import Organization
 from popit.models import Area
 from popit.models import OtherName
 from popit.models import Link
-from popit.models import Contact
+from popit.models import ContactDetail
 
 
 class PostModelTestCase(TestCase):
@@ -59,7 +59,7 @@ class PostModelTestCase(TestCase):
 
     def test_create_post_contacts(self):
         post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
-        Contact.objects.language("en").create(
+        ContactDetail.objects.language("en").create(
             value="231313123131",
             type="sms",
             content_object=post
@@ -69,7 +69,7 @@ class PostModelTestCase(TestCase):
         self.assertEqual(contact.type, "sms")
 
     def test_update_post_contacts(self):
-        contact = Contact.objects.language("en").get(id="7f3f67c4-6afd-4de9-880e-943560cf56c0")
+        contact = ContactDetail.objects.language("en").get(id="7f3f67c4-6afd-4de9-880e-943560cf56c0")
         contact.type="phone"
         contact.save()
         post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")

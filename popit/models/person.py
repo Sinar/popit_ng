@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 from popit.models.misc import OtherName
 from popit.models.misc import Contact
+from popit.models.misc import ContactDetail
 from popit.models.misc import Link
 from popit.models.misc import Identifier
 from popit.models.exception import PopItFieldNotExist
@@ -44,7 +45,7 @@ class Person(TranslatableModel):
     other_names = GenericRelation(OtherName)
     links = GenericRelation(Link)
     identifiers = GenericRelation(Identifier)
-    contacts = GenericRelation(Contact)
+    contact_details = GenericRelation(ContactDetail)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated at"))

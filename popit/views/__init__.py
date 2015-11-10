@@ -35,3 +35,15 @@ from popit.views.misc import AreaDetail
 from popit.views.misc import AreaList
 from popit.views.misc import AreaLinkDetail
 from popit.views.misc import AreaLinkList
+from popit.views.post import PostDetail
+from popit.views.post import PostList
+from popit.views.post import PostContactDetail
+from popit.views.post import PostContactList
+from popit.views.post import PostContactLinkDetail
+from popit.views.post import PostContactLinkList
+from popit.views.post import PostOtherLabelsDetail
+from popit.views.post import PostOtherLabelsList
+from popit.views.post import PostOtherLabelsLinkDetail
+from popit.views.post import PostOtherLabelsLinkList
+from popit.views.post import PostLinkDetail
+from popit.views.post import PostLinkList

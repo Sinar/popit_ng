@@ -67,6 +67,22 @@
     note: ''}
   model: popit.contacttranslation
   pk: 4
+- fields: {label: anon phone, language_code: en, master: 2256ec04-2d1d-4994-b1f1-16d3f5245441,
+    note: Just an anon phone}
+  model: popit.contactdetailtranslation
+  pk: 10
+- fields: {label: sinar project phone, language_code: en, master: 651da7cd-f109-4aaa-b04c-df835fb6831f,
+    note: just a phone}
+  model: popit.contactdetailtranslation
+  pk: 11
+- fields: {label: '', language_code: en, master: 7f3f67c4-6afd-4de9-880e-943560cf56c0,
+    note: ''}
+  model: popit.contactdetailtranslation
+  pk: 12
+- fields: {label: sweemeng phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61,
+    note: my phone}
+  model: popit.contactdetailtranslation
+  pk: 13
 - fields: {language_code: en, master: af7c01b5-1c4f-4c08-9174-3de5ff270bdb, scheme: random}
   model: popit.identifiertranslation
   pk: 1
@@ -264,6 +280,10 @@
 - fields: {app_label: popit, model: posttranslation}
   model: contenttypes.contenttype
 - fields: {app_label: popit, model: post}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: contactdetailtranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: contactdetail}
   model: contenttypes.contenttype
 - fields:
     codename: add_logentry
@@ -611,6 +631,36 @@
     name: Can delete post
   model: auth.permission
 - fields:
+    codename: add_contactdetailtranslation
+    content_type: [popit, contactdetailtranslation]
+    name: Can add contact detail translation
+  model: auth.permission
+- fields:
+    codename: change_contactdetailtranslation
+    content_type: [popit, contactdetailtranslation]
+    name: Can change contact detail translation
+  model: auth.permission
+- fields:
+    codename: delete_contactdetailtranslation
+    content_type: [popit, contactdetailtranslation]
+    name: Can delete contact detail translation
+  model: auth.permission
+- fields:
+    codename: add_contactdetail
+    content_type: [popit, contactdetail]
+    name: Can add contact detail
+  model: auth.permission
+- fields:
+    codename: change_contactdetail
+    content_type: [popit, contactdetail]
+    name: Can change contact detail
+  model: auth.permission
+- fields:
+    codename: delete_contactdetail
+    content_type: [popit, contactdetail]
+    name: Can delete contact detail
+  model: auth.permission
+- fields:
     content_type: [popit, organization]
     created_at: 2015-10-22
     end_date: ''
@@ -665,6 +715,50 @@
     updated_at: 2015-10-06
   model: popit.identifier
   pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    type: phone
+    updated_at: 2015-11-09
+    valid_from: 2015-10-06
+    valid_until: 2020-10-06
+    value: '0123423424342'
+  model: popit.contactdetail
+  pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
+- fields:
+    content_type: [popit, organization]
+    created_at: 2015-10-22
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    type: phone
+    updated_at: 2015-11-09
+    valid_from: 2015-10-22
+    valid_until: 2020-10-22
+    value: 0129123132112
+  model: popit.contactdetail
+  pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
+- fields:
+    content_type: [popit, post]
+    created_at: 2015-11-03
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+    type: email
+    updated_at: 2015-11-09
+    valid_from: 2015-11-03
+    valid_until: 2015-11-03
+    value: sweester@sinarproject
+  model: popit.contactdetail
+  pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
+- fields:
+    content_type: [popit, person]
+    created_at: 2015-10-05
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    type: phone
+    updated_at: 2015-11-09
+    valid_from: 2015-10-05
+    valid_until: 2020-10-05
+    value: '0123421221'
+  model: popit.contactdetail
+  pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
 - fields:
     content_type: [popit, person]
     created_at: 2015-10-06
@@ -730,12 +824,12 @@
   model: popit.link
   pk: 10472346-59bf-40f9-95cc-e4cf2dea6e48
 - fields:
-    content_type: [popit, contact]
+    content_type: [popit, contactdetail]
     created_at: 2015-10-26
     field: type
     label: ''
     object_id: 651da7cd-f109-4aaa-b04c-df835fb6831f
-    updated_at: 2015-10-26
+    updated_at: 2015-11-09
     url: http://sinarproject.org/about/
   model: popit.link
   pk: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf
@@ -770,12 +864,12 @@
   model: popit.link
   pk: 6c928027-4813-4770-80a5-ba413a43efae
 - fields:
-    content_type: [popit, contact]
+    content_type: [popit, contactdetail]
     created_at: 2015-10-28
     field: ''
     label: ''
     object_id: 2256ec04-2d1d-4994-b1f1-16d3f5245441
-    updated_at: 2015-10-28
+    updated_at: 2015-11-09
     url: http://google.com
   model: popit.link
   pk: 6d0afb46-67d4-4708-87c4-4d51ce99767e
@@ -790,12 +884,12 @@
   model: popit.link
   pk: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd
 - fields:
-    content_type: [popit, contact]
+    content_type: [popit, contactdetail]
     created_at: 2015-11-06
     field: ''
     label: ''
     object_id: 7f3f67c4-6afd-4de9-880e-943560cf56c0
-    updated_at: 2015-11-06
+    updated_at: 2015-11-09
     url: http://en.wikipedia.com
   model: popit.link
   pk: a37256e6-eab7-417a-8ac8-32edc5031924

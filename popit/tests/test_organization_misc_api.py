@@ -121,15 +121,15 @@ class OrganizationContactAPITestCase(APITestCase):
     fixtures = [ "api_request_test_data.yaml" ]
 
     def test_list_organization_contact(self):
-        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/")
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_show_organization_contact_not_exist(self):
-        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/not_exist/")
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/not_exist/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_show_organization_contact(self):
-        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/")
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_organization_contact_unauthorized(self):
@@ -141,7 +141,7 @@ class OrganizationContactAPITestCase(APITestCase):
             "valid_from": "2015-01-01",
             "valid_until": "2020-01-01",
         }
-        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/", data)
+        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/", data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_create_organization_contact_authorized(self):
@@ -155,7 +155,7 @@ class OrganizationContactAPITestCase(APITestCase):
         }
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/", data)
+        response = self.client.post("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_update_organization_contact_not_exist_unauthorized(self):
@@ -163,7 +163,7 @@ class OrganizationContactAPITestCase(APITestCase):
             "value": "01291231321"
         }
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/not_exist/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/not_exist/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -176,7 +176,7 @@ class OrganizationContactAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/not_exist/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/not_exist/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -186,7 +186,7 @@ class OrganizationContactAPITestCase(APITestCase):
             "value": "01291231321"
         }
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/",
             data
         )
 
@@ -201,33 +201,33 @@ class OrganizationContactAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/",
             data
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_organization_contact_does_not_exist_unauthorized(self):
-        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/not_exist/")
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/not_exist/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_organizatioN_contact_does_not_exist_authorized(self):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/not_exist/")
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/not_exist/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
     def test_delete_organization_contact_unauthorized(self):
 
-        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/")
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
     def test_delete_organization_contact_authorized(self):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/")
+        response = self.client.delete("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
@@ -569,19 +569,19 @@ class OrganizationContactLinkAPITestCase(APITestCase):
 
     def test_list_organization_contact_link(self):
         response = self.client.get(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/"
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_show_organization_contact_link(self):
         response = self.client.get(
-             "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
+             "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_show_organization_contact_link_not_exist(self):
         response = self.client.get(
-             "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exist/"
+             "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exist/"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -590,7 +590,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
             "url": "http://google.com"
         }
         response = self.client.post(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -604,7 +604,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.post(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/",
             data
         )
 
@@ -616,7 +616,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
         }
 
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -629,7 +629,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -641,7 +641,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
         }
 
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -655,7 +655,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.put(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/",
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/",
             data
         )
 
@@ -663,7 +663,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
 
     def test_delete_organization_contact_link_not_exist_unauthorized(self):
         response = self.client.delete(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/"
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/"
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -672,13 +672,13 @@ class OrganizationContactLinkAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.delete(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/"
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/not_exists/"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_organization_contact_link_unauthorized(self):
         response = self.client.delete(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -687,7 +687,7 @@ class OrganizationContactLinkAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.delete(
-            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contacts/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
+            "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/links/26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf/"
         )
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

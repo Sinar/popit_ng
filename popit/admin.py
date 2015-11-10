@@ -8,6 +8,7 @@ from popit.models import Identifier
 from popit.models import Area
 from popit.models import Organization
 from popit.models import Post
+from popit.models import ContactDetail
 
 
 # Register your models here.
@@ -43,6 +44,9 @@ class PostAdmin(TranslatableAdmin):
     pass
 
 
+class ContactDetailAdmin(TranslatableAdmin):
+    pass
+
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Link, LinkAdmin)
 admin.site.register(Contact, ContactAdmin)
@@ -51,3 +55,4 @@ admin.site.register(Identifier, IdentifierAdmin)
 admin.site.register(Area, AreaAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(ContactDetail, ContactDetailAdmin)

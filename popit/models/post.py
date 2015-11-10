@@ -7,7 +7,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from popit.models import Organization
 from popit.models import Area
 from popit.models import OtherName
-from popit.models import Contact
+from popit.models import ContactDetail
 from popit.models import Link
 from popit.models.exception import PopItFieldNotExist
 
@@ -26,7 +26,7 @@ class Post(TranslatableModel):
     start_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("start date"))
     end_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("end date"))
 
-    contact_details = GenericRelation(Contact)
+    contact_details = GenericRelation(ContactDetail)
 
     links = GenericRelation(Link)
 

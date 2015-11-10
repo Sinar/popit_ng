@@ -51,7 +51,7 @@ class PersonSerializerTestCase(TestCase):
             "birth_date": "1950-01-01",
             "death_data": "2000-01-01",
             "email": "joejambul@sinarproject.org",
-            "contacts":[
+            "contact_details":[
                 {
                     "type":"twitter",
                     "value": "sinarproject",
@@ -139,7 +139,7 @@ class PersonSerializerTestCase(TestCase):
     def test_update_create_nested_links_persons_serializer(self):
         person_data = {
             "id":"ab1a5788e5bae955c048748fa6af0e97",
-            "contacts":[
+            "contact_details":[
                 {
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "links": [{
@@ -155,7 +155,7 @@ class PersonSerializerTestCase(TestCase):
         person_serializer.save()
         person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
         # There should be only 1 links in that contact
-        contact = person_.contacts.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
+        contact = person_.contact_details.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
         links = contact.links.language('en').all()
         self.assertEqual(links[0].url, "http://facebook.com")
 
@@ -222,7 +222,7 @@ class PersonSerializerTestCase(TestCase):
 
     def test_create_contact_person_serializer(self):
         person_data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "type":"twitter",
                     "value": "sinarproject",
@@ -235,25 +235,25 @@ class PersonSerializerTestCase(TestCase):
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
         person_ = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        contact = person_.contacts.language('en').get(type="twitter")
+        contact = person_.contact_details.language('en').get(type="twitter")
         self.assertEqual(contact.value, "sinarproject")
 
     def test_update_contact_person_serializer(self):
         person_data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "value": "0123421222",
                 }
             ]
         }
-        person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person = Person.objects.untranslated().get(id='ab1a5788e5bae955c048748fa6af0e97')
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language="en")
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
         person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        contact = person_.contacts.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
+        contact = person_.contact_details.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
         self.assertEqual(contact.value, "0123421222")
 
     def test_create_other_name_person_serializer(self):
@@ -332,7 +332,7 @@ class PersonAPITestCase(APITestCase):
             "birth_date": "1950-01-01",
             "death_data": "2000-01-01",
             "email": "joejambul@sinarproject.org",
-            "contacts":[
+            "contact_details":[
                 {
                     "type":"twitter",
                     "value": "sinarproject",
@@ -376,7 +376,7 @@ class PersonAPITestCase(APITestCase):
             "birth_date": "1950-01-01",
             "death_data": "2000-01-01",
             "email": "joejambul@sinarproject.org",
-            "contacts":[
+            "contact_details":[
                 {
                     "type":"twitter",
                     "value": "sinarproject",
@@ -506,7 +506,7 @@ class PersonAPITestCase(APITestCase):
     def test_create_nested_person_links_unauthorized(self):
         person_data = {
             "id":"ab1a5788e5bae955c048748fa6af0e97",
-            "contacts":[
+            "contact_details":[
                 {
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "links": [{
@@ -521,7 +521,7 @@ class PersonAPITestCase(APITestCase):
     def test_create_nested_person_links_authorized(self):
         person_data = {
             "id":"ab1a5788e5bae955c048748fa6af0e97",
-            "contacts":[
+            "contact_details":[
                 {
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "links": [{
@@ -536,7 +536,7 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
         # There should be only 1 links in that contact
-        contact = person_.contacts.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
+        contact = person_.contact_details.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
         links = contact.links.language('en').all()
         self.assertEqual(links[0].url, "http://facebook.com")
 
@@ -641,7 +641,7 @@ class PersonAPITestCase(APITestCase):
 
     def test_create_contact_unauthorized(self):
         person_data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "type":"twitter",
                     "value": "sinarproject",
@@ -654,7 +654,7 @@ class PersonAPITestCase(APITestCase):
 
     def test_create_contact_authorized(self):
         person_data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "type":"twitter",
                     "value": "sinarproject",
@@ -667,12 +667,12 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         person_ = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        contact = person_.contacts.language('en').get(type="twitter")
+        contact = person_.contact_details.language('en').get(type="twitter")
         self.assertEqual(contact.value, "sinarproject")
 
     def test_update_contact_unauthorized(self):
         person_data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "value": "0123421222",
@@ -684,7 +684,7 @@ class PersonAPITestCase(APITestCase):
 
     def test_update_contact_authorized(self):
         person_data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
                     "value": "0123421222",
@@ -697,7 +697,7 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        contact = person_.contacts.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
+        contact = person_.contact_details.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
         self.assertEqual(contact.value, "0123421222")
 
     def test_create_other_names_unauthorized(self):

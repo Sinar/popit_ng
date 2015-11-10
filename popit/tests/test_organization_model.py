@@ -4,7 +4,7 @@ from popit.models import Organization
 from popit.models import OtherName
 from popit.models import Link
 from popit.models import Identifier
-from popit.models import Contact
+from popit.models import ContactDetail
 from popit.models import Area
 from popit.models.exception import PopItFieldNotExist
 
@@ -80,7 +80,7 @@ class OrganizationTestCase(TestCase):
         organization = Organization.objects.language("en").create(
             name="acme corp"
         )
-        Contact.objects.language("en").create(
+        ContactDetail.objects.language("en").create(
             type='phone',
             value='01234567',
             label='myphone',
@@ -91,7 +91,7 @@ class OrganizationTestCase(TestCase):
         )
 
         organization_ = Organization.objects.language("en").get(name="acme corp")
-        contact = organization_.contacts.language("en").get(value="01234567")
+        contact = organization_.contact_details.language("en").get(value="01234567")
         self.assertEqual(contact.type, "phone")
 
     def test_create_organization_area(self):
@@ -131,11 +131,11 @@ class OrganizationTestCase(TestCase):
 
     def test_create_organization_contact_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        contact = organization.contacts.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
+        contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         contact.add_citation("value","google.com", "find it")
 
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        contact = organization.contacts.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
+        contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         link = contact.links.language("en").get(field="value")
         self.assertEqual(link.url, "google.com")
 
@@ -168,7 +168,7 @@ class OrganizationTestCase(TestCase):
 
     def test_create_organization_contact_citation_bad_field(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        contact = organization.contacts.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
+        contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         with self.assertRaises(PopItFieldNotExist):
             contact.add_citation("name","google.com", "find it")
 

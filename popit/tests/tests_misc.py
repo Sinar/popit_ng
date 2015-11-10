@@ -205,22 +205,22 @@ class PersonContactSerializerTestCase(TestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
-    def test_view_contact_list(self):
+    def test_view_contact_details_list(self):
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        contact = person.contacts.untranslated().all()
-        serializers = ContactSerializer(contact, language="en", many=True)
+        contact_details = person.contact_details.untranslated().all()
+        serializers = ContactSerializer(contact_details, language="en", many=True)
         self.assertEqual(len(serializers.data), 1)
         self.assertEqual(serializers.data[0]["value"], "0123421221")
 
-    def test_view_contact(self):
+    def test_view_contact_details(self):
         # a66cb422-eec3-4861-bae1-a64ae5dbde61
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
 
-        contact = person.contacts.untranslated().get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
-        serializer = ContactSerializer(contact, language="en")
+        contact_details = person.contact_details.untranslated().get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
+        serializer = ContactSerializer(contact_details, language="en")
         self.assertEqual(serializer.data["value"], "0123421221")
 
-    def test_create_contact(self):
+    def test_create_contact_details(self):
         data = {
             "type":"twitter",
             "value": "sinarproject",
@@ -231,10 +231,10 @@ class PersonContactSerializerTestCase(TestCase):
         self.assertEqual(serializer.errors, {})
         serializer.save(content_object=person)
         person_ = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        contact = person_.contacts.language('en').get(type="twitter")
-        self.assertEqual(contact.value, "sinarproject")
+        contact_details = person_.contact_details.language('en').get(type="twitter")
+        self.assertEqual(contact_details.value, "sinarproject")
 
-    def test_create_contact_without_parent(self):
+    def test_create_contact_details_without_parent(self):
         data = {
             "type":"twitter",
             "value": "sinarproject",
@@ -246,7 +246,7 @@ class PersonContactSerializerTestCase(TestCase):
         with self.assertRaises(ContentObjectNotAvailable):
             serializer.save()
 
-    def test_test_update_contact(self):
+    def test_test_update_contact_details(self):
         data = {
             "id": "a66cb422-eec3-4861-bae1-a64ae5dbde61",
             "value": "0123421222",
@@ -254,15 +254,15 @@ class PersonContactSerializerTestCase(TestCase):
 
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
 
-        contact = person.contacts.untranslated().get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
-        serializer = ContactSerializer(contact, data=data, language="en", partial=True)
+        contact_details = person.contact_details.untranslated().get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
+        serializer = ContactSerializer(contact_details, data=data, language="en", partial=True)
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
         serializer.save()
 
         person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        contact = person_.contacts.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
-        self.assertEqual(contact.value, "0123421222")
+        contact_details = person_.contact_details.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
+        self.assertEqual(contact_details.value, "0123421222")
 
 
 class AreaSerializerTestCase(TestCase):

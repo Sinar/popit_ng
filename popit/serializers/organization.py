@@ -1,6 +1,6 @@
 __author__ = 'sweemeng'
 from popit.models import Organization
-from popit.models import Contact
+from popit.models import ContactDetail
 from popit.models import Link
 from popit.models import Identifier
 from popit.models import OtherName
@@ -19,7 +19,7 @@ class ParentOrganizationSerializer(TranslatableModelSerializer):
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    contacts = ContactSerializer(many=True, required=False)
+    contact_details = ContactSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
 
     class Meta:
@@ -35,7 +35,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    contacts = ContactSerializer(many=True, required=False)
+    contact_details = ContactSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
 
@@ -43,7 +43,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
         other_names = validated_data.pop('other_names', [])
         links = validated_data.pop('links', [])
         identifiers = validated_data.pop('identifier', [])
-        contacts = validated_data.pop('contacts', [])
+        contact_details = validated_data.pop('contact_details', [])
         language = self.language
         validated_data.pop("language_code", None)
 
@@ -83,8 +83,8 @@ class OrganizationSerializer(TranslatableModelSerializer):
         for identifier in identifiers:
             self.create_child(identifier, Identifier, organization)
 
-        for contact in contacts:
-            self.create_child(contact, Contact, organization)
+        for contact in contact_details:
+            self.create_child(contact, ContactDetail, organization)
 
         return organization
 
@@ -111,7 +111,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
         other_names = data.pop("other_names", [])
         links = data.pop("links", [])
         identifiers = data.pop("identifiers", [])
-        contacts = data.pop("contacts", [])
+        contact_details = data.pop("contact_details", [])
         area = data.pop("area", None)
         area_id = data.pop("area_id", None)
 
@@ -148,8 +148,8 @@ class OrganizationSerializer(TranslatableModelSerializer):
         for identifier in identifiers:
             self.update_childs(identifier, Identifier, instance)
 
-        for contact in contacts:
-            self.update_childs(contact, Contact, instance)
+        for contact in contact_details:
+            self.update_childs(contact, ContactDetail, instance)
 
         for link in links:
             self.update_links(link, instance)

@@ -1,6 +1,6 @@
 __author__ = 'sweemeng'
 from popit.models import Person
-from popit.models import Contact
+from popit.models import ContactDetail
 from popit.models import Link
 from popit.models import Identifier
 from popit.models import OtherName
@@ -11,19 +11,20 @@ from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactSerializer
 
+
 class PersonSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    contacts = ContactSerializer(many=True, required=False)
+    contact_details = ContactSerializer(many=True, required=False)
 
     def create(self, validated_data):
         language_code=self.language
         links = validated_data.pop("links")
         other_names = validated_data.pop("other_names")
-        contacts = validated_data.pop('contacts')
+        contact_details = validated_data.pop('contact_details')
         identifiers = validated_data.pop("identifiers")
         # Where do the language come from inside the create function
         validated_data.pop("language_code", [])
@@ -32,8 +33,8 @@ class PersonSerializer(TranslatableModelSerializer):
         for other_name in other_names:
             self.create_child(other_name, OtherName, person)
 
-        for contact in contacts:
-            self.create_child(contact, Contact, person)
+        for contact in contact_details:
+            self.create_child(contact, ContactDetail, person)
 
         for identifier in identifiers:
             self.create_child(identifier, Identifier, person)
@@ -91,9 +92,9 @@ class PersonSerializer(TranslatableModelSerializer):
         for identifier in identifiers:
             self.update_childs(identifier, Identifier, instance)
 
-        contacts = validated_data.pop("contacts", [])
-        for contact in contacts:
-            self.update_childs(contact, Contact, instance)
+        contact_details = validated_data.pop("contact_details", [])
+        for contact in contact_details:
+            self.update_childs(contact, ContactDetail, instance)
 
         other_names = validated_data.pop("other_names", [])
         for other_name in other_names:

@@ -1,6 +1,7 @@
 __author__ = 'sweemeng'
 from popit.models import Person
 from popit.models import Contact
+from popit.models import ContactDetail
 from popit.models import Link
 from popit.models import Identifier
 from popit.models import OtherName
@@ -49,7 +50,7 @@ class ContactSerializer(TranslatableModelSerializer):
         # content_object must be pass into save parameter
         if not "content_object" in validated_data:
             raise ContentObjectNotAvailable("Please save parent object by callsing serializer.save(content_object=ParentObject)")
-        contact = Contact.objects.language(language).create(
+        contact = ContactDetail.objects.language(language).create(
             **validated_data
         )
         for link in links:

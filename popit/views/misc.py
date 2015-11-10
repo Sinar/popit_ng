@@ -14,7 +14,7 @@ from popit.serializers.exceptions import SerializerNotSetException
 from popit.serializers.exceptions import ParentNotSetException
 from popit.serializers.exceptions import ChildNotSetException
 from popit.models import Person
-from popit.models import Contact
+from popit.models import ContactDetail
 from popit.models import Link
 from popit.models import OtherName
 from popit.models import Identifier
@@ -72,8 +72,8 @@ class GenericContactList(GenericParentChildList):
     def get_query(self, parent_pk, language):
         parent = self.get_parent(parent_pk, language)
 
-        contacts = parent.contacts.untranslated().all()
-        return contacts
+        contact_details = parent.contact_details.untranslated().all()
+        return contact_details
 
 
 class GenericOtherNameList(GenericParentChildList):
@@ -167,8 +167,8 @@ class GenericContactDetail(GenericParentChildDetail):
 
     def get_object(self, parent, pk):
         try:
-            return parent.contacts.untranslated().get(id=pk)
-        except Contact.DoesNotExist:
+            return parent.contact_details.untranslated().get(id=pk)
+        except ContactDetail.DoesNotExist:
             raise Http404
 
 
@@ -249,13 +249,13 @@ class GenericParentChildLinkList(APIView):
 
 class GenericContactLinkList(GenericParentChildLinkList):
 
-    child = Contact
+    child = ContactDetail
 
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")
         try:
-            return parent.contacts.language(language).get(id=pk)
+            return parent.contact_details.language(language).get(id=pk)
         except self.child.DoesNotExist:
             raise Http404
 
@@ -343,13 +343,13 @@ class GenericParentChildLinkDetail(APIView):
 
 class GenericContactLinkDetail(GenericParentChildLinkDetail):
 
-    child = Contact
+    child = ContactDetail
 
     def get_child(self, parent, pk, language):
         if not self.child:
             raise ChildNotSetException("Need to set child object")
         try:
-            return parent.contacts.language(language).get(id=pk)
+            return parent.contact_details.language(language).get(id=pk)
         except self.child.DoesNotExist:
             raise Http404
 

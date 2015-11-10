@@ -436,27 +436,27 @@ class PersonContactAPITestCase(APITestCase):
     fixtures = [ "api_request_test_data.yaml" ]
 
     def test_view_person_contact_list_unauthorized(self):
-        response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/")
+        response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data[0]["value"], "0123421221")
 
     def test_view_person_contact_list_authorized(self):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/")
+        response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data[0]["value"], "0123421221")
 
     def test_view_person_contact_detail_unauthorized(self):
         response = self.client.get(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["value"], "0123421221")
 
     def test_view_person_contact_detail_not_exist_unauthorized(self):
         response = self.client.get(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/not_exist/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/not_exist/"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -464,7 +464,7 @@ class PersonContactAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.get(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["value"], "0123421221")
@@ -473,7 +473,7 @@ class PersonContactAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.get(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/not_exist/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/not_exist/"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -484,7 +484,7 @@ class PersonContactAPITestCase(APITestCase):
         }
 
         request = self.client.post(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/",
             data
         )
         self.assertEqual(request.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -499,12 +499,12 @@ class PersonContactAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         request = self.client.post(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/",
             data
         )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         person_ = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        contact = person_.contacts.language('en').get(type="twitter")
+        contact = person_.contact_details.language('en').get(type="twitter")
         self.assertEqual(contact.value, "sinarproject")
 
     def test_update_person_contact_unauthorized(self):
@@ -515,7 +515,7 @@ class PersonContactAPITestCase(APITestCase):
 
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
         request = self.client.put(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/a66cb422-eec3-4861-bae1-a64ae5dbde61/",
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/",
             data
         )
         self.assertEqual(request.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -527,7 +527,7 @@ class PersonContactAPITestCase(APITestCase):
         }
 
         request = self.client.put(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/not_exist/",
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/not_exist/",
             data
         )
         self.assertEqual(request.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -541,13 +541,13 @@ class PersonContactAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         request = self.client.put(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/a66cb422-eec3-4861-bae1-a64ae5dbde61/",
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/",
             data
         )
         self.assertEqual(request.status_code, status.HTTP_200_OK)
 
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        contact = person.contacts.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
+        contact = person.contact_details.language('en').get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
         self.assertEqual(contact.value, "0123421222")
 
     def test_update_person_contact_not_exist_authorized(self):
@@ -559,20 +559,20 @@ class PersonContactAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         request = self.client.put(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/not_exist/",
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/not_exist/",
             data
         )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_person_contact_unauthorized(self):
         request = self.client.delete(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(request.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_delete_person_contact_not_exist_unauthorized(self):
         request = self.client.delete(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/not_exist/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/not_exist/"
         )
         self.assertEqual(request.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -580,7 +580,7 @@ class PersonContactAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         request = self.client.delete(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(request.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -588,7 +588,7 @@ class PersonContactAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         request = self.client.delete(
-            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contacts/not_exist/"
+            "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/not_exist/"
         )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -894,21 +894,21 @@ class PersonContactLinkAPITestCase(APITestCase):
 
     def test_list_person_contact_link(self):
         response = self.client.get(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/"
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/"
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_show_person_contact_link_not_exist(self):
         response = self.client.get(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
         )
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_show_person_contact_link(self):
         response = self.client.get(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -918,7 +918,7 @@ class PersonContactLinkAPITestCase(APITestCase):
         }
 
         response = self.client.post(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -930,7 +930,7 @@ class PersonContactLinkAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -941,7 +941,7 @@ class PersonContactLinkAPITestCase(APITestCase):
         }
 
         response = self.client.put(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -954,7 +954,7 @@ class PersonContactLinkAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.put(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
@@ -965,7 +965,7 @@ class PersonContactLinkAPITestCase(APITestCase):
         }
 
         response = self.client.put(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -979,14 +979,14 @@ class PersonContactLinkAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.put(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/",
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/",
             data
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_delete_person_contact_link_not_exist_unauthorized(self):
         response = self.client.delete(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -994,13 +994,13 @@ class PersonContactLinkAPITestCase(APITestCase):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.delete(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/not_exist/"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_person_contact_link_unauthorized(self):
         response = self.client.delete(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -1009,6 +1009,6 @@ class PersonContactLinkAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.delete(
-            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contacts/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
+            "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/contact_details/2256ec04-2d1d-4994-b1f1-16d3f5245441/links/6d0afb46-67d4-4708-87c4-4d51ce99767e/"
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

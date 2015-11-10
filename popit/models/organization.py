@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 from popit.models.misc import OtherName
 from popit.models.misc import Contact
+from popit.models.misc import ContactDetail
 from popit.models.misc import Link
 from popit.models.misc import Identifier
 from popit.models.misc import Area
@@ -31,7 +32,7 @@ class Organization(TranslatableModel):
     image = models.URLField(null=True, blank=True, verbose_name=_('image'))
 
     other_names = GenericRelation(OtherName)
-    contacts = GenericRelation(Contact)
+    contact_details = GenericRelation(ContactDetail)
     identifiers = GenericRelation(Identifier)
     links = GenericRelation(Link)
 

@@ -109,9 +109,9 @@ class OrganizationSerializerTestCase(TestCase):
         identifier = organization.identifiers.language("en").get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
         self.assertEqual(identifier.identifier, "3131313")
 
-    def test_create_organization_contacts_serializer(self):
+    def test_create_organization_contact_details_serializer(self):
         data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "value": "01234567",
                     "label": "myphone",
@@ -127,12 +127,12 @@ class OrganizationSerializerTestCase(TestCase):
         self.assertEqual(serializer.errors, {})
         serializer.save()
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        contact = organization.contacts.language("en").get(label="myphone")
+        contact = organization.contact_details.language("en").get(label="myphone")
         self.assertEqual(contact.value, "01234567")
 
-    def test_update_organization_contacts_serializer(self):
+    def test_update_organization_contact_details_serializer(self):
         data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "id": "651da7cd-f109-4aaa-b04c-df835fb6831f",
                     "value": "01291231321"
@@ -145,7 +145,7 @@ class OrganizationSerializerTestCase(TestCase):
         self.assertEqual(serializer.errors, {})
         serializer.save()
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        contact = organization.contacts.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
+        contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         self.assertEqual(contact.value, "01291231321")
 
     def test_create_organization_link_serializer(self):
@@ -286,7 +286,7 @@ class OrganizationSerializerTestCase(TestCase):
 
     def test_create_organization_contact_citation_serializer(self):
         data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "id": "651da7cd-f109-4aaa-b04c-df835fb6831f",
                     "links": [
@@ -303,13 +303,13 @@ class OrganizationSerializerTestCase(TestCase):
         self.assertEqual(serializer.errors, {})
         serializer.save()
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        contact = organization.contacts.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
+        contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         link = contact.links.language("en").get(url="http://google.com")
         self.assertEqual(link.url, "http://google.com")
 
     def test_update_organization_contact_citation_serializer(self):
         data = {
-            "contacts": [
+            "contact_details": [
                 {
                     "id": "651da7cd-f109-4aaa-b04c-df835fb6831f",
                     "links": [
@@ -328,6 +328,6 @@ class OrganizationSerializerTestCase(TestCase):
         self.assertEqual(serializer.errors, {})
         serializer.save()
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        contact = organization.contacts.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
+        contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         link = contact.links.language("en").get(id="26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf")
         self.assertEqual(link.note, "yet another link")
