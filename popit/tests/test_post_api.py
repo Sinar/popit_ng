@@ -114,3 +114,330 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.delete("/en/posts/not_exist/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_create_post_otherlabels_not_exist_unauthorized(self):
+        data = {
+            "other_labels": [{
+                "name": "sampan party"
+            }]
+        }
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_post_otherlabels_not_exist_authorized(self):
+        data = {
+            "other_labels": [{
+                "name": "sampan party"
+            }]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_create_post_otherlabels_exist_unauthorized(self):
+        data = {
+            "other_labels": [{
+                "name": "sampan party"
+            }]
+        }
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_post_otherlabels_exist_authorized(self):
+        data = {
+            "other_labels": [{
+                "name": "sampan party"
+            }]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_otherlabels_not_exist_unauthorized(self):
+        data = {
+            "other_labels": [
+                {
+                    "id":"aee39ddd-6785-4a36-9781-8e745c6359b7",
+                    "name": "Bilge Rat"
+                }
+            ]
+        }
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_otherlabels_not_exist_authorized(self):
+        data = {
+            "other_labels": [
+                {
+                    "id":"aee39ddd-6785-4a36-9781-8e745c6359b7",
+                    "name": "Bilge Rat"
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_otherlabels_exist_unauthorized(self):
+        data = {
+            "other_labels": [
+                {
+                    "id":"aee39ddd-6785-4a36-9781-8e745c6359b7",
+                    "name": "Bilge Rat"
+                }
+            ]
+        }
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_otherlabels_exist_authorized(self):
+        data = {
+            "other_labels": [
+                {
+                    "id":"aee39ddd-6785-4a36-9781-8e745c6359b7",
+                    "name": "Bilge Rat"
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_post_contacts_not_exist_unauthorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "type": "sms",
+                    "value": "231313123131",
+                }
+            ]
+        }
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_post_contacts_not_exist_authorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "type": "sms",
+                    "value": "231313123131",
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_create_post_contacts_exist_unauthorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "type": "sms",
+                    "value": "231313123131",
+                }
+            ]
+        }
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_post_contacts_exist_authorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "type": "sms",
+                    "value": "231313123131",
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_post_contacts_not_exist_unauthorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "id": "7f3f67c4-6afd-4de9-880e-943560cf56c0",
+                    "type": "phone"
+                }
+            ]
+        }
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_post_contacts_not_exist_authorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "id": "7f3f67c4-6afd-4de9-880e-943560cf56c0",
+                    "type": "phone"
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_post_contacts_exist_unauthorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "id": "7f3f67c4-6afd-4de9-880e-943560cf56c0",
+                    "type": "phone"
+                }
+            ]
+        }
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_post_contacts_exist_authorized(self):
+        data = {
+            "contact_details": [
+                {
+                    "id": "7f3f67c4-6afd-4de9-880e-943560cf56c0",
+                    "type": "phone"
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_post_links_not_exist_unauthorized(self):
+        data = {
+            "links": [
+                {
+                    "url": "http://www.yahoo.com"
+                }
+            ]
+        }
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_post_links_not_exist_authorized(self):
+        data = {
+            "links": [
+                {
+                    "url": "http://www.yahoo.com"
+                }
+            ]
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_create_post_links_exist_unauthorized(self):
+        data = {
+            "links": [
+                {
+                    "url": "http://www.yahoo.com"
+                }
+            ]
+        }
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_post_links_exist_authorized(self):
+        data = {
+            "links": [
+                {
+                    "url": "http://www.yahoo.com"
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_post_links_not_exist_unauthorized(self):
+        data = {
+            "links": [
+                {
+                    "id": "ce15a9ee-6742-4467-bbfb-c86459ee685b",
+                    "note": "just a link"
+                }
+            ]
+        }
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_post_links_not_exist_authorized(self):
+        data = {
+            "links": [
+                {
+                    "id": "ce15a9ee-6742-4467-bbfb-c86459ee685b",
+                    "note": "just a link"
+                }
+            ]
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_post_links_exist_unauthorized(self):
+        data = {
+            "links": [
+                {
+                    "id": "ce15a9ee-6742-4467-bbfb-c86459ee685b",
+                    "note": "just a link"
+                }
+            ]
+        }
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_post_links_exist_authorized(self):
+        data = {
+            "links": [
+                {
+                    "id": "ce15a9ee-6742-4467-bbfb-c86459ee685b",
+                    "note": "just a link"
+                }
+            ]
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
