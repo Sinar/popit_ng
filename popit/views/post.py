@@ -119,7 +119,7 @@ class PostOtherLabelsDetail(APIView):
             return Response(serializer.data, status.HTTP_200_OK)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, laguage, parent_pk, pk, format=None):
+    def delete(self, request, language, parent_pk, pk, format=None):
         other_labels = self.get_object(parent_pk, pk)
         other_labels.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -31,17 +31,17 @@ if "rosetta" in settings.INSTALLED_APPS:
 
 api_urls = [
 
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/links/(?P<link_pk>[-\w]+)/$', PostContactDetailLinkDetail.as_view()),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/links/$', PostContactDetailLinkList.as_view()),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w+])/$', PostContactDetailDetail.as_view()),
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$', PostContactDetailLinkDetail.as_view()),
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/$', PostContactDetailLinkList.as_view()),
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/$', PostContactDetailDetail.as_view()),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/$', PostContactDetailList.as_view()),
 
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w+])/links/(?P<link_pk>[-\w]+)/$', PostOtherLabelsLinkDetail.as_view()),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w+])/links/$', PostOtherLabelsLinkList.as_view()),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w+])/$', PostOtherLabelsDetail.as_view()),
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$', PostOtherLabelsLinkDetail.as_view()),
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w]+)/links/$', PostOtherLabelsLinkList.as_view()),
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w]+)/$', PostOtherLabelsDetail.as_view()),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/$', PostOtherLabelsList.as_view()),
 
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w+])/$', PostLinkDetail.as_view()),
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', PostLinkDetail.as_view()),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/links/$', PostLinkList.as_view()),
     url(r'^(?P<language>\w{2})/posts/(?P<pk>[-\w]+)/$', PostDetail.as_view()),
     url(r'^(?P<language>\w{2})/posts/$', PostList.as_view()),

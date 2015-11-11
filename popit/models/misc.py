@@ -235,7 +235,7 @@ class OtherName(TranslatableModel):
         return False
 
     def __unicode__(self):
-        return self.safe_translation_getter('name')
+        return self.safe_translation_getter('name', self.id)
 
 
 # Chances is this will be sync manually from mapit. That one have proper browsing and a few thing
