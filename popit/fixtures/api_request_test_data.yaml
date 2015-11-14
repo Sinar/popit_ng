@@ -51,6 +51,9 @@
 - fields: {language_code: en, master: a37256e6-eab7-417a-8ac8-32edc5031924, note: ''}
   model: popit.linktranslation
   pk: 16
+- fields: {language_code: en, master: 239edef4-af68-4ffb-adce-96d17cbea79d, note: ''}
+  model: popit.linktranslation
+  pk: 17
 - fields: {label: sweemeng phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61,
     note: my phone}
   model: popit.contacttranslation
@@ -67,6 +70,10 @@
     note: ''}
   model: popit.contacttranslation
   pk: 4
+- fields: {label: The captain, language_code: en, master: 7b1f49f7-34fd-483f-be57-4c75c6c93fb0,
+    note: ''}
+  model: popit.contacttranslation
+  pk: 5
 - fields: {label: anon phone, language_code: en, master: 2256ec04-2d1d-4994-b1f1-16d3f5245441,
     note: Just an anon phone}
   model: popit.contactdetailtranslation
@@ -169,6 +176,16 @@
     name: Swee Meng, national_identity: '', patronymic_name: '', sort_name: '', summary: ''}
   model: popit.persontranslation
   pk: 10
+- fields: {additional_name: '', biography: '', family_name: '', gender: '', given_name: '',
+    honorific_prefix: '', honorific_suffix: '', language_code: en, master: 078541c9-9081-4082-b28f-29cbb64440cb,
+    name: jolly roger, national_identity: '', patronymic_name: '', sort_name: '',
+    summary: ''}
+  model: popit.persontranslation
+  pk: 11
+- fields: {birth_date: '', created_at: ! '2015-11-13 01:24:31.461419+00:00', death_date: '',
+    email: roger@sinarproject.org, image: '', updated_at: ! '2015-11-13 01:24:31.461449+00:00'}
+  model: popit.person
+  pk: 078541c9-9081-4082-b28f-29cbb64440cb
 - fields: {birth_date: '1901-01-01', created_at: ! '2015-10-06 00:00:00+00:00', death_date: '2001-01-01',
     email: johndoe@sinarproject.org, image: '', updated_at: ! '2015-10-06 00:00:00+00:00'}
   model: popit.person
@@ -235,6 +252,36 @@
     updated_at: ! '2015-11-03 00:58:25.398478+00:00'}
   model: popit.post
   pk: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+- fields: {label: Capt Jolly Roger, language_code: en, master: b351cdc2-6961-4fc7-9d61-08fca66e1d44,
+    role: ''}
+  model: popit.membershiptranslation
+  pk: 1
+- fields: {label: Swee meng scaly wag, language_code: en, master: 0a44195b-c3c9-4040-8dbf-be1aa250b700,
+    role: ''}
+  model: popit.membershiptranslation
+  pk: 2
+- fields: {label: '', language_code: en, master: b5464931-d3a9-4250-a645-204740c1bd9e,
+    role: ''}
+  model: popit.membershiptranslation
+  pk: 3
+- fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-13 01:37:07.640696+00:00',
+    end_date: '', member: null, on_behalf_of: null, organization: null, person: ab1a5788e5bae955c048748fa6af0e97,
+    post: c1f0f86b-a491-4986-b48d-861b58a3ef6e, start_date: '', updated_at: ! '2015-11-13
+      01:41:47.306960+00:00'}
+  model: popit.membership
+  pk: 0a44195b-c3c9-4040-8dbf-be1aa250b700
+- fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-13 01:35:31.151781+00:00',
+    end_date: '', member: null, on_behalf_of: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
+    person: 078541c9-9081-4082-b28f-29cbb64440cb, post: 2c6982c2-504a-4e0d-8949-dade5f9e494e,
+    start_date: '', updated_at: ! '2015-11-13 01:35:31.151801+00:00'}
+  model: popit.membership
+  pk: b351cdc2-6961-4fc7-9d61-08fca66e1d44
+- fields: {area: null, created_at: ! '2015-11-13 02:44:58.358098+00:00', end_date: '',
+    member: null, on_behalf_of: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
+    person: 8497ba86-7485-42d2-9596-2ab14520f1f4, post: null, start_date: '', updated_at: ! '2015-11-13
+      02:44:58.358117+00:00'}
+  model: popit.membership
+  pk: b5464931-d3a9-4250-a645-204740c1bd9e
 - fields: {app_label: admin, model: logentry}
   model: contenttypes.contenttype
 - fields: {app_label: auth, model: permission}
@@ -284,6 +331,10 @@
 - fields: {app_label: popit, model: contactdetailtranslation}
   model: contenttypes.contenttype
 - fields: {app_label: popit, model: contactdetail}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: membershiptranslation}
+  model: contenttypes.contenttype
+- fields: {app_label: popit, model: membership}
   model: contenttypes.contenttype
 - fields:
     codename: add_logentry
@@ -661,6 +712,36 @@
     name: Can delete contact detail
   model: auth.permission
 - fields:
+    codename: add_membershiptranslation
+    content_type: [popit, membershiptranslation]
+    name: Can add membership translation
+  model: auth.permission
+- fields:
+    codename: change_membershiptranslation
+    content_type: [popit, membershiptranslation]
+    name: Can change membership translation
+  model: auth.permission
+- fields:
+    codename: delete_membershiptranslation
+    content_type: [popit, membershiptranslation]
+    name: Can delete membership translation
+  model: auth.permission
+- fields:
+    codename: add_membership
+    content_type: [popit, membership]
+    name: Can add membership
+  model: auth.permission
+- fields:
+    codename: change_membership
+    content_type: [popit, membership]
+    name: Can change membership
+  model: auth.permission
+- fields:
+    codename: delete_membership
+    content_type: [popit, membership]
+    name: Can delete membership
+  model: auth.permission
+- fields:
     content_type: [popit, organization]
     created_at: 2015-10-22
     end_date: ''
@@ -782,6 +863,17 @@
   model: popit.contact
   pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
 - fields:
+    content_type: [popit, membership]
+    created_at: 2015-11-14
+    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
+    type: twitter
+    updated_at: 2015-11-14
+    valid_from: null
+    valid_until: null
+    value: project.org
+  model: popit.contact
+  pk: 7b1f49f7-34fd-483f-be57-4c75c6c93fb0
+- fields:
     content_type: [popit, post]
     created_at: 2015-11-03
     object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
@@ -823,6 +915,16 @@
     url: http://www.facebook.com
   model: popit.link
   pk: 10472346-59bf-40f9-95cc-e4cf2dea6e48
+- fields:
+    content_type: [popit, membership]
+    created_at: 2015-11-14
+    field: ''
+    label: ''
+    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
+    updated_at: 2015-11-14
+    url: http://sinarproject.org/the_captain
+  model: popit.link
+  pk: 239edef4-af68-4ffb-adce-96d17cbea79d
 - fields:
     content_type: [popit, contactdetail]
     created_at: 2015-10-26
