@@ -57,6 +57,6 @@ class Post(TranslatableModel):
         super(Post, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        name = '%s of %s' % (self.safe_translation_getter('role', self.pk), self.organization.safe_translation_getter("name", self.organization.name))
+        name = '%s of %s' % (self.safe_translation_getter('role', self.role), self.organization.safe_translation_getter("name", self.organization.name))
         return name
 
