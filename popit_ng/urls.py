@@ -102,6 +102,17 @@ api_urls = [
     url(r'^(?P<language>\w{2})/areas/(?P<parent_pk>[-\w]+)/links/$', AreaLinkList.as_view()),
     url(r'^(?P<language>\w{2})/areas/(?P<pk>[-\w]+)/$', AreaDetail.as_view()),
     url(r'^(?P<language>\w{2})/areas/$', AreaList.as_view()),
+
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$',
+        MembershipContactDetailLinkDetail.as_view()),
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/$', MembershipContactDetailLinkList.as_view()),
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/$', MembershipContactDetailDetail.as_view()),
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/$', MembershipContactDetailList.as_view()),
+
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/$', MembershipLinkDetail.as_view()),
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/links/$', MembershipLinkList.as_view()),
+    url(r'^(?P<language>\w{2})/memberships/(?P<pk>[-\w]+)/$', MembershipDetail.as_view()),
+    url(r'^(?P<language>\w{2})/memberships/$', MembershipList.as_view()),
  ]
 
 api_urls = format_suffix_patterns(api_urls)

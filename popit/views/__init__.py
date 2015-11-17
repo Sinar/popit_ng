@@ -47,3 +47,11 @@ from popit.views.post import PostOtherLabelsLinkDetail
 from popit.views.post import PostOtherLabelsLinkList
 from popit.views.post import PostLinkDetail
 from popit.views.post import PostLinkList
+from popit.views.membership import MembershipContactDetailDetail
+from popit.views.membership import MembershipContactDetailLinkDetail
+from popit.views.membership import MembershipContactDetailList
+from popit.views.membership import MembershipContactDetailLinkList
+from popit.views.membership import MembershipLinkDetail
+from popit.views.membership import MembershipLinkList
+from popit.views.membership import MembershipDetail
+from popit.views.membership import MembershipList
