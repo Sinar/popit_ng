@@ -54,6 +54,12 @@
 - fields: {language_code: en, master: 239edef4-af68-4ffb-adce-96d17cbea79d, note: ''}
   model: popit.linktranslation
   pk: 17
+- fields: {language_code: en, master: c6e2349f-a180-4b44-81f6-804c25714cb1, note: ''}
+  model: popit.linktranslation
+  pk: 18
+- fields: {language_code: en, master: adebb549-e7a0-4ba6-a9ff-60eb2656c15b, note: ''}
+  model: popit.linktranslation
+  pk: 19
 - fields: {label: sweemeng phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61,
     note: my phone}
   model: popit.contacttranslation
@@ -90,6 +96,10 @@
     note: my phone}
   model: popit.contactdetailtranslation
   pk: 13
+- fields: {label: '', language_code: en, master: 78a35135-52e3-4af9-8c32-ea3f557354fd,
+    note: ''}
+  model: popit.contactdetailtranslation
+  pk: 14
 - fields: {language_code: en, master: af7c01b5-1c4f-4c08-9174-3de5ff270bdb, scheme: random}
   model: popit.identifiertranslation
   pk: 1
@@ -242,11 +252,20 @@
     role: Captain}
   model: popit.posttranslation
   pk: 2
+- fields: {label: '', language_code: en, master: 3eb967bb-23e3-41b6-8cba-54aadac8d918,
+    role: member}
+  model: popit.posttranslation
+  pk: 3
 - fields: {area: null, created_at: ! '2015-11-03 01:05:47.328900+00:00', end_date: '',
     organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: '', updated_at: ! '2015-11-03
       01:05:47.328925+00:00'}
   model: popit.post
   pk: 2c6982c2-504a-4e0d-8949-dade5f9e494e
+- fields: {area: null, created_at: ! '2015-11-16 07:22:02.280560+00:00', end_date: '',
+    organization: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec, start_date: '', updated_at: ! '2015-11-16
+      07:22:02.280581+00:00'}
+  model: popit.post
+  pk: 3eb967bb-23e3-41b6-8cba-54aadac8d918
 - fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-03 00:58:25.398456+00:00',
     end_date: '2013-05-05', organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: '2008-05-08',
     updated_at: ! '2015-11-03 00:58:25.398478+00:00'}
@@ -819,6 +838,17 @@
   model: popit.contactdetail
   pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
 - fields:
+    content_type: [popit, membership]
+    created_at: 2015-11-16
+    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
+    type: email
+    updated_at: 2015-11-17
+    valid_from: null
+    valid_until: null
+    value: thecaptain@pirateparty.com
+  model: popit.contactdetail
+  pk: 78a35135-52e3-4af9-8c32-ea3f557354fd
+- fields:
     content_type: [popit, post]
     created_at: 2015-11-03
     object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
@@ -1015,6 +1045,26 @@
     url: http://sinarproject.org/en/about/team
   model: popit.link
   pk: abbd9287ec0b491d6e84dcbfd6f958fc
+- fields:
+    content_type: [popit, contactdetail]
+    created_at: 2015-11-16
+    field: ''
+    label: ''
+    object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
+    updated_at: 2015-11-17
+    url: http://pirateparty.com/captain
+  model: popit.link
+  pk: adebb549-e7a0-4ba6-a9ff-60eb2656c15b
+- fields:
+    content_type: [popit, contactdetail]
+    created_at: 2015-11-16
+    field: ''
+    label: ''
+    object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
+    updated_at: 2015-11-16
+    url: http://pirateparty.com/captain
+  model: popit.link
+  pk: c6e2349f-a180-4b44-81f6-804c25714cb1
 - fields:
     content_type: [popit, post]
     created_at: 2015-11-03

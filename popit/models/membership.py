@@ -25,7 +25,7 @@ class Membership(TranslatableModel):
     person = models.ForeignKey(Person, verbose_name=_("person"))
     # Used with organization for now. I think this going to break the spec
     member = models.ForeignKey(Organization, null=True, blank=True, verbose_name=_("member"), related_name="member")
-    organization = models.ForeignKey(Organization, null=True, blank=True, verbose_name=_("organization"))
+    organization = models.ForeignKey(Organization, null=True, blank=True, verbose_name=_("organization"), related_name="membership")
     post = models.ForeignKey(Post, null=True, blank=True, verbose_name=_("post"))
     on_behalf_of = models.ForeignKey(Organization, null=True, blank=True, verbose_name=_("on_behalf_of"), related_name="on_behalf_of")
     area = models.ForeignKey(Area, null=True, blank=True, verbose_name=_("area"))
