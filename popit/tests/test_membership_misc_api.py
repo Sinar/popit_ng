@@ -91,3 +91,94 @@ class MembershipContactDetailAPI(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.delete("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/contact_details/78a35135-52e3-4af9-8c32-ea3f557354fd/")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class MembershipLinkAPITestCase(APITestCase):
+
+    fixtures = [ "api_request_test_data.yaml" ]
+
+    def test_list_membership_link_api(self):
+        response = self.client.get("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_show_membership_link_detail_api(self):
+        response = self.client.get("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/239edef4-af68-4ffb-adce-96d17cbea79d/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_show_membership_link_detail_api_not_exist(self):
+        response = self.client.get("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_create_membership_link_api_unauthorized(self):
+        data = {
+            "url": "http://thecaptain.tumblr.com",
+            "label": "Captain's Tumblr"
+        }
+        response = self.client.post("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_membership_link_api_authorized(self):
+        data = {
+            "url": "http://thecaptain.tumblr.com",
+            "label": "Captain's Tumblr"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_update_membership_link_api_not_exist_unauthorized(self):
+        data = {
+            "id": "239edef4-af68-4ffb-adce-96d17cbea79d",
+            "label": "Captain's page"
+        }
+        response = self.client.put("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_membership_link_api_not_exist_authorized(self):
+        data = {
+            "id": "239edef4-af68-4ffb-adce-96d17cbea79d",
+            "label": "Captain's page"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/not_exist/", data)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_membership_link_api_exist_unauthorized(self):
+        data = {
+            "id": "239edef4-af68-4ffb-adce-96d17cbea79d",
+            "label": "Captain's page"
+        }
+        response = self.client.put("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/239edef4-af68-4ffb-adce-96d17cbea79d/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_membership_link_api_exist_authorized(self):
+        data = {
+            "id": "239edef4-af68-4ffb-adce-96d17cbea79d",
+            "label": "Captain's page"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/239edef4-af68-4ffb-adce-96d17cbea79d/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_membership_link_api_not_exist_unauthorized(self):
+        response = self.client.delete("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_membership_link_api_not_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/not_exist/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_membership_link_api_exist_unauthorized(self):
+        response = self.client.delete("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/239edef4-af68-4ffb-adce-96d17cbea79d/")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_membership_link_api_exist_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/links/239edef4-af68-4ffb-adce-96d17cbea79d/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
