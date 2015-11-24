@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'popit',
+    'popit_search'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,6 +135,11 @@ REST_FRAMEWORK = {
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
+
+# We might change host in production, but in dev and
+ES_HOST = [ "http://localhost:9200", ]
+# Support 1 index for now
+ES_INDEX = "popit"
 
 try:
     from settings_local import *
