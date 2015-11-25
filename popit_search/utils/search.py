@@ -21,6 +21,12 @@ class SerializerSearch(object):
     def add(self, instance, serializer):
         assert isinstance(instance, models.Model)
         assert issubclass(serializer, Serializer)
+        query = "id:%s AND language_code:%s" % (instance.id, instance.language_code)
+        result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
+        logging.warn(result)
+        hits = result["hits"]["hits"]
+        if hits:
+            raise SerializerSearchInstanceExist("Instance exist")
         s = serializer(instance)
         result = self.es.index(index=self.index, doc_type=self.doc_type, body=s.data)
         # Can be a bad idea,
@@ -57,7 +63,7 @@ class SerializerSearch(object):
         time.sleep(INDEX_PREPARATION_TIME)
         return result
 
-    # TODO: There is delete index and delete documents
+    # delete all instance of same id. Because in ES it is stored as 2 documents
     def delete(self, instance):
         assert isinstance(instance, models.Model)
         query = "id:%s" % instance.id
@@ -83,4 +89,8 @@ class SerializerSearchNotFoundException(Exception):
 
 
 class SerializerSearchNotUniqueException(Exception):
+    pass
+
+
+class SerializerSearchInstanceExist(Exception):
     pass
