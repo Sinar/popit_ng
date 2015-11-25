@@ -2,11 +2,33 @@ __author__ = 'sweemeng'
 from django.test import TestCase
 from popit.serializers import PostSerializer
 from popit.models import Post
+from popit.signals.handlers import *
+from popit.models import *
 
 
 class PostSerializerTestCase(TestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
+
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
 
     def test_fetch_post_serializer(self):
         post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")

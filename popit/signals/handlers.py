@@ -14,79 +14,87 @@ from popit_search.utils import search
 
 
 @receiver(post_save, sender=Person)
-def person_save_handler(sender, **kwargs):
-    language_code =  sender.language_code
-    id = sender.id
+def person_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+    language_code =  instance.language_code
+    id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
     indexer = search.SerializerSearch("person")
     check = indexer.search(query, language=language_code)
     if not check:
-        indexer.add(sender, PersonSerializer)
+        indexer.add(instance, PersonSerializer)
     else:
-        indexer.update(sender, PersonSerializer)
+        indexer.update(instance, PersonSerializer)
 
 
 # use pre_delete event is a good idea, this ensure data exist before data is emoved in indexer
 @receiver(pre_delete, sender=Person)
-def person_delete_handler(sender, **kwargs):
+def person_delete_handler(sender, instance, using, **kwargs):
 
     indexer = search.SerializerSearch("person")
 
-    indexer.delete(sender)
+    indexer.delete(instance)
 
 
 @receiver(post_save, sender=Organization)
-def organization_save_handler(sender, **kwargs):
-    language_code =  sender.language_code
-    id = sender.id
+def organization_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+    language_code =  instance.language_code
+    id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
     indexer = search.SerializerSearch("organization")
     check = indexer.search(query, language=language_code)
     if not check:
-        indexer.add(sender, OrganizationSerializer)
+        indexer.add(instance, OrganizationSerializer)
     else:
-        indexer.update(sender, OrganizationSerializer)
+        indexer.update(instance, OrganizationSerializer)
 
 
 @receiver(pre_delete, sender=Organization)
-def organization_delete_handler(sender, **kwargs):
+def organization_delete_handler(sender, instance, using, **kwargs):
     indexer = search.SerializerSearch("organization")
-    indexer.delete(sender)
+    indexer.delete(instance)
 
 
 @receiver(post_save, sender=Membership)
-def membership_save_handler(sender, **kwargs):
-    language_code =  sender.language_code
-    id = sender.id
+def membership_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+    language_code =  instance.language_code
+    id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
     indexer = search.SerializerSearch("membership")
     check = indexer.search(query, language=language_code)
     if not check:
-        indexer.add(sender, MembershipSerializer)
+        indexer.add(instance, MembershipSerializer)
     else:
-        indexer.update(sender, MembershipSerializer)
+        indexer.update(instance, MembershipSerializer)
 
 
 @receiver(pre_delete, sender=Membership)
-def membership_delete_handler(sender, **kwargs):
+def membership_delete_handler(sender, instance, using, **kwargs):
     indexer = search.SerializerSearch("membership")
-    indexer.delete(sender)
+    indexer.delete(instance)
 
 
 @receiver(post_save, sender=Post)
-def post_save_handler(sender, **kwargs):
-    language_code =  sender.language_code
-    id = sender.id
+def post_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+    language_code =  instance.language_code
+    id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
     indexer = search.SerializerSearch("post")
     check = indexer.search(query, language=language_code)
     if not check:
-        indexer.add(sender, PostSerializer)
+        indexer.add(instance, PostSerializer)
     else:
-        indexer.update(sender, PostSerializer)
+        indexer.update(instance, PostSerializer)
 
 
 @receiver(pre_delete, sender=Post)
-def post_delete_handler(sender, **kwargs):
+def post_delete_handler(sender, instance, using, **kwargs):
     indexer = search.SerializerSearch("post")
-    indexer.delete(sender)
+    indexer.delete(instance)

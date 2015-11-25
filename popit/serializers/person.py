@@ -19,6 +19,8 @@ class PersonSerializer(TranslatableModelSerializer):
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
+    birth_date = CharField(allow_null=True, default=None)
+    death_date = CharField(allow_null=True, default=None)
 
     def create(self, validated_data):
         language_code=self.language
@@ -28,6 +30,12 @@ class PersonSerializer(TranslatableModelSerializer):
         identifiers = validated_data.pop("identifiers")
         # Where do the language come from inside the create function
         validated_data.pop("language_code", [])
+        # So that elasticsearch handle this sanely
+        if not validated_data["birth_date"]:
+            validated_data["birth_date"] = None
+        if not validated_data["death_date"]:
+            validated_data["death_date"] = None
+
         person = Person.objects.language(language_code).create(**validated_data)
 
         for other_name in other_names:
@@ -76,7 +84,12 @@ class PersonSerializer(TranslatableModelSerializer):
         instance.email = validated_data.get("email", instance.email)
         instance.gender = validated_data.get("gender", instance.gender)
         instance.birth_date = validated_data.get("birth_date", instance.birth_date)
+        # Keep elasticseach sane
+        if not instance.birth_date:
+            instance.birth_date = None
         instance.death_date = validated_data.get("death_date", instance.death_date)
+        if not instance.death_date:
+            instance.death_date = None
         instance.image = validated_data.get("image", instance.image)
         instance.summary = validated_data.get("summary", instance.summary)
         instance.biography = validated_data.get("biography", instance.biography)

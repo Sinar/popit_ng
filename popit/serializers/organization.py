@@ -38,6 +38,8 @@ class OrganizationSerializer(TranslatableModelSerializer):
     contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
+    founding_date = CharField(allow_null=True, default=None)
+    dissolution_date = CharField(allow_null=True, default=None)
 
     def create(self, validated_data):
         other_names = validated_data.pop('other_names', [])
@@ -73,6 +75,15 @@ class OrganizationSerializer(TranslatableModelSerializer):
         if parent_id:
             parent_org = Organization.objects.untranslated().get(id=parent_id)
             validated_data["parent"] = parent_org
+
+        # Keep elasticsearch dane as it tend to return empty string to date
+        if not validated_data.get("founding_date"):
+            validated_data["founding_date"] = None
+
+        if not validated_data.get("dissolution_date"):
+            validated_data["dissolution_date"] = None
+
+
         organization = Organization.objects.language(language).create(**validated_data)
         for other_name in other_names:
             self.create_child(other_name, OtherName, organization)
@@ -123,7 +134,11 @@ class OrganizationSerializer(TranslatableModelSerializer):
         instance.abstract = data.get("abstract", instance.abstract)
         instance.description = data.get("description", instance.description)
         instance.founding_date = data.get("founding_date", instance.founding_date)
+        if not instance.founding_date:
+            instance.founding_date = None
         instance.dissolution_date = data.get("dissolution_date", instance.dissolution_date)
+        if not instance.dissolution_date:
+            instance.dissolution_date = None
 
         # We only allow pointing to new parent and area not create a new parent and area
         if area_id:

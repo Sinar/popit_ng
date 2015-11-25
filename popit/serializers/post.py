@@ -25,6 +25,9 @@ class PostSerializer(TranslatableModelSerializer):
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
+
 
     def create(self, validated_data):
         other_labels = validated_data.pop("other_labels", [])
@@ -44,6 +47,12 @@ class PostSerializer(TranslatableModelSerializer):
         if area_id:
             area = Area.objects.language(self.language).get(id=area_id)
             validated_data["area"] = area
+
+        if not validated_data.get("start_date"):
+            validated_data["start_date"] = None
+
+        if not validated_data.get("end_date"):
+            validated_data["end_date"] = None
 
         post = Post.objects.language(self.language).create(**validated_data)
 
@@ -84,7 +93,13 @@ class PostSerializer(TranslatableModelSerializer):
         instance.role = data.get("role", instance.role)
 
         instance.start_date = data.get("start_date", instance.start_date)
+        if not instance.start_date:
+            instance.start_date = None
+
         instance.end_date = data.get("end_date", instance.end_date)
+        if not instance.end_date:
+            instance.end_date = None
+
         if data.get("area_id"):
             area = Area.objects.language(self.language).get(id=data.get("area_id"))
             instance.area = area

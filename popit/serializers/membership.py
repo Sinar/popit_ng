@@ -34,6 +34,8 @@ class MembershipSerializer(TranslatableModelSerializer):
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
 
     def create(self, validated_data):
         validated_data.pop("person", None)
@@ -74,6 +76,12 @@ class MembershipSerializer(TranslatableModelSerializer):
         if post_id:
             post = Post.objects.language(self.language).get(id=post_id)
             validated_data["post"] = post
+
+        if not validated_data.get("start_date"):
+            validated_data["start_date"] = None
+
+        if not validated_data.get("end_date"):
+            validated_data["end_date"] = None
 
         membership = Membership.objects.language(self.language).create(**validated_data)
 
@@ -120,7 +128,11 @@ class MembershipSerializer(TranslatableModelSerializer):
         instance.label = data.get("label", instance.label)
         instance.role = data.get("role", instance.role)
         instance.start_date = data.get("start_date", instance.start_date)
+        if not instance.start_date:
+            instance.start_date = None
         instance.end_date = data.get("end_date", instance.end_date)
+        if not instance.end_date:
+            instance.end_date = None
 
         if person_id:
             person = Person.objects.language(self.language).get(id=person_id)

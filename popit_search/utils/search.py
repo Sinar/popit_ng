@@ -4,6 +4,8 @@ from django.db import models
 from rest_framework.serializers import Serializer
 import logging
 import time
+from popit.models import *
+from popit.serializers import *
 
 INDEX_PREPARATION_TIME=5
 
@@ -23,7 +25,7 @@ class SerializerSearch(object):
         assert issubclass(serializer, Serializer)
         query = "id:%s AND language_code:%s" % (instance.id, instance.language_code)
         result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
-        logging.warn(result)
+
         hits = result["hits"]["hits"]
         if hits:
             raise SerializerSearchInstanceExist("Instance exist")
@@ -49,10 +51,9 @@ class SerializerSearch(object):
         assert issubclass(serializer, Serializer)
         query = "id:%s AND language_code:%s" % (instance.id, instance.language_code)
         result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
-        logging.warn(result)
         hits = result["hits"]["hits"]
         if not hits:
-            raise SerializerSearchNotFoundException("Not result")
+            raise SerializerSearchNotFoundException("no result")
         if len(hits) > 1:
             raise SerializerSearchNotUniqueException("There should only have one result")
         id = hits[0]["_id"]
@@ -94,3 +95,30 @@ class SerializerSearchNotUniqueException(Exception):
 
 class SerializerSearchInstanceExist(Exception):
     pass
+
+
+# TODO: Improve API usage.
+def popit_indexer():
+    person_indexer = SerializerSearch("person")
+    persons = Person.objects.language("all").all()
+    for person in persons:
+        person_indexer.add(person, PersonSerializer)
+
+    org_indexer = SerializerSearch("organization")
+    organizations = Organization.objects.language("all").all()
+    for organization in organizations:
+        org_indexer.add(organization, OrganizationSerializer)
+
+    post_indexer = SerializerSearch("post")
+    posts = Post.objects.language("all").all()
+    for post in posts:
+        post_indexer.add(post, PostSerializer)
+
+    mem_indexer = SerializerSearch("membership")
+    memberships = Membership.objects.language("all").all()
+    for membership in memberships:
+        mem_indexer.add(membership, MembershipSerializer)
+
+def remove_popit_index():
+    person_indexer = SerializerSearch("person")
+    person_indexer.delete_index()

@@ -161,6 +161,8 @@ class OtherNameSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
 
     def create(self, validated_data):
         links = validated_data.pop('links', [])
@@ -169,6 +171,12 @@ class OtherNameSerializer(TranslatableModelSerializer):
         language = self.language
         if not "content_object" in validated_data:
             raise ContentObjectNotAvailable("Please save parent object by calling serializer.save(content_object=ParentObject)")
+        if not validated_data.get("start_date"):
+            validated_data["start_date"] = None
+
+        if not validated_data.get("end_date"):
+            validated_data["end_date"] = None
+
         othername = OtherName.objects.language(language).create(**validated_data)
         for link in links:
             self.create_links(link, othername)
@@ -189,7 +197,11 @@ class OtherNameSerializer(TranslatableModelSerializer):
         instance.honorific_prefix = data.get('honorific_prefix', instance.honorific_prefix)
         instance.patronymic_name = data.get('patronymic_name', instance.patronymic_name)
         instance.start_date = data.get('start_date', instance.start_date)
+        if not instance.start_date:
+            instance.start_date = None
         instance.end_date = data.get('end_date', instance.end_date)
+        if not instance.end_date:
+            instance.end_date = None
         instance.note = data.get('note', instance.note)
 
         instance.save()

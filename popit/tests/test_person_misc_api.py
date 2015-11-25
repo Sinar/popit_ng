@@ -3,11 +3,33 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from popit.models import Person
+from popit.signals.handlers import *
+from popit.models import *
 
 
 class PersonLinkAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
+
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
 
     def test_view_person_link_list_unauthorized(self):
         response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/links/")
@@ -134,6 +156,25 @@ class PersonOtherNameAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
 
     def test_view_person_othername_list_unauthorized(self):
         response = self.client.get("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/")
@@ -293,6 +334,26 @@ class PersonIdentifierAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
+
     def test_view_person_identifier_list_unauthorized(self):
         response = self.client.get("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -434,6 +495,26 @@ class PersonIdentifierAPITestCase(APITestCase):
 class PersonContactAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
+
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
 
     def test_view_person_contact_list_unauthorized(self):
         response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/")
@@ -597,6 +678,26 @@ class PersonContactAPITestCase(APITestCase):
 class PersonIdentifierLinkAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
+
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
 
     def test_get_person_identifier_link_list_unauthorized(self):
         # identifier af7c01b5-1c4f-4c08-9174-3de5ff270bdb
@@ -766,6 +867,26 @@ class PersonOtherNameLinkAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
+
     def test_list_person_othername_link(self):
         response = self.client.get(
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/cf93e73f-91b6-4fad-bf76-0782c80297a8/links/"
@@ -891,6 +1012,26 @@ class PersonOtherNameLinkAPITestCase(APITestCase):
 class PersonContactLinkAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
+
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
 
     def test_list_person_contact_link(self):
         response = self.client.get(

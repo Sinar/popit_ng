@@ -7,11 +7,33 @@ from popit.models import OtherName
 from popit.models import ContactDetail
 from popit.models import Identifier
 from popit.models.exception import PopItFieldNotExist
+from popit.signals.handlers import *
+from popit.models import *
 
 
 # Unit test only have to test for attribute
 # The reason is a model should map into popolo standard, unittest is a good way to show that
 class PersonTestCase(TestCase):
+
+    def setUp(self):
+        post_save.disconnect(person_save_handler, Person)
+        pre_delete.disconnect(person_delete_handler, Person)
+        post_save.disconnect(organization_save_handler, Organization)
+        pre_delete.disconnect(organization_delete_handler, Organization)
+        post_save.disconnect(membership_save_handler, Membership)
+        pre_delete.disconnect(membership_delete_handler, Membership)
+        post_save.disconnect(post_save_handler, Post)
+        pre_delete.disconnect(post_delete_handler, Post)
+
+    def tearDown(self):
+        post_save.connect(person_save_handler, Person)
+        pre_delete.connect(person_delete_handler, Person)
+        post_save.connect(organization_save_handler, Organization)
+        pre_delete.connect(organization_delete_handler, Organization)
+        post_save.connect(membership_save_handler, Membership)
+        pre_delete.connect(membership_delete_handler, Membership)
+        post_save.connect(post_save_handler, Post)
+        pre_delete.connect(post_delete_handler, Post)
 
     def test_minimum_fields_to_create_person(self):
             # This is mostly to show people what is the required field

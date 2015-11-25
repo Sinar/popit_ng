@@ -192,7 +192,7 @@
     summary: ''}
   model: popit.persontranslation
   pk: 11
-- fields: {birth_date: '', created_at: ! '2015-11-13 01:24:31.461419+00:00', death_date: '',
+- fields: {birth_date: null, created_at: ! '2015-11-13 01:24:31.461419+00:00', death_date: null,
     email: roger@sinarproject.org, image: '', updated_at: ! '2015-11-13 01:24:31.461449+00:00'}
   model: popit.person
   pk: 078541c9-9081-4082-b28f-29cbb64440cb
@@ -200,7 +200,7 @@
     email: johndoe@sinarproject.org, image: '', updated_at: ! '2015-10-06 00:00:00+00:00'}
   model: popit.person
   pk: 8497ba86-7485-42d2-9596-2ab14520f1f4
-- fields: {birth_date: '', created_at: ! '2015-10-02 00:00:00+00:00', death_date: '',
+- fields: {birth_date: null, created_at: ! '2015-10-02 00:00:00+00:00', death_date: null,
     email: sweester@sinarproject.org, image: '', updated_at: ! '2015-10-12 00:00:00+00:00'}
   model: popit.person
   pk: ab1a5788e5bae955c048748fa6af0e97
@@ -240,8 +240,8 @@
       23:22:44.583911+00:00'}
   model: popit.organization
   pk: 612943b1-864d-4188-8d79-ca387ed19b32
-- fields: {area: null, created_at: ! '2015-10-21 23:13:25.144862+00:00', dissolution_date: '',
-    founding_date: '', image: '', parent: null, updated_at: ! '2015-10-21 23:15:55.262100+00:00'}
+- fields: {area: null, created_at: ! '2015-10-21 23:13:25.144862+00:00', dissolution_date: null,
+    founding_date: null, image: '', parent: null, updated_at: ! '2015-10-21 23:15:55.262100+00:00'}
   model: popit.organization
   pk: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
 - fields: {label: '', language_code: en, master: c1f0f86b-a491-4986-b48d-861b58a3ef6e,
@@ -256,13 +256,13 @@
     role: member}
   model: popit.posttranslation
   pk: 3
-- fields: {area: null, created_at: ! '2015-11-03 01:05:47.328900+00:00', end_date: '',
-    organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: '', updated_at: ! '2015-11-03
+- fields: {area: null, created_at: ! '2015-11-03 01:05:47.328900+00:00', end_date: null,
+    organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: null, updated_at: ! '2015-11-03
       01:05:47.328925+00:00'}
   model: popit.post
   pk: 2c6982c2-504a-4e0d-8949-dade5f9e494e
-- fields: {area: null, created_at: ! '2015-11-16 07:22:02.280560+00:00', end_date: '',
-    organization: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec, start_date: '', updated_at: ! '2015-11-16
+- fields: {area: null, created_at: ! '2015-11-16 07:22:02.280560+00:00', end_date: null,
+    organization: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec, start_date: null, updated_at: ! '2015-11-16
       07:22:02.280581+00:00'}
   model: popit.post
   pk: 3eb967bb-23e3-41b6-8cba-54aadac8d918
@@ -284,20 +284,20 @@
   model: popit.membershiptranslation
   pk: 3
 - fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-13 01:37:07.640696+00:00',
-    end_date: '', member: null, on_behalf_of: null, organization: null, person: ab1a5788e5bae955c048748fa6af0e97,
-    post: c1f0f86b-a491-4986-b48d-861b58a3ef6e, start_date: '', updated_at: ! '2015-11-13
+    end_date: null, member: null, on_behalf_of: null, organization: null, person: ab1a5788e5bae955c048748fa6af0e97,
+    post: c1f0f86b-a491-4986-b48d-861b58a3ef6e, start_date: null, updated_at: ! '2015-11-13
       01:41:47.306960+00:00'}
   model: popit.membership
   pk: 0a44195b-c3c9-4040-8dbf-be1aa250b700
 - fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-13 01:35:31.151781+00:00',
-    end_date: '', member: null, on_behalf_of: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
+    end_date: null, member: null, on_behalf_of: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
     person: 078541c9-9081-4082-b28f-29cbb64440cb, post: 2c6982c2-504a-4e0d-8949-dade5f9e494e,
-    start_date: '', updated_at: ! '2015-11-13 01:35:31.151801+00:00'}
+    start_date: null, updated_at: ! '2015-11-13 01:35:31.151801+00:00'}
   model: popit.membership
   pk: b351cdc2-6961-4fc7-9d61-08fca66e1d44
-- fields: {area: null, created_at: ! '2015-11-13 02:44:58.358098+00:00', end_date: '',
+- fields: {area: null, created_at: ! '2015-11-13 02:44:58.358098+00:00', end_date: null,
     member: null, on_behalf_of: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
-    person: 8497ba86-7485-42d2-9596-2ab14520f1f4, post: null, start_date: '', updated_at: ! '2015-11-13
+    person: 8497ba86-7485-42d2-9596-2ab14520f1f4, post: null, start_date: null, updated_at: ! '2015-11-13
       02:44:58.358117+00:00'}
   model: popit.membership
   pk: b5464931-d3a9-4250-a645-204740c1bd9e
@@ -763,20 +763,20 @@
 - fields:
     content_type: [popit, organization]
     created_at: 2015-10-22
-    end_date: ''
+    end_date: null
     note: really othername field don't seems appropriate for organization
     object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-    start_date: ''
+    start_date: null
     updated_at: 2015-10-22
   model: popit.othername
   pk: 53a22b00-1383-4bf5-b4be-4753d8d16062
 - fields:
     content_type: [popit, post]
     created_at: 2015-11-03
-    end_date: ''
+    end_date: null
     note: ''
     object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
-    start_date: ''
+    start_date: null
     updated_at: 2015-11-03
   model: popit.othername
   pk: aee39ddd-6785-4a36-9781-8e745c6359b7
