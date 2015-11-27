@@ -6,6 +6,7 @@ import logging
 import time
 from popit.models import *
 from popit.serializers import *
+import logging
 
 INDEX_PREPARATION_TIME=5
 
@@ -102,21 +103,25 @@ def popit_indexer():
     person_indexer = SerializerSearch("person")
     persons = Person.objects.language("all").all()
     for person in persons:
+        logging.warn("Indexing %s with %s for language %s" % (person.name, person.id, person.language_code))
         person_indexer.add(person, PersonSerializer)
 
     org_indexer = SerializerSearch("organization")
     organizations = Organization.objects.language("all").all()
     for organization in organizations:
+        logging.warn("Indexing %s with %s for language %s" % (organization.name, organization.id, organization.language_code))
         org_indexer.add(organization, OrganizationSerializer)
 
     post_indexer = SerializerSearch("post")
     posts = Post.objects.language("all").all()
     for post in posts:
+        logging.warn("Indexing %s with %s for language %s" % (post.label, post.id, post.language_code))
         post_indexer.add(post, PostSerializer)
 
     mem_indexer = SerializerSearch("membership")
     memberships = Membership.objects.language("all").all()
     for membership in memberships:
+        logging.warn("Indexing id %s for language %s" % (membership.id, membership.language_code))
         mem_indexer.add(membership, MembershipSerializer)
 
 def remove_popit_index():

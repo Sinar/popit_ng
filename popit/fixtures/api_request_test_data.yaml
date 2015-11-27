@@ -140,34 +140,6 @@
     updated_at: ! '2015-10-21 23:44:40.750308+00:00'}
   model: popit.area
   pk: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
-- fields: {additional_name: '', biography: '', family_name: ng, gender: '', given_name: '',
-    honorific_prefix: '', honorific_suffix: '', language_code: ms_my, master: ab1a5788e5bae955c048748fa6af0e97,
-    name: Swee Meng, national_identity: '', patronymic_name: '', sort_name: '', summary: ''}
-  model: popit.persontranslation
-  pk: 3
-- fields: {additional_name: '', biography: '', family_name: ng, gender: '', given_name: '',
-    honorific_prefix: '', honorific_suffix: '', language_code: en-gb, master: ab1a5788e5bae955c048748fa6af0e97,
-    name: Swee Meng, national_identity: '', patronymic_name: '', sort_name: '', summary: ''}
-  model: popit.persontranslation
-  pk: 4
-- fields: {additional_name: '', biography: orang biasa, family_name: ng, gender: '',
-    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: ms_MY,
-    master: ab1a5788e5bae955c048748fa6af0e97, name: swee meng, national_identity: '',
-    patronymic_name: '', sort_name: '', summary: orang biasa}
-  model: popit.persontranslation
-  pk: 5
-- fields: {additional_name: '', biography: ordinary guy, family_name: ng, gender: '',
-    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: en-us,
-    master: ab1a5788e5bae955c048748fa6af0e97, name: Swee Meng, national_identity: '',
-    patronymic_name: '', sort_name: '', summary: ordinary guy}
-  model: popit.persontranslation
-  pk: 6
-- fields: {additional_name: '', biography: ordinary guy, family_name: ng, gender: '',
-    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: en-my,
-    master: ab1a5788e5bae955c048748fa6af0e97, name: Swee Meng, national_identity: '',
-    patronymic_name: '', sort_name: '', summary: ordinary guy}
-  model: popit.persontranslation
-  pk: 7
 - fields: {additional_name: '', biography: an ordinary guy, family_name: ng, gender: '',
     given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: en,
     master: ab1a5788e5bae955c048748fa6af0e97, name: Swee Meng, national_identity: '',
