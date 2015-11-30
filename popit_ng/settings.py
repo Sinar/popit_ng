@@ -45,13 +45,15 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'popit',
-    'popit_search'
+    'popit_search',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'solid_i18n.middleware.SolidLocaleMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -140,6 +142,11 @@ REST_FRAMEWORK = {
 ES_HOST = [ "http://localhost:9200", ]
 # Support 1 index for now
 ES_INDEX = "popit"
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = ()
+CORS_ORIGIN_REGEX_WHITELIST = (
+    '^(https?://)?(\w+\.)?sinarproject\.org$', )
 
 try:
     from settings_local import *
