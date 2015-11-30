@@ -39,7 +39,12 @@ class SerializerSearch(object):
     def search(self, query, language=None):
         # Support only query string query for now.
         # e.g https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
-        result = self.es.search(self.index, q=query)
+
+        # ewww but I am on a deadline
+        if "language_code" not in query and language:
+            query += " AND language_code:%s" % language
+        logging.warn(query)
+        result = self.es.search(self.index, doc_type=self.doc_type, q=query)
         hits = result["hits"]["hits"]
         output = []
         for hit in hits:
@@ -100,30 +105,34 @@ class SerializerSearchInstanceExist(Exception):
 
 # TODO: Improve API usage.
 def popit_indexer():
-    person_indexer = SerializerSearch("person")
+    person_indexer = SerializerSearch("persons")
     persons = Person.objects.language("all").all()
     for person in persons:
         logging.warn("Indexing %s with %s for language %s" % (person.name, person.id, person.language_code))
-        person_indexer.add(person, PersonSerializer)
+        status=person_indexer.add(person, PersonSerializer)
+        logging.warn(status)
 
-    org_indexer = SerializerSearch("organization")
+    org_indexer = SerializerSearch("organizations")
     organizations = Organization.objects.language("all").all()
     for organization in organizations:
         logging.warn("Indexing %s with %s for language %s" % (organization.name, organization.id, organization.language_code))
-        org_indexer.add(organization, OrganizationSerializer)
+        status=org_indexer.add(organization, OrganizationSerializer)
+        logging.warn(status)
 
-    post_indexer = SerializerSearch("post")
+    post_indexer = SerializerSearch("posts")
     posts = Post.objects.language("all").all()
     for post in posts:
         logging.warn("Indexing %s with %s for language %s" % (post.label, post.id, post.language_code))
-        post_indexer.add(post, PostSerializer)
+        status=post_indexer.add(post, PostSerializer)
+        logging.warn(status)
 
-    mem_indexer = SerializerSearch("membership")
+    mem_indexer = SerializerSearch("memberships")
     memberships = Membership.objects.language("all").all()
     for membership in memberships:
         logging.warn("Indexing id %s for language %s" % (membership.id, membership.language_code))
-        mem_indexer.add(membership, MembershipSerializer)
+        status=mem_indexer.add(membership, MembershipSerializer)
+        logging.warn(status)
 
 def remove_popit_index():
-    person_indexer = SerializerSearch("person")
+    person_indexer = SerializerSearch("persons")
     person_indexer.delete_index()

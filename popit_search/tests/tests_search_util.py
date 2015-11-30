@@ -16,7 +16,7 @@ class SearchUtilTestCase(TestCase):
     fixtures = [ "api_request_test_data.yaml" ]
 
     def setUp(self):
-        self.popit_search = search.SerializerSearch("person", index="test_popit")
+        self.popit_search = search.SerializerSearch("persons", index="test_popit")
         self.es_host = settings.ES_HOST[0]
 
     def tearDown(self):

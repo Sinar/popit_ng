@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from rest_framework.urlpatterns import format_suffix_patterns
 from popit.views import *
+from popit_search.views import GenericSearchView
 
 
 urlpatterns = [
@@ -30,7 +31,7 @@ if "rosetta" in settings.INSTALLED_APPS:
     )
 
 api_urls = [
-
+    url(r'^(?P<language>\w{2})/search/(?P<index_name>\w+)/$', GenericSearchView.as_view()),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/$', PostContactDetailLinkDetail.as_view()),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/$', PostContactDetailLinkList.as_view()),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/$', PostContactDetailDetail.as_view()),
