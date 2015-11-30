@@ -44,7 +44,7 @@ class SerializerSearch(object):
         if "language_code" not in query and language:
             query += " AND language_code:%s" % language
         logging.warn(query)
-        result = self.es.search(self.index, doc_type=self.doc_type, q=query)
+        result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
         hits = result["hits"]["hits"]
         output = []
         for hit in hits:
@@ -78,7 +78,7 @@ class SerializerSearch(object):
         hits = result["hits"]["hits"]
         for hit in hits:
             id = hit["_id"]
-            self.es.delete(self.index, doc_type=self.doc_type, id=id)
+            self.es.delete(index=self.index, doc_type=self.doc_type, id=id)
             time.sleep(INDEX_PREPARATION_TIME)
 
     def raw_query(self, query):
