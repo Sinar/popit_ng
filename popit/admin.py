@@ -10,46 +10,47 @@ from popit.models import Organization
 from popit.models import Post
 from popit.models import ContactDetail
 from popit.models import Membership
+from reversion.admin import VersionAdmin
 
 
 # Register your models here.
-class PersonAdmin(TranslatableAdmin):
+class PersonAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class LinkAdmin(TranslatableAdmin):
+class LinkAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class ContactAdmin(TranslatableAdmin):
+class ContactAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class OtherNameAdmin(TranslatableAdmin):
+class OtherNameAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class IdentifierAdmin(TranslatableAdmin):
+class IdentifierAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class AreaAdmin(TranslatableAdmin):
+class AreaAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class OrganizationAdmin(TranslatableAdmin):
+class OrganizationAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class PostAdmin(TranslatableAdmin):
+class PostAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class ContactDetailAdmin(TranslatableAdmin):
+class ContactDetailAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 
-class MembershipAdmin(TranslatableAdmin):
+class MembershipAdmin(TranslatableAdmin, VersionAdmin):
     pass
 
 admin.site.register(Person, PersonAdmin)
