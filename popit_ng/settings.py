@@ -47,9 +47,11 @@ INSTALLED_APPS = (
     'popit',
     'popit_search',
     'corsheaders',
+    'reversion',
 )
 
 MIDDLEWARE_CLASSES = (
+    'reversion.middleware.RevisionMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'solid_i18n.middleware.SolidLocaleMiddleware',
     'django.middleware.locale.LocaleMiddleware',
