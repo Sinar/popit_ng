@@ -1,5 +1,6 @@
 __author__ = 'sweemeng'
 from django.test import TestCase
+from django.core.validators import ValidationError
 from popit.models import Post
 from popit.models import Organization
 from popit.models import Area
@@ -49,8 +50,8 @@ class PostModelTestCase(TestCase):
             role="director",
             organization=organization,
             area=area,
-            start_date="2000-2-2",
-            end_date="2030-2-2",
+            start_date="2000-02-02",
+            end_date="2030-02-02",
         )
         self.assertEqual(post.label, "leader")
 
@@ -122,4 +123,17 @@ class PostModelTestCase(TestCase):
 
         link = post.links.language("en").get(field="label")
         self.assertEqual(link.note, "Just a note")
+
+    def test_create_post_invalid_date(self):
+        with self.assertRaises(ValidationError):
+            organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+            area = Area.objects.language("en").get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
+            post = Post.objects.language("en").create(
+                label="leader",
+                role="director",
+                organization=organization,
+                area=area,
+                start_date="bad",
+                end_date="date",
+            )
 

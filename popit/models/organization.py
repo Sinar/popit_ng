@@ -4,6 +4,7 @@ from hvad.models import TranslatableModel
 from hvad.models import TranslatedFields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
+from django.core.validators import RegexValidator
 from popit.models.misc import OtherName
 from popit.models.misc import Contact
 from popit.models.misc import ContactDetail
@@ -26,8 +27,15 @@ class Organization(TranslatableModel):
     parent = models.ForeignKey('self', related_name='children', null=True, blank=True)
 
     area = models.ForeignKey(Area, null=True, blank=True)
-    founding_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('founding date'))
-    dissolution_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('dissolution date'))
+    founding_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('founding date'),
+                                     validators=[
+                                      RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                  ])
+    dissolution_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('dissolution date'),
+                                        validators=[
+                                              RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                          ]
+                                        )
 
     image = models.URLField(null=True, blank=True, verbose_name=_('image'))
 
@@ -57,9 +65,13 @@ class Organization(TranslatableModel):
             return True
         return False
 
+    def clean(self):
+        super(Organization, self).clean()
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4())
+        self.full_clean()
         super(Organization, self).save(*args, **kwargs)
 
     def __unicode__(self):

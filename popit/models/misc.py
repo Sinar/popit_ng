@@ -5,6 +5,7 @@ from hvad.models import TranslatedFields
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.fields import GenericRelation
+from django.core.validators import RegexValidator
 from django.utils.translation import ugettext_lazy as _
 import uuid
 from popit.models.exception import PopItFieldNotExist
@@ -33,6 +34,7 @@ class Link(TranslatableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4())
+        self.full_clean()
         super(Link, self).save(*args, **kwargs)
 
     def add_citation(self, field, url, note):
@@ -68,6 +70,7 @@ class Contact(TranslatableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4())
+        self.full_clean()
         super(Contact, self).save(*args, **kwargs)
 
     def add_citation(self, field, url, note):
@@ -100,8 +103,14 @@ class ContactDetail(TranslatableModel):
     )
     type = models.CharField(max_length=255, verbose_name=_("type"))
     value = models.CharField(max_length=255, verbose_name=_("value"))
-    valid_from = models.DateField(null=True, blank=True, verbose_name=_("valid from"))
-    valid_until = models.DateField(null=True, blank=True, verbose_name=_("valid until"))
+    valid_from = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("valid from"),
+                                        validators=[
+                                              RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                          ])
+    valid_until = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("valid until"),
+                                        validators=[
+                                              RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                          ])
     object_id = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey("content_type", "object_id")
@@ -112,6 +121,7 @@ class ContactDetail(TranslatableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4())
+        self.full_clean()
         super(ContactDetail, self).save(*args, **kwargs)
 
     def add_citation(self, field, url, note):
@@ -156,6 +166,7 @@ class Identifier(TranslatableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4())
+        self.full_clean()
         super(Identifier, self).save(*args, **kwargs)
 
     def add_citation(self, field, url, note):
@@ -196,8 +207,14 @@ class OtherName(TranslatableModel):
         honorific_suffix = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("honorific suffix")),
         patronymic_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("patronymmic name")),
     )
-    start_date = models.CharField(max_length=20, null=True, blank=True) # Sometime we have no idea
-    end_date = models.CharField(max_length=20, null=True, blank=True)
+    start_date = models.CharField(max_length=20, null=True, blank=True,
+                                        validators=[
+                                              RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                          ]) # Sometime we have no idea
+    end_date = models.CharField(max_length=20, null=True, blank=True,
+                                        validators=[
+                                              RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                          ])
 
     object_id = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType)
@@ -213,6 +230,7 @@ class OtherName(TranslatableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4())
+        self.full_clean()
         super(OtherName, self).save(*args, **kwargs)
 
     def add_citation(self, field, url, note):
@@ -262,6 +280,7 @@ class Area(TranslatableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4()) # We use id from popolo, but do not assume anyone have mapit setup
+        self.full_clean()
         super(Area, self).save(*args, **kwargs)
 
     def add_citation(self, field, url, note):

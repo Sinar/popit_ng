@@ -126,3 +126,21 @@ class MembershipModelTestCase(TestCase):
 
         links = membership.links.language("en").get(url="http://facebook.com/scaly_wag")
         self.assertEqual(links.url, "http://facebook.com/scaly_wag")
+
+    def test_create_bad_date_membership(self):
+        person = Person.objects.language("en").get(id="8497ba86-7485-42d2-9596-2ab14520f1f4")
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        area = Area.objects.language("en").get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
+        on_behalf_of = Organization.objects.language("en").get(id="e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec")
+        with self.assertRaises(ValidationError):
+            membership=Membership.objects.language("en").create(
+                label="Test full membership",
+                start_date="abcd",
+                end_date="abcd",
+                person=person,
+                organization=organization,
+                post=post,
+                area=area,
+                on_behalf_of=on_behalf_of
+            )

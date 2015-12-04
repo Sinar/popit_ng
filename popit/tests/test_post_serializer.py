@@ -53,8 +53,8 @@ class PostSerializerTestCase(TestCase):
             "organization_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
             "role": "Honorary Member",
             "area_id": "640c0f1d-2305-4d17-97fe-6aa59f079cc4",
-            "start_date": "2000-2-2",
-            "end_date": "2030-2-2",
+            "start_date": "2000-02-02",
+            "end_date": "2030-02-02",
         }
 
         serializer = PostSerializer(data=data, language="en")
@@ -237,7 +237,7 @@ class PostSerializerTestCase(TestCase):
         data = {
             "contact_details": [
                 {
-                    "id": "aee39ddd-6785-4a36-9781-8e745c6359b7",
+                    "id": "7f3f67c4-6afd-4de9-880e-943560cf56c0",
                     "links": [
                         {
                             "url": "http://www.bing.com"
@@ -253,7 +253,7 @@ class PostSerializerTestCase(TestCase):
         serializer.save()
 
         post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
-        contact = post.contact_details.language("en").get(id="aee39ddd-6785-4a36-9781-8e745c6359b7")
+        contact = post.contact_details.language("en").get(id="7f3f67c4-6afd-4de9-880e-943560cf56c0")
         link = contact.links.language("en").get(url="http://www.bing.com")
         self.assertEqual(link.url, "http://www.bing.com")
 

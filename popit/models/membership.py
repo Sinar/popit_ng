@@ -4,6 +4,7 @@ from hvad.models import TranslatedFields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 from popit.models.exception import PopItFieldNotExist
 from popit.models import Person
 from popit.models import Organization
@@ -29,8 +30,16 @@ class Membership(TranslatableModel):
     post = models.ForeignKey(Post, null=True, blank=True, verbose_name=_("post"))
     on_behalf_of = models.ForeignKey(Organization, null=True, blank=True, verbose_name=_("on_behalf_of"), related_name="on_behalf_of")
     area = models.ForeignKey(Area, null=True, blank=True, verbose_name=_("area"))
-    start_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("start date"))
-    end_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("end date"))
+    start_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("start date"),
+                                  validators=[
+                                      RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                  ]
+        )
+    end_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("end date"),
+                                validators=[
+                                      RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                  ]
+                                )
     contact_details = GenericRelation(ContactDetail)
     links = GenericRelation(Link)
 
@@ -56,9 +65,11 @@ class Membership(TranslatableModel):
         return False
 
     def save(self, *args, **kwargs):
-        self.full_clean()
         if not self.id:
             self.id = str(uuid.uuid4())
+
+        self.full_clean()
+
         super(Membership, self).save(*args, **kwargs)
 
     def clean(self):

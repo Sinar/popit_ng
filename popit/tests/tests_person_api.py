@@ -12,7 +12,7 @@ from popit.models import *
 # TODO: Test multilingual behavior. To make behavior clear
 # TODO: Need new fixtures
 class PersonSerializerTestCase(TestCase):
-    fixtures = [ "api_test_data.yaml" ]
+    fixtures = [ "api_request_test_data.yaml" ]
 
     def setUp(self):
         post_save.disconnect(person_save_handler, Person)

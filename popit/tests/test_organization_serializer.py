@@ -138,6 +138,7 @@ class OrganizationSerializerTestCase(TestCase):
                     "value": "01234567",
                     "label": "myphone",
                     "note": "my phone",
+                    "type": "phone",
                     "valid_from": "2015-01-01",
                     "valid_until": "2020-01-01",
                 }

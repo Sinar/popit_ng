@@ -1,5 +1,6 @@
 __author__ = "sweemeng"
 from django.test import TestCase
+from django.core.validators import ValidationError
 from rest_framework.test import APIRequestFactory
 from popit.models import Person
 from popit.models import Link
@@ -129,7 +130,7 @@ class PersonTestCase(TestCase):
             name="John Doe"
         )
         links = Link.objects.language('en').create(
-            url="www.google.com",
+            url="http://www.google.com",
             note="some link",
             content_object=person
         )
@@ -138,7 +139,7 @@ class PersonTestCase(TestCase):
         self.assertNotEqual(person_.id, '')
         links_ = person_.links.language('en').all()[0]
         self.assertNotEqual(links_.id, '')
-        self.assertEqual(links_.url, 'www.google.com')
+        self.assertEqual(links_.url, 'http://www.google.com')
 
     def test_create_person_citation(self):
         person = Person.objects.language('en').create(
@@ -146,10 +147,10 @@ class PersonTestCase(TestCase):
         )
 
         person_ = Person.objects.language('en').get(name='john bin doe')
-        person_.add_citation('name', 'google.com', 'just a link')
+        person_.add_citation('name', 'http://google.com', 'just a link')
         links = person_.links.language('en').filter(field='name')
 
-        self.assertEqual(links[0].url, 'google.com')
+        self.assertEqual(links[0].url, 'http://google.com')
 
     # Each citation is done on object level. This might be hard on the UI
     # But it is easier on data model. In Django Rest Framework, there is nested relationship, which show the full thing
@@ -165,13 +166,13 @@ class PersonTestCase(TestCase):
             content_object=person,
             note="Test Data"
         )
-        other_name.add_citation('family_name', 'google.com', 'just search it')
+        other_name.add_citation('family_name', 'http://google.com', 'just search it')
 
         # I don't like this query. Can potentially slow down.
         person_ = Person.objects.language('en').get(name='john jambul')
         other_name_ = person_.other_names.language('en').all()
         links= other_name_[0].links.language('en').all()
-        self.assertEqual(links[0].url, 'google.com')
+        self.assertEqual(links[0].url, 'http://google.com')
 
     def test_create_contact_citation(self):
         person = Person.objects.language('en').create(
@@ -187,13 +188,13 @@ class PersonTestCase(TestCase):
             content_object=person
         )
 
-        contact_details.add_citation('type', 'google.com', 'just search it')
+        contact_details.add_citation('type', 'http://google.com', 'just search it')
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, "")
         contact_details_ = person_.contact_details.language('en').all()[0]
         links = contact_details_.links.language('en').all()
-        self.assertEqual(links[0].url, 'google.com')
+        self.assertEqual(links[0].url, 'http://google.com')
 
     def test_create_identifier_citation(self):
         person = Person.objects.language('en').create(
@@ -206,14 +207,14 @@ class PersonTestCase(TestCase):
             content_object=person
         )
 
-        identifiers.add_citation("identifier", 'google.com', 'just search it')
+        identifiers.add_citation("identifier", 'http://google.com', 'just search it')
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, '')
         identifiers_ = person_.identifiers.language('en').all()[0]
         links = identifiers_.links.language('en').all()
 
-        self.assertEqual(links[0].url, 'google.com')
+        self.assertEqual(links[0].url, 'http://google.com')
 
     def test_create_person_citation_field_not_exist(self):
         person = Person.objects.language('en').create(
@@ -274,7 +275,7 @@ class PersonTestCase(TestCase):
         )
 
         person_ = Person.objects.language('en').get(name='john bin doe')
-        person_.add_citation('name', 'google.com', 'just a link')
+        person_.add_citation('name', 'http://google.com', 'just a link')
         self.assertTrue(person_.citation_exist('name'))
 
     def test_othername_citation_exist(self):
@@ -288,7 +289,7 @@ class PersonTestCase(TestCase):
             content_object=person,
             note="Test Data"
         )
-        other_name.add_citation('family_name', 'google.com', 'just search it')
+        other_name.add_citation('family_name', 'http://google.com', 'just search it')
 
         # I don't like this query. Can potentially slow down.
         person_ = Person.objects.language('en').get(name='john jambul')
@@ -309,7 +310,7 @@ class PersonTestCase(TestCase):
             content_object=person
         )
 
-        contact_details.add_citation('type', 'google.com', 'just search it')
+        contact_details.add_citation('type', 'http://google.com', 'just search it')
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, "")
@@ -327,7 +328,7 @@ class PersonTestCase(TestCase):
             content_object=person
         )
 
-        identifiers.add_citation("identifier", 'google.com', 'just search it')
+        identifiers.add_citation("identifier", 'http://google.com', 'just search it')
 
         person_ = Person.objects.language('en').get(name='John Doe')
         self.assertNotEqual(person_.id, '')
@@ -440,7 +441,7 @@ class PersonTestCase(TestCase):
         links = Link.objects.language('en').create(
             label="test data",
             field="",
-            url="www.google.com",
+            url="http://www.google.com",
             note="some link",
             content_object=person
         )
@@ -512,3 +513,23 @@ class PersonTestCase(TestCase):
         self.assertEqual(type(contact_details.note), str)
         self.assertEqual(type(contact_details.valid_from), str)
         self.assertEqual(type(contact_details.valid_until), str)
+
+    def test_create_person_bad_date(self):
+        # This is what the field look like if you add everything
+        with self.assertRaises(ValidationError):
+            person = Person.objects.language('en').create(
+                name="John",
+                family_name="Doe",
+                given_name="Harry",
+                additional_name="The Fake",
+                honorific_prefix="Sir",
+                honorific_suffix="of Sinar Office",
+                email="doe@sinarproject.org",
+                gender="male",
+                birth_date="bad",
+                death_date="date",
+                image="",
+                summary="This is a test person",
+                biography="This is a test person in sinar project",
+                national_identity="Malaysian"
+            )

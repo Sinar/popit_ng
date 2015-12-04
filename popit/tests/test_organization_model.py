@@ -1,5 +1,6 @@
 __author__ = 'sweemeng'
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 from popit.models import Organization
 from popit.models import OtherName
 from popit.models import Link
@@ -51,7 +52,7 @@ class OrganizationTestCase(TestCase):
             abstract="sell useless object",
             description="sell useless object to coyote to hunt roadrunner",
             founding_date="1902-01-01",
-            dissolution_date="20220-01-01"
+            dissolution_date="2020-01-01"
         )
         organization = Organization.objects.language("en").get(name="acme corp")
         self.assertEqual(organization.classification, "corporation")
@@ -74,13 +75,13 @@ class OrganizationTestCase(TestCase):
             name="acme corp"
         )
         Link.objects.language("en").create(
-            url="google.com",
+            url="http://google.com",
             note="Some url",
             content_object=organization
         )
 
         organization_ = Organization.objects.language("en").get(name="acme corp")
-        link = organization_.links.language("en").get(url="google.com")
+        link = organization_.links.language("en").get(url="http://google.com")
         self.assertEqual(link.note, "Some url")
 
     def test_create_organization_identifier(self):
@@ -127,48 +128,48 @@ class OrganizationTestCase(TestCase):
 
     def test_create_organization_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        organization.add_citation("name", "pirateparty.com", "just a link")
+        organization.add_citation("name", "http://pirateparty.com", "just a link")
 
         organization_ = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         links=organization_.links.get(field="name")
-        self.assertEqual(links.url, "pirateparty.com")
+        self.assertEqual(links.url, "http://pirateparty.com")
 
     def test_create_organization_other_name_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         other_name = organization.other_names.language("en").get(id="53a22b00-1383-4bf5-b4be-4753d8d16062")
-        other_name.add_citation("family_name", "sinarproject.org", "just another note")
+        other_name.add_citation("family_name", "http://sinarproject.org", "just another note")
         organization_ = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         other_name = organization_.other_names.language("en").get(id="53a22b00-1383-4bf5-b4be-4753d8d16062")
         link = other_name.links.language("en").get(field="family_name")
-        self.assertEqual(link.url, "sinarproject.org")
+        self.assertEqual(link.url, "http://sinarproject.org")
 
     def test_create_organization_identifier_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         identifier = organization.identifiers.get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
-        identifier.add_citation("scheme", "sinarproject.org", "random source")
+        identifier.add_citation("scheme", "http://sinarproject.org", "random source")
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         identifier = organization.identifiers.language("en").get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
         link = identifier.links.language("en").get(field="scheme")
-        self.assertEqual(link.url, "sinarproject.org")
+        self.assertEqual(link.url, "http://sinarproject.org")
 
     def test_create_organization_contact_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
-        contact.add_citation("value","google.com", "find it")
+        contact.add_citation("value","http://google.com", "find it")
 
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         link = contact.links.language("en").get(field="value")
-        self.assertEqual(link.url, "google.com")
+        self.assertEqual(link.url, "http://google.com")
 
     def test_create_organization_area_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         area = organization.area
-        area.add_citation("name", "en.wikipedia.com", "wikipedia")
+        area.add_citation("name", "http://en.wikipedia.com", "wikipedia")
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         area = organization.area
         link = area.links.language("en").get(field="name")
-        self.assertEqual(link.url, "en.wikipedia.com")
+        self.assertEqual(link.url, "http://en.wikipedia.com")
 
     # TODO: Add bad citation
     def test_create_organization_citation_citation_bad_field(self):
@@ -199,3 +200,14 @@ class OrganizationTestCase(TestCase):
         area = organization.area
         with self.assertRaises(PopItFieldNotExist):
             area.add_citation("names", "en.wikipedia.com", "wikipedia")
+
+    def test_create_organization_invalid_date(self):
+        with self.assertRaises(ValidationError):
+            Organization.objects.language("en").create(
+                name="acme corp",
+                classification="corporation",
+                abstract="sell useless object",
+                description="sell useless object to coyote to hunt roadrunner",
+                founding_date="abcd",
+                dissolution_date="abcd"
+            )

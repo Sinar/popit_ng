@@ -4,6 +4,7 @@ from hvad.models import TranslatableModel
 from hvad.models import TranslatedFields
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.fields import GenericRelation
+from django.core.validators import RegexValidator
 from popit.models.misc import OtherName
 from popit.models.misc import Contact
 from popit.models.misc import ContactDetail
@@ -36,10 +37,16 @@ class Person(TranslatableModel):
 
     )
 
-    email = models.EmailField(null=True, verbose_name=_("email")) # Because we happen to have a lot of unusable email.
+    email = models.EmailField(blank=True, null=True, verbose_name=_("email")) # Because we happen to have a lot of unusable email.
 
-    birth_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("birth date"))
-    death_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("death data"))
+    birth_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("birth date"),
+                                        validators=[
+                                              RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                          ])
+    death_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("death data"),
+                                        validators=[
+                                              RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
+                                          ])
     image = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("image links")) # Maybe I should have a default image path :-/
 
     other_names = GenericRelation(OtherName)
@@ -71,6 +78,7 @@ class Person(TranslatableModel):
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = str(uuid.uuid4())
+        self.full_clean()
         super(Person, self).save(*args, **kwargs)
 
     def __unicode__(self):
