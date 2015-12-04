@@ -8,6 +8,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.utils.translation import ugettext_lazy as _
 import uuid
 from popit.models.exception import PopItFieldNotExist
+import reversion
 
 
 # Yay Popolo+!
@@ -47,6 +48,7 @@ class Link(TranslatableModel):
 
     def __unicode__(self):
         return self.url
+
 
 class Contact(TranslatableModel):
     id = models.CharField(max_length=255, primary_key=True, blank=True)
@@ -286,3 +288,10 @@ class Area(TranslatableModel):
     def __unicode__(self):
         return self.safe_translation_getter('name', self.name)
 
+
+reversion.register(ContactDetail, follow=[ "translation" ])
+# a bit magical. Should streamline this
+reversion.register(ContactDetail._meta.translations_model)
+reversion.register(Contact, follow=[ "translation" ])
+# a bit magical. Should streamline this
+reversion.register(Contact._meta.translations_model)
