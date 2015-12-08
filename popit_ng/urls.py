@@ -26,9 +26,9 @@ urlpatterns = [
 ]
 
 if "rosetta" in settings.INSTALLED_APPS:
-    urlpatterns += patterns('',
+    urlpatterns += [
         url(r'rosetta/', include('rosetta.urls'))
-    )
+    ]
 
 api_urls = [
     url(r'^(?P<language>\w{2})/search/(?P<index_name>\w+)/$', GenericSearchView.as_view()),
