@@ -92,6 +92,15 @@ class ContactDetailSerializer(TranslatableModelSerializer):
         else:
             self.create_links(validated_data, parent)
 
+    def to_representation(self, instance):
+        data = super(ContactDetailSerializer, self).to_representation(instance)
+
+        links_instance = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(instance=links_instance, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        return data
+
     class Meta:
         model = ContactDetail
         exclude = ('object_id', 'content_type')
@@ -150,6 +159,15 @@ class IdentifierSerializer(TranslatableModelSerializer):
                 link.save()
         else:
             self.create_links(validated_data, parent)
+
+    def to_representation(self, instance):
+        data = super(IdentifierSerializer, self).to_representation(instance)
+
+        links_instance = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(instance=links_instance, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        return data
 
     class Meta:
         model = Identifier
@@ -225,6 +243,15 @@ class OtherNameSerializer(TranslatableModelSerializer):
                 link.save()
         else:
             self.create_links(validated_data, parent)
+
+    def to_representation(self, instance):
+        data = super(OtherNameSerializer, self).to_representation(instance)
+
+        links_instance = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(instance=links_instance, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        return data
 
     class Meta:
         model = OtherName
@@ -310,6 +337,15 @@ class AreaSerializer(TranslatableModelSerializer):
                 link.save()
         else:
             self.create_links(validated_data, parent)
+
+    def to_representation(self, instance):
+        data = super(AreaSerializer, self).to_representation(instance)
+
+        links_instance = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(instance=links_instance, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        return data
 
     class Meta:
         model = Area

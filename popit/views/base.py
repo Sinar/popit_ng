@@ -41,10 +41,10 @@ class BasePopitListCreateView(BasePopitView):
             raise EntityNotSetException("Please set an entity in views")
 
         entities = self.entity.objects.untranslated().all()
-        page = self.paginator.paginate_queryset(entities, request, view=self)
 
-        serializer = self.serializer(page, language=language, many=True)
-        return self.paginator.get_paginated_response(serializer.data)
+        serializer = self.serializer(entities, language=language, many=True)
+        page = self.paginator.paginate_queryset(serializer.data, request, view=self)
+        return self.paginator.get_paginated_response(page)
 
     def post(self, request, language, format=True):
         if not self.serializer:

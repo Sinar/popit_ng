@@ -155,6 +155,29 @@ class PersonSerializer(TranslatableModelSerializer):
         else:
             self.create_links(validated_data, parent)
 
+    def to_representation(self, instance):
+        data = super(PersonSerializer, self).to_representation(instance)
+        # Now we do all the overriding
+
+        other_name_instance = instance.other_names.untranslated().all()
+        other_name_serializer = OtherNameSerializer(instance=other_name_instance, many=True, language=instance.language_code)
+        data["other_names"] = other_name_serializer.data
+
+        identifier_instance = instance.identifiers.untranslated().all()
+        identifier_serializer = IdentifierSerializer(instance=identifier_instance, many=True, language=instance.language_code)
+        data["identifiers"] = identifier_serializer.data
+
+        links_instance = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(instance=links_instance, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        contact_details_instance = instance.contact_details.untranslated().all()
+        contact_details_serializer = ContactDetailSerializer(instance=contact_details_instance, many=True,
+                                                             language=instance.language_code)
+        data["contact_details"] = contact_details_serializer.data
+
+        return data
+
     class Meta:
         model = Person
         extra_kwargs = {'id': {'read_only': False, 'required': False}}

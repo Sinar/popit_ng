@@ -143,14 +143,14 @@ class OrganizationSerializer(TranslatableModelSerializer):
         # We only allow pointing to new parent and area not create a new parent and area
         if area_id:
             try:
-                area = Area.objects.language(instance.language_code).get(id=area_id)
+                area = Area.objects.language(instance.language_code_code).get(id=area_id)
                 instance.area = area
             except Area.DoesNotExist:
                 pass
 
         if parent_id:
             try:
-                parent = Organization.objects.language(instance.language_code).get(id=parent_id)
+                parent = Organization.objects.language(instance.language_code_code).get(id=parent_id)
                 instance.parent = parent
             except Organization.DoesNotExist:
                 pass
@@ -211,6 +211,36 @@ class OrganizationSerializer(TranslatableModelSerializer):
                 link.save()
         else:
             self.create_links(validated_data, parent)
+
+    def to_representation(self, instance):
+        data = super(OrganizationSerializer, self).to_representation(instance)
+        # Now we do all the overriding
+        if instance.parent_id:
+            parent_instance = instance.parent.__class__.objects.language(instance.language_code).get(id=instance.parent_id)
+            parent_serializer = ParentOrganizationSerializer(parent_instance, language=instance.language_code)
+            data["parent"] = parent_serializer.data
+        other_name_instance = instance.other_names.untranslated().all()
+        other_name_serializer = OtherNameSerializer(instance=other_name_instance, many=True, language=instance.language_code)
+        data["other_names"] = other_name_serializer.data
+
+        identifier_instance = instance.identifiers.untranslated().all()
+        identifier_serializer = IdentifierSerializer(instance=identifier_instance, many=True, language=instance.language_code)
+        data["identifiers"] = identifier_serializer.data
+
+        links_instance = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(instance=links_instance, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        contact_details_instance = instance.contact_details.untranslated().all()
+        contact_details_serializer = ContactDetailSerializer(instance=contact_details_instance, many=True,
+                                                             language=instance.language_code)
+        data["contact_details"] = contact_details_serializer.data
+
+        if instance.area_id:
+            area_instance = instance.area.__class__.objects.language(instance.language_code).get(id=instance.area_id)
+            area_serializer = AreaSerializer(instance, language=instance.language_code)
+            data["area"] = area_serializer.data
+        return data
 
     class Meta:
         model = Organization

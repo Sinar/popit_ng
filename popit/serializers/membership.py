@@ -232,6 +232,48 @@ class MembershipSerializer(TranslatableModelSerializer):
                         raise serializers.ValidationError("Organization ID does not match Post Organization id")
         return data
 
+    def to_representation(self, instance):
+        data = super(MembershipSerializer, self).to_representation(instance)
+        # Now we do all the overriding
+
+        if instance.organization_id:
+            organization_instance = instance.organization.__class__.objects.language(instance.language_code).get(id=instance.organization_id)
+            organization_serializer = OrganizationSerializer(instance=organization_instance, language=instance.language_code)
+            data["organization"] = organization_serializer.data
+
+        if instance.on_behalf_of_id:
+            on_behalf_of_instance = instance.on_behalf_of.__class__.objects.language(instance.language_code).get(id=instance.on_behalf_of_id)
+            on_behalf_of_serializer = OrganizationSerializer(on_behalf_of_instance, language=instance.language_code)
+            data["on_behalf_of"] = on_behalf_of_serializer.data
+
+        if instance.member_id:
+            member_instance = instance.member.__class__.objects.language(instance.language_code).get(id=instance.member_id)
+            member_serializer = OrganizationSerializer(instance=member_instance, language=instance.language_code)
+            data["member"] = member_serializer.data
+
+        person_instance = instance.person.__class__.objects.language(instance.language_code).get(id=instance.person_id)
+        person_serializer = PersonSerializer(instance=person_instance, language=instance.language_code)
+        data["person"] = person_serializer.data
+
+        if instance.post_id:
+            post_instance = instance.post.__class__.objects.language(instance.language_code).get(id=instance.post_id)
+            post_serializer = PostSerializer(instance=post_instance, language=instance.language_code)
+            data["post"] = post_serializer.data
+
+        links_instance = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(instance=links_instance, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        contact_details_instance = instance.contact_details.untranslated().all()
+        contact_details_serializer = ContactDetailSerializer(instance=contact_details_instance, many=True,
+                                                             language=instance.language_code)
+        data["contact_details"] = contact_details_serializer.data
+
+        if instance.area_id:
+            area_instance = instance.area.__class__.objects.language(instance.language_code).get(id=instance.area_id)
+            area_serializer = AreaSerializer(area_instance, language=instance.language_code)
+            data["area"] = area_serializer.data
+        return data
 
     class Meta:
         model = Membership
