@@ -4,15 +4,12 @@ from popit_search.utils.search import SerializerSearch
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 import logging
+from popit.views.base import BasePopitView
 
 
 # Create your views here.
-class GenericSearchView(APIView):
+class GenericSearchView(BasePopitView):
     index = None
-
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
 
     def get(self, request, language, index_name, **kwargs):
         search = SerializerSearch(index_name)
@@ -20,4 +17,5 @@ class GenericSearchView(APIView):
         q = request.GET.get("q")
         logging.warn(q)
         result = search.search(query=q, language=language)
-        return Response(result)
+        page = self.paginator.paginate_queryset(result, request, view=self)
+        return self.paginator.get_paginated_response(page)

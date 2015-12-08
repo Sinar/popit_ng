@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from popit.signals.handlers import *
 from popit.models import *
+import logging
 
 
 class OrganizationAPITestCase(APITestCase):
@@ -456,7 +457,9 @@ class OrganizationAPITestCase(APITestCase):
 
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
         response = self.client.put("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/", data)
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")

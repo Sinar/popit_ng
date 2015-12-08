@@ -18,58 +18,21 @@ from popit.views.misc import GenericOtherNameLinkList
 from popit.views.misc import GenericOtherNameList
 from popit.views.misc import GenericLinkDetail
 from popit.views.misc import GenericLinkList
+from popit.views.base import BasePopitDetailUpdateView
+from popit.views.base import BasePopitListCreateView
+from popit.views.base import BasePopitView
 
 
-class PostList(APIView):
+class PostList(BasePopitListCreateView):
 
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
-
-    def get(self, request, language, format=None):
-
-        posts = Post.objects.untranslated().all()
-        serializer = PostSerializer(posts, many=True, language=language)
-        return Response(serializer.data)
-
-    def post(self, request, language, format=None):
-        serializer = PostSerializer(data=request.data, language=language)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    entity = Post
+    serializer = PostSerializer
 
 
-class PostDetail(APIView):
+class PostDetail(BasePopitDetailUpdateView):
 
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
-
-    def get_object(self, pk):
-        try:
-            return Post.objects.untranslated().get(id=pk)
-        except Post.DoesNotExist:
-            raise Http404
-
-    def get(self, request, language, pk, format=None):
-        post = self.get_object(pk)
-        serializer = PostSerializer(post, language=language)
-        return Response(serializer.data)
-
-    def put(self, request, language, pk, format=None):
-        post= self.get_object(pk)
-        serializer = PostSerializer(post, data=request.data, partial=True, language=language)
-        if serializer.is_valid():
-            serializer.save()
-
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, language, pk, format=None):
-        post = self.get_object(pk)
-        post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    entity = Post
+    serializer = PostSerializer
 
 
 class PostContactDetailDetail(GenericContactDetailDetail):
@@ -89,11 +52,7 @@ class PostContactDetailLinkList(GenericContactDetailLinkList):
 
 
 # Because the specification uses other_label but It is easier to just use OtherName object Yes I am lazy
-class PostOtherLabelsDetail(APIView):
-
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
+class PostOtherLabelsDetail(BasePopitView):
 
     def get_object(self, parent_pk, pk):
         try:
@@ -109,14 +68,16 @@ class PostOtherLabelsDetail(APIView):
     def get(self, request, language, parent_pk, pk, format=None):
         other_labels = self.get_object(parent_pk, pk)
         serializer = OtherNameSerializer(other_labels, language=language)
-        return Response(serializer.data)
+        data = { "results": serializer.data }
+        return Response(data)
 
     def put(self, request, language, parent_pk, pk, format=None):
         other_labels = self.get_object(parent_pk, pk)
         serializer = OtherNameSerializer(other_labels, data=request.data, language=language)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status.HTTP_200_OK)
+            data = { "results": serializer.data }
+            return Response(data, status.HTTP_200_OK)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, language, parent_pk, pk, format=None):
@@ -125,7 +86,7 @@ class PostOtherLabelsDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class PostOtherLabelsList(APIView):
+class PostOtherLabelsList(BasePopitView):
 
     permission_classes = (
         IsAuthenticatedOrReadOnly,
@@ -141,15 +102,18 @@ class PostOtherLabelsList(APIView):
 
     def get(self, request, language, parent_pk):
         other_labels = self.get_query(parent_pk)
-        serializer = OtherNameSerializer(other_labels, many=True, language=language)
-        return Response(serializer.data)
+        page = self.paginator.paginate_queryset(other_labels, request, view=self)
+
+        serializer = OtherNameSerializer(page, many=True, language=language)
+        return self.paginator.get_paginated_response(serializer.data)
 
     def post(self, request, language, parent_pk):
         post = Post.objects.untranslated().get(id=parent_pk)
         serializer = OtherNameSerializer(data=request.data, language=language)
         if serializer.is_valid():
             serializer.save(content_object=post)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            data = { "results": serializer.data }
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

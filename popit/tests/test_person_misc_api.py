@@ -367,7 +367,7 @@ class PersonIdentifierAPITestCase(APITestCase):
     def test_view_person_identifier_detail_unauthorized(self):
         response = self.client.get("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/34b59cb9-607a-43c7-9d13-dfe258790ebf/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["identifier"], "53110321")
+        self.assertEqual(response.data["results"]["identifier"], "53110321")
 
     def test_view_person_identifier_detail_not_exist_unauthorized(self):
         response = self.client.get("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/not_exist/")
@@ -380,7 +380,7 @@ class PersonIdentifierAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/34b59cb9-607a-43c7-9d13-dfe258790ebf/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["identifier"], "53110321")
+        self.assertEqual(response.data["results"]["identifier"], "53110321")
 
     def test_view_person_identifier_detail_not_exist_authorized(self):
         token = Token.objects.get(user__username="admin")
@@ -519,21 +519,21 @@ class PersonContactAPITestCase(APITestCase):
     def test_view_person_contact_list_unauthorized(self):
         response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data[0]["value"], "0123421221")
+        self.assertEqual(response.data["results"][0]["value"], "0123421221")
 
     def test_view_person_contact_list_authorized(self):
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data[0]["value"], "0123421221")
+        self.assertEqual(response.data["results"][0]["value"], "0123421221")
 
     def test_view_person_contact_detail_unauthorized(self):
         response = self.client.get(
             "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["value"], "0123421221")
+        self.assertEqual(response.data["results"]["value"], "0123421221")
 
     def test_view_person_contact_detail_not_exist_unauthorized(self):
         response = self.client.get(
@@ -548,7 +548,7 @@ class PersonContactAPITestCase(APITestCase):
             "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["value"], "0123421221")
+        self.assertEqual(response.data["results"]["value"], "0123421221")
 
     def test_view_person_contact_detail_not_exist_authorized(self):
         token = Token.objects.get(user__username="admin")
@@ -708,7 +708,7 @@ class PersonIdentifierLinkAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/af7c01b5-1c4f-4c08-9174-3de5ff270bdb/links/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        data = response.data[0]
+        data = response.data["results"][0]
         self.assertEqual(data["url"], "http://github.com/sinarproject/")
 
     def test_get_person_identifier_link_list_authorized(self):
@@ -718,7 +718,7 @@ class PersonIdentifierLinkAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/af7c01b5-1c4f-4c08-9174-3de5ff270bdb/links/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        data = response.data[0]
+        data = response.data["results"][0]
         self.assertEqual(data["url"], "http://github.com/sinarproject/")
 
     def test_get_person_identifier_link_detail_unauthorized(self):
@@ -727,7 +727,7 @@ class PersonIdentifierLinkAPITestCase(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(response.data["url"], "http://github.com/sinarproject/")
+        self.assertEqual(response.data["results"]["url"], "http://github.com/sinarproject/")
 
     def test_get_person_identifier_link_detail_not_exist_unauthorized(self):
         response = self.client.get(
@@ -743,7 +743,7 @@ class PersonIdentifierLinkAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/af7c01b5-1c4f-4c08-9174-3de5ff270bdb/links/9c9a2093-c3eb-4b51-b869-0d3b4ab281fd/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["url"], "http://github.com/sinarproject/")
+        self.assertEqual(response.data["results"]["url"], "http://github.com/sinarproject/")
 
     def test_get_person_identifier_link_detail_not_exist_authorized(self):
         token = Token.objects.get(user__username="admin")

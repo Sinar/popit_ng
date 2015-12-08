@@ -20,56 +20,20 @@ from popit.views.misc import GenericOtherNameLinkList
 from popit.views.misc import GenericOtherNameList
 from popit.views.misc import GenericLinkDetail
 from popit.views.misc import GenericLinkList
+from popit.views.base import BasePopitDetailUpdateView
+from popit.views.base import BasePopitListCreateView
 
 
-class OrganizationList(APIView):
+class OrganizationList(BasePopitListCreateView):
 
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
-
-    def get(self, request, language, format=None):
-        organizations = Organization.objects.untranslated().all()
-        serializer = OrganizationSerializer(organizations, many=True, language=language)
-        return Response(serializer.data)
-
-    def post(self, request, language, format=None):
-        serializer = OrganizationSerializer(data=request.data, language=language)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    entity = Organization
+    serializer = OrganizationSerializer
 
 
-class OrganizationDetail(APIView):
+class OrganizationDetail(BasePopitDetailUpdateView):
 
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
-
-    def get_object(self, pk):
-        try:
-            return Organization.objects.untranslated().get(id=pk)
-        except Organization.DoesNotExist:
-            raise Http404
-
-    def get(self, request, language, pk, format=None):
-        organization = self.get_object(pk)
-        serializer = OrganizationSerializer(organization, language=language)
-        return Response(serializer.data)
-
-    def put(self, request, language, pk, format=None):
-        organization = self.get_object(pk)
-        serializer = OrganizationSerializer(organization, data=request.data, language=language, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, language, pk, format=None):
-        organization = self.get_object(pk)
-        organization.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    entity = Organization
+    serializer = OrganizationSerializer
 
 
 # This might be able to make into the constructor

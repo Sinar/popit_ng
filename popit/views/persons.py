@@ -20,58 +20,19 @@ from popit.views.misc import GenericOtherNameLinkList
 from popit.views.misc import GenericOtherNameList
 from popit.views.misc import GenericLinkDetail
 from popit.views.misc import GenericLinkList
+from popit.views.base import BasePopitListCreateView
+from popit.views.base import BasePopitDetailUpdateView
 
 
 # Create your views here.
-class PersonList(APIView):
-
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
-
-    def get(self, request, language, format=None):
-        persons = Person.objects.untranslated().all()
-        serializer = PersonSerializer(persons, many=True, language=language)
-        return Response(serializer.data)
-
-    def post(self, request, language, format=None):
-        serializer = PersonSerializer(data=request.data, language=language)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class PersonList(BasePopitListCreateView):
+    entity = Person
+    serializer = PersonSerializer
 
 
-class PersonDetail(APIView):
-
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
-
-    def get_object(self, pk, language):
-        try:
-            return Person.objects.language(language).get(id=pk)
-        except Person.DoesNotExist:
-            raise Http404
-
-    def get(self, request, language, pk, format=None):
-        person = self.get_object(pk, language)
-
-        serializer = PersonSerializer(person, language=language)
-        return Response(serializer.data)
-
-    def put(self, request, language, pk, format=None):
-        person = self.get_object(pk, language)
-        serializer = PersonSerializer(person, data=request.data, language=language, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, language, pk, format=None):
-        person = self.get_object(pk, language)
-        person.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class PersonDetail(BasePopitDetailUpdateView):
+    entity = Person
+    serializer = PersonSerializer
 
 
 class PersonContactDetailList(GenericContactDetailList):

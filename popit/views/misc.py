@@ -19,12 +19,11 @@ from popit.models import Link
 from popit.models import OtherName
 from popit.models import Identifier
 from popit.models import Area
+from popit.views.base import BasePopitView
 
 
-class GenericParentChildList(APIView):
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
+
+class GenericParentChildList(BasePopitView):
 
     serializer = None
     parent = None
@@ -44,9 +43,10 @@ class GenericParentChildList(APIView):
         if not self.serializer:
             raise SerializerNotSetException("Not Serializer Set")
         obj = self.get_query(parent_pk, language)
-        serializer = self.serializer(obj, many=True, language=language)
+        page = self.paginator.paginate_queryset(obj, request, view=self)
+        serializer = self.serializer(page, many=True, language=language)
 
-        return Response(serializer.data)
+        return self.paginator.get_paginated_response(serializer.data)
 
     def post(self, request, language, parent_pk, format=None):
         if not self.serializer:
@@ -59,7 +59,8 @@ class GenericParentChildList(APIView):
         if serializer.is_valid():
             try:
                 serializer.save(content_object=parent)
-                return Response(serializer.data, status.HTTP_201_CREATED)
+                data = { "results": serializer.data}
+                return Response(data, status.HTTP_201_CREATED)
             except ContentObjectNotAvailable as e:
                 return Response({"error": e.message}, status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
@@ -109,11 +110,7 @@ class GenericLinkList(GenericParentChildList):
         return links
 
 
-class GenericParentChildDetail(APIView):
-
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
+class GenericParentChildDetail(BasePopitView):
 
     serializer = None
     parent = None
@@ -136,7 +133,8 @@ class GenericParentChildDetail(APIView):
         parent = self.get_parent(parent_pk, language)
         obj = self.get_object(parent, pk)
         serializer = self.serializer(obj, language=language)
-        return Response(serializer.data)
+        data = { "results": serializer.data }
+        return Response(data)
 
     def put(self, request, language, parent_pk, pk, format=None):
         if not self.serializer:
@@ -148,7 +146,8 @@ class GenericParentChildDetail(APIView):
         if serializer.is_valid():
             # We do not override where a link is point to.
             serializer.save()
-            return Response(serializer.data, status.HTTP_200_OK)
+            data = { "results": serializer.data }
+            return Response(data, status.HTTP_200_OK)
 
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
@@ -206,11 +205,7 @@ class GenericLinkDetail(GenericParentChildDetail):
             raise Http404
 
 
-class GenericParentChildLinkList(APIView):
-
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
+class GenericParentChildLinkList(BasePopitView):
 
     serializer = LinkSerializer
     parent = None
@@ -231,8 +226,10 @@ class GenericParentChildLinkList(APIView):
         parent = self.get_parent(parent_pk, language)
         child = self.get_child(parent, pk, language)
         links = child.links.untranslated().all()
-        serializer = self.serializer(links, many=True, language=language)
-        return Response(serializer.data)
+        page = self.paginator.paginate_queryset(links, request, view=self)
+
+        serializer = self.serializer(page, many=True, language=language)
+        return self.paginator.get_paginated_response(serializer.data)
 
     def post(self, request, language, parent_pk, pk, format=None):
         parent = self.get_parent(parent_pk, language)
@@ -241,7 +238,8 @@ class GenericParentChildLinkList(APIView):
         if serializer.is_valid():
             try:
                 serializer.save(content_object=child)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                data = { "results": serializer.data }
+                return Response(data, status=status.HTTP_201_CREATED)
             except ContentObjectNotAvailable as e:
                 # Mostly for idiot that forget to set content object
                 return Response({"message": e.message}, status=status.HTTP_400_BAD_REQUEST)
@@ -287,11 +285,7 @@ class GenericOtherNameLinkList(GenericParentChildLinkList):
             raise Http404
 
 
-class GenericParentChildLinkDetail(APIView):
-
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
+class GenericParentChildLinkDetail(BasePopitView):
 
     serializer = LinkSerializer
     parent = None
@@ -316,7 +310,8 @@ class GenericParentChildLinkDetail(APIView):
         except Link.DoesNotExist:
             raise Http404
         serializer = self.serializer(link, language=language)
-        return Response(serializer.data)
+        data = { "results": serializer.data }
+        return Response(data)
 
     def put(self, request, language, parent_pk, pk, link_pk, format=None):
         parent = self.get_parent(parent_pk, language)
@@ -328,6 +323,7 @@ class GenericParentChildLinkDetail(APIView):
         serializer = self.serializer(link, data=request.data, partial=True, language=language)
         if serializer.is_valid():
             serializer.save()
+            data = { "results": serializer.data }
             return Response(serializer.data, status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -381,15 +377,14 @@ class GenericOtherNameLinkDetail(GenericParentChildLinkDetail):
             raise Http404
 
 
-class AreaList(APIView):
-    permission_classes = (
-        IsAuthenticatedOrReadOnly,
-    )
+class AreaList(BasePopitView):
 
     def get(self, request, language, format=None):
         areas = Area.objects.untranslated().all()
-        serializer = AreaSerializer(areas, language=language, many=True)
-        return Response(serializer.data)
+        page = self.paginator.paginate_queryset(areas, request, view=self)
+        serializer = AreaSerializer(page, language=language, many=True)
+
+        return self.paginator.get_paginated_response(serializer.data)
 
     def post(self, request, language, format=None):
         serializer = AreaSerializer(data=request.data, language=language)
@@ -413,14 +408,16 @@ class AreaDetail(APIView):
     def get(self, request, language, pk, format=None):
         area = self.get_object(pk)
         serializer = AreaSerializer(area, language=language)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        data = { "results": serializer.data }
+        return Response(data, status=status.HTTP_200_OK)
 
     def put(self, request, language, pk, format=None):
         area = self.get_object(pk)
         serializer = AreaSerializer(area, data=request.data, language=language, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            data = { "results": serializer.data }
+            return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, language, pk, format=None):
