@@ -344,3 +344,16 @@ class MembershipAPITestCasse(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.delete("/en/memberships/not_exist/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_fetch_membership_translated_nested(self):
+        response = self.client.get("/ms/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/")
+        results = response.data["results"]
+
+        self.assertEqual(results["organization"]["name"], "Parti Lanun KL")
+        self.assertEqual(results["organization"]["language_code"], "ms")
+
+    def test_fetch_membership_translated(self):
+        response = self.client.get("/ms/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/")
+        results = response.data["results"]
+        self.assertEqual(results["label"], "Kapten Jolly Roger")
+        self.assertEqual(results["language_code"], "ms")

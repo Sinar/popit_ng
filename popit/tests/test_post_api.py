@@ -463,3 +463,16 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.put("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_fetch_post_translated_nested(self):
+        response = self.client.get("/ms/posts/2c6982c2-504a-4e0d-8949-dade5f9e494e/")
+        results = response.data["results"]
+        self.assertEqual(results["organization"]["name"], "Parti Lanun KL")
+        self.assertEqual(results["organization"]["language_code"], "ms")
+
+    def test_fetch_post_translated(self):
+        response = self.client.get("/ms/posts/2c6982c2-504a-4e0d-8949-dade5f9e494e/")
+        results = response.data["results"]
+        self.assertEqual(results["label"], "kapten parti lanun KL")
+        self.assertEqual(results["language_code"], "ms")
+

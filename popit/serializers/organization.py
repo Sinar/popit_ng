@@ -216,7 +216,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
         data = super(OrganizationSerializer, self).to_representation(instance)
         # Now we do all the overriding
         if instance.parent_id:
-            parent_instance = instance.parent.__class__.objects.language(instance.language_code).get(id=instance.parent_id)
+            parent_instance = instance.parent.__class__.objects.untranslated().get(id=instance.parent_id)
             parent_serializer = ParentOrganizationSerializer(parent_instance, language=instance.language_code)
             data["parent"] = parent_serializer.data
         other_name_instance = instance.other_names.untranslated().all()
@@ -237,7 +237,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
         data["contact_details"] = contact_details_serializer.data
 
         if instance.area_id:
-            area_instance = instance.area.__class__.objects.language(instance.language_code).get(id=instance.area_id)
+            area_instance = instance.area.__class__.objects.untranslated().get(id=instance.area_id)
             area_serializer = AreaSerializer(instance, language=instance.language_code)
             data["area"] = area_serializer.data
         return data

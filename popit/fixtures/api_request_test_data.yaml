@@ -1,1108 +1,1119 @@
-- fields: {language_code: en, master: abbd9287ec0b491d6e84dcbfd6f958fc, note: Member
-      of sinar project staff}
-  model: popit.linktranslation
+- model: popit.linktranslation
   pk: 1
-- fields: {language_code: en, master: a4ffa24a9ef3cbcb8cfaa178c9329367, note: github
-      page}
-  model: popit.linktranslation
+  fields: {note: Member of sinar project staff, language_code: en, master: abbd9287ec0b491d6e84dcbfd6f958fc}
+- model: popit.linktranslation
   pk: 2
-- fields: {language_code: en, master: f70854dd-4e2e-4141-a2b8-051a36e5c9ee, note: just
-      the github link}
-  model: popit.linktranslation
+  fields: {note: github page, language_code: en, master: a4ffa24a9ef3cbcb8cfaa178c9329367}
+- model: popit.linktranslation
   pk: 3
-- fields: {language_code: en, master: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd, note: ''}
-  model: popit.linktranslation
+  fields: {note: just the github link, language_code: en, master: f70854dd-4e2e-4141-a2b8-051a36e5c9ee}
+- model: popit.linktranslation
   pk: 4
-- fields: {language_code: en, master: 45b0a790-8c9e-4553-844b-431ed34b6b12, note: Web
-      page of the party leader}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd}
+- model: popit.linktranslation
   pk: 5
-- fields: {language_code: en, master: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a, note: just
-      from a site}
-  model: popit.linktranslation
+  fields: {note: Web page of the party leader, language_code: en, master: 45b0a790-8c9e-4553-844b-431ed34b6b12}
+- model: popit.linktranslation
   pk: 6
-- fields: {language_code: en, master: fe662497-c24d-4bbb-a72d-feb77319782a, note: ''}
-  model: popit.linktranslation
+  fields: {note: just from a site, language_code: en, master: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a}
+- model: popit.linktranslation
   pk: 7
-- fields: {language_code: en, master: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: fe662497-c24d-4bbb-a72d-feb77319782a}
+- model: popit.linktranslation
   pk: 8
-- fields: {language_code: en, master: 02369098-7b46-4d62-9318-a5f1c2d385bd, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf}
+- model: popit.linktranslation
   pk: 9
-- fields: {language_code: en, master: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 02369098-7b46-4d62-9318-a5f1c2d385bd}
+- model: popit.linktranslation
   pk: 10
-- fields: {language_code: en, master: 6d0afb46-67d4-4708-87c4-4d51ce99767e, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6}
+- model: popit.linktranslation
   pk: 11
-- fields: {language_code: en, master: ed8a52d8-5503-45aa-a2ad-9931461172d2, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 6d0afb46-67d4-4708-87c4-4d51ce99767e}
+- model: popit.linktranslation
   pk: 12
-- fields: {language_code: en, master: ce15a9ee-6742-4467-bbfb-c86459ee685b, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: ed8a52d8-5503-45aa-a2ad-9931461172d2}
+- model: popit.linktranslation
   pk: 13
-- fields: {language_code: en, master: 10472346-59bf-40f9-95cc-e4cf2dea6e48, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: ce15a9ee-6742-4467-bbfb-c86459ee685b}
+- model: popit.linktranslation
   pk: 14
-- fields: {language_code: en, master: 6c928027-4813-4770-80a5-ba413a43efae, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 10472346-59bf-40f9-95cc-e4cf2dea6e48}
+- model: popit.linktranslation
   pk: 15
-- fields: {language_code: en, master: a37256e6-eab7-417a-8ac8-32edc5031924, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 6c928027-4813-4770-80a5-ba413a43efae}
+- model: popit.linktranslation
   pk: 16
-- fields: {language_code: en, master: 239edef4-af68-4ffb-adce-96d17cbea79d, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: a37256e6-eab7-417a-8ac8-32edc5031924}
+- model: popit.linktranslation
   pk: 17
-- fields: {language_code: en, master: c6e2349f-a180-4b44-81f6-804c25714cb1, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: 239edef4-af68-4ffb-adce-96d17cbea79d}
+- model: popit.linktranslation
   pk: 18
-- fields: {language_code: en, master: adebb549-e7a0-4ba6-a9ff-60eb2656c15b, note: ''}
-  model: popit.linktranslation
+  fields: {note: '', language_code: en, master: c6e2349f-a180-4b44-81f6-804c25714cb1}
+- model: popit.linktranslation
   pk: 19
-- fields: {label: sweemeng phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61,
-    note: my phone}
-  model: popit.contacttranslation
+  fields: {note: '', language_code: en, master: adebb549-e7a0-4ba6-a9ff-60eb2656c15b}
+- model: popit.contacttranslation
   pk: 1
-- fields: {label: anon phone, language_code: en, master: 2256ec04-2d1d-4994-b1f1-16d3f5245441,
-    note: Just an anon phone}
-  model: popit.contacttranslation
+  fields: {label: sweemeng phone, note: my phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
+- model: popit.contacttranslation
   pk: 2
-- fields: {label: sinar project phone, language_code: en, master: 651da7cd-f109-4aaa-b04c-df835fb6831f,
-    note: just a phone}
-  model: popit.contacttranslation
+  fields: {label: anon phone, note: Just an anon phone, language_code: en, master: 2256ec04-2d1d-4994-b1f1-16d3f5245441}
+- model: popit.contacttranslation
   pk: 3
-- fields: {label: '', language_code: en, master: 7f3f67c4-6afd-4de9-880e-943560cf56c0,
-    note: ''}
-  model: popit.contacttranslation
+  fields: {label: sinar project phone, note: just a phone, language_code: en, master: 651da7cd-f109-4aaa-b04c-df835fb6831f}
+- model: popit.contacttranslation
   pk: 4
-- fields: {label: The captain, language_code: en, master: 7b1f49f7-34fd-483f-be57-4c75c6c93fb0,
-    note: ''}
-  model: popit.contacttranslation
+  fields: {label: '', note: '', language_code: en, master: 7f3f67c4-6afd-4de9-880e-943560cf56c0}
+- model: popit.contacttranslation
   pk: 5
-- fields: {label: anon phone, language_code: en, master: 2256ec04-2d1d-4994-b1f1-16d3f5245441,
-    note: Just an anon phone}
-  model: popit.contactdetailtranslation
+  fields: {label: The captain, note: '', language_code: en, master: 7b1f49f7-34fd-483f-be57-4c75c6c93fb0}
+- model: popit.contactdetailtranslation
   pk: 10
-- fields: {label: sinar project phone, language_code: en, master: 651da7cd-f109-4aaa-b04c-df835fb6831f,
-    note: just a phone}
-  model: popit.contactdetailtranslation
+  fields: {label: anon phone, note: Just an anon phone, language_code: en, master: 2256ec04-2d1d-4994-b1f1-16d3f5245441}
+- model: popit.contactdetailtranslation
   pk: 11
-- fields: {label: '', language_code: en, master: 7f3f67c4-6afd-4de9-880e-943560cf56c0,
-    note: ''}
-  model: popit.contactdetailtranslation
+  fields: {label: sinar project phone, note: just a phone, language_code: en, master: 651da7cd-f109-4aaa-b04c-df835fb6831f}
+- model: popit.contactdetailtranslation
   pk: 12
-- fields: {label: sweemeng phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61,
-    note: my phone}
-  model: popit.contactdetailtranslation
+  fields: {label: '', note: '', language_code: en, master: 7f3f67c4-6afd-4de9-880e-943560cf56c0}
+- model: popit.contactdetailtranslation
   pk: 13
-- fields: {label: '', language_code: en, master: 78a35135-52e3-4af9-8c32-ea3f557354fd,
-    note: ''}
-  model: popit.contactdetailtranslation
+  fields: {label: sweemeng phone, note: my phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
+- model: popit.contactdetailtranslation
   pk: 14
-- fields: {language_code: en, master: af7c01b5-1c4f-4c08-9174-3de5ff270bdb, scheme: random}
-  model: popit.identifiertranslation
+  fields: {label: '', note: '', language_code: en, master: 78a35135-52e3-4af9-8c32-ea3f557354fd}
+- model: popit.identifiertranslation
   pk: 1
-- fields: {language_code: en, master: 34b59cb9-607a-43c7-9d13-dfe258790ebf, scheme: random}
-  model: popit.identifiertranslation
+  fields: {scheme: random, language_code: en, master: af7c01b5-1c4f-4c08-9174-3de5ff270bdb}
+- model: popit.identifiertranslation
   pk: 2
-- fields: {language_code: en, master: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda, scheme: ssm}
-  model: popit.identifiertranslation
+  fields: {scheme: random, language_code: en, master: 34b59cb9-607a-43c7-9d13-dfe258790ebf}
+- model: popit.identifiertranslation
   pk: 3
-- fields: {additional_name: something, family_name: Doe, given_name: Lucky Jane, honorific_prefix: Datuk,
-    honorific_suffix: of Sinar Project, language_code: en, master: cf93e73f-91b6-4fad-bf76-0782c80297a8,
-    name: Jane, patronymic_name: ''}
-  model: popit.othernametranslation
+  fields: {scheme: ssm, language_code: en, master: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda}
+- model: popit.othernametranslation
   pk: 1
-- fields: {additional_name: '', family_name: '', given_name: '', honorific_prefix: '',
-    honorific_suffix: '', language_code: en, master: 53a22b00-1383-4bf5-b4be-4753d8d16062,
-    name: Not Sinar Project, patronymic_name: ''}
-  model: popit.othernametranslation
+  fields: {name: Jane, family_name: Doe, given_name: Lucky Jane, additional_name: something,
+    honorific_prefix: Datuk, honorific_suffix: of Sinar Project, patronymic_name: '',
+    language_code: en, master: cf93e73f-91b6-4fad-bf76-0782c80297a8}
+- model: popit.othernametranslation
   pk: 2
-- fields: {additional_name: '', family_name: '', given_name: '', honorific_prefix: '',
-    honorific_suffix: '', language_code: en, master: aee39ddd-6785-4a36-9781-8e745c6359b7,
-    name: bilge rat, patronymic_name: ''}
-  model: popit.othernametranslation
+  fields: {name: Not Sinar Project, family_name: '', given_name: '', additional_name: '',
+    honorific_prefix: '', honorific_suffix: '', patronymic_name: '', language_code: en,
+    master: 53a22b00-1383-4bf5-b4be-4753d8d16062}
+- model: popit.othernametranslation
   pk: 3
-- fields: {classification: '', language_code: en, master: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea,
-    name: Malaysia}
-  model: popit.areatranslation
+  fields: {name: bilge rat, family_name: '', given_name: '', additional_name: '',
+    honorific_prefix: '', honorific_suffix: '', patronymic_name: '', language_code: en,
+    master: aee39ddd-6785-4a36-9781-8e745c6359b7}
+- model: popit.areatranslation
   pk: 1
-- fields: {classification: '', language_code: en, master: 640c0f1d-2305-4d17-97fe-6aa59f079cc4,
-    name: kuala lumpur}
-  model: popit.areatranslation
+  fields: {name: Malaysia, classification: '', language_code: en, master: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea}
+- model: popit.areatranslation
   pk: 2
-- fields: {created_at: ! '2015-10-21 23:44:25.171028+00:00', identifier: '', parent: null,
-    updated_at: ! '2015-10-21 23:44:25.171048+00:00'}
-  model: popit.area
+  fields: {name: kuala lumpur, classification: '', language_code: en, master: 640c0f1d-2305-4d17-97fe-6aa59f079cc4}
+- model: popit.area
   pk: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea
-- fields: {created_at: ! '2015-10-21 23:44:40.750284+00:00', identifier: '', parent: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea,
-    updated_at: ! '2015-10-21 23:44:40.750308+00:00'}
-  model: popit.area
+  fields: {identifier: '', parent: null, created_at: ! '2015-10-21 23:44:25.171028+00:00',
+    updated_at: ! '2015-10-21 23:44:25.171048+00:00'}
+- model: popit.area
   pk: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
-- fields: {additional_name: '', biography: an ordinary guy, family_name: ng, gender: '',
-    given_name: '', honorific_prefix: '', honorific_suffix: '', language_code: en,
-    master: ab1a5788e5bae955c048748fa6af0e97, name: Swee Meng, national_identity: '',
-    patronymic_name: '', sort_name: '', summary: just an ordinary guy}
-  model: popit.persontranslation
+  fields: {identifier: '', parent: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea, created_at: ! '2015-10-21
+      23:44:40.750284+00:00', updated_at: ! '2015-10-21 23:44:40.750308+00:00'}
+- model: popit.persontranslation
   pk: 8
-- fields: {additional_name: Fake Person, biography: he is created so that we can test
-      this application, family_name: Doe, gender: Male, given_name: John Doe, honorific_prefix: Datuk,
-    honorific_suffix: of Sinar Project, language_code: en, master: 8497ba86-7485-42d2-9596-2ab14520f1f4,
-    name: John, national_identity: Malaysia, patronymic_name: '', sort_name: '', summary: Our
-      test person}
-  model: popit.persontranslation
+  fields: {name: Swee Meng, family_name: ng, given_name: '', additional_name: '',
+    honorific_prefix: '', honorific_suffix: '', patronymic_name: '', sort_name: '',
+    gender: '', summary: just an ordinary guy, biography: an ordinary guy, national_identity: '',
+    language_code: en, master: ab1a5788e5bae955c048748fa6af0e97}
+- model: popit.persontranslation
   pk: 9
-- fields: {additional_name: '', biography: '', family_name: '', gender: '', given_name: '',
-    honorific_prefix: '', honorific_suffix: '', language_code: ms, master: ab1a5788e5bae955c048748fa6af0e97,
-    name: Swee Meng, national_identity: '', patronymic_name: '', sort_name: '', summary: ''}
-  model: popit.persontranslation
+  fields: {name: John, family_name: Doe, given_name: John Doe, additional_name: Fake
+      Person, honorific_prefix: Datuk, honorific_suffix: of Sinar Project, patronymic_name: '',
+    sort_name: '', gender: Male, summary: Our test person, biography: he is created
+      so that we can test this application, national_identity: Malaysia, language_code: en,
+    master: 8497ba86-7485-42d2-9596-2ab14520f1f4}
+- model: popit.persontranslation
   pk: 10
-- fields: {additional_name: '', biography: '', family_name: '', gender: '', given_name: '',
-    honorific_prefix: '', honorific_suffix: '', language_code: en, master: 078541c9-9081-4082-b28f-29cbb64440cb,
-    name: jolly roger, national_identity: '', patronymic_name: '', sort_name: '',
-    summary: ''}
-  model: popit.persontranslation
+  fields: {name: Swee Meng, family_name: '', given_name: '', additional_name: '',
+    honorific_prefix: '', honorific_suffix: '', patronymic_name: '', sort_name: '',
+    gender: '', summary: '', biography: '', national_identity: '', language_code: ms,
+    master: ab1a5788e5bae955c048748fa6af0e97}
+- model: popit.persontranslation
   pk: 11
-- fields: {birth_date: null, created_at: ! '2015-11-13 01:24:31.461419+00:00', death_date: null,
-    email: roger@sinarproject.org, image: '', updated_at: ! '2015-11-13 01:24:31.461449+00:00'}
-  model: popit.person
+  fields: {name: jolly roger, family_name: '', given_name: '', additional_name: '',
+    honorific_prefix: '', honorific_suffix: '', patronymic_name: '', sort_name: '',
+    gender: '', summary: '', biography: '', national_identity: '', language_code: en,
+    master: 078541c9-9081-4082-b28f-29cbb64440cb}
+- model: popit.persontranslation
+  pk: 15
+  fields: {name: test user, family_name: '', given_name: '', additional_name: '',
+    honorific_prefix: '', honorific_suffix: '', patronymic_name: '', sort_name: '',
+    gender: '', summary: '', biography: '', national_identity: '', language_code: en,
+    master: 2439e472-10dc-4f9c-aa99-efddd9046b4a}
+- model: popit.person
   pk: 078541c9-9081-4082-b28f-29cbb64440cb
-- fields: {birth_date: '1901-01-01', created_at: ! '2015-10-06 00:00:00+00:00', death_date: '2001-01-01',
-    email: johndoe@sinarproject.org, image: '', updated_at: ! '2015-10-06 00:00:00+00:00'}
-  model: popit.person
+  fields: {email: roger@sinarproject.org, birth_date: null, death_date: null, image: '',
+    created_at: ! '2015-11-13 01:24:31.461419+00:00', updated_at: ! '2015-11-13 01:24:31.461449+00:00'}
+- model: popit.person
+  pk: 2439e472-10dc-4f9c-aa99-efddd9046b4a
+  fields: {email: '', birth_date: '', death_date: '', image: '', created_at: ! '2015-12-08
+      12:04:52.113864+00:00', updated_at: ! '2015-12-08 12:04:52.113886+00:00'}
+- model: popit.person
   pk: 8497ba86-7485-42d2-9596-2ab14520f1f4
-- fields: {birth_date: null, created_at: ! '2015-10-02 00:00:00+00:00', death_date: null,
-    email: sweester@sinarproject.org, image: '', updated_at: ! '2015-10-12 00:00:00+00:00'}
-  model: popit.person
+  fields: {email: johndoe@sinarproject.org, birth_date: '1901-01-01', death_date: '2001-01-01',
+    image: '', created_at: ! '2015-10-06 00:00:00+00:00', updated_at: ! '2015-10-06
+      00:00:00+00:00'}
+- model: popit.person
   pk: ab1a5788e5bae955c048748fa6af0e97
-- fields: {abstract: '', classification: '', description: '', language_code: en, master: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec,
-    name: sinar project}
-  model: popit.organizationtranslation
+  fields: {email: sweester@sinarproject.org, birth_date: null, death_date: null, image: '',
+    created_at: ! '2015-10-02 00:00:00+00:00', updated_at: ! '2015-10-12 00:00:00+00:00'}
+- model: popit.organizationtranslation
   pk: 3
-- fields: {abstract: '', classification: '', description: '', language_code: ms, master: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec,
-    name: projek sinar}
-  model: popit.organizationtranslation
+  fields: {name: sinar project, classification: '', abstract: '', description: '',
+    language_code: en, master: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec}
+- model: popit.organizationtranslation
   pk: 4
-- fields: {abstract: '', classification: '', description: '', language_code: ms, master: 612943b1-864d-4188-8d79-ca387ed19b32,
-    name: Parti Lanun}
-  model: popit.organizationtranslation
+  fields: {name: projek sinar, classification: '', abstract: '', description: '',
+    language_code: ms, master: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec}
+- model: popit.organizationtranslation
   pk: 5
-- fields: {abstract: pirates, classification: political party, description: arrrrrr,
-    language_code: en, master: 612943b1-864d-4188-8d79-ca387ed19b32, name: Pirate
-      Party}
-  model: popit.organizationtranslation
+  fields: {name: Parti Lanun, classification: '', abstract: '', description: '', language_code: ms,
+    master: 612943b1-864d-4188-8d79-ca387ed19b32}
+- model: popit.organizationtranslation
   pk: 6
-- fields: {abstract: KL Branch of Pirate Party, classification: political party, description: KL
-      Branch of Pirate Party, language_code: en, master: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
-    name: Pirate Party KL}
-  model: popit.organizationtranslation
+  fields: {name: Pirate Party, classification: political party, abstract: pirates,
+    description: arrrrrr, language_code: en, master: 612943b1-864d-4188-8d79-ca387ed19b32}
+- model: popit.organizationtranslation
   pk: 7
-- fields: {abstract: '', classification: '', description: '', language_code: ms, master: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
-    name: Parti Lanun KL}
-  model: popit.organizationtranslation
+  fields: {name: Pirate Party KL, classification: political party, abstract: KL Branch
+      of Pirate Party, description: KL Branch of Pirate Party, language_code: en,
+    master: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3}
+- model: popit.organizationtranslation
   pk: 8
-- fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-10-21 23:46:14.589608+00:00',
-    dissolution_date: '2020-10-22', founding_date: '2015-10-22', image: '', parent: 612943b1-864d-4188-8d79-ca387ed19b32,
-    updated_at: ! '2015-10-21 23:48:16.167211+00:00'}
-  model: popit.organization
+  fields: {name: Parti Lanun KL, classification: '', abstract: '', description: '',
+    language_code: ms, master: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3}
+- model: popit.organization
   pk: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-- fields: {area: null, created_at: ! '2015-10-21 23:22:00.443496+00:00', dissolution_date: '2020-09-01',
-    founding_date: '2013-09-01', image: '', parent: null, updated_at: ! '2015-10-21
-      23:22:44.583911+00:00'}
-  model: popit.organization
+  fields: {parent: 612943b1-864d-4188-8d79-ca387ed19b32, area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4,
+    founding_date: '2015-10-22', dissolution_date: '2020-10-22', image: '', created_at: ! '2015-10-21
+      23:46:14.589608+00:00', updated_at: ! '2015-10-21 23:48:16.167211+00:00'}
+- model: popit.organization
   pk: 612943b1-864d-4188-8d79-ca387ed19b32
-- fields: {area: null, created_at: ! '2015-10-21 23:13:25.144862+00:00', dissolution_date: null,
-    founding_date: null, image: '', parent: null, updated_at: ! '2015-10-21 23:15:55.262100+00:00'}
-  model: popit.organization
+  fields: {parent: null, area: null, founding_date: '2013-09-01', dissolution_date: '2020-09-01',
+    image: '', created_at: ! '2015-10-21 23:22:00.443496+00:00', updated_at: ! '2015-10-21
+      23:22:44.583911+00:00'}
+- model: popit.organization
   pk: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
-- fields: {label: '', language_code: en, master: c1f0f86b-a491-4986-b48d-861b58a3ef6e,
-    role: member}
-  model: popit.posttranslation
+  fields: {parent: null, area: null, founding_date: null, dissolution_date: null,
+    image: '', created_at: ! '2015-10-21 23:13:25.144862+00:00', updated_at: ! '2015-10-21
+      23:15:55.262100+00:00'}
+- model: popit.posttranslation
   pk: 1
-- fields: {label: '', language_code: en, master: 2c6982c2-504a-4e0d-8949-dade5f9e494e,
-    role: Captain}
-  model: popit.posttranslation
+  fields: {label: '', role: member, language_code: en, master: c1f0f86b-a491-4986-b48d-861b58a3ef6e}
+- model: popit.posttranslation
   pk: 2
-- fields: {label: '', language_code: en, master: 3eb967bb-23e3-41b6-8cba-54aadac8d918,
-    role: member}
-  model: popit.posttranslation
+  fields: {label: Captain of Pirate Party KL, role: Captain, language_code: en, master: 2c6982c2-504a-4e0d-8949-dade5f9e494e}
+- model: popit.posttranslation
   pk: 3
-- fields: {area: null, created_at: ! '2015-11-03 01:05:47.328900+00:00', end_date: null,
-    organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: null, updated_at: ! '2015-11-03
-      01:05:47.328925+00:00'}
-  model: popit.post
+  fields: {label: '', role: member, language_code: en, master: 3eb967bb-23e3-41b6-8cba-54aadac8d918}
+- model: popit.posttranslation
+  pk: 4
+  fields: {label: kapten parti lanun KL, role: kapten, language_code: ms, master: 2c6982c2-504a-4e0d-8949-dade5f9e494e}
+- model: popit.post
   pk: 2c6982c2-504a-4e0d-8949-dade5f9e494e
-- fields: {area: null, created_at: ! '2015-11-16 07:22:02.280560+00:00', end_date: null,
-    organization: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec, start_date: null, updated_at: ! '2015-11-16
-      07:22:02.280581+00:00'}
-  model: popit.post
+  fields: {organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, area: null, start_date: null,
+    end_date: null, created_at: ! '2015-11-03 01:05:47.328900+00:00', updated_at: ! '2015-11-03
+      01:05:47.328925+00:00'}
+- model: popit.post
   pk: 3eb967bb-23e3-41b6-8cba-54aadac8d918
-- fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-03 00:58:25.398456+00:00',
-    end_date: '2013-05-05', organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, start_date: '2008-05-08',
-    updated_at: ! '2015-11-03 00:58:25.398478+00:00'}
-  model: popit.post
+  fields: {organization: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec, area: null, start_date: null,
+    end_date: null, created_at: ! '2015-11-16 07:22:02.280560+00:00', updated_at: ! '2015-11-16
+      07:22:02.280581+00:00'}
+- model: popit.post
   pk: c1f0f86b-a491-4986-b48d-861b58a3ef6e
-- fields: {label: Capt Jolly Roger, language_code: en, master: b351cdc2-6961-4fc7-9d61-08fca66e1d44,
-    role: ''}
-  model: popit.membershiptranslation
+  fields: {organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4,
+    start_date: '2008-05-08', end_date: '2013-05-05', created_at: ! '2015-11-03 00:58:25.398456+00:00',
+    updated_at: ! '2015-11-03 00:58:25.398478+00:00'}
+- model: popit.membershiptranslation
   pk: 1
-- fields: {label: Swee meng scaly wag, language_code: en, master: 0a44195b-c3c9-4040-8dbf-be1aa250b700,
-    role: ''}
-  model: popit.membershiptranslation
+  fields: {label: Capt Jolly Roger, role: '', language_code: en, master: b351cdc2-6961-4fc7-9d61-08fca66e1d44}
+- model: popit.membershiptranslation
   pk: 2
-- fields: {label: '', language_code: en, master: b5464931-d3a9-4250-a645-204740c1bd9e,
-    role: ''}
-  model: popit.membershiptranslation
+  fields: {label: Swee meng scaly wag, role: '', language_code: en, master: 0a44195b-c3c9-4040-8dbf-be1aa250b700}
+- model: popit.membershiptranslation
   pk: 3
-- fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-13 01:37:07.640696+00:00',
-    end_date: null, member: null, on_behalf_of: null, organization: null, person: ab1a5788e5bae955c048748fa6af0e97,
-    post: c1f0f86b-a491-4986-b48d-861b58a3ef6e, start_date: null, updated_at: ! '2015-11-13
-      01:41:47.306960+00:00'}
-  model: popit.membership
+  fields: {label: '', role: '', language_code: en, master: b5464931-d3a9-4250-a645-204740c1bd9e}
+- model: popit.membershiptranslation
+  pk: 4
+  fields: {label: Kapten Jolly Roger, role: null, language_code: ms, master: b351cdc2-6961-4fc7-9d61-08fca66e1d44}
+- model: popit.membership
   pk: 0a44195b-c3c9-4040-8dbf-be1aa250b700
-- fields: {area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4, created_at: ! '2015-11-13 01:35:31.151781+00:00',
-    end_date: null, member: null, on_behalf_of: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
-    person: 078541c9-9081-4082-b28f-29cbb64440cb, post: 2c6982c2-504a-4e0d-8949-dade5f9e494e,
-    start_date: null, updated_at: ! '2015-11-13 01:35:31.151801+00:00'}
-  model: popit.membership
+  fields: {person: ab1a5788e5bae955c048748fa6af0e97, member: null, organization: null,
+    post: c1f0f86b-a491-4986-b48d-861b58a3ef6e, on_behalf_of: null, area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4,
+    start_date: null, end_date: null, created_at: ! '2015-11-13 01:37:07.640696+00:00',
+    updated_at: ! '2015-11-13 01:41:47.306960+00:00'}
+- model: popit.membership
   pk: b351cdc2-6961-4fc7-9d61-08fca66e1d44
-- fields: {area: null, created_at: ! '2015-11-13 02:44:58.358098+00:00', end_date: null,
-    member: null, on_behalf_of: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
-    person: 8497ba86-7485-42d2-9596-2ab14520f1f4, post: null, start_date: null, updated_at: ! '2015-11-13
-      02:44:58.358117+00:00'}
-  model: popit.membership
+  fields: {person: 078541c9-9081-4082-b28f-29cbb64440cb, member: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
+    post: 2c6982c2-504a-4e0d-8949-dade5f9e494e, on_behalf_of: null, area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4,
+    start_date: null, end_date: null, created_at: ! '2015-11-13 01:35:31.151781+00:00',
+    updated_at: ! '2015-12-09 03:10:15.307954+00:00'}
+- model: popit.membership
   pk: b5464931-d3a9-4250-a645-204740c1bd9e
-- fields: {app_label: admin, model: logentry}
-  model: contenttypes.contenttype
-- fields: {app_label: auth, model: permission}
-  model: contenttypes.contenttype
-- fields: {app_label: auth, model: group}
-  model: contenttypes.contenttype
-- fields: {app_label: auth, model: user}
-  model: contenttypes.contenttype
-- fields: {app_label: contenttypes, model: contenttype}
-  model: contenttypes.contenttype
-- fields: {app_label: sessions, model: session}
-  model: contenttypes.contenttype
-- fields: {app_label: authtoken, model: token}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: linktranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: link}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: contacttranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: contact}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: identifiertranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: identifier}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: othernametranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: othername}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: areatranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: area}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: persontranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: person}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: organizationtranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: organization}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: posttranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: post}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: contactdetailtranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: contactdetail}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: membershiptranslation}
-  model: contenttypes.contenttype
-- fields: {app_label: popit, model: membership}
-  model: contenttypes.contenttype
-- fields:
-    codename: add_logentry
-    content_type: [admin, logentry]
+  fields: {person: 8497ba86-7485-42d2-9596-2ab14520f1f4, member: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
+    post: null, on_behalf_of: null, area: null, start_date: null, end_date: null,
+    created_at: ! '2015-11-13 02:44:58.358098+00:00', updated_at: ! '2015-11-13 02:44:58.358117+00:00'}
+- model: contenttypes.contenttype
+  fields: {app_label: admin, model: logentry}
+- model: contenttypes.contenttype
+  fields: {app_label: auth, model: permission}
+- model: contenttypes.contenttype
+  fields: {app_label: auth, model: group}
+- model: contenttypes.contenttype
+  fields: {app_label: auth, model: user}
+- model: contenttypes.contenttype
+  fields: {app_label: contenttypes, model: contenttype}
+- model: contenttypes.contenttype
+  fields: {app_label: sessions, model: session}
+- model: contenttypes.contenttype
+  fields: {app_label: authtoken, model: token}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: linktranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: link}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: contacttranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: contact}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: contactdetailtranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: contactdetail}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: identifiertranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: identifier}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: othernametranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: othername}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: areatranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: area}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: persontranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: person}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: organizationtranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: organization}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: posttranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: post}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: membershiptranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: membership}
+- model: contenttypes.contenttype
+  fields: {app_label: corsheaders, model: corsmodel}
+- model: auth.permission
+  fields:
     name: Can add log entry
-  model: auth.permission
-- fields:
-    codename: change_logentry
     content_type: [admin, logentry]
+    codename: add_logentry
+- model: auth.permission
+  fields:
     name: Can change log entry
-  model: auth.permission
-- fields:
-    codename: delete_logentry
     content_type: [admin, logentry]
+    codename: change_logentry
+- model: auth.permission
+  fields:
     name: Can delete log entry
-  model: auth.permission
-- fields:
-    codename: add_permission
-    content_type: [auth, permission]
+    content_type: [admin, logentry]
+    codename: delete_logentry
+- model: auth.permission
+  fields:
     name: Can add permission
-  model: auth.permission
-- fields:
-    codename: change_permission
     content_type: [auth, permission]
+    codename: add_permission
+- model: auth.permission
+  fields:
     name: Can change permission
-  model: auth.permission
-- fields:
-    codename: delete_permission
     content_type: [auth, permission]
+    codename: change_permission
+- model: auth.permission
+  fields:
     name: Can delete permission
-  model: auth.permission
-- fields:
-    codename: add_group
-    content_type: [auth, group]
+    content_type: [auth, permission]
+    codename: delete_permission
+- model: auth.permission
+  fields:
     name: Can add group
-  model: auth.permission
-- fields:
-    codename: change_group
     content_type: [auth, group]
+    codename: add_group
+- model: auth.permission
+  fields:
     name: Can change group
-  model: auth.permission
-- fields:
-    codename: delete_group
     content_type: [auth, group]
+    codename: change_group
+- model: auth.permission
+  fields:
     name: Can delete group
-  model: auth.permission
-- fields:
-    codename: add_user
-    content_type: [auth, user]
+    content_type: [auth, group]
+    codename: delete_group
+- model: auth.permission
+  fields:
     name: Can add user
-  model: auth.permission
-- fields:
-    codename: change_user
     content_type: [auth, user]
+    codename: add_user
+- model: auth.permission
+  fields:
     name: Can change user
-  model: auth.permission
-- fields:
-    codename: delete_user
     content_type: [auth, user]
+    codename: change_user
+- model: auth.permission
+  fields:
     name: Can delete user
-  model: auth.permission
-- fields:
-    codename: add_contenttype
-    content_type: [contenttypes, contenttype]
+    content_type: [auth, user]
+    codename: delete_user
+- model: auth.permission
+  fields:
     name: Can add content type
-  model: auth.permission
-- fields:
-    codename: change_contenttype
     content_type: [contenttypes, contenttype]
+    codename: add_contenttype
+- model: auth.permission
+  fields:
     name: Can change content type
-  model: auth.permission
-- fields:
-    codename: delete_contenttype
     content_type: [contenttypes, contenttype]
+    codename: change_contenttype
+- model: auth.permission
+  fields:
     name: Can delete content type
-  model: auth.permission
-- fields:
-    codename: add_session
-    content_type: [sessions, session]
+    content_type: [contenttypes, contenttype]
+    codename: delete_contenttype
+- model: auth.permission
+  fields:
     name: Can add session
-  model: auth.permission
-- fields:
-    codename: change_session
     content_type: [sessions, session]
+    codename: add_session
+- model: auth.permission
+  fields:
     name: Can change session
-  model: auth.permission
-- fields:
-    codename: delete_session
     content_type: [sessions, session]
+    codename: change_session
+- model: auth.permission
+  fields:
     name: Can delete session
-  model: auth.permission
-- fields:
-    codename: add_token
-    content_type: [authtoken, token]
+    content_type: [sessions, session]
+    codename: delete_session
+- model: auth.permission
+  fields:
     name: Can add token
-  model: auth.permission
-- fields:
-    codename: change_token
     content_type: [authtoken, token]
+    codename: add_token
+- model: auth.permission
+  fields:
     name: Can change token
-  model: auth.permission
-- fields:
-    codename: delete_token
     content_type: [authtoken, token]
+    codename: change_token
+- model: auth.permission
+  fields:
     name: Can delete token
-  model: auth.permission
-- fields:
-    codename: add_linktranslation
-    content_type: [popit, linktranslation]
-    name: Can add link translation
-  model: auth.permission
-- fields:
-    codename: change_linktranslation
-    content_type: [popit, linktranslation]
-    name: Can change link translation
-  model: auth.permission
-- fields:
-    codename: delete_linktranslation
-    content_type: [popit, linktranslation]
-    name: Can delete link translation
-  model: auth.permission
-- fields:
-    codename: add_link
-    content_type: [popit, link]
+    content_type: [authtoken, token]
+    codename: delete_token
+- model: auth.permission
+  fields:
     name: Can add link
-  model: auth.permission
-- fields:
-    codename: change_link
     content_type: [popit, link]
+    codename: add_link
+- model: auth.permission
+  fields:
     name: Can change link
-  model: auth.permission
-- fields:
-    codename: delete_link
     content_type: [popit, link]
+    codename: change_link
+- model: auth.permission
+  fields:
     name: Can delete link
-  model: auth.permission
-- fields:
-    codename: add_contacttranslation
-    content_type: [popit, contacttranslation]
-    name: Can add contact translation
-  model: auth.permission
-- fields:
-    codename: change_contacttranslation
-    content_type: [popit, contacttranslation]
-    name: Can change contact translation
-  model: auth.permission
-- fields:
-    codename: delete_contacttranslation
-    content_type: [popit, contacttranslation]
-    name: Can delete contact translation
-  model: auth.permission
-- fields:
-    codename: add_contact
-    content_type: [popit, contact]
+    content_type: [popit, link]
+    codename: delete_link
+- model: auth.permission
+  fields:
     name: Can add contact
-  model: auth.permission
-- fields:
-    codename: change_contact
     content_type: [popit, contact]
+    codename: add_contact
+- model: auth.permission
+  fields:
     name: Can change contact
-  model: auth.permission
-- fields:
-    codename: delete_contact
     content_type: [popit, contact]
+    codename: change_contact
+- model: auth.permission
+  fields:
     name: Can delete contact
-  model: auth.permission
-- fields:
-    codename: add_identifiertranslation
-    content_type: [popit, identifiertranslation]
-    name: Can add identifier translation
-  model: auth.permission
-- fields:
-    codename: change_identifiertranslation
-    content_type: [popit, identifiertranslation]
-    name: Can change identifier translation
-  model: auth.permission
-- fields:
-    codename: delete_identifiertranslation
-    content_type: [popit, identifiertranslation]
-    name: Can delete identifier translation
-  model: auth.permission
-- fields:
-    codename: add_identifier
-    content_type: [popit, identifier]
-    name: Can add identifier
-  model: auth.permission
-- fields:
-    codename: change_identifier
-    content_type: [popit, identifier]
-    name: Can change identifier
-  model: auth.permission
-- fields:
-    codename: delete_identifier
-    content_type: [popit, identifier]
-    name: Can delete identifier
-  model: auth.permission
-- fields:
-    codename: add_othernametranslation
-    content_type: [popit, othernametranslation]
-    name: Can add other name translation
-  model: auth.permission
-- fields:
-    codename: change_othernametranslation
-    content_type: [popit, othernametranslation]
-    name: Can change other name translation
-  model: auth.permission
-- fields:
-    codename: delete_othernametranslation
-    content_type: [popit, othernametranslation]
-    name: Can delete other name translation
-  model: auth.permission
-- fields:
-    codename: add_othername
-    content_type: [popit, othername]
-    name: Can add other name
-  model: auth.permission
-- fields:
-    codename: change_othername
-    content_type: [popit, othername]
-    name: Can change other name
-  model: auth.permission
-- fields:
-    codename: delete_othername
-    content_type: [popit, othername]
-    name: Can delete other name
-  model: auth.permission
-- fields:
-    codename: add_areatranslation
-    content_type: [popit, areatranslation]
-    name: Can add area translation
-  model: auth.permission
-- fields:
-    codename: change_areatranslation
-    content_type: [popit, areatranslation]
-    name: Can change area translation
-  model: auth.permission
-- fields:
-    codename: delete_areatranslation
-    content_type: [popit, areatranslation]
-    name: Can delete area translation
-  model: auth.permission
-- fields:
-    codename: add_area
-    content_type: [popit, area]
-    name: Can add area
-  model: auth.permission
-- fields:
-    codename: change_area
-    content_type: [popit, area]
-    name: Can change area
-  model: auth.permission
-- fields:
-    codename: delete_area
-    content_type: [popit, area]
-    name: Can delete area
-  model: auth.permission
-- fields:
-    codename: add_persontranslation
-    content_type: [popit, persontranslation]
-    name: Can add person translation
-  model: auth.permission
-- fields:
-    codename: change_persontranslation
-    content_type: [popit, persontranslation]
-    name: Can change person translation
-  model: auth.permission
-- fields:
-    codename: delete_persontranslation
-    content_type: [popit, persontranslation]
-    name: Can delete person translation
-  model: auth.permission
-- fields:
-    codename: add_person
-    content_type: [popit, person]
-    name: Can add person
-  model: auth.permission
-- fields:
-    codename: change_person
-    content_type: [popit, person]
-    name: Can change person
-  model: auth.permission
-- fields:
-    codename: delete_person
-    content_type: [popit, person]
-    name: Can delete person
-  model: auth.permission
-- fields:
-    codename: add_organizationtranslation
-    content_type: [popit, organizationtranslation]
-    name: Can add organization translation
-  model: auth.permission
-- fields:
-    codename: change_organizationtranslation
-    content_type: [popit, organizationtranslation]
-    name: Can change organization translation
-  model: auth.permission
-- fields:
-    codename: delete_organizationtranslation
-    content_type: [popit, organizationtranslation]
-    name: Can delete organization translation
-  model: auth.permission
-- fields:
-    codename: add_organization
-    content_type: [popit, organization]
-    name: Can add organization
-  model: auth.permission
-- fields:
-    codename: change_organization
-    content_type: [popit, organization]
-    name: Can change organization
-  model: auth.permission
-- fields:
-    codename: delete_organization
-    content_type: [popit, organization]
-    name: Can delete organization
-  model: auth.permission
-- fields:
-    codename: add_posttranslation
-    content_type: [popit, posttranslation]
-    name: Can add post translation
-  model: auth.permission
-- fields:
-    codename: change_posttranslation
-    content_type: [popit, posttranslation]
-    name: Can change post translation
-  model: auth.permission
-- fields:
-    codename: delete_posttranslation
-    content_type: [popit, posttranslation]
-    name: Can delete post translation
-  model: auth.permission
-- fields:
-    codename: add_post
-    content_type: [popit, post]
-    name: Can add post
-  model: auth.permission
-- fields:
-    codename: change_post
-    content_type: [popit, post]
-    name: Can change post
-  model: auth.permission
-- fields:
-    codename: delete_post
-    content_type: [popit, post]
-    name: Can delete post
-  model: auth.permission
-- fields:
-    codename: add_contactdetailtranslation
-    content_type: [popit, contactdetailtranslation]
-    name: Can add contact detail translation
-  model: auth.permission
-- fields:
-    codename: change_contactdetailtranslation
-    content_type: [popit, contactdetailtranslation]
-    name: Can change contact detail translation
-  model: auth.permission
-- fields:
-    codename: delete_contactdetailtranslation
-    content_type: [popit, contactdetailtranslation]
-    name: Can delete contact detail translation
-  model: auth.permission
-- fields:
-    codename: add_contactdetail
-    content_type: [popit, contactdetail]
+    content_type: [popit, contact]
+    codename: delete_contact
+- model: auth.permission
+  fields:
     name: Can add contact detail
-  model: auth.permission
-- fields:
-    codename: change_contactdetail
     content_type: [popit, contactdetail]
+    codename: add_contactdetail
+- model: auth.permission
+  fields:
     name: Can change contact detail
-  model: auth.permission
-- fields:
-    codename: delete_contactdetail
     content_type: [popit, contactdetail]
+    codename: change_contactdetail
+- model: auth.permission
+  fields:
     name: Can delete contact detail
-  model: auth.permission
-- fields:
-    codename: add_membershiptranslation
-    content_type: [popit, membershiptranslation]
-    name: Can add membership translation
-  model: auth.permission
-- fields:
-    codename: change_membershiptranslation
-    content_type: [popit, membershiptranslation]
-    name: Can change membership translation
-  model: auth.permission
-- fields:
-    codename: delete_membershiptranslation
-    content_type: [popit, membershiptranslation]
-    name: Can delete membership translation
-  model: auth.permission
-- fields:
-    codename: add_membership
-    content_type: [popit, membership]
+    content_type: [popit, contactdetail]
+    codename: delete_contactdetail
+- model: auth.permission
+  fields:
+    name: Can add identifier
+    content_type: [popit, identifier]
+    codename: add_identifier
+- model: auth.permission
+  fields:
+    name: Can change identifier
+    content_type: [popit, identifier]
+    codename: change_identifier
+- model: auth.permission
+  fields:
+    name: Can delete identifier
+    content_type: [popit, identifier]
+    codename: delete_identifier
+- model: auth.permission
+  fields:
+    name: Can add other name
+    content_type: [popit, othername]
+    codename: add_othername
+- model: auth.permission
+  fields:
+    name: Can change other name
+    content_type: [popit, othername]
+    codename: change_othername
+- model: auth.permission
+  fields:
+    name: Can delete other name
+    content_type: [popit, othername]
+    codename: delete_othername
+- model: auth.permission
+  fields:
+    name: Can add area
+    content_type: [popit, area]
+    codename: add_area
+- model: auth.permission
+  fields:
+    name: Can change area
+    content_type: [popit, area]
+    codename: change_area
+- model: auth.permission
+  fields:
+    name: Can delete area
+    content_type: [popit, area]
+    codename: delete_area
+- model: auth.permission
+  fields:
+    name: Can add person
+    content_type: [popit, person]
+    codename: add_person
+- model: auth.permission
+  fields:
+    name: Can change person
+    content_type: [popit, person]
+    codename: change_person
+- model: auth.permission
+  fields:
+    name: Can delete person
+    content_type: [popit, person]
+    codename: delete_person
+- model: auth.permission
+  fields:
+    name: Can add organization
+    content_type: [popit, organization]
+    codename: add_organization
+- model: auth.permission
+  fields:
+    name: Can change organization
+    content_type: [popit, organization]
+    codename: change_organization
+- model: auth.permission
+  fields:
+    name: Can delete organization
+    content_type: [popit, organization]
+    codename: delete_organization
+- model: auth.permission
+  fields:
+    name: Can add post
+    content_type: [popit, post]
+    codename: add_post
+- model: auth.permission
+  fields:
+    name: Can change post
+    content_type: [popit, post]
+    codename: change_post
+- model: auth.permission
+  fields:
+    name: Can delete post
+    content_type: [popit, post]
+    codename: delete_post
+- model: auth.permission
+  fields:
     name: Can add membership
-  model: auth.permission
-- fields:
-    codename: change_membership
     content_type: [popit, membership]
+    codename: add_membership
+- model: auth.permission
+  fields:
     name: Can change membership
-  model: auth.permission
-- fields:
-    codename: delete_membership
     content_type: [popit, membership]
+    codename: change_membership
+- model: auth.permission
+  fields:
     name: Can delete membership
-  model: auth.permission
-- fields:
+    content_type: [popit, membership]
+    codename: delete_membership
+- model: auth.permission
+  fields:
+    name: Can add cors model
+    content_type: [corsheaders, corsmodel]
+    codename: add_corsmodel
+- model: auth.permission
+  fields:
+    name: Can change cors model
+    content_type: [corsheaders, corsmodel]
+    codename: change_corsmodel
+- model: auth.permission
+  fields:
+    name: Can delete cors model
+    content_type: [corsheaders, corsmodel]
+    codename: delete_corsmodel
+- model: auth.permission
+  fields:
+    name: Can add link translation
+    content_type: [popit, linktranslation]
+    codename: add_linktranslation
+- model: auth.permission
+  fields:
+    name: Can change link translation
+    content_type: [popit, linktranslation]
+    codename: change_linktranslation
+- model: auth.permission
+  fields:
+    name: Can delete link translation
+    content_type: [popit, linktranslation]
+    codename: delete_linktranslation
+- model: auth.permission
+  fields:
+    name: Can add contact translation
+    content_type: [popit, contacttranslation]
+    codename: add_contacttranslation
+- model: auth.permission
+  fields:
+    name: Can change contact translation
+    content_type: [popit, contacttranslation]
+    codename: change_contacttranslation
+- model: auth.permission
+  fields:
+    name: Can delete contact translation
+    content_type: [popit, contacttranslation]
+    codename: delete_contacttranslation
+- model: auth.permission
+  fields:
+    name: Can add identifier translation
+    content_type: [popit, identifiertranslation]
+    codename: add_identifiertranslation
+- model: auth.permission
+  fields:
+    name: Can change identifier translation
+    content_type: [popit, identifiertranslation]
+    codename: change_identifiertranslation
+- model: auth.permission
+  fields:
+    name: Can delete identifier translation
+    content_type: [popit, identifiertranslation]
+    codename: delete_identifiertranslation
+- model: auth.permission
+  fields:
+    name: Can add other name translation
+    content_type: [popit, othernametranslation]
+    codename: add_othernametranslation
+- model: auth.permission
+  fields:
+    name: Can change other name translation
+    content_type: [popit, othernametranslation]
+    codename: change_othernametranslation
+- model: auth.permission
+  fields:
+    name: Can delete other name translation
+    content_type: [popit, othernametranslation]
+    codename: delete_othernametranslation
+- model: auth.permission
+  fields:
+    name: Can add area translation
+    content_type: [popit, areatranslation]
+    codename: add_areatranslation
+- model: auth.permission
+  fields:
+    name: Can change area translation
+    content_type: [popit, areatranslation]
+    codename: change_areatranslation
+- model: auth.permission
+  fields:
+    name: Can delete area translation
+    content_type: [popit, areatranslation]
+    codename: delete_areatranslation
+- model: auth.permission
+  fields:
+    name: Can add person translation
+    content_type: [popit, persontranslation]
+    codename: add_persontranslation
+- model: auth.permission
+  fields:
+    name: Can change person translation
+    content_type: [popit, persontranslation]
+    codename: change_persontranslation
+- model: auth.permission
+  fields:
+    name: Can delete person translation
+    content_type: [popit, persontranslation]
+    codename: delete_persontranslation
+- model: auth.permission
+  fields:
+    name: Can add organization translation
+    content_type: [popit, organizationtranslation]
+    codename: add_organizationtranslation
+- model: auth.permission
+  fields:
+    name: Can change organization translation
+    content_type: [popit, organizationtranslation]
+    codename: change_organizationtranslation
+- model: auth.permission
+  fields:
+    name: Can delete organization translation
+    content_type: [popit, organizationtranslation]
+    codename: delete_organizationtranslation
+- model: auth.permission
+  fields:
+    name: Can add post translation
+    content_type: [popit, posttranslation]
+    codename: add_posttranslation
+- model: auth.permission
+  fields:
+    name: Can change post translation
+    content_type: [popit, posttranslation]
+    codename: change_posttranslation
+- model: auth.permission
+  fields:
+    name: Can delete post translation
+    content_type: [popit, posttranslation]
+    codename: delete_posttranslation
+- model: auth.permission
+  fields:
+    name: Can add contact detail translation
+    content_type: [popit, contactdetailtranslation]
+    codename: add_contactdetailtranslation
+- model: auth.permission
+  fields:
+    name: Can change contact detail translation
+    content_type: [popit, contactdetailtranslation]
+    codename: change_contactdetailtranslation
+- model: auth.permission
+  fields:
+    name: Can delete contact detail translation
+    content_type: [popit, contactdetailtranslation]
+    codename: delete_contactdetailtranslation
+- model: auth.permission
+  fields:
+    name: Can add membership translation
+    content_type: [popit, membershiptranslation]
+    codename: add_membershiptranslation
+- model: auth.permission
+  fields:
+    name: Can change membership translation
+    content_type: [popit, membershiptranslation]
+    codename: change_membershiptranslation
+- model: auth.permission
+  fields:
+    name: Can delete membership translation
+    content_type: [popit, membershiptranslation]
+    codename: delete_membershiptranslation
+- model: popit.othername
+  pk: 53a22b00-1383-4bf5-b4be-4753d8d16062
+  fields:
+    start_date: null
+    end_date: null
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
     created_at: 2015-10-22
-    end_date: null
-    note: really othername field don't seems appropriate for organization
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-    start_date: null
     updated_at: 2015-10-22
-  model: popit.othername
-  pk: 53a22b00-1383-4bf5-b4be-4753d8d16062
-- fields:
+    note: really othername field don't seems appropriate for organization
+- model: popit.othername
+  pk: aee39ddd-6785-4a36-9781-8e745c6359b7
+  fields:
+    start_date: null
+    end_date: null
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     content_type: [popit, post]
     created_at: 2015-11-03
-    end_date: null
-    note: ''
-    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
-    start_date: null
     updated_at: 2015-11-03
-  model: popit.othername
-  pk: aee39ddd-6785-4a36-9781-8e745c6359b7
-- fields:
+    note: ''
+- model: popit.othername
+  pk: cf93e73f-91b6-4fad-bf76-0782c80297a8
+  fields:
+    start_date: '1950-01-01'
+    end_date: '2000-01-01'
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
     created_at: 2015-10-06
-    end_date: '2000-01-01'
+    updated_at: 2015-10-06
     note: Turn out that she had a sex change. People have right to decide their own
       gender asshole!
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    start_date: '1950-01-01'
-    updated_at: 2015-10-06
-  model: popit.othername
-  pk: cf93e73f-91b6-4fad-bf76-0782c80297a8
-- fields:
-    content_type: [popit, organization]
-    created_at: 2015-10-22
+- model: popit.identifier
+  pk: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
+  fields:
     identifier: '3131312'
     object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    content_type: [popit, organization]
+    created_at: 2015-10-22
     updated_at: 2015-10-22
-  model: popit.identifier
-  pk: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-06
+- model: popit.identifier
+  pk: 34b59cb9-607a-43c7-9d13-dfe258790ebf
+  fields:
     identifier: '53110321'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    updated_at: 2015-10-06
-  model: popit.identifier
-  pk: 34b59cb9-607a-43c7-9d13-dfe258790ebf
-- fields:
     content_type: [popit, person]
     created_at: 2015-10-06
+    updated_at: 2015-10-06
+- model: popit.identifier
+  pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
+  fields:
     identifier: '12321223'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    updated_at: 2015-10-06
-  model: popit.identifier
-  pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
-- fields:
     content_type: [popit, person]
     created_at: 2015-10-06
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
-    type: phone
-    updated_at: 2015-11-09
-    valid_from: 2015-10-06
-    valid_until: 2020-10-06
-    value: '0123423424342'
-  model: popit.contactdetail
+    updated_at: 2015-10-06
+- model: popit.contactdetail
   pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
-- fields:
+  fields:
+    type: phone
+    value: '0123423424342'
+    valid_from: '2015-10-06'
+    valid_until: '2020-10-06'
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    updated_at: 2015-11-09
+- model: popit.contactdetail
+  pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
+  fields:
+    type: phone
+    value: 0129123132112
+    valid_from: '2015-10-22'
+    valid_until: '2020-10-22'
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
     created_at: 2015-10-22
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
-    type: phone
     updated_at: 2015-11-09
-    valid_from: 2015-10-22
-    valid_until: 2020-10-22
-    value: 0129123132112
-  model: popit.contactdetail
-  pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
-- fields:
+- model: popit.contactdetail
+  pk: 78a35135-52e3-4af9-8c32-ea3f557354fd
+  fields:
+    type: email
+    value: thecaptain@pirateparty.com
+    valid_from: null
+    valid_until: null
+    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
     content_type: [popit, membership]
     created_at: 2015-11-16
-    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
-    type: email
     updated_at: 2015-11-17
-    valid_from: null
-    valid_until: null
-    value: thecaptain@pirateparty.com
-  model: popit.contactdetail
-  pk: 78a35135-52e3-4af9-8c32-ea3f557354fd
-- fields:
+- model: popit.contactdetail
+  pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
+  fields:
+    type: email
+    value: sweester@sinarproject
+    valid_from: '2015-11-03'
+    valid_until: '2015-11-03'
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     content_type: [popit, post]
     created_at: 2015-11-03
-    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
-    type: email
     updated_at: 2015-11-09
-    valid_from: 2015-11-03
-    valid_until: 2015-11-03
-    value: sweester@sinarproject
-  model: popit.contactdetail
-  pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
-- fields:
+- model: popit.contactdetail
+  pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
+  fields:
+    type: phone
+    value: '0123421221'
+    valid_from: '2015-10-05'
+    valid_until: '2020-10-05'
+    object_id: ab1a5788e5bae955c048748fa6af0e97
     content_type: [popit, person]
     created_at: 2015-10-05
-    object_id: ab1a5788e5bae955c048748fa6af0e97
-    type: phone
     updated_at: 2015-11-09
-    valid_from: 2015-10-05
-    valid_until: 2020-10-05
-    value: '0123421221'
-  model: popit.contactdetail
-  pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-06
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+- model: popit.contact
+  pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
+  fields:
     type: phone
-    updated_at: 2015-10-06
+    value: '0123423424342'
     valid_from: 2015-10-06
     valid_until: 2020-10-06
-    value: '0123423424342'
-  model: popit.contact
-  pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
-- fields:
-    content_type: [popit, organization]
-    created_at: 2015-10-22
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
+    content_type: [popit, person]
+    created_at: 2015-10-06
+    updated_at: 2015-10-06
+- model: popit.contact
+  pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
+  fields:
     type: phone
-    updated_at: 2015-10-22
+    value: 0129123132112
     valid_from: 2015-10-22
     valid_until: 2020-10-22
-    value: 0129123132112
-  model: popit.contact
-  pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
-- fields:
-    content_type: [popit, membership]
-    created_at: 2015-11-14
-    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
+    content_type: [popit, organization]
+    created_at: 2015-10-22
+    updated_at: 2015-10-22
+- model: popit.contact
+  pk: 7b1f49f7-34fd-483f-be57-4c75c6c93fb0
+  fields:
     type: twitter
-    updated_at: 2015-11-14
+    value: project.org
     valid_from: null
     valid_until: null
-    value: project.org
-  model: popit.contact
-  pk: 7b1f49f7-34fd-483f-be57-4c75c6c93fb0
-- fields:
-    content_type: [popit, post]
-    created_at: 2015-11-03
-    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
+    content_type: [popit, membership]
+    created_at: 2015-11-14
+    updated_at: 2015-11-14
+- model: popit.contact
+  pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
+  fields:
     type: email
-    updated_at: 2015-11-03
+    value: sweester@sinarproject
     valid_from: 2015-11-03
     valid_until: 2015-11-03
-    value: sweester@sinarproject
-  model: popit.contact
-  pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-05
-    object_id: ab1a5788e5bae955c048748fa6af0e97
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
+    content_type: [popit, post]
+    created_at: 2015-11-03
+    updated_at: 2015-11-03
+- model: popit.contact
+  pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
+  fields:
     type: phone
-    updated_at: 2015-10-05
+    value: '0123421221'
     valid_from: 2015-10-05
     valid_until: 2020-10-05
-    value: '0123421221'
-  model: popit.contact
-  pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
-- fields:
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2015-10-05
+    updated_at: 2015-10-05
+- model: popit.link
+  pk: 02369098-7b46-4d62-9318-a5f1c2d385bd
+  fields:
+    label: ''
+    field: identifier
+    url: http://ssm.com
+    object_id: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
     content_type: [popit, identifier]
     created_at: 2015-10-26
-    field: identifier
-    label: ''
-    object_id: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
     updated_at: 2015-10-26
-    url: http://ssm.com
-  model: popit.link
-  pk: 02369098-7b46-4d62-9318-a5f1c2d385bd
-- fields:
+- model: popit.link
+  pk: 10472346-59bf-40f9-95cc-e4cf2dea6e48
+  fields:
+    label: ''
+    field: ''
+    url: http://www.facebook.com
+    object_id: http://127.0.0.1:8000/admin/popit/contact/7f3f67c4-6afd-4de9-880e-943560cf56c0/
     content_type: [popit, contact]
     created_at: 2015-11-03
-    field: ''
-    label: ''
-    object_id: http://127.0.0.1:8000/admin/popit/contact/7f3f67c4-6afd-4de9-880e-943560cf56c0/
     updated_at: 2015-11-03
-    url: http://www.facebook.com
-  model: popit.link
-  pk: 10472346-59bf-40f9-95cc-e4cf2dea6e48
-- fields:
+- model: popit.link
+  pk: 239edef4-af68-4ffb-adce-96d17cbea79d
+  fields:
+    label: ''
+    field: ''
+    url: http://sinarproject.org/the_captain
+    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
     content_type: [popit, membership]
     created_at: 2015-11-14
-    field: ''
-    label: ''
-    object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
     updated_at: 2015-11-14
-    url: http://sinarproject.org/the_captain
-  model: popit.link
-  pk: 239edef4-af68-4ffb-adce-96d17cbea79d
-- fields:
+- model: popit.link
+  pk: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf
+  fields:
+    label: ''
+    field: type
+    url: http://sinarproject.org/about/
+    object_id: 651da7cd-f109-4aaa-b04c-df835fb6831f
     content_type: [popit, contactdetail]
     created_at: 2015-10-26
-    field: type
-    label: ''
-    object_id: 651da7cd-f109-4aaa-b04c-df835fb6831f
     updated_at: 2015-11-09
-    url: http://sinarproject.org/about/
-  model: popit.link
-  pk: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf
-- fields:
+- model: popit.link
+  pk: 45b0a790-8c9e-4553-844b-431ed34b6b12
+  fields:
+    label: ''
+    field: ''
+    url: https://github.com/sweemeng/
+    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
     created_at: 2015-10-22
-    field: ''
-    label: ''
-    object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     updated_at: 2015-10-22
-    url: https://github.com/sweemeng/
-  model: popit.link
-  pk: 45b0a790-8c9e-4553-844b-431ed34b6b12
-- fields:
+- model: popit.link
+  pk: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6
+  fields:
+    label: ''
+    field: ''
+    url: http://google.com
+    object_id: cf93e73f-91b6-4fad-bf76-0782c80297a8
     content_type: [popit, othername]
     created_at: 2015-10-28
-    field: ''
-    label: ''
-    object_id: cf93e73f-91b6-4fad-bf76-0782c80297a8
     updated_at: 2015-10-28
-    url: http://google.com
-  model: popit.link
-  pk: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6
-- fields:
+- model: popit.link
+  pk: 6c928027-4813-4770-80a5-ba413a43efae
+  fields:
+    label: ''
+    field: ''
+    url: http://www.facebook.com
+    object_id: aee39ddd-6785-4a36-9781-8e745c6359b7
     content_type: [popit, othername]
     created_at: 2015-11-03
-    field: ''
-    label: ''
-    object_id: aee39ddd-6785-4a36-9781-8e745c6359b7
     updated_at: 2015-11-03
-    url: http://www.facebook.com
-  model: popit.link
-  pk: 6c928027-4813-4770-80a5-ba413a43efae
-- fields:
+- model: popit.link
+  pk: 6d0afb46-67d4-4708-87c4-4d51ce99767e
+  fields:
+    label: ''
+    field: ''
+    url: http://google.com
+    object_id: 2256ec04-2d1d-4994-b1f1-16d3f5245441
     content_type: [popit, contactdetail]
     created_at: 2015-10-28
-    field: ''
-    label: ''
-    object_id: 2256ec04-2d1d-4994-b1f1-16d3f5245441
     updated_at: 2015-11-09
-    url: http://google.com
-  model: popit.link
-  pk: 6d0afb46-67d4-4708-87c4-4d51ce99767e
-- fields:
+- model: popit.link
+  pk: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd
+  fields:
+    label: ''
+    field: ''
+    url: http://github.com/sinarproject/
+    object_id: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
     content_type: [popit, identifier]
     created_at: 2015-10-12
-    field: ''
-    label: ''
-    object_id: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
     updated_at: 2015-10-12
-    url: http://github.com/sinarproject/
-  model: popit.link
-  pk: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd
-- fields:
+- model: popit.link
+  pk: a37256e6-eab7-417a-8ac8-32edc5031924
+  fields:
+    label: ''
+    field: ''
+    url: http://en.wikipedia.com
+    object_id: 7f3f67c4-6afd-4de9-880e-943560cf56c0
     content_type: [popit, contactdetail]
     created_at: 2015-11-06
-    field: ''
-    label: ''
-    object_id: 7f3f67c4-6afd-4de9-880e-943560cf56c0
     updated_at: 2015-11-09
-    url: http://en.wikipedia.com
-  model: popit.link
-  pk: a37256e6-eab7-417a-8ac8-32edc5031924
-- fields:
-    content_type: [popit, person]
-    created_at: 2015-10-02
-    field: ''
-    label: ''
-    object_id: ab1a5788e5bae955c048748fa6af0e97
-    updated_at: 2015-10-02
-    url: http://github.com/sweemeng/
-  model: popit.link
+- model: popit.link
   pk: a4ffa24a9ef3cbcb8cfaa178c9329367
-- fields:
+  fields:
+    label: ''
+    field: ''
+    url: http://github.com/sweemeng/
+    object_id: ab1a5788e5bae955c048748fa6af0e97
     content_type: [popit, person]
     created_at: 2015-10-02
-    field: ''
-    label: ''
-    object_id: ab1a5788e5bae955c048748fa6af0e97
     updated_at: 2015-10-02
-    url: http://sinarproject.org/en/about/team
-  model: popit.link
+- model: popit.link
   pk: abbd9287ec0b491d6e84dcbfd6f958fc
-- fields:
-    content_type: [popit, contactdetail]
-    created_at: 2015-11-16
-    field: ''
+  fields:
     label: ''
-    object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
-    updated_at: 2015-11-17
-    url: http://pirateparty.com/captain
-  model: popit.link
+    field: ''
+    url: http://sinarproject.org/en/about/team
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2015-10-02
+    updated_at: 2015-10-02
+- model: popit.link
   pk: adebb549-e7a0-4ba6-a9ff-60eb2656c15b
-- fields:
+  fields:
+    label: ''
+    field: ''
+    url: http://pirateparty.com/captain
+    object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
     content_type: [popit, contactdetail]
     created_at: 2015-11-16
-    field: ''
-    label: ''
-    object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
-    updated_at: 2015-11-16
-    url: http://pirateparty.com/captain
-  model: popit.link
+    updated_at: 2015-11-17
+- model: popit.link
   pk: c6e2349f-a180-4b44-81f6-804c25714cb1
-- fields:
+  fields:
+    label: ''
+    field: ''
+    url: http://pirateparty.com/captain
+    object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
+    content_type: [popit, contactdetail]
+    created_at: 2015-11-16
+    updated_at: 2015-11-16
+- model: popit.link
+  pk: ce15a9ee-6742-4467-bbfb-c86459ee685b
+  fields:
+    label: ''
+    field: ''
+    url: http://www.talklikeapirate.com/howto.html#basic
+    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     content_type: [popit, post]
     created_at: 2015-11-03
-    field: ''
-    label: ''
-    object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     updated_at: 2015-11-03
-    url: http://www.talklikeapirate.com/howto.html#basic
-  model: popit.link
-  pk: ce15a9ee-6742-4467-bbfb-c86459ee685b
-- fields:
+- model: popit.link
+  pk: ed8a52d8-5503-45aa-a2ad-9931461172d2
+  fields:
+    label: ''
+    field: ''
+    url: http://en.wikipedia.com
+    object_id: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
     content_type: [popit, area]
     created_at: 2015-10-30
-    field: ''
-    label: ''
-    object_id: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
     updated_at: 2015-10-30
-    url: http://en.wikipedia.com
-  model: popit.link
-  pk: ed8a52d8-5503-45aa-a2ad-9931461172d2
-- fields:
+- model: popit.link
+  pk: f70854dd-4e2e-4141-a2b8-051a36e5c9ee
+  fields:
+    label: ''
+    field: ''
+    url: http://github.com/sweemeng/
+    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
     created_at: 2015-10-06
-    field: ''
-    label: ''
-    object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     updated_at: 2015-10-06
-    url: http://github.com/sweemeng/
-  model: popit.link
-  pk: f70854dd-4e2e-4141-a2b8-051a36e5c9ee
-- fields:
+- model: popit.link
+  pk: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a
+  fields:
+    label: ''
+    field: name
+    url: http://sinarproject.org/
+    object_id: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
     content_type: [popit, organization]
     created_at: 2015-10-23
-    field: name
-    label: ''
-    object_id: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
     updated_at: 2015-10-23
-    url: http://sinarproject.org/
-  model: popit.link
-  pk: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a
-- fields:
+- model: popit.link
+  pk: fe662497-c24d-4bbb-a72d-feb77319782a
+  fields:
+    label: ''
+    field: name
+    url: http://sinarproject.org
+    object_id: 53a22b00-1383-4bf5-b4be-4753d8d16062
     content_type: [popit, othername]
     created_at: 2015-10-26
-    field: name
-    label: ''
-    object_id: 53a22b00-1383-4bf5-b4be-4753d8d16062
     updated_at: 2015-10-26
-    url: http://sinarproject.org
-  model: popit.link
-  pk: fe662497-c24d-4bbb-a72d-feb77319782a
-- fields:
-    date_joined: 2015-10-02 02:01:13.495365+00:00
-    email: sweester@sinarproject.org
-    first_name: ''
-    groups: []
-    is_active: true
-    is_staff: true
+- model: auth.user
+  fields:
+    password: pbkdf2_sha256$24000$kqm8tnbp16sn$QB2jEr3NVg655eUePVGI3Jy3nmsOVzGMZrfI+LaON5Q=
+    last_login: 2015-12-08 11:54:16.840494+00:00
     is_superuser: true
-    last_login: 2015-11-06 01:48:14.356005+00:00
-    last_name: ''
-    password: pbkdf2_sha256$20000$7HQArODZc3cJ$fn4FGXn5RVCS8t/8aJubpQPopg1O2eEpGIaaCNqI0ao=
-    user_permissions: []
     username: admin
-  model: auth.user
-- fields:
-    created: 2015-10-12 05:24:56.057275+00:00
-    user: [admin]
-  model: authtoken.token
+    first_name: ''
+    last_name: ''
+    email: sweester@sinarproject.org
+    is_staff: true
+    is_active: true
+    date_joined: 2015-10-02 02:01:13.495365+00:00
+    groups: []
+    user_permissions: []
+- model: authtoken.token
   pk: 04afcac1d644e3dbab187d8b2205d355c0d9b951
+  fields:
+    user: [admin]
+    created: 2015-10-12 05:24:56.057275+00:00

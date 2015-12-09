@@ -179,7 +179,7 @@ class PostSerializer(TranslatableModelSerializer):
             data["other_labels"] = []
 
         if instance.organization_id:
-            organization_instance = instance.organization.__class__.objects.language(instance.language_code).get(id=instance.organization_id)
+            organization_instance = instance.organization.__class__.objects.untranslated().get(id=instance.organization_id)
             organization_serializer = OrganizationSerializer(instance=organization_instance, language=instance.language_code)
             data["organization"] = organization_serializer.data
 
@@ -193,7 +193,7 @@ class PostSerializer(TranslatableModelSerializer):
         data["contact_details"] = contact_details_serializer.data
 
         if instance.area_id:
-            area_instance = instance.area.__class__.objects.language(instance.language_code).get(id=instance.area_id)
+            area_instance = instance.area.__class__.objects.untranslated().get(id=instance.area_id)
             area_serializer = AreaSerializer(area_instance, language=instance.language_code)
             data["area"] = area_serializer.data
         return data

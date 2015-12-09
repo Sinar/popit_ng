@@ -599,3 +599,14 @@ class OrganizationAPITestCase(APITestCase):
         identifier = organization.identifiers.language("en").get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
         link = identifier.links.language("en").get(id="02369098-7b46-4d62-9318-a5f1c2d385bd")
         self.assertEqual(link.note, "Just a link")
+
+    def test_fetch_organization_translated(self):
+        response = self.client.get("/ms/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/")
+        results = response.data["results"]
+        self.assertEqual(results["name"], "Parti Lanun KL")
+        self.assertEqual(results["language_code"], "ms")
+
+    def test_fetch_organization_translated_nested(self):
+        response = self.client.get("/ms/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/")
+        results = response.data["results"]
+        self.assertEqual(results["parent"]["language_code"], "ms")
