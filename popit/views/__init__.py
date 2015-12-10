@@ -55,3 +55,5 @@ from popit.views.membership import MembershipLinkDetail
 from popit.views.membership import MembershipLinkList
 from popit.views.membership import MembershipDetail
 from popit.views.membership import MembershipList
+from popit.views.root_view import api_root
+from popit.views.root_view import api_root_all
