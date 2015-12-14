@@ -62,3 +62,5 @@ target/
 
 # pycharm directory
 .idea
+
+static
