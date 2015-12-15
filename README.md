@@ -34,10 +34,11 @@ $ python manage.py runserver 0.0.0.0:8000
 We still doing heavy development on this, so all the steps here are for testing and development.
 
 ## Current feature
-1. CRUD API for Person, Organization, Post, Membership
-2. Implement Othername, ContactDetails, Area, Links, Identifier
+1. CRUD API for Person, Organization, Post, Membership following popolo standarrd
+2. Implement Othername, ContactDetails, Area, Links, Identifier following popolo standard
 3. Search API for Person, Organization, Post, Membership. Including any entity on 2. that is embedded. 
 4. Multilingual support for the feature 1., 2. and 3.
 5. Support for json output
 6. Support for API to be displayed on browser
 7. Extensive supporting unit test for supported feature
+8. extend links to support citation by having an optional field value, no API to easily browse citation yet
