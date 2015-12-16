@@ -19,6 +19,7 @@ from django.conf import settings
 from rest_framework.urlpatterns import format_suffix_patterns
 from popit.views import *
 from popit_search.views import GenericSearchView
+from rest_framework.authtoken import views as token_view
 
 
 urlpatterns = [
@@ -146,7 +147,8 @@ api_urls = [
         name="membership-detail"),
     url(r'^(?P<language>\w{2})/memberships/', MembershipList.as_view(), name="membership-list"),
     url(r'^(?P<language>\w{2})', api_root, name="api-root"),
-    url(r'^$', api_root_all)
+    url(r'^$', api_root_all),
+    url(r'^api-token-auth/', token_view.obtain_auth_token)
  ]
 
 api_urls = format_suffix_patterns(api_urls)
