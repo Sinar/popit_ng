@@ -32,6 +32,7 @@ if "rosetta" in settings.INSTALLED_APPS:
     ]
 
 api_urls = [
+    url(r'^api-token-auth/', token_view.obtain_auth_token),
     url(r'^(?P<language>\w{2})/search/(?P<index_name>\w+)/', GenericSearchView.as_view(), name="search"),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/',
         PostContactDetailLinkDetail.as_view(), name="post-contact-detail-link-detail"),
@@ -148,7 +149,6 @@ api_urls = [
     url(r'^(?P<language>\w{2})/memberships/', MembershipList.as_view(), name="membership-list"),
     url(r'^(?P<language>\w{2})', api_root, name="api-root"),
     url(r'^$', api_root_all),
-    url(r'^api-token-auth/', token_view.obtain_auth_token)
  ]
 
 api_urls = format_suffix_patterns(api_urls)
