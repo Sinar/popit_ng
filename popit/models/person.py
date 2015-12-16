@@ -29,7 +29,7 @@ class Person(TranslatableModel):
         patronymic_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("patronymic name")), # What the heck is that!
         sort_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("sort name")), # What on earth....
         gender = models.CharField(max_length=25, null=True, blank=True, verbose_name=_("gender")),
-        summary = models.CharField(max_length=255, blank=True, verbose_name=_("summary")), # Member of the human race
+        summary = models.TextField(blank=True, verbose_name=_("summary")), # Member of the human race
         biography = models.TextField(blank=True, verbose_name=_("biography")),
         # Actually should should validate this? Easier if we don't though
         # Also dual citizenship

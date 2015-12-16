@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from popit.signals.handlers import *
 from popit.models import *
+import requests
 
 
 # TODO: Test multilingual behavior. To make behavior clear
@@ -827,3 +828,12 @@ class PersonAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.delete("/en/persons/not_exist/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_person_api_summary_more_than_255(self):
+        r = requests.get("https://sinar-malaysia.popit.mysociety.org/api/v0.1/persons/53630562f1eab6270da6c8ed", verify=False)
+        data = r.json()
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/organizations/", data["result"])
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
