@@ -1,7 +1,7 @@
-# TODO: Implement for each
 from django.db.models.signals import pre_delete
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
 from popit.models import Person
 from popit.models import Organization
 from popit.models import Membership
@@ -11,6 +11,7 @@ from popit.serializers import OrganizationSerializer
 from popit.serializers import MembershipSerializer
 from popit.serializers import PostSerializer
 from popit_search.utils import search
+from rest_framework.authtoken.models import Token
 
 
 @receiver(post_save, sender=Person)
@@ -98,3 +99,9 @@ def post_save_handler(sender, instance, created, raw, using, update_fields, **kw
 def post_delete_handler(sender, instance, using, **kwargs):
     indexer = search.SerializerSearch("post")
     indexer.delete(instance)
+
+
+@receiver(post_save, sender=User)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
