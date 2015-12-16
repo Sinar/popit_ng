@@ -367,7 +367,7 @@ class PersonIdentifierAPITestCase(APITestCase):
     def test_view_person_identifier_detail_unauthorized(self):
         response = self.client.get("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/34b59cb9-607a-43c7-9d13-dfe258790ebf/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["results"]["identifier"], "53110321")
+        self.assertEqual(response.data["result"]["identifier"], "53110321")
 
     def test_view_person_identifier_detail_not_exist_unauthorized(self):
         response = self.client.get("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/not_exist/")
@@ -380,7 +380,7 @@ class PersonIdentifierAPITestCase(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/identifiers/34b59cb9-607a-43c7-9d13-dfe258790ebf/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["results"]["identifier"], "53110321")
+        self.assertEqual(response.data["result"]["identifier"], "53110321")
 
     def test_view_person_identifier_detail_not_exist_authorized(self):
         token = Token.objects.get(user__username="admin")

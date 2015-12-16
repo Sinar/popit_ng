@@ -59,7 +59,7 @@ class GenericParentChildList(BasePopitView):
         if serializer.is_valid():
             try:
                 serializer.save(content_object=parent)
-                data = { "results": serializer.data}
+                data = { "result": serializer.data}
                 return Response(data, status.HTTP_201_CREATED)
             except ContentObjectNotAvailable as e:
                 return Response({"error": e.message}, status.HTTP_400_BAD_REQUEST)
@@ -133,7 +133,7 @@ class GenericParentChildDetail(BasePopitView):
         parent = self.get_parent(parent_pk, language)
         obj = self.get_object(parent, pk)
         serializer = self.serializer(obj, language=language)
-        data = { "results": serializer.data }
+        data = { "result": serializer.data }
         return Response(data)
 
     def put(self, request, language, parent_pk, pk, format=None):
@@ -146,7 +146,7 @@ class GenericParentChildDetail(BasePopitView):
         if serializer.is_valid():
             # We do not override where a link is point to.
             serializer.save()
-            data = { "results": serializer.data }
+            data = { "result": serializer.data }
             return Response(data, status.HTTP_200_OK)
 
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)

@@ -179,8 +179,8 @@ class OtherNameSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     links = LinkSerializer(many=True, required=False)
-    start_date = CharField(allow_null=True, default=None)
-    end_date = CharField(allow_null=True, default=None)
+    start_date = CharField(allow_null=True, default=None, allow_blank=True)
+    end_date = CharField(allow_null=True, default=None, allow_blank=True)
 
     def create(self, validated_data):
         links = validated_data.pop('links', [])

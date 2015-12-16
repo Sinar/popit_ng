@@ -354,7 +354,7 @@ class PersonAPITestCase(APITestCase):
         response = self.client.get("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.data
-        self.assertEqual(data["results"]["name"], "John")
+        self.assertEqual(data["result"]["name"], "John")
 
     def test_view_person_detail_not_exist(self):
         response = self.client.get("/en/persons/not_exist/")

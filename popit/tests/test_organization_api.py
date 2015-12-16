@@ -4,9 +4,11 @@ from rest_framework.test import APITestCase
 from popit.models import Organization
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
 from popit.signals.handlers import *
 from popit.models import *
 import logging
+import requests
 
 
 class OrganizationAPITestCase(APITestCase):
@@ -15,6 +17,7 @@ class OrganizationAPITestCase(APITestCase):
 
     def setUp(self):
         self.factory = APIRequestFactory()
+        post_save.disconnect(create_auth_token, User)
         post_save.disconnect(person_save_handler, Person)
         pre_delete.disconnect(person_delete_handler, Person)
         post_save.disconnect(organization_save_handler, Organization)
@@ -33,6 +36,7 @@ class OrganizationAPITestCase(APITestCase):
         pre_delete.connect(membership_delete_handler, Membership)
         post_save.connect(post_save_handler, Post)
         pre_delete.connect(post_delete_handler, Post)
+        post_save.connect(create_auth_token, User)
 
     def test_view_organization_list(self):
         response = self.client.get("/en/organizations/")
@@ -602,11 +606,26 @@ class OrganizationAPITestCase(APITestCase):
 
     def test_fetch_organization_translated(self):
         response = self.client.get("/ms/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/")
-        results = response.data["results"]
+        results = response.data["result"]
         self.assertEqual(results["name"], "Parti Lanun KL")
         self.assertEqual(results["language_code"], "ms")
 
     def test_fetch_organization_translated_nested(self):
         response = self.client.get("/ms/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/")
-        results = response.data["results"]
+        results = response.data["result"]
         self.assertEqual(results["parent"]["language_code"], "ms")
+
+    def test_import_error_organization(self):
+        source = "https://sinar-malaysia.popit.mysociety.org/api/v0.1/organizations/"
+        r = requests.get(source, verify=False)
+        data = r.json()
+        target = None
+        for item in data["result"]:
+            if item["id"] == "5362fcc219ee29270d8a9e22":
+                target = item
+        if target:
+            token = Token.objects.get(user__username="admin")
+            self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+            response = self.client.post("/en/organizations/", target)
+            logging.warn(response.data)
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)

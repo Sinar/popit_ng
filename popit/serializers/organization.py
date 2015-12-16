@@ -31,20 +31,20 @@ class OrganizationSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     parent = ParentOrganizationSerializer(required=False)
-    parent_id = CharField(max_length=255, required=False)
+    parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
-    founding_date = CharField(allow_null=True, default=None)
-    dissolution_date = CharField(allow_null=True, default=None)
+    founding_date = CharField(allow_null=True, default=None, allow_blank=True)
+    dissolution_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
 
     def create(self, validated_data):
         other_names = validated_data.pop('other_names', [])
         links = validated_data.pop('links', [])
-        identifiers = validated_data.pop('identifier', [])
+        identifiers = validated_data.pop('identifiers', [])
         contact_details = validated_data.pop('contact_details', [])
         language = self.language
         validated_data.pop("language_code", None)

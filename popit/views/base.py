@@ -56,7 +56,7 @@ class BasePopitListCreateView(BasePopitView):
         serializer = self.serializer(data=request.data, language=language)
         if serializer.is_valid():
             serializer.save()
-            data = { "results": serializer.data }
+            data = { "result": serializer.data }
             return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -78,7 +78,7 @@ class BasePopitDetailUpdateView(BasePopitView):
         instance = self.get_object(pk)
 
         serializer = self.serializer(instance, language=language)
-        data = { "results": serializer.data }
+        data = { "result": serializer.data }
         return Response(data)
 
     def put(self, request, language, pk, format=True):
@@ -86,7 +86,7 @@ class BasePopitDetailUpdateView(BasePopitView):
         serializer = self.serializer(instance, data=request.data, language=language, partial=True)
         if serializer.is_valid():
             serializer.save()
-            data = { "results": serializer.data }
+            data = { "result": serializer.data }
             return Response(data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

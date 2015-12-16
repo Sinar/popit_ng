@@ -102,6 +102,6 @@ def post_delete_handler(sender, instance, using, **kwargs):
 
 
 @receiver(post_save, sender=User)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
+def create_auth_token(sender, instance=None, created=False, raw=False, **kwargs):
+    if created and not raw:
         Token.objects.create(user=instance)
