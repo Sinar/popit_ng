@@ -533,7 +533,7 @@ class PersonContactAPITestCase(APITestCase):
             "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["results"]["value"], "0123421221")
+        self.assertEqual(response.data["result"]["value"], "0123421221")
 
     def test_view_person_contact_detail_not_exist_unauthorized(self):
         response = self.client.get(
@@ -548,7 +548,7 @@ class PersonContactAPITestCase(APITestCase):
             "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["results"]["value"], "0123421221")
+        self.assertEqual(response.data["result"]["value"], "0123421221")
 
     def test_view_person_contact_detail_not_exist_authorized(self):
         token = Token.objects.get(user__username="admin")
