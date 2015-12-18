@@ -281,3 +281,17 @@ class PostSerializerTestCase(TestCase):
         contact = post.contact_details.language("en").get(id="7f3f67c4-6afd-4de9-880e-943560cf56c0")
         link = contact.links.language("en").get(id="a37256e6-eab7-417a-8ac8-32edc5031924")
         self.assertEqual(link.note, "a wikipedia site")
+
+    def test_serializer_create_post_invalid_date(self):
+        data = {
+            "label": "Honorary Member",
+            "organization_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
+            "role": "Honorary Member",
+            "area_id": "640c0f1d-2305-4d17-97fe-6aa59f079cc4",
+            "start_date": "invalid date",
+            "end_date": "invalid date",
+        }
+
+        serializer = PostSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})

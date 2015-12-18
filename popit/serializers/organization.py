@@ -7,11 +7,13 @@ from popit.models import OtherName
 from popit.models import Area
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
+from rest_framework.serializers import ValidationError
 from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
+import re
 
 # We make this read only, and we shall show 1 level of parent. Not grand parent
 class ParentOrganizationSerializer(TranslatableModelSerializer):
@@ -241,6 +243,22 @@ class OrganizationSerializer(TranslatableModelSerializer):
             area_serializer = AreaSerializer(instance, language=instance.language_code)
             data["area"] = area_serializer.data
         return data
+
+    def validate_founding_date(self, value):
+        # None is fine empty is not
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
+    def validate_dissolution_date(self, value):
+        # None is fine, empty is not
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
 
     class Meta:
         model = Organization

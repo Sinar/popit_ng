@@ -9,6 +9,8 @@ from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from popit.serializers.exceptions import ContentObjectNotAvailable
 from popit.models import Area
+from rest_framework.serializers import ValidationError
+import re
 
 
 class LinkSerializer(TranslatableModelSerializer):
@@ -100,6 +102,16 @@ class ContactDetailSerializer(TranslatableModelSerializer):
         data["links"] = links_serializer.data
 
         return data
+
+    def validate_valid_from(self, value):
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
+    def validate_valid_to(self, value):
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
 
     class Meta:
         model = ContactDetail
@@ -252,6 +264,20 @@ class OtherNameSerializer(TranslatableModelSerializer):
         data["links"] = links_serializer.data
 
         return data
+
+    def validate_start_date(self, value):
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
+    def validate_end_date(self, value):
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
 
     class Meta:
         model = OtherName

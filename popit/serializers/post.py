@@ -12,6 +12,8 @@ from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
+import re
+from rest_framework.serializers import ValidationError
 
 
 class PostSerializer(TranslatableModelSerializer):
@@ -197,6 +199,21 @@ class PostSerializer(TranslatableModelSerializer):
             area_serializer = AreaSerializer(area_instance, language=instance.language_code)
             data["area"] = area_serializer.data
         return data
+
+    def validate_start_date(self, value):
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
+    def validate_end_date(self, value):
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
 
     class Meta:
         model = Post

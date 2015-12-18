@@ -354,3 +354,23 @@ class OrganizationSerializerTestCase(TestCase):
         contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
         link = contact.links.language("en").get(id="26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf")
         self.assertEqual(link.note, "yet another link")
+
+    def test_create_organization_invalid_date(self):
+        data = {
+            "name": "acme corp",
+            "founding_date": "invalid date",
+            "dissolution_date": "invalid date",
+        }
+        serializer = OrganizationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_organization_valid_date(self):
+        data = {
+            "name": "acme corp",
+            "founding_date": "2015-01-01",
+            "dissolution_date": "2015-01-01",
+        }
+        serializer = OrganizationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})

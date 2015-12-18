@@ -629,3 +629,25 @@ class OrganizationAPITestCase(APITestCase):
             response = self.client.post("/en/organizations/", target)
             logging.warn(response.data)
             self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_organization_invalid_date(self):
+        data = {
+            "name": "acme corp",
+            "founding_date": "invalid date",
+            "dissolution_date": "invalid date"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/organizations/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_organization_valid_date(self):
+        data = {
+            "name": "acme corp",
+            "founding_date": "2010-01-01",
+            "dissolution_date": "2015-01-01",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/organizations/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

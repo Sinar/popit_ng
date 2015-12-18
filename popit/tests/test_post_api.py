@@ -476,3 +476,18 @@ class PostAPITestCase(APITestCase):
         self.assertEqual(results["label"], "kapten parti lanun KL")
         self.assertEqual(results["language_code"], "ms")
 
+    def test_create_post_invalid_date(self):
+        data = {
+            "label": "Honorary Member",
+            "organization_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
+            "role": "Honorary Member",
+            "area_id": "640c0f1d-2305-4d17-97fe-6aa59f079cc4",
+            "start_date": "invalid date",
+            "end_date": "invalid date",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/posts/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+

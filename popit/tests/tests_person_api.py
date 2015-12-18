@@ -318,6 +318,26 @@ class PersonSerializerTestCase(TestCase):
         other_name = person_.other_names.language('en').get(id="cf93e73f-91b6-4fad-bf76-0782c80297a8")
         self.assertEqual(other_name.family_name, "jambul")
 
+    def test_create_person_invalid_date_serializer(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "invalid date",
+            "death_data": "invalid date",
+            "email": "joejambul@sinarproject.org",
+        }
+        person_serial = PersonSerializer(data=person_data, language='en')
+        person_serial.is_valid()
+        self.assertNotEqual(person_serial.errors, {})
+
+
 
 # TODO: Test with different language url. For integration
 # TODO: Find ways to delete value in reference item. The proper way is to expose each of those child entity as API
@@ -834,6 +854,25 @@ class PersonAPITestCase(APITestCase):
         data = r.json()
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.post("/en/organizations/", data["result"])
+        response = self.client.post("/en/persons/", data["result"])
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_person_api_invalid_date(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "invalid date",
+            "death_date": "invalid date",
+            "email": "joejambul@sinarproject.org",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/persons/", person_data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

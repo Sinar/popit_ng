@@ -114,6 +114,32 @@ class MembershipContactDetailAPI(APITestCase):
         response = self.client.delete("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/contact_details/78a35135-52e3-4af9-8c32-ea3f557354fd/")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
+    def test_create_membership_detail_invalid_date(self):
+        data = {
+            "type": "phone",
+            "value": "755-2525",
+            "label": "captain's phone",
+            "valid_from": "invalid date",
+            "valid_to": "invalid date",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/contact_details/",data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_membership_detail_valid_date(self):
+        data = {
+            "type": "phone",
+            "value": "755-2525",
+            "label": "captain's phone",
+            "valid_from": "2010-01-01",
+            "valid_to": "2015-01-01",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/contact_details/",data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
 class MembershipLinkAPITestCase(APITestCase):
 

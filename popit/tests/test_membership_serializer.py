@@ -209,4 +209,28 @@ class MembershipSerializerTestCase(TestCase):
         link = contacts.links.language("en").get(id="adebb549-e7a0-4ba6-a9ff-60eb2656c15b")
         self.assertEqual(link.label, "contact link")
 
+    def test_create_membership_invalid_date(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "start_date": "invalid date",
+            "end_date": "invalid date",
+        }
 
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_membership_valid_date(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "start_date": "2010-01-01",
+            "end_date": "2015-01-01",
+        }
+
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})

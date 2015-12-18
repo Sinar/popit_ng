@@ -10,6 +10,8 @@ from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
+from rest_framework.serializers import ValidationError
+import re
 
 
 class PersonSerializer(TranslatableModelSerializer):
@@ -177,6 +179,20 @@ class PersonSerializer(TranslatableModelSerializer):
         data["contact_details"] = contact_details_serializer.data
 
         return data
+
+    def validate_birth_date(self, value):
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
+    def validate_death_date(self, value):
+        if not value:
+            return None
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise ValidationError("value need to be in in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
 
     class Meta:
         model = Person

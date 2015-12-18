@@ -14,6 +14,7 @@ from popit.serializers import OrganizationSerializer
 from popit.serializers import PersonSerializer
 from popit.serializers import PostSerializer
 from rest_framework import serializers
+import re
 
 
 class MembershipSerializer(TranslatableModelSerializer):
@@ -274,6 +275,24 @@ class MembershipSerializer(TranslatableModelSerializer):
             area_serializer = AreaSerializer(area_instance, language=instance.language_code)
             data["area"] = area_serializer.data
         return data
+
+    def validate_start_date(self, value):
+        # None is fine, empty is not
+        if not value:
+            return value
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise serializers.ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
+    def validate_end_date(self, value):
+        if not value:
+            return value
+
+        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
+            raise serializers.ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
+        return value
+
+
 
     class Meta:
         model = Membership
