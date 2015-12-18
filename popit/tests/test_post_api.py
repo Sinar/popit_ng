@@ -491,3 +491,32 @@ class PostAPITestCase(APITestCase):
         response = self.client.post("/en/posts/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_create_post_api_role_more_20_char(self):
+        data = {
+            "result": {
+
+                "html_url": "https://sinar-malaysia.popit.mysociety.org/posts/545f7f5d5222837c2c05b740",
+                "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/posts/545f7f5d5222837c2c05b740",
+                "organization_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3", # Actual ID in production 545e01f45222837c2c0586f3
+                "area": {
+                        "state": "Kelantan",
+                        "id": "N1",
+                        "name": "Pengkalan Kubor"
+                },
+                "role": "Member of State Assembly",
+                "label": "ADUN for Pengkalan Kubor",
+                "id": "545f7f5d5222837c2c05b740",
+                "images": [ ],
+                "memberships": [ ],
+                "links": [ ],
+                "contact_details": [ ]
+            }
+
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/posts/", data["result"])
+        print(response.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

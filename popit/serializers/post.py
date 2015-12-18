@@ -38,7 +38,7 @@ class PostSerializer(TranslatableModelSerializer):
         validated_data.pop("area", {})
         area_id = validated_data.pop("area_id", None)
         links = validated_data.pop("links", [])
-        contacts = validated_data.pop("contacts", [])
+        contacts = validated_data.pop("contact_details", [])
         validated_data.pop("language_code", None)
 
         # Organization is read and assign only, no create or update

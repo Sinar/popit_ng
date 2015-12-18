@@ -19,7 +19,7 @@ class Post(TranslatableModel):
     id = models.CharField(max_length=255, primary_key=True, blank=True, verbose_name=_("id"))
     translations = TranslatedFields(
         label = models.CharField(max_length=255, verbose_name=_("label"), null=True, blank=True),
-        role = models.CharField(max_length=20, verbose_name=_("role"), null=True, blank=True),
+        role = models.CharField(max_length=100, verbose_name=_("role"), null=True, blank=True),
     )
     other_labels = GenericRelation(OtherName)
     organization = models.ForeignKey(Organization)
