@@ -260,6 +260,24 @@ class OrganizationSerializer(TranslatableModelSerializer):
             raise ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
         return value
 
+    def validate_parent_id(self, value):
+        if not value:
+            return value
+        try:
+            org = Organization.objects.untranslated().get(id=value)
+        except Organization.DoesNotExist:
+            raise ValidationError("Organization id %s, does not exist" % value)
+        return value
+
+    def validate_area_id(self, value):
+        if not value:
+            return value
+        try:
+            Area.objects.untranslated().get(id=value)
+        except Area.DoesNotExist:
+            raise ValidationError("Area id %s Does not exist" % value)
+        return value
+
     class Meta:
         model = Organization
         extra_kwargs = {'id': {'read_only': False, 'required': False}}

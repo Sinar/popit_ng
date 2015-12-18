@@ -295,3 +295,31 @@ class PostSerializerTestCase(TestCase):
         serializer = PostSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertNotEqual(serializer.errors, {})
+
+    def test_create_post_serializer_invalid_organization(self):
+        data = {
+            "label": "Honorary Member",
+            "organization_id": "not exist",
+            "role": "Honorary Member",
+            "area_id": "640c0f1d-2305-4d17-97fe-6aa59f079cc4",
+            "start_date": "2000-02-02",
+            "end_date": "2030-02-02",
+        }
+
+        serializer = PostSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_post_serializer_invalid_area_id(self):
+        data = {
+            "label": "Honorary Member",
+            "organization_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
+            "role": "Honorary Member",
+            "area_id": "not exist",
+            "start_date": "2000-02-02",
+            "end_date": "2030-02-02",
+        }
+
+        serializer = PostSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})

@@ -234,3 +234,47 @@ class MembershipSerializerTestCase(TestCase):
         serializer = MembershipSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
+
+    def test_create_membership_invalid_organization(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "not_exist",
+        }
+
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_membership_invalid_person(self):
+        data = {
+            "label": "test membership",
+            "person_id":"not_exist",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+        }
+
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_membership_invalid_post(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "post_id": "not_exist"
+        }
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_membership_invalid_area_id(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "area_id": "not_exist"
+        }
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})

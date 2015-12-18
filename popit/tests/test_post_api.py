@@ -520,3 +520,29 @@ class PostAPITestCase(APITestCase):
         response = self.client.post("/en/posts/", data["result"])
         print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_post_api_invalid_organization(self):
+        data = {
+            "label": "Honorary Member",
+            "organization_id": "not exist",
+            "role": "Honorary Member",
+            "area_id": "640c0f1d-2305-4d17-97fe-6aa59f079cc4",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/posts/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_post_api_invalid_area(self):
+        data = {
+            "label": "Honorary Member",
+            "organization_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
+            "role": "Honorary Member",
+            "area_id": "not exist",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/posts/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

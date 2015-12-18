@@ -387,3 +387,54 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_membership_invalid_organization(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "not_exist",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/memberships/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_membership_invalid_person(self):
+        data = {
+            "label": "test membership",
+            "person_id":"not_exist",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/memberships/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_membership_invalid_post(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "post_id": "not_exist"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/memberships/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_membership_invalid_area_id(self):
+
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "area_id": "not_exist"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/memberships/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

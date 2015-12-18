@@ -374,3 +374,30 @@ class OrganizationSerializerTestCase(TestCase):
         serializer = OrganizationSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
+
+    def test_create_organization_parent_not_exist(self):
+        data = {
+            "name": "acme corp",
+            "parent_id": "not exist"
+        }
+        serializer = OrganizationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_organization_parent_exist(self):
+        data = {
+            "name": "acme corp",
+            "parent_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3"
+        }
+        serializer = OrganizationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+
+    def test_create_organization_area_id_not_exist(self):
+        data = {
+            "name": "acme corp",
+            "area_id": "does not exist"
+        }
+        serializer = OrganizationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})

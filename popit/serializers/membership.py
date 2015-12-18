@@ -14,6 +14,7 @@ from popit.serializers import OrganizationSerializer
 from popit.serializers import PersonSerializer
 from popit.serializers import PostSerializer
 from rest_framework import serializers
+from rest_framework.serializers import ValidationError
 import re
 
 
@@ -292,7 +293,32 @@ class MembershipSerializer(TranslatableModelSerializer):
             raise serializers.ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
         return value
 
+    def validate_area_id(self, value):
+        if not value:
+            return value
+        try:
+            Area.objects.get(id=value)
+        except Area.DoesNotExist:
+            raise ValidationError("Area id %s does not exist" % value)
+        return value
 
+    def validate_organization_id(self, value):
+        if not value:
+            return value
+        try:
+            Organization.objects.untranslated().get(id=value)
+        except Organization.DoesNotExist:
+            raise ValidationError("Organization id %s does not exist" % value)
+
+    def validate_post_id(self, value):
+        if not value:
+            return value
+
+        try:
+            Post.objects.untranslated().get(id=value)
+        except Post.DoesNotExist:
+            raise ValidationError("Post id %s does not exist" % value)
+        return value
 
     class Meta:
         model = Membership
