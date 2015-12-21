@@ -438,3 +438,18 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_membership_invalid_person_id(self):
+        data = {
+            "label": "test membership",
+            "person_id":"does not exist",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "start_date": "2010-01-01",
+            "end_date": "2015-01-01"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/memberships/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

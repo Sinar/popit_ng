@@ -5,6 +5,7 @@ from popit.models import ContactDetail
 from popit.models import Link
 from popit.signals.handlers import *
 from popit.models import *
+import logging
 
 
 class MembershipSerializerTestCase(TestCase):
@@ -102,8 +103,12 @@ class MembershipSerializerTestCase(TestCase):
         }
 
         membership = Membership.objects.untranslated().get(id="0a44195b-c3c9-4040-8dbf-be1aa250b700")
+        logging.warn("Membership rorg id %s" % membership.post.organization_id)
+        logging.warn("Data org id %s" % data["organization_id"])
+
         serializer = MembershipSerializer(membership, data=data, partial=True, language="en")
         serializer.is_valid()
+
         self.assertNotEqual(serializer.errors, {})
 
     def test_update_membership_organization_post_conflict_serializer(self):
@@ -274,6 +279,18 @@ class MembershipSerializerTestCase(TestCase):
             "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
             "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
             "area_id": "not_exist"
+        }
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_create_membership_invalid_person_id_serializer(self):
+        data = {
+            "label": "test membership",
+            "person_id":"does not exist",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "start_date": "2010-01-01",
+            "end_date": "2015-01-01"
         }
         serializer = MembershipSerializer(data=data, language="en")
         serializer.is_valid()

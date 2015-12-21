@@ -400,4 +400,4 @@ class OrganizationSerializerTestCase(TestCase):
         }
         serializer = OrganizationSerializer(data=data, language="en")
         serializer.is_valid()
-        self.assertEqual(serializer.errors, {})
+        self.assertNotEqual(serializer.errors, {})

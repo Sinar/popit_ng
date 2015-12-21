@@ -16,6 +16,7 @@ from popit.serializers import PostSerializer
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 import re
+import logging
 
 
 class MembershipSerializer(TranslatableModelSerializer):
@@ -211,9 +212,22 @@ class MembershipSerializer(TranslatableModelSerializer):
     def validate(self, data):
 
         if not data.get("post_id") and not data.get("organization_id"):
+            logging.warn(data)
             if not self.partial:
-
                 raise serializers.ValidationError("Please provide either a post_id or organization_id when creating membership")
+
+        if data.get("post_id"):
+            try:
+                Post.objects.untranslated().get(id=data.get("post_id"))
+            except Post.DoesNotExist:
+                raise ValidationError("Post id %s does not exist" % data.get("post_id"))
+
+        if data.get("organization_id"):
+            try:
+                Organization.objects.untranslated().get(id=data.get("organization_id"))
+            except Organization.DoesNotExist:
+                raise ValidationError("Organization id %s does not exist" % data.get("organization_id"))
+
         if data.get("post_id") and data.get("organization_id"):
             post = Post.objects.untranslated().get(id=data.get("post_id"))
             if post.organization_id != data.get("organization_id"):
@@ -232,6 +246,34 @@ class MembershipSerializer(TranslatableModelSerializer):
                     organization = Organization.objects.untranslated().get(id=data.get("organization_id"))
                     if organization.id != self.instance.post.organization_id:
                         raise serializers.ValidationError("Organization ID does not match Post Organization id")
+
+        if data.get("area_id"):
+            try:
+                Area.objects.untranslated().get(id=data.get("area_id"))
+            except Area.DoesNotExist:
+                raise ValidationError("Area id %s does not exist" % data.get("area_id"))
+
+        if data.get("start_date"):
+            if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", data.get("start_date")):
+                raise serializers.ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format, currently %s" %
+                                                  data.get("start_date"))
+
+        if data.get("end_date"):
+            if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", data.get("end_date")):
+                raise serializers.ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format, currently %s" %
+                                                  data.get("end_date"))
+
+        if not data.get("person_id"):
+            if not self.partial:
+                raise serializers.ValidationError("person_id must not be empty")
+        else:
+            try:
+                Person.objects.untranslated().get(id=data.get("person_id"))
+
+            except Person.DoesNotExist:
+                raise serializers.ValidationError("Person %s does not exist" % data.get("person_id"))
+
+
         return data
 
     def to_representation(self, instance):
@@ -276,49 +318,6 @@ class MembershipSerializer(TranslatableModelSerializer):
             area_serializer = AreaSerializer(area_instance, language=instance.language_code)
             data["area"] = area_serializer.data
         return data
-
-    def validate_start_date(self, value):
-        # None is fine, empty is not
-        if not value:
-            return value
-        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
-            raise serializers.ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
-        return value
-
-    def validate_end_date(self, value):
-        if not value:
-            return value
-
-        if not re.match(r"^[0-9]{4}(-[0-9]{2}){0,2}$", value):
-            raise serializers.ValidationError("value need to be in ^[0-9]{4}(-[0-9]{2}){0,2}$ format")
-        return value
-
-    def validate_area_id(self, value):
-        if not value:
-            return value
-        try:
-            Area.objects.get(id=value)
-        except Area.DoesNotExist:
-            raise ValidationError("Area id %s does not exist" % value)
-        return value
-
-    def validate_organization_id(self, value):
-        if not value:
-            return value
-        try:
-            Organization.objects.untranslated().get(id=value)
-        except Organization.DoesNotExist:
-            raise ValidationError("Organization id %s does not exist" % value)
-
-    def validate_post_id(self, value):
-        if not value:
-            return value
-
-        try:
-            Post.objects.untranslated().get(id=value)
-        except Post.DoesNotExist:
-            raise ValidationError("Post id %s does not exist" % value)
-        return value
 
     class Meta:
         model = Membership
