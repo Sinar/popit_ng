@@ -35,10 +35,8 @@ class PostModelTestCase(TestCase):
         pre_delete.connect(post_delete_handler, Post)
 
     def test_create_post_minimum_field(self):
-        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         post = Post.objects.language("en").create(
             role="director",
-            organization=organization
         )
         self.assertEqual(post.role, "director")
 

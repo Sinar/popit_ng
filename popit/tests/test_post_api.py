@@ -546,3 +546,14 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.post("/en/posts/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_post_api_no_organization(self):
+        data = {
+            "label": "Honorary Member",
+            "role": "Honorary Member",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/posts/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

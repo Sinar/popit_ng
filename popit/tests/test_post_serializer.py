@@ -37,7 +37,6 @@ class PostSerializerTestCase(TestCase):
 
     def test_create_post_minimal_field_serializer(self):
         data = {
-            "organization_id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
             "role": "Honorary Member",
         }
         serializer = PostSerializer(data=data, language="en")
@@ -45,7 +44,7 @@ class PostSerializerTestCase(TestCase):
         self.assertEqual(serializer.errors, {})
         serializer.save()
         post = Post.objects.language("en").get(role="Honorary Member")
-        self.assertEqual(post.organization_id, "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        self.assertEqual(post.role, "Honorary Member")
 
     def test_create_post_serializer(self):
         data = {

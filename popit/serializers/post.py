@@ -21,7 +21,7 @@ class PostSerializer(TranslatableModelSerializer):
     id = CharField(max_length=255, required=False)
     other_labels = OtherNameSerializer(many=True, required=False)
     organization = OrganizationSerializer(required=False) # A post must tied to an organization
-    organization_id = CharField(max_length=255)
+    organization_id = CharField(max_length=255, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
 
@@ -42,8 +42,9 @@ class PostSerializer(TranslatableModelSerializer):
         validated_data.pop("language_code", None)
 
         # Organization is read and assign only, no create or update
-        organization = Organization.objects.language(self.language).get(id=organization_id)
-        validated_data["organization"] = organization
+        if organization_id:
+            organization = Organization.objects.language(self.language).get(id=organization_id)
+            validated_data["organization"] = organization
 
         # Area in this object is link or read only, not create or update
         if area_id:
