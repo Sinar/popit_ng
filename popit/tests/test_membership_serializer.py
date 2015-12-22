@@ -295,3 +295,14 @@ class MembershipSerializerTestCase(TestCase):
         serializer = MembershipSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertNotEqual(serializer.errors, {})
+
+    def test_create_membership_post_org_null_with_org(self):
+        data = {
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "post_id": "01e253f3-8d41-4f00-947d-6cba95b2740d"
+        }
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})

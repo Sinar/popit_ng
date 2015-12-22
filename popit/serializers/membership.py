@@ -230,12 +230,13 @@ class MembershipSerializer(TranslatableModelSerializer):
 
         if data.get("post_id") and data.get("organization_id"):
             post = Post.objects.untranslated().get(id=data.get("post_id"))
-            if post.organization_id != data.get("organization_id"):
-                raise serializers.ValidationError("Organization id is not consistent orrganization id in post")
+            if post.organization_id:
+                if post.organization_id != data.get("organization_id"):
+                    raise serializers.ValidationError("Organization id is not consistent orrganization id in post")
 
         if data.get("post_id") and not data.get("organization_id"):
             if self.instance:
-                if self.instance.organization_id:
+                if self.instance.organization_id and self.instance.post.organization_id:
                     post = Post.objects.untranslated().get(id=data.get("post_id"))
                     if post.organization_id != self.instance.organization_id:
                         raise serializers.ValidationError("Post Organization ID does not match organization id")
@@ -243,9 +244,10 @@ class MembershipSerializer(TranslatableModelSerializer):
         if not data.get("post_id") and data.get("organization_id"):
             if self.instance:
                 if self.instance.post:
-                    organization = Organization.objects.untranslated().get(id=data.get("organization_id"))
-                    if organization.id != self.instance.post.organization_id:
-                        raise serializers.ValidationError("Organization ID does not match Post Organization id")
+                    if self.instance.post.organization_id:
+                        organization = Organization.objects.untranslated().get(id=data.get("organization_id"))
+                        if organization.id != self.instance.post.organization_id:
+                            raise serializers.ValidationError("Organization ID does not match Post Organization id")
 
         if data.get("area_id"):
             try:

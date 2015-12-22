@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from popit.signals.handlers import *
 from popit.models import *
+import logging
 
 
 class MembershipAPITestCasse(APITestCase):
@@ -453,3 +454,19 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    # Need a better name for this test
+    def test_create_membership_post_org_null_with_org_api(self):
+        data = {
+            "label": "free pirate on test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "post_id": "01e253f3-8d41-4f00-947d-6cba95b2740d",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/memberships/", data)
+        logging.warn(response.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+

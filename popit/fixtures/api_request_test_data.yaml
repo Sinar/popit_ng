@@ -223,6 +223,13 @@
 - model: popit.posttranslation
   pk: 4
   fields: {label: kapten parti lanun KL, role: kapten, language_code: ms, master: 2c6982c2-504a-4e0d-8949-dade5f9e494e}
+- model: popit.posttranslation
+  pk: 6
+  fields: {label: free pirate, role: member, language_code: en, master: 01e253f3-8d41-4f00-947d-6cba95b2740d}
+- model: popit.post
+  pk: 01e253f3-8d41-4f00-947d-6cba95b2740d
+  fields: {organization: null, area: null, start_date: null, end_date: null, created_at: ! '2015-12-22
+      07:02:10.033482+00:00', updated_at: ! '2015-12-22 07:02:10.033524+00:00'}
 - model: popit.post
   pk: 2c6982c2-504a-4e0d-8949-dade5f9e494e
   fields: {organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, area: null, start_date: null,

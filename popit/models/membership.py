@@ -79,8 +79,9 @@ class Membership(TranslatableModel):
 
         if self.post and self.organization:
             post_org = self.post.organization
-            if post_org != self.organization:
-                raise ValidationError("An organization for membership should match organization of a post")
+            if post_org:
+                if post_org != self.organization:
+                    raise ValidationError("An organization for membership should match organization of a post")
 
         super(Membership, self).clean()
 
