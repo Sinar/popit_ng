@@ -61,7 +61,7 @@ class BasePopitListCreateView(BasePopitView):
 
 
 class BasePopitDetailUpdateView(BasePopitView):
-    def get_object(self, pk):
+    def get_object(self, pk, language=None):
         if not self.entity:
             raise EntityNotSetException("Please sent entity in class")
 
@@ -69,7 +69,10 @@ class BasePopitDetailUpdateView(BasePopitView):
             raise SerializerNotSetException("Please set serializer in class")
 
         try:
-            return self.entity.objects.untranslated().get(id=pk)
+            if not language:
+                return self.entity.objects.untranslated().get(id=pk)
+            else:
+                return self.entity.objects.language(language).get(id=pk)
         except self.entity.DoesNotExist:
             raise Http404
 
@@ -81,7 +84,10 @@ class BasePopitDetailUpdateView(BasePopitView):
         return Response(data)
 
     def put(self, request, language, pk, format=True):
+        # TODO: This need optimization
         instance = self.get_object(pk)
+        if language in instance.get_available_languages():
+            instance = self.get_object(pk, language)
         serializer = self.serializer(instance, data=request.data, language=language, partial=True)
         if serializer.is_valid():
             serializer.save()

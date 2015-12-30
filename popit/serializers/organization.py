@@ -121,6 +121,10 @@ class OrganizationSerializer(TranslatableModelSerializer):
         return area
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
+
         other_names = data.pop("other_names", [])
         links = data.pop("links", [])
         identifiers = data.pop("identifiers", [])

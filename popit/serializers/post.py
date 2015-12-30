@@ -43,12 +43,12 @@ class PostSerializer(TranslatableModelSerializer):
 
         # Organization is read and assign only, no create or update
         if organization_id:
-            organization = Organization.objects.language(self.language).get(id=organization_id)
+            organization = Organization.objects.untranslated().get(id=organization_id)
             validated_data["organization"] = organization
 
         # Area in this object is link or read only, not create or update
         if area_id:
-            area = Area.objects.language(self.language).get(id=area_id)
+            area = Area.objects.untranslated().get(id=area_id)
             validated_data["area"] = area
 
         if not validated_data.get("start_date"):
@@ -90,7 +90,9 @@ class PostSerializer(TranslatableModelSerializer):
         return area
 
     def update(self, instance, data):
-
+        available_language = instance.get_available_languages()
+        if not self.language in available_language:
+            instance = instance.translate(self.language)
 
         instance.label = data.get("label", instance.label)
         instance.role = data.get("role", instance.role)
@@ -104,11 +106,11 @@ class PostSerializer(TranslatableModelSerializer):
             instance.end_date = None
 
         if data.get("area_id"):
-            area = Area.objects.language(self.language).get(id=data.get("area_id"))
+            area = Area.objects.untranslated().get(id=data.get("area_id"))
             instance.area = area
 
         if data.get("organization_id"):
-            organization = Organization.objects.language(self.language).get(id=data.get("area_id"))
+            organization = Organization.objects.untranslated().get(id=data.get("area_id"))
             instance.organization = organization
 
         instance.save()

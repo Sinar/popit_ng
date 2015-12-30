@@ -401,3 +401,28 @@ class OrganizationSerializerTestCase(TestCase):
         serializer = OrganizationSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertNotEqual(serializer.errors, {})
+
+    def test_create_organization_translated(self):
+        data = {
+            "name": "acme sdn bhd",
+        }
+
+        serializer = OrganizationSerializer(data=data, language="ms")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+
+        organization = Organization.objects.language("ms").get(name="acme sdn bhd")
+        self.assertEqual(organization.name, "acme sdn bhd")
+
+    def test_update_organization_authorized_translated(self):
+        data = {
+            "abstract": "Cawangan KL Parti Lanun Malaysia"
+        }
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        serializer = OrganizationSerializer(organization, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        self.assertEqual(organization.abstract, "Cawangan KL Parti Lanun Malaysia")

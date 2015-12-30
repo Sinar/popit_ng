@@ -5,6 +5,7 @@ from popit.models import Post
 from rest_framework.authtoken.models import Token
 from popit.signals.handlers import *
 from popit.models import *
+import logging
 
 
 class PostAPITestCase(APITestCase):
@@ -557,3 +558,28 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.post("/en/posts/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_post_api_translated(self):
+        data = {
+            "label": "Ahli Terhormat",
+            "role": "Ahli Terhormat",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/ms/posts/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        logging.warn(response.data)
+        self.assertEqual(response.data["result"]["label"], "Ahli Terhormat")
+        self.assertEqual(response.data["result"]["role"], "Ahli Terhormat")
+
+    def test_update_post_api_translated(self):
+        data = {
+            "label": "ahli"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/ms/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        post = Post.objects.language("ms").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        self.assertEqual(post.label, "ahli")

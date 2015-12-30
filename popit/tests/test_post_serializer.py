@@ -74,7 +74,6 @@ class PostSerializerTestCase(TestCase):
         serializer.save()
         post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
         self.assertEqual(post.label, "member")
-        pass
 
     def test_create_post_otherlabels_serializer(self):
         data = {
@@ -322,3 +321,27 @@ class PostSerializerTestCase(TestCase):
         serializer = PostSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertNotEqual(serializer.errors, {})
+
+    def test_create_post_translated(self):
+        data = {
+            "label": "Ahli Terhormat",
+            "role": "Ahli Terhormat",
+        }
+        serializer = PostSerializer(data=data, language="ms")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        post = Post.objects.language("ms").get(role="Ahli Terhormat")
+        self.assertEqual(post.role, "Ahli Terhormat")
+
+    def test_update_post_translated(self):
+        data = {
+            "label": "ahli"
+        }
+        post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        serializer = PostSerializer(post, data=data, language="ms", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        post = Post.objects.language("ms").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        self.assertEqual(post.label, "ahli")

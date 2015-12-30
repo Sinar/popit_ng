@@ -306,3 +306,32 @@ class MembershipSerializerTestCase(TestCase):
         serializer = MembershipSerializer(data=data, language="en")
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
+
+    def test_update_membership_unauthorized_translated(self):
+        data = {
+            "label": "sweemeng adalah land lubber"
+        }
+
+        membership = Membership.objects.untranslated().get(id="0a44195b-c3c9-4040-8dbf-be1aa250b700")
+        logging.warn(membership.get_available_languages())
+        serializer = MembershipSerializer(membership, data=data, partial=True, language="ms")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        membership = Membership.objects.language("ms").get(id="0a44195b-c3c9-4040-8dbf-be1aa250b700")
+        self.assertEqual(membership.label, "sweemeng adalah land lubber")
+
+
+    def test_create_membership_with_translation(self):
+        data = {
+            "label": "percubaan membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+        }
+
+        serializer = MembershipSerializer(data=data, language="ms")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        membership = Membership.objects.language("ms").get(label="percubaan membership")
+        self.assertEqual(membership.person_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")

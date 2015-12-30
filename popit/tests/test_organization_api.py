@@ -684,3 +684,24 @@ class OrganizationAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/organizations/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_organization_translated(self):
+        data = {
+            "name": "acme sdn bhd",
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/ms/organizations/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_update_organization_authorized_translated(self):
+        data = {
+            "abstract": "Cawangan KL Parti Lanun Malaysia"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/ms/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        organization = Organization.objects.language("ms").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        self.assertEqual(organization.abstract, "Cawangan KL Parti Lanun Malaysia")

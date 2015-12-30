@@ -470,3 +470,27 @@ class MembershipAPITestCasse(APITestCase):
         logging.warn(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_update_membership_unauthorized_translated(self):
+        data = {
+            "label": "sweemeng adalah land lubber"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/ms/memberships/0a44195b-c3c9-4040-8dbf-be1aa250b700/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["result"]["label"], "sweemeng adalah land lubber")
+
+    def test_create_membership_with_translation(self):
+        data = {
+            "label": "percubaan membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/ms/memberships/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["result"]["label"], "percubaan membership")

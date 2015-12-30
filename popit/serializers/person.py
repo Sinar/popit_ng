@@ -26,10 +26,10 @@ class PersonSerializer(TranslatableModelSerializer):
 
     def create(self, validated_data):
         language_code=self.language
-        links = validated_data.pop("links")
-        other_names = validated_data.pop("other_names")
-        contact_details = validated_data.pop('contact_details')
-        identifiers = validated_data.pop("identifiers")
+        links = validated_data.pop("links", [])
+        other_names = validated_data.pop("other_names", [])
+        contact_details = validated_data.pop('contact_details', [])
+        identifiers = validated_data.pop("identifiers", [])
         # Where do the language come from inside the create function
         validated_data.pop("language_code", [])
         # So that elasticsearch handle this sanely
@@ -75,6 +75,9 @@ class PersonSerializer(TranslatableModelSerializer):
         :param validated_data:
         :return:
         """
+        available_language = instance.get_available_languages()
+        if not self.language in available_language:
+            instance = instance.translate(self.language)
         # Now sure if save everytime we update a good idea. On the other hand, not like everyone can update anyway.
         # Also some field is not added, maybe I should add patronymic name and sort name =.=
         instance.name = validated_data.get("name", instance.name)

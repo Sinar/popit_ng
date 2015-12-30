@@ -61,23 +61,23 @@ class MembershipSerializer(TranslatableModelSerializer):
         validated_data.pop("language_code", None)
 
         if person_id:
-            person = Person.objects.language(self.language).get(id=person_id)
+            person = Person.objects.untranslated().get(id=person_id)
             validated_data["person"] = person
 
         if organization_id:
-            organization = Organization.objects.language(self.language).get(id=organization_id)
+            organization = Organization.objects.untranslated().get(id=organization_id)
             validated_data["organization"] = organization
 
         if on_behalf_of_id:
-            on_behalf_of = Organization.objects.language(self.language).get(id=on_behalf_of_id)
+            on_behalf_of = Organization.objects.untranslated().get(id=on_behalf_of_id)
             validated_data["on_behalf_of"] = on_behalf_of
 
         if area_id:
-            area = Area.objects.language(self.language).get(id=area_id)
+            area = Area.objects.untranslated().get(id=area_id)
             validated_data["area"] = area
 
         if post_id:
-            post = Post.objects.language(self.language).get(id=post_id)
+            post = Post.objects.untranslated().get(id=post_id)
             validated_data["post"] = post
 
         if not validated_data.get("start_date"):
@@ -109,6 +109,9 @@ class MembershipSerializer(TranslatableModelSerializer):
             self.create_links(link, obj)
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
         data.pop("person", None)
         person_id = data.pop("person_id", None)
 
@@ -138,23 +141,23 @@ class MembershipSerializer(TranslatableModelSerializer):
             instance.end_date = None
 
         if person_id:
-            person = Person.objects.language(self.language).get(id=person_id)
+            person = Person.objects.untranslated().get(id=person_id)
             instance.person = person
 
         if organization_id:
-            organization = Organization.objects.language(self.language).get(id=organization_id)
+            organization = Organization.objects.untranslated().get(id=organization_id)
             instance.organization = organization
 
         if on_behalf_of_id:
-            on_behalf_of = Organization.objects.language(self.language).get(id=on_behalf_of_id)
+            on_behalf_of = Organization.objects.untranslated().get(id=on_behalf_of_id)
             instance.on_behalf_of = on_behalf_of
 
         if area_id:
-            area = Area.objects.language(self.language).get(id=area_id)
+            area = Area.objects.untranslated().get(id=area_id)
             instance.area = area
 
         if post_id:
-            post = Post.objects.language(self.language).get(id=post_id)
+            post = Post.objects.untranslated().get(id=post_id)
             instance.post = post
 
         instance.save()

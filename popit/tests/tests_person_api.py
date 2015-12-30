@@ -337,10 +337,40 @@ class PersonSerializerTestCase(TestCase):
         person_serial.is_valid()
         self.assertNotEqual(person_serial.errors, {})
 
+    def test_update_person_translated_serializer(self):
+        person_data = {
+            "given_name": "jerry jambul",
+        }
 
+        person = Person.objects.language("ms").get(id='ab1a5788e5bae955c048748fa6af0e97')
 
-# TODO: Test with different language url. For integration
-# TODO: Find ways to delete value in reference item. The proper way is to expose each of those child entity as API
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language='ms')
+        person_serializer.is_valid()
+        self.assertEqual(person_serializer.errors, {})
+        person_serializer.save()
+        person_ = Person.objects.language('ms').get(id='ab1a5788e5bae955c048748fa6af0e97')
+        self.assertEqual(person_.given_name, "jerry jambul")
+
+    def test_create_person_translated_serializer(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "bukan john doe",
+            "gender": "tak tahu",
+            "summary": "orang ujian",
+            "honorific_prefix": "Datuk Seri",
+            "biography": "Dia Tak wujud!!!!",
+            "email": "joejambul@sinarproject.org",
+        }
+
+        person_serial = PersonSerializer(data=person_data, language='ms')
+        person_serial.is_valid()
+        self.assertEqual(person_serial.errors, {})
+        person_serial.save()
+        person = Person.objects.language("ms").get(name="joe")
+        self.assertEqual(person.given_name, "joe jambul")
+
 # We have set parameter in client into json instead of multipart form, maybe we should explicitly set it.
 class PersonAPITestCase(APITestCase):
 
@@ -471,7 +501,6 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         person = Person.objects.language("en").get(name="joe")
         self.assertEqual(person.name, "joe")
-        self.client.credentials()
 
     def test_update_person_unauthorized(self):
         person_data = {
@@ -876,3 +905,34 @@ class PersonAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/persons/", person_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_update_person_authorized_translated(self):
+        person_data = {
+            "given_name": "jerry jambul",
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/ms/persons/ab1a5788e5bae955c048748fa6af0e97/", person_data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        person_ = Person.objects.language('ms').get(id='ab1a5788e5bae955c048748fa6af0e97')
+        self.assertEqual(person_.given_name, "jerry jambul")
+
+    def test_create_person_authorized_translated(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "bukan john doe",
+            "gender": "tak tahu",
+            "summary": "orang ujian",
+            "honorific_prefix": "Datuk Seri",
+            "biography": "Dia Tak wujud!!!!",
+            "email": "joejambul@sinarproject.org",
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/ms/persons/", person_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        person = Person.objects.language("ms").get(name="joe")
+        self.assertEqual(person.name, "joe")
