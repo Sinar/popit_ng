@@ -60,7 +60,8 @@ class Post(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.id = str(uuid.uuid4())
+            id_ = uuid.uuid4()
+            self.id = str(id_.hex)
         self.full_clean()
         super(Post, self).save(*args, **kwargs)
 

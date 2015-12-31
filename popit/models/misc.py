@@ -33,7 +33,8 @@ class Link(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.id = str(uuid.uuid4())
+            id_ = uuid.uuid4()
+            self.id = str(id_.hex)
         self.full_clean()
         super(Link, self).save(*args, **kwargs)
 
@@ -69,7 +70,8 @@ class Contact(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.id = str(uuid.uuid4())
+            id_ = uuid.uuid4()
+            self.id = str(id_.hex)
         self.full_clean()
         super(Contact, self).save(*args, **kwargs)
 
@@ -120,7 +122,8 @@ class ContactDetail(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.id = str(uuid.uuid4())
+            id_ = uuid.uuid4()
+            self.id = str(id_.hex)
         self.full_clean()
         super(ContactDetail, self).save(*args, **kwargs)
 
@@ -165,7 +168,8 @@ class Identifier(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.id = str(uuid.uuid4())
+            id_ = uuid.uuid4()
+            self.id = str(id_.hex)
         self.full_clean()
         super(Identifier, self).save(*args, **kwargs)
 
@@ -229,7 +233,8 @@ class OtherName(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.id = str(uuid.uuid4())
+            id_ = uuid.uuid4()
+            self.id = str(id_.hex)
         self.full_clean()
         super(OtherName, self).save(*args, **kwargs)
 
@@ -279,7 +284,8 @@ class Area(TranslatableModel):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            self.id = str(uuid.uuid4()) # We use id from popolo, but do not assume anyone have mapit setup
+            id_ = uuid.uuid4()
+            self.id = str(id_.hex)# We use id from popolo, but do not assume anyone have mapit setup
         self.full_clean()
         super(Area, self).save(*args, **kwargs)
 

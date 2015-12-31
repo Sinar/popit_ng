@@ -150,7 +150,7 @@ class PersonSerializerTestCase(TestCase):
             ]
         }
         person = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language="en")
         person_serializer.is_valid()
 
         self.assertEqual(person_serializer.errors, {})
@@ -235,7 +235,7 @@ class PersonSerializerTestCase(TestCase):
         }
 
         person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        person_serializer = PersonSerializer(person, data=person_data, partial=True)
+        person_serializer = PersonSerializer(person, data=person_data, partial=True, language="en")
         person_serializer.is_valid()
         self.assertEqual(person_serializer.errors, {})
         person_serializer.save()
