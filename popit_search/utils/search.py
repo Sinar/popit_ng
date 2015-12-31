@@ -89,6 +89,8 @@ class SerializerSearch(object):
     def delete_index(self):
         self.es.indices.delete(index=self.index)
 
+    def delete_document(self):
+        self.es.delete(index=self.index, doc_type=self.doc_type)
 
 
 class SerializerSearchNotFoundException(Exception):
@@ -103,35 +105,50 @@ class SerializerSearchInstanceExist(Exception):
     pass
 
 
-# TODO: Improve API usage.
-def popit_indexer():
-    person_indexer = SerializerSearch("persons")
-    persons = Person.objects.language("all").all()
-    for person in persons:
-        logging.warn("Indexing %s with %s for language %s" % (person.name, person.id, person.language_code))
-        status=person_indexer.add(person, PersonSerializer)
-        logging.warn(status)
+def popit_indexer(entity=""):
+    if not entity or entity == "persons":
+        person_indexer = SerializerSearch("persons")
+        persons = Person.objects.language("all").all()
+        for person in persons:
+            try:
+                logging.warn("Indexing %s with %s for language %s" % (person.name, person.id, person.language_code))
+                status=person_indexer.add(person, PersonSerializer)
+                logging.warn(status)
+            except SerializerSearchInstanceExist:
+                logging.warn("Instance %s with %s for language %s exist" % (person.name, person.id, person.language_code))
 
-    org_indexer = SerializerSearch("organizations")
-    organizations = Organization.objects.language("all").all()
-    for organization in organizations:
-        logging.warn("Indexing %s with %s for language %s" % (organization.name, organization.id, organization.language_code))
-        status=org_indexer.add(organization, OrganizationSerializer)
-        logging.warn(status)
+    if not entity or entity == "organizations":
+        org_indexer = SerializerSearch("organizations")
+        organizations = Organization.objects.language("all").all()
+        for organization in organizations:
+            try:
+                logging.warn("Indexing %s with %s for language %s" % (organization.name, organization.id, organization.language_code))
+                status=org_indexer.add(organization, OrganizationSerializer)
+                logging.warn(status)
+            except SerializerSearchInstanceExist:
+                logging.warn("Instance %s with %s for language %s exist" % (organization.name, organization.id, organization.language_code))
 
-    post_indexer = SerializerSearch("posts")
-    posts = Post.objects.language("all").all()
-    for post in posts:
-        logging.warn("Indexing %s with %s for language %s" % (post.label, post.id, post.language_code))
-        status=post_indexer.add(post, PostSerializer)
-        logging.warn(status)
+    if not entity or entity == "posts":
+        post_indexer = SerializerSearch("posts")
+        posts = Post.objects.language("all").all()
+        for post in posts:
+            try:
+                logging.warn("Indexing %s with %s for language %s" % (post.label, post.id, post.language_code))
+                status=post_indexer.add(post, PostSerializer)
+                logging.warn(status)
+            except SerializerSearchInstanceExist:
+                logging.warn("Instance %s with %s for language %s exist" % (post.label, post.id, post.language_code))
 
-    mem_indexer = SerializerSearch("memberships")
-    memberships = Membership.objects.language("all").all()
-    for membership in memberships:
-        logging.warn("Indexing id %s for language %s" % (membership.id, membership.language_code))
-        status=mem_indexer.add(membership, MembershipSerializer)
-        logging.warn(status)
+    if not entity or entity == "memberships":
+        mem_indexer = SerializerSearch("memberships")
+        memberships = Membership.objects.language("all").all()
+        for membership in memberships:
+            try:
+                logging.warn("Indexing id %s for language %s" % (membership.id, membership.language_code))
+                status=mem_indexer.add(membership, MembershipSerializer)
+                logging.warn(status)
+            except SerializerSearchInstanceExist:
+                logging.warn("Instance with %s for language %s exist" % (membership.id, membership.language_code))
 
 def remove_popit_index():
     person_indexer = SerializerSearch("persons")
