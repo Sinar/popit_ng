@@ -31,6 +31,16 @@ $ python manage.py createsuperuser
 $ python manage.py runserver 0.0.0.0:8000
 ```
 
+To load test data
+
+```sh
+$ python manage.py loaddata popit/fixtures/api_request_test_data.yaml
+```
+
+* username is admin, password is rockgod. Don't use it for production
+* auth token is 04afcac1d644e3dbab187d8b2205d355c0d9b951.
+* token is set http header "Authorization: Token 04afcac1d644e3dbab187d8b2205d355c0d9b951"
+
 We are still doing heavy development on this project, so all the steps here are for testing and development only.
 
 ## Current features
