@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 from popit.models import Person
 from popit.signals.handlers import *
 from popit.models import *
+import logging
 
 
 class PersonLinkAPITestCase(APITestCase):

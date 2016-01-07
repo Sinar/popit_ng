@@ -41,6 +41,7 @@ class OrganizationAPITestCase(APITestCase):
     def test_view_organization_list(self):
         response = self.client.get("/en/organizations/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("page" in response.data)
 
     def test_view_organization_list_authorized(self):
         token = Token.objects.get(user__username="admin")

@@ -32,6 +32,7 @@ class MembershipAPITestCasse(APITestCase):
     def test_list_membership(self):
         response = self.client.get("/en/memberships/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("page" in response.data)
 
     def test_fetch_membership_detail(self):
         response = self.client.get("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/")

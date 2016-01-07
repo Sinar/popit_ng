@@ -36,6 +36,7 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.get("/en/posts/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("page" in response.data)
 
     def test_view_post_detail_not_exist_unauthorized(self):
         response = self.client.get("/en/posts/not_exist/")

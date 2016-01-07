@@ -399,6 +399,7 @@ class PersonAPITestCase(APITestCase):
     def test_view_person_list(self):
         response = self.client.get("/en/persons/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("page" in response.data)
 
     def test_view_person_detail(self):
         person = Person.objects.language("en").get(id="8497ba86-7485-42d2-9596-2ab14520f1f4")
