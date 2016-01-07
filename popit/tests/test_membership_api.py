@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from popit.signals.handlers import *
 from popit.models import *
 import logging
+from django.conf import settings
 
 
 class MembershipAPITestCasse(APITestCase):
@@ -33,6 +34,7 @@ class MembershipAPITestCasse(APITestCase):
         response = self.client.get("/en/memberships/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("page" in response.data)
+        self.assertEqual(response.data["per_page"], settings.REST_FRAMEWORK["PAGE_SIZE"])
 
     def test_fetch_membership_detail(self):
         response = self.client.get("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/")

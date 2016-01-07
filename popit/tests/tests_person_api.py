@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 from popit.signals.handlers import *
 from popit.models import *
 import requests
+from django.conf import settings
 
 
 # TODO: Test multilingual behavior. To make behavior clear
@@ -400,6 +401,7 @@ class PersonAPITestCase(APITestCase):
         response = self.client.get("/en/persons/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("page" in response.data)
+        self.assertEqual(response.data["per_page"], settings.REST_FRAMEWORK["PAGE_SIZE"])
 
     def test_view_person_detail(self):
         person = Person.objects.language("en").get(id="8497ba86-7485-42d2-9596-2ab14520f1f4")
