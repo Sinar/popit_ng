@@ -57,7 +57,8 @@ class BasePopitListCreateView(BasePopitView):
             serializer.save()
             data = { "result": serializer.data }
             return Response(data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        errors = { "errors": serializer.errors }
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BasePopitDetailUpdateView(BasePopitView):
