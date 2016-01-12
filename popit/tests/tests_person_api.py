@@ -908,6 +908,7 @@ class PersonAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/persons/", person_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_update_person_authorized_translated(self):
         person_data = {

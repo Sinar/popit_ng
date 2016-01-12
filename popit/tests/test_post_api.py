@@ -494,6 +494,7 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.post("/en/posts/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_post_api_role_more_20_char(self):
         data = {
@@ -537,6 +538,7 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.post("/en/posts/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_post_api_invalid_area(self):
         data = {
@@ -550,6 +552,7 @@ class PostAPITestCase(APITestCase):
 
         response = self.client.post("/en/posts/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_post_api_no_organization(self):
         data = {

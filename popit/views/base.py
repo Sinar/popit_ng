@@ -94,7 +94,8 @@ class BasePopitDetailUpdateView(BasePopitView):
             serializer.save()
             data = { "result": serializer.data }
             return Response(data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        errors = { "errors": serializer.errors }
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, language, pk, format=True):
         instance = self.get_object(pk)

@@ -86,6 +86,7 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_membership_with_post_unauthorized(self):
         data = {
@@ -152,6 +153,7 @@ class MembershipAPITestCasse(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_update_membership_unauthorized(self):
         data = {
@@ -202,6 +204,7 @@ class MembershipAPITestCasse(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.put("/en/memberships/0a44195b-c3c9-4040-8dbf-be1aa250b700/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_update_membership_conflict_organization_post_unauthorized(self):
         data = {
@@ -218,6 +221,7 @@ class MembershipAPITestCasse(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.put("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_membership_contact_unauthorized(self):
         data = {
@@ -376,6 +380,7 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_membership_valid_date(self):
         data = {
@@ -403,6 +408,7 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_membership_invalid_person(self):
         data = {
@@ -415,6 +421,7 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_membership_invalid_post(self):
         data = {
@@ -428,6 +435,7 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_membership_invalid_area_id(self):
 
@@ -442,6 +450,7 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_membership_invalid_person_id(self):
         data = {
@@ -457,6 +466,7 @@ class MembershipAPITestCasse(APITestCase):
 
         response = self.client.post("/en/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     # Need a better name for this test
     def test_create_membership_post_org_null_with_org_api(self):

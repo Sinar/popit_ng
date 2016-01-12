@@ -643,6 +643,7 @@ class OrganizationAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/organizations/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_organization_valid_date(self):
         data = {
@@ -665,6 +666,7 @@ class OrganizationAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/organizations/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_organization_valid_parent(self):
         data = {
@@ -687,6 +689,7 @@ class OrganizationAPITestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/organizations/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertTrue("errors" in response.data)
 
     def test_create_organization_translated(self):
         data = {
