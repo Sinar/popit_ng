@@ -35,22 +35,21 @@ class OrganizationMembershipSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     person_id = CharField(max_length=255, required=False)
-    organization_id = CharField(max_length=255, required=False)
-    member_id = CharField(max_length=255, required=False)
-    on_behalf_of_id = CharField(max_length=255, required=False)
-    area = AreaSerializer(required=False)
-    area_id = CharField(max_length=255, required=False)
-    post_id = CharField(max_length=255, required=False)
+    organization_id = CharField(max_length=255, required=False, allow_null=True)
+    member_id = CharField(max_length=255, required=False, allow_null=True)
+    on_behalf_of_id = CharField(max_length=255, required=False, allow_null=True)
+    area_id = CharField(max_length=255, required=False, allow_null=True)
+    post_id = CharField(max_length=255, required=False, allow_null=True)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    start_date = CharField(allow_null=True, default=None)
-    end_date = CharField(allow_null=True, default=None)
+    start_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
+    end_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
 
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = ["person", "organization", "post"]
+        exclude = ["person", "organization", "post", "area"]
 
 
 
@@ -61,7 +60,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
     parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
-    membership = OrganizationMembershipSerializer(many=True, required=False)
+    memberships = OrganizationMembershipSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
