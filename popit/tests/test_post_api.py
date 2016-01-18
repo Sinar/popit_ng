@@ -51,6 +51,8 @@ class PostAPITestCase(APITestCase):
     def test_view_post_detail_exist_unauthorized(self):
         response = self.client.get("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("memberships" in response.data["result"])
+
 
     def test_view_post_detail_exist_authorized(self):
         response = self.client.get("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/")

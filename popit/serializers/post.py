@@ -24,8 +24,7 @@ class PostMembershipSerializer(TranslatableModelSerializer):
     organization_id = CharField(max_length=255, required=False)
     member_id = CharField(max_length=255, required=False)
     on_behalf_of_id = CharField(max_length=255, required=False)
-    area = AreaSerializer(required=False)
-    area_id = CharField(max_length=255, required=False)
+    area_id = CharField(max_length=255, required=False, allow_null=True)
     post_id = CharField(max_length=255, required=False)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
@@ -36,7 +35,7 @@ class PostMembershipSerializer(TranslatableModelSerializer):
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = ["person", "organization", "post"]
+        exclude = ["person", "organization", "post", "area"]
 
 
 class PostSerializer(TranslatableModelSerializer):
