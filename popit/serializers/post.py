@@ -6,6 +6,7 @@ from popit.models import Area
 from popit.models import OtherName
 from popit.models import Organization
 from popit.models import ContactDetail
+from popit.models import Membership
 from rest_framework.serializers import CharField
 from popit.serializers.organization import OrganizationSerializer
 from popit.serializers.misc import OtherNameSerializer
@@ -16,6 +17,28 @@ import re
 from rest_framework.serializers import ValidationError
 
 
+class PostMembershipSerializer(TranslatableModelSerializer):
+
+    id = CharField(max_length=255, required=False)
+    person_id = CharField(max_length=255, required=False)
+    organization_id = CharField(max_length=255, required=False)
+    member_id = CharField(max_length=255, required=False)
+    on_behalf_of_id = CharField(max_length=255, required=False)
+    area = AreaSerializer(required=False)
+    area_id = CharField(max_length=255, required=False)
+    post_id = CharField(max_length=255, required=False)
+
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
+
+    class Meta:
+        model = Membership
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        exclude = ["person", "organization", "post"]
+
+
 class PostSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
@@ -24,6 +47,8 @@ class PostSerializer(TranslatableModelSerializer):
     organization_id = CharField(max_length=255, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
+
+    memberships = PostMembershipSerializer(required=False, many=True)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
@@ -40,6 +65,7 @@ class PostSerializer(TranslatableModelSerializer):
         links = validated_data.pop("links", [])
         contacts = validated_data.pop("contact_details", [])
         validated_data.pop("language_code", None)
+        validated_data.pop("memberships", None)
 
         # Organization is read and assign only, no create or update
         if organization_id:

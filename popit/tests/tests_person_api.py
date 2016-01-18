@@ -9,6 +9,8 @@ from popit.signals.handlers import *
 from popit.models import *
 import requests
 from django.conf import settings
+import json
+import logging
 
 
 # TODO: Test multilingual behavior. To make behavior clear
@@ -882,11 +884,120 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_person_api_summary_more_than_255(self):
-        r = requests.get("https://sinar-malaysia.popit.mysociety.org/api/v0.1/persons/53630562f1eab6270da6c8ed", verify=False)
-        data = r.json()
+        raw_data = """
+            {
+
+                "result":
+
+                    {
+
+                        "proxy_image": "https://sinar-malaysia.popit.mysociety.org/image-proxy/http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F0%2F05%2FAnwar_Ibrahim.jpg%2F398px-Anwar_Ibrahim.jpg",
+                        "image": "http://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Anwar_Ibrahim.jpg/398px-Anwar_Ibrahim.jpg",
+                        "html_url": "https://sinar-malaysia.popit.mysociety.org/persons/53630562f1eab6270da6c8ed",
+                        "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/persons/53630562f1eab6270da6c8ed",
+                        "birth_date": "1947-08-10",
+                        "death_date": null,
+                        "id": "53630562f1eab6270da6c8ed",
+                        "name": "Anwar Ibrahim",
+                        "summary": "Dato' Seri Anwar Bin Ibrahim[1] (born 10 August 1947) is a Malaysian politician. He is the Leader of Opposition of Malaysia (Pakatan Rakyat), economic advisor to the state government of Selangor[2] and de facto leader of PKR (KeADILan). He served as the Deputy Prime Minister of Malaysia from 1993 to 1998 and Finance Minister from 1991 to 1998 when he was in UMNO, a major party in ruling Barisan Nasional coaltion.",
+                        "images":
+
+                        [
+
+                            {
+                                "proxy_url": "https://sinar-malaysia.popit.mysociety.org/image-proxy/http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F0%2F05%2FAnwar_Ibrahim.jpg%2F398px-Anwar_Ibrahim.jpg",
+                                "created": "",
+                                "url": "http://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Anwar_Ibrahim.jpg/398px-Anwar_Ibrahim.jpg",
+                                "id": "536305bef1eab6270da6c8ee"
+                            }
+
+                        ],
+                        "memberships":
+                        [
+
+                            {
+
+                                "contact_details": [ ],
+                                "links": [ ],
+                                "images": [ ],
+                                "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/memberships/53630b0619ee29270d8a9e5e",
+                                "start_date": null,
+                                "role": "",
+                                "post_id": null,
+                                "person_id": "53630562f1eab6270da6c8ed",
+                                "organization_id": "536309c319ee29270d8a9e26",
+                                "label": null,
+                                "id": "53630b0619ee29270d8a9e5e",
+                                "html_url": "https://sinar-malaysia.popit.mysociety.org/memberships/53630b0619ee29270d8a9e5e",
+                                "end_date": null,
+                                "area_name": null,
+                                "area_id": null
+
+                            },
+                            {
+
+                                "contact_details": [ ],
+                                "links": [ ],
+                                "images": [ ],
+                                "id": "53633d8319ee29270d8a9ed5",
+                                "person_id": "53630562f1eab6270da6c8ed",
+                                "end_date": "2013-05-05",
+                                "start_date": "2008-08-26",
+                                "label": null,
+                                "post_id": "53633d1719ee29270d8a9ed4",
+                                "role": "Opposition Leader",
+                                "organization_id": "53633b5a19ee29270d8a9ecf",
+                                "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/memberships/53633d8319ee29270d8a9ed5",
+                                "html_url": "https://sinar-malaysia.popit.mysociety.org/memberships/53633d8319ee29270d8a9ed5"
+
+                            },
+                            {
+
+                                "contact_details": [ ],
+                                "links": [ ],
+                                "images": [ ],
+                                "end_date": null,
+
+                                "id": "5535e892aea781383fa79402",
+                                "post_id": "545e4d5b5222837c2c05988b",
+                                "start_date": "2013",
+                                "role": "Parliamentary Candidate",
+                                "organization_id": "545de8665222837c2c0586c0",
+                                "person_id": "53630562f1eab6270da6c8ed",
+                                "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/memberships/5535e892aea781383fa79402",
+                                "html_url": "https://sinar-malaysia.popit.mysociety.org/memberships/5535e892aea781383fa79402"
+                            }
+
+                        ],
+                        "links": [ ],
+                        "contact_details": [ ],
+                        "identifiers": [ ],
+                        "other_names":
+                        [
+
+                        {
+
+                            "name": "Dato' Seri Anwar Bin Ibrahim",
+                            "note": "With honorifics.",
+                            "id": "55653036561fa5421bb7bd20"
+
+                        },
+
+                                    {
+                                        "name": "Anwar Bin Ibrahim",
+                                        "id": "55653036561fa5421bb7bd1f"
+                                    }
+                                ]
+                            }
+
+                        }
+            """
+        data = json.loads(raw_data)
         token = Token.objects.get(user__username="admin")
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.post("/en/persons/", data["result"])
+        logging.warn(response.data)
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_person_api_invalid_date(self):

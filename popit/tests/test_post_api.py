@@ -589,3 +589,19 @@ class PostAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         post = Post.objects.language("ms").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
         self.assertEqual(post.label, "ahli")
+
+    def test_create_post_api_with_membership(self):
+        data = {
+            "label": "parrot of pirate party",
+            "memberships": [
+                {
+                    "label": "test membership",
+                    "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+                    "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+                }
+            ]
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/posts/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

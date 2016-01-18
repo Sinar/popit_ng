@@ -10,6 +10,7 @@ from popit.models import *
 import logging
 import requests
 from django.conf import settings
+import json
 
 
 class OrganizationAPITestCase(APITestCase):
@@ -711,3 +712,182 @@ class OrganizationAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         organization = Organization.objects.language("ms").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         self.assertEqual(organization.abstract, "Cawangan KL Parti Lanun Malaysia")
+
+    def test_create_organization_real_data(self):
+        raw_data = """
+            {
+
+                "result": {
+                    "proxy_image": "https://sinar-malaysia.popit.mysociety.org/image-proxy/http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F1%2F1e%2FParti_Keadilan_Rakyat_logo.svg%2F800px-Parti_Keadilan_Rakyat_logo.svg.png",
+                    "image": "http://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Parti_Keadilan_Rakyat_logo.svg/800px-Parti_Keadilan_Rakyat_logo.svg.png",
+                    "birth_date": null,
+                    "death_date": null,
+                    "html_url": "https://sinar-malaysia.popit.mysociety.org/organizations/536309c319ee29270d8a9e26",
+                    "id": "536309c319ee29270d8a9e26",
+                    "name": "People's Justice Party",
+                    "summary": "The People's Justice Party (Malay: Parti Keadilan Rakyat , often known simply as KeADILan or PKR) is a centrist multiracial political party in Malaysia formed in 2003 by a merger of the National Justice Party and the older Malaysian People's Party. Keadilan was led by Dr Wan Azizah Wan Ismail and increased its parliamentary representation from 1 seat to 31 seats in the Malaysian general election, 2008 until the five-year political ban imposed on former Deputy Prime Minister Anwar Ibrahim was lifted on 14 April 2008. This party enjoys strong support from the urban state such as Selangor and Penang.",
+                    "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/organizations/536309c319ee29270d8a9e26",
+                    "classification": "Party",
+                    "dissolution_date": "",
+                    "founding_date": "",
+                    "parent_id": "",
+                    "images": [
+                        {
+                            "proxy_url": "https://sinar-malaysia.popit.mysociety.org/image-proxy/http%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F1%2F1e%2FParti_Keadilan_Rakyat_logo.svg%2F800px-Parti_Keadilan_Rakyat_logo.svg.png",
+                            "created": "",
+                            "url": "http://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Parti_Keadilan_Rakyat_logo.svg/800px-Parti_Keadilan_Rakyat_logo.svg.png",
+                            "id": "536309edf1eab6270da6c8ef"
+                        }
+                    ],
+                    "posts": [ ],
+                    "memberships": [
+
+                        {
+
+                            "contact_details": [ ],
+                            "links": [ ],
+                            "images": [ ],
+                            "area":
+
+                            {
+                                "name": ""
+                            },
+                            "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/memberships/53630b0619ee29270d8a9e5e",
+                            "start_date": "",
+                            "role": "",
+                            "post_id": null,
+                            "person_id": "53630562f1eab6270da6c8ed",
+                            "organization_id": "536309c319ee29270d8a9e26",
+                            "label": null,
+                            "id": "53630b0619ee29270d8a9e5e",
+                            "html_url": "https://sinar-malaysia.popit.mysociety.org/memberships/53630b0619ee29270d8a9e5e",
+                            "end_date": "",
+                            "area_name": null,
+                            "area_id": null
+
+                        },
+                        {
+
+                            "contact_details": [ ],
+                            "links": [ ],
+                            "images": [ ],
+                            "area":
+
+                            {
+                                "name": ""
+                            },
+                            "id": "5363529319ee29270d8a9eea",
+                            "person_id": "53635149f1eab6270da6c8f6",
+                            "area_name": null,
+                            "area_id": null,
+                            "end_date": "",
+                            "start_date": "",
+                            "label": null,
+                            "post_id": "5363526819ee29270d8a9ee9",
+                            "role": "",
+                            "organization_id": "536309c319ee29270d8a9e26",
+                            "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/memberships/5363529319ee29270d8a9eea",
+                            "html_url": "https://sinar-malaysia.popit.mysociety.org/memberships/5363529319ee29270d8a9eea"
+
+                        },
+                        {
+
+                            "contact_details": [ ],
+                            "links": [ ],
+                            "images": [ ],
+                            "id": "555968759e14806704785cb9",
+                            "area":
+
+                                {
+                                    "name": ""
+                                },
+                                "end_date": "",
+                                "start_date": "",
+                                "organization_id": "536309c319ee29270d8a9e26",
+                                "role": "Member",
+                                "person_id": "53635149f1eab6270da6c8f6",
+                                "url": "https://sinar-malaysia.popit.mysociety.org/api/v0.1/memberships/555968759e14806704785cb9",
+                                "html_url": "https://sinar-malaysia.popit.mysociety.org/memberships/555968759e14806704785cb9"
+                            }
+
+                    ],
+                    "links": [
+
+                        {
+                            "url": "http://www.keadilanrakyat.org/",
+                            "note": "Main website",
+                            "id": "545e11b05222837c2c058722"
+                        }
+
+                    ],
+                    "contact_details": [
+
+                        {
+
+                            "label": "Email",
+                            "type": "Email",
+                            "value": "ibupejabat@keadilanrakyat.org",
+                            "note": "",
+                            "id": "545e11b05222837c2c058721"
+
+                        },
+                        {
+
+                            "label": "Fax",
+                            "type": "Fax",
+                            "value": "+603 - 7885 0531",
+                            "note": "",
+                            "id": "545e11b05222837c2c058720"
+
+                        },
+
+                        {
+                            "label": "Phone",
+                            "type": "Phone",
+                            "value": "+603 - 7885 0530",
+                            "note": "",
+                            "id": "545e11b05222837c2c05871f"
+                        }
+
+                    ],
+                    "identifiers": [ ],
+                    "other_names": [
+
+                        {
+
+                            "name": "KeADILan",
+                            "start_date": "",
+                            "end_date": "",
+                            "note": "",
+                            "id": "545e11b05222837c2c058728"
+
+                        },
+                        {
+
+                            "name": "PKR",
+                            "start_date": "",
+                            "end_date": "",
+                            "note": "Abbreviation",
+                            "id": "545e11b05222837c2c058727"
+
+                        },
+
+                        {
+                            "name": "Parti Keadilan Rakyat",
+                            "start_date": "",
+                            "end_date": "",
+                            "note": "Bahasa",
+                            "id": "545e11b05222837c2c058723"
+                        }
+                    ]
+                }
+
+            }
+
+        """
+        data = json.loads(raw_data)
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/organizations/", data["result"])
+        logging.warn(response.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)

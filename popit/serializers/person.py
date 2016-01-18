@@ -4,14 +4,38 @@ from popit.models import ContactDetail
 from popit.models import Link
 from popit.models import Identifier
 from popit.models import OtherName
+from popit.models import Membership
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
+from popit.serializers.misc import AreaSerializer
 from rest_framework.serializers import ValidationError
 import re
+
+
+class PersonMembershipSerializer(TranslatableModelSerializer):
+
+    id = CharField(max_length=255, required=False)
+    person_id = CharField(max_length=255, required=False)
+    organization_id = CharField(max_length=255, required=False)
+    member_id = CharField(max_length=255, required=False)
+    on_behalf_of_id = CharField(max_length=255, required=False)
+    area = AreaSerializer(required=False)
+    area_id = CharField(max_length=255, required=False, allow_null=True)
+    post_id = CharField(max_length=255, required=False, allow_null=True)
+
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
+
+    class Meta:
+        model = Membership
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        exclude = ["person", "organization", "post"]
 
 
 class PersonSerializer(TranslatableModelSerializer):
@@ -19,6 +43,7 @@ class PersonSerializer(TranslatableModelSerializer):
     id = CharField(max_length=255, required=False)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
+    memberships = PersonMembershipSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     birth_date = CharField(allow_null=True, default=None)
@@ -32,6 +57,7 @@ class PersonSerializer(TranslatableModelSerializer):
         identifiers = validated_data.pop("identifiers", [])
         # Where do the language come from inside the create function
         validated_data.pop("language_code", [])
+        validated_data.pop("memberships", None)
         # So that elasticsearch handle this sanely
         if not validated_data["birth_date"]:
             validated_data["birth_date"] = None

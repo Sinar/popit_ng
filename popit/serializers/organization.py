@@ -5,6 +5,7 @@ from popit.models import Link
 from popit.models import Identifier
 from popit.models import OtherName
 from popit.models import Area
+from popit.models import Membership
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from rest_framework.serializers import ValidationError
@@ -14,6 +15,7 @@ from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
 import re
+
 
 # We make this read only, and we shall show 1 level of parent. Not grand parent
 class ParentOrganizationSerializer(TranslatableModelSerializer):
@@ -29,6 +31,29 @@ class ParentOrganizationSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
+class OrganizationMembershipSerializer(TranslatableModelSerializer):
+
+    id = CharField(max_length=255, required=False)
+    person_id = CharField(max_length=255, required=False)
+    organization_id = CharField(max_length=255, required=False)
+    member_id = CharField(max_length=255, required=False)
+    on_behalf_of_id = CharField(max_length=255, required=False)
+    area = AreaSerializer(required=False)
+    area_id = CharField(max_length=255, required=False)
+    post_id = CharField(max_length=255, required=False)
+
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
+
+    class Meta:
+        model = Membership
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        exclude = ["person", "organization", "post"]
+
+
+
 class OrganizationSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
@@ -36,6 +61,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
     parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
+    membership = OrganizationMembershipSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
@@ -52,6 +78,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
         validated_data.pop("language_code", None)
 
         validated_data.pop("parent", None)
+        validated_data.pop("memberships", None)
 
         area_data = validated_data.pop("area", None)
         area_id = validated_data.pop("area_id", None)
