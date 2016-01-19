@@ -56,6 +56,7 @@ class OrganizationAPITestCase(APITestCase):
         response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("memberships" in response.data["result"])
+        self.assertTrue("posts" in response.data["result"])
 
     def test_view_organization_detail_authorized(self):
         token = Token.objects.get(user__username="admin")

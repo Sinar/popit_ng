@@ -22,7 +22,7 @@ class Post(TranslatableModel):
         role = models.CharField(max_length=100, verbose_name=_("role"), null=True, blank=True),
     )
     other_labels = GenericRelation(OtherName)
-    organization = models.ForeignKey(Organization, null=True, blank=True)
+    organization = models.ForeignKey(Organization, null=True, blank=True, related_name="posts")
     area = models.ForeignKey(Area, null=True, blank=True)
     start_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("start date"),
                                         validators=[

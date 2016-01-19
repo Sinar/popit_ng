@@ -6,6 +6,7 @@ from popit.models import Identifier
 from popit.models import OtherName
 from popit.models import Area
 from popit.models import Membership
+from popit.models import Post
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from rest_framework.serializers import ValidationError
@@ -52,12 +53,30 @@ class OrganizationMembershipSerializer(TranslatableModelSerializer):
         exclude = ["person", "organization", "post", "area"]
 
 
+class OrganizationPostSerializer(TranslatableModelSerializer):
+
+    id = CharField(max_length=255, required=False)
+    other_labels = OtherNameSerializer(many=True, required=False)
+    organization_id = CharField(max_length=255, required=False)
+    area_id = CharField(max_length=255, required=False)
+
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
+
+    class Meta:
+        model = Post
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        exclude = [ "organization", "area"]
+
 
 class OrganizationSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     parent = ParentOrganizationSerializer(required=False)
     parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
+    posts = OrganizationPostSerializer(many=True, required=False)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     memberships = OrganizationMembershipSerializer(many=True, required=False)
@@ -78,6 +97,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
 
         validated_data.pop("parent", None)
         validated_data.pop("memberships", None)
+        validated_data.pop("posts", None)
 
         area_data = validated_data.pop("area", None)
         area_id = validated_data.pop("area_id", None)
