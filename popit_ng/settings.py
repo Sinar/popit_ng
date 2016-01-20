@@ -152,6 +152,8 @@ CORS_ORIGIN_WHITELIST = ()
 CORS_ORIGIN_REGEX_WHITELIST = (
     '^(https?://)?(\w+\.)?sinarproject\.org$', )
 
+INDEX_PREPARATION_TIME = 5
+
 try:
     from settings_local import *
 except:

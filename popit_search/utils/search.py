@@ -8,7 +8,6 @@ from popit.models import *
 from popit.serializers import *
 import logging
 
-INDEX_PREPARATION_TIME=5
 
 # Big idea, since serializer already have json docs
 class SerializerSearch(object):
@@ -33,7 +32,7 @@ class SerializerSearch(object):
         s = serializer(instance)
         result = self.es.index(index=self.index, doc_type=self.doc_type, body=s.data)
         # Can be a bad idea,
-        time.sleep(INDEX_PREPARATION_TIME)
+        time.sleep(settings.INDEX_PREPARATION_TIME)
         return result
 
     def search(self, query, language=None):
@@ -67,7 +66,7 @@ class SerializerSearch(object):
         data =serializer.data
 
         result = self.es.update(index=self.index, doc_type=self.doc_type, id=id, body={"doc": data})
-        time.sleep(INDEX_PREPARATION_TIME)
+        time.sleep(settings.INDEX_PREPARATION_TIME)
         return result
 
     # delete all instance of same id. Because in ES it is stored as 2 documents
@@ -79,7 +78,7 @@ class SerializerSearch(object):
         for hit in hits:
             id = hit["_id"]
             self.es.delete(index=self.index, doc_type=self.doc_type, id=id)
-            time.sleep(INDEX_PREPARATION_TIME)
+            time.sleep(settings.INDEX_PREPARATION_TIME)
 
     def raw_query(self, query):
         # Mostly for debugging, also allows for tuning of search.
