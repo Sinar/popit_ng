@@ -57,9 +57,9 @@ class Command(BaseCommand):
                     instances = MODEL_DOC_MAP[entity].objects.language("all").all()
                     for instance in instances:
                         entity_search.delete(instance)
-            else:
-                logging.info("Nuclear option detected, executing. Thing could take some time")
-                remove_popit_index()
+        else:
+            logging.info("Nuclear option detected, executing. Thing could take some time")
+            remove_popit_index()
 
         time.sleep(10)
         # Now we add
