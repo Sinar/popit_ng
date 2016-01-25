@@ -18,5 +18,6 @@ class PopitPaginator(PageNumberPagination):
             ('next', self.get_next_link()),
             ('previous', self.get_previous_link()),
             ('results', data),
-            ('per_page', self.page_size)
+            ('per_page', self.page_size),
+            ('num_pages', self.page.paginator.num_pages)
         ]))
