@@ -12,6 +12,10 @@ class PopitPaginator(PageNumberPagination):
         return result
 
     def get_paginated_response(self, data):
+        if self.get_next_link():
+            has_more = True
+        else:
+            has_more = False
         return Response(OrderedDict([
             ('page', int(self.page_number)),
             ('total', self.page.paginator.count),
@@ -19,5 +23,6 @@ class PopitPaginator(PageNumberPagination):
             ('previous', self.get_previous_link()),
             ('results', data),
             ('per_page', self.page_size),
-            ('num_pages', self.page.paginator.num_pages)
+            ('num_pages', self.page.paginator.num_pages),
+            ('has_more', has_more)
         ]))
