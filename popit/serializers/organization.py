@@ -195,14 +195,14 @@ class OrganizationSerializer(TranslatableModelSerializer):
         # We only allow pointing to new parent and area not create a new parent and area
         if area_id:
             try:
-                area = Area.objects.language(instance.language_code_code).get(id=area_id)
+                area = Area.objects.language(instance.language_code).get(id=area_id)
                 instance.area = area
             except Area.DoesNotExist:
                 pass
 
         if parent_id:
             try:
-                parent = Organization.objects.language(instance.language_code_code).get(id=parent_id)
+                parent = Organization.objects.language(instance.language_code).get(id=parent_id)
                 instance.parent = parent
             except Organization.DoesNotExist:
                 pass
