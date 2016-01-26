@@ -14,7 +14,7 @@ import re
 
 
 class LinkSerializer(TranslatableModelSerializer):
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
 
     def create(self, validated_data):
         language = self.language
@@ -41,7 +41,7 @@ class LinkSerializer(TranslatableModelSerializer):
 
 class ContactDetailSerializer(TranslatableModelSerializer):
 
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
 
     def create(self, validated_data):
@@ -121,7 +121,7 @@ class ContactDetailSerializer(TranslatableModelSerializer):
 
 class IdentifierSerializer(TranslatableModelSerializer):
 
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
 
     def create(self, validated_data):
@@ -189,7 +189,7 @@ class IdentifierSerializer(TranslatableModelSerializer):
 
 class OtherNameSerializer(TranslatableModelSerializer):
 
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
     start_date = CharField(allow_null=True, default=None, allow_blank=True)
     end_date = CharField(allow_null=True, default=None, allow_blank=True)
@@ -286,7 +286,7 @@ class OtherNameSerializer(TranslatableModelSerializer):
 
 
 class AreaSerializer(TranslatableModelSerializer):
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
 
     # Why create and update? Because we need to create an API endpoint to import data from mapit

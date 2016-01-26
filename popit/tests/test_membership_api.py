@@ -507,3 +507,31 @@ class MembershipAPITestCasse(APITestCase):
         response = self.client.post("/ms/memberships/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["result"]["label"], "percubaan membership")
+
+    def test_create_membership_with_post_blank_id_authorized(self):
+        data = {
+            "id": "",
+            "label": "test membership",
+            "person_id":"8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "post_id": "c1f0f86b-a491-4986-b48d-861b58a3ef6e"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/memberships/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_membership_link_blank_id_authorized(self):
+        data = {
+            "links": [
+                {
+                    "id": "",
+                    "url": "http://thecaptain.tumblr.com",
+                    "label": "Captain's Tumblr"
+                }
+            ]
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/", data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

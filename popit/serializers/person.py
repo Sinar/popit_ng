@@ -39,7 +39,7 @@ class PersonMembershipSerializer(TranslatableModelSerializer):
 
 class PersonSerializer(TranslatableModelSerializer):
 
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     memberships = PersonMembershipSerializer(many=True, required=False)

@@ -40,7 +40,7 @@ class PostMembershipSerializer(TranslatableModelSerializer):
 
 class PostSerializer(TranslatableModelSerializer):
 
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     other_labels = OtherNameSerializer(many=True, required=False)
     organization = OrganizationSerializer(required=False) # A post must tied to an organization
     organization_id = CharField(max_length=255, required=False)

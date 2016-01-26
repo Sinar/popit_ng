@@ -1053,3 +1053,175 @@ class PersonAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         person = Person.objects.language("ms").get(name="joe")
         self.assertEqual(person.name, "joe")
+
+    def test_create_person_othername_blank_id_authorized(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "1950-01-01",
+            "death_data": "2000-01-01",
+            "email": "joejambul@sinarproject.org",
+
+            "other_names":[
+                {
+                    "id": "",
+                    "name":"Jane",
+                    "family_name":"Jambul",
+                    "start_date": "1950-01-01",
+                    "end_date": "2010-01-01",
+                }
+            ]
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/persons/", person_data)
+        logging.warn(response.data["result"]["other_names"])
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        other_names = response.data["result"]["other_names"][0]
+        self.assertNotEqual(other_names["id"], "")
+
+    def test_create_person_identifier_blank_id_authorized(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "1950-01-01",
+            "death_data": "2000-01-01",
+            "email": "joejambul@sinarproject.org",
+
+            "identifiers":[
+                {
+                    "id": "",
+                    "identifier": "9089098098",
+                    "scheme": "rakyat",
+                }
+            ],
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/persons/", person_data)
+        logging.warn(response.data["result"]["other_names"])
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        identifiers = response.data["result"]["identifiers"][0]
+        self.assertNotEqual(identifiers["id"], "")
+
+    def test_create_person_contact_details_blank_id_authorized(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "1950-01-01",
+            "death_data": "2000-01-01",
+            "email": "joejambul@sinarproject.org",
+            "contact_details":[
+                {
+                    "id": "",
+                    "type":"twitter",
+                    "value": "sinarproject",
+                }
+            ],
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/persons/", person_data)
+        logging.warn(response.data["result"]["other_names"])
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        contact_details = response.data["result"]["contact_details"][0]
+        self.assertNotEqual(contact_details["id"], "")
+
+    def test_create_person_links_blank_id_authorized(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "1950-01-01",
+            "death_data": "2000-01-01",
+            "email": "joejambul@sinarproject.org",
+            "links":[
+                {
+                    "id": "",
+                    "url":"http://sinarproject.org",
+                }
+            ],
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/persons/", person_data)
+        logging.warn(response.data["result"]["other_names"])
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        links = response.data["result"]["links"][0]
+        self.assertNotEqual(links["id"], "")
+
+    def test_create_person_with_all_field_blank_id_serializer(self):
+
+        person_data = {
+            "id": "",
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "1950-01-01",
+            "death_data": "2000-01-01",
+            "email": "joejambul@sinarproject.org",
+            "contact_details":[
+                {
+                    "type":"twitter",
+                    "value": "sinarproject",
+                }
+            ],
+            "links":[
+                {
+                    "url":"http://sinarproject.org",
+                }
+            ],
+            "identifiers":[
+                {
+                    "identifier": "9089098098",
+                    "scheme": "rakyat",
+                }
+            ],
+            "other_names":[
+                {
+                    "name":"Jane",
+                    "family_name":"Jambul",
+                    "start_date": "1950-01-01",
+                    "end_date": "2010-01-01",
+                }
+            ]
+        }
+        person_serial = PersonSerializer(data=person_data, language='en')
+        person_serial.is_valid()
+        self.assertEqual(person_serial.errors, {})
+        person_serial.save()
+        person = Person.objects.language("en").get(name="joe")
+        self.assertEqual(person.given_name, "joe jambul")

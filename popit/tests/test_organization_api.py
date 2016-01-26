@@ -893,3 +893,15 @@ class OrganizationAPITestCase(APITestCase):
         response = self.client.post("/en/organizations/", data["result"])
         logging.warn(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_organization_blank_id_authorized(self):
+        data = {
+            "id": "",
+            "name": "acme corp"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post("/en/organizations/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        organization = Organization.objects.language("en").get(name="acme corp")
+        self.assertEqual(organization.name, "acme corp")

@@ -73,7 +73,7 @@ class OrganizationPostSerializer(TranslatableModelSerializer):
 
 class OrganizationSerializer(TranslatableModelSerializer):
 
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False,  allow_null=True, allow_blank=True)
     parent = ParentOrganizationSerializer(required=False)
     parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     posts = OrganizationPostSerializer(many=True, required=False)

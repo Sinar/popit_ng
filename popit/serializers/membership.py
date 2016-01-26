@@ -21,7 +21,7 @@ import logging
 
 class MembershipSerializer(TranslatableModelSerializer):
 
-    id = CharField(max_length=255, required=False)
+    id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     person = PersonSerializer(required=False)
     person_id = CharField(max_length=255, required=False)
     organization = OrganizationSerializer(required=False)
