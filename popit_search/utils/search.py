@@ -1,4 +1,5 @@
 import elasticsearch
+from elasticsearch.exceptions import NotFoundError
 from django.conf import settings
 from django.db import models
 from rest_framework.serializers import Serializer
@@ -77,8 +78,12 @@ class SerializerSearch(object):
         hits = result["hits"]["hits"]
         for hit in hits:
             id = hit["_id"]
-            self.es.delete(index=self.index, doc_type=self.doc_type, id=id)
-            time.sleep(settings.INDEX_PREPARATION_TIME)
+            try:
+                self.es.delete(index=self.index, doc_type=self.doc_type, id=id)
+                time.sleep(settings.INDEX_PREPARATION_TIME)
+            except NotFoundError:
+                logging.warn("No index found, but it's fine")
+                continue
 
     def raw_query(self, query):
         # Mostly for debugging, also allows for tuning of search.
