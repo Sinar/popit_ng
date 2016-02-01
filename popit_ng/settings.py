@@ -153,6 +153,30 @@ CORS_ORIGIN_REGEX_WHITELIST = (
     '^(https?://)?(\w+\.)?sinarproject\.org$', )
 
 INDEX_PREPARATION_TIME = 5
+LOG_PATH = os.path.join(BASE_DIR, "log")
+
+if not os.path.exists(LOG_PATH):
+    os.mkdir(LOG_PATH)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            #'filename': '/path/to/django/debug.log',
+            'filename': os.path.join(LOG_PATH, "popit.log"),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 try:
     from settings_local import *
