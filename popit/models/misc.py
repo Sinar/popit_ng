@@ -28,8 +28,8 @@ class Link(TranslatableModel):
     object_id = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey("content_type", "object_id")
-    created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateField(auto_now=True, verbose_name=_("updated at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -65,8 +65,8 @@ class Contact(TranslatableModel):
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey("content_type", "object_id")
     links = GenericRelation(Link)
-    created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateField(auto_now=True, verbose_name=_("updated at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -117,8 +117,8 @@ class ContactDetail(TranslatableModel):
     content_type = models.ForeignKey(ContentType)
     content_object = GenericForeignKey("content_type", "object_id")
     links = GenericRelation(Link)
-    created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateField(auto_now=True, verbose_name=_("updated at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -163,8 +163,8 @@ class Identifier(TranslatableModel):
 
     links = GenericRelation(Link)
 
-    created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateField(auto_now=True, verbose_name=_("updated at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -226,8 +226,8 @@ class OtherName(TranslatableModel):
 
     links = GenericRelation(Link)
 
-    created_at = models.DateField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateField(auto_now=True, verbose_name=_("updated at"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
 
     note = models.TextField(null=True, blank=True)
 

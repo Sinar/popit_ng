@@ -165,8 +165,7 @@
 - model: popit.person
   pk: 8497ba86-7485-42d2-9596-2ab14520f1f4
   fields: {email: johndoe@sinarproject.org, birth_date: '1901-01-01', death_date: '2001-01-01',
-    image: '', created_at: ! '2015-10-06 00:00:00+00:00', updated_at: ! '2015-10-06
-      00:00:00+00:00'}
+    image: '', created_at: ! '2015-10-06 00:00:00.00000+00:00', updated_at: ! '2015-10-06 00:00:00.00000+00:00'}
 - model: popit.person
   pk: ab1a5788e5bae955c048748fa6af0e97
   fields: {email: sweester@sinarproject.org, birth_date: null, death_date: null, image: '',
@@ -777,8 +776,8 @@
     end_date: '2000-01-01'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06
-    updated_at: 2015-10-06
+    created_at: 2015-10-06 00:00:00.00000+00:00
+    updated_at: 2015-10-06 00:00:00.00000+00:00
     note: Turn out that she had a sex change. People have right to decide their own
       gender asshole!
 - model: popit.identifier
@@ -795,26 +794,26 @@
     identifier: '53110321'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06
-    updated_at: 2015-10-06
+    created_at: 2015-10-06 00:00:00.00000+00:00
+    updated_at: 2015-10-06 00:00:00.00000+00:00
 - model: popit.identifier
   pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
   fields:
     identifier: '12321223'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06
-    updated_at: 2015-10-06
+    created_at: 2015-10-06 00:00:00.00000+00:00
+    updated_at: 2015-10-06 00:00:00.00000+00:00
 - model: popit.contactdetail
   pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
   fields:
     type: phone
     value: '0123423424342'
-    valid_from: '2015-10-06'
+    valid_from: '2015-10-06 00:00:00.00000+00:00'
     valid_until: '2020-10-06'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06
+    created_at: 2015-10-06 00:00:00.00000+00:00
     updated_at: 2015-11-09
 - model: popit.contactdetail
   pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
@@ -865,12 +864,12 @@
   fields:
     type: phone
     value: '0123423424342'
-    valid_from: 2015-10-06
+    valid_from: 2015-10-06 00:00:00.00000+00:00
     valid_until: 2020-10-06
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06
-    updated_at: 2015-10-06
+    created_at: 2015-10-06 00:00:00.00000+00:00
+    updated_at: 2015-10-06 00:00:00.00000+00:00
 - model: popit.contact
   pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
   fields:
@@ -1003,8 +1002,8 @@
     url: http://github.com/sinarproject/
     object_id: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
     content_type: [popit, identifier]
-    created_at: 2015-10-12
-    updated_at: 2015-10-12
+    created_at: 2015-10-12 00:00:00.00000+00:00
+    updated_at: 2015-10-12 00:00:00.00000+00:00
 - model: popit.link
   pk: a37256e6-eab7-417a-8ac8-32edc5031924
   fields:
@@ -1083,8 +1082,8 @@
     url: http://github.com/sweemeng/
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06
-    updated_at: 2015-10-06
+    created_at: 2015-10-06 00:00:00.00000+00:00
+    updated_at: 2015-10-06 00:00:00.00000+00:00
 - model: popit.link
   pk: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a
   fields:
