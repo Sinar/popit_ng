@@ -21,7 +21,7 @@ def person_save_handler(sender, instance, created, raw, using, update_fields, **
     language_code =  instance.language_code
     id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
-    indexer = search.SerializerSearch("person")
+    indexer = search.SerializerSearch("persons")
     check = indexer.search(query, language=language_code)
     if not check:
         indexer.add(instance, PersonSerializer)
@@ -33,7 +33,7 @@ def person_save_handler(sender, instance, created, raw, using, update_fields, **
 @receiver(pre_delete, sender=Person)
 def person_delete_handler(sender, instance, using, **kwargs):
 
-    indexer = search.SerializerSearch("person")
+    indexer = search.SerializerSearch("persons")
 
     indexer.delete(instance)
 
@@ -45,7 +45,7 @@ def organization_save_handler(sender, instance, created, raw, using, update_fiel
     language_code =  instance.language_code
     id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
-    indexer = search.SerializerSearch("organization")
+    indexer = search.SerializerSearch("organizations")
     check = indexer.search(query, language=language_code)
     if not check:
         indexer.add(instance, OrganizationSerializer)
@@ -55,7 +55,7 @@ def organization_save_handler(sender, instance, created, raw, using, update_fiel
 
 @receiver(pre_delete, sender=Organization)
 def organization_delete_handler(sender, instance, using, **kwargs):
-    indexer = search.SerializerSearch("organization")
+    indexer = search.SerializerSearch("organizations")
     indexer.delete(instance)
 
 
@@ -66,7 +66,7 @@ def membership_save_handler(sender, instance, created, raw, using, update_fields
     language_code =  instance.language_code
     id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
-    indexer = search.SerializerSearch("membership")
+    indexer = search.SerializerSearch("memberships")
     check = indexer.search(query, language=language_code)
     if not check:
         indexer.add(instance, MembershipSerializer)
@@ -76,7 +76,7 @@ def membership_save_handler(sender, instance, created, raw, using, update_fields
 
 @receiver(pre_delete, sender=Membership)
 def membership_delete_handler(sender, instance, using, **kwargs):
-    indexer = search.SerializerSearch("membership")
+    indexer = search.SerializerSearch("memberships")
     indexer.delete(instance)
 
 
@@ -87,7 +87,7 @@ def post_save_handler(sender, instance, created, raw, using, update_fields, **kw
     language_code =  instance.language_code
     id = instance.id
     query = "id:%s AND language_code:%s" % (id, language_code)
-    indexer = search.SerializerSearch("post")
+    indexer = search.SerializerSearch("posts")
     check = indexer.search(query, language=language_code)
     if not check:
         indexer.add(instance, PostSerializer)
@@ -97,7 +97,7 @@ def post_save_handler(sender, instance, created, raw, using, update_fields, **kw
 
 @receiver(pre_delete, sender=Post)
 def post_delete_handler(sender, instance, using, **kwargs):
-    indexer = search.SerializerSearch("post")
+    indexer = search.SerializerSearch("posts")
     indexer.delete(instance)
 
 

@@ -8,6 +8,11 @@ import time
 from popit.models import *
 from popit.serializers import *
 import logging
+import os
+
+
+log_path = os.path.join(settings.BASE_DIR, "log/popit_search.log")
+logging.basicConfig(filename=log_path, level=logging.DEBUG)
 
 
 # Big idea, since serializer already have json docs
@@ -22,9 +27,11 @@ class SerializerSearch(object):
             self.es.indices.create(index=self.index)
 
     def add(self, instance, serializer):
+        logging.debug("Indexing %s and %s" % (str(instance), str(serializer)))
         assert isinstance(instance, models.Model)
         assert issubclass(serializer, Serializer)
         query = "id:%s AND language_code:%s" % (instance.id, instance.language_code)
+        logging.debug("Checking index")
         result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
 
         hits = result["hits"]["hits"]
@@ -32,6 +39,7 @@ class SerializerSearch(object):
             raise SerializerSearchInstanceExist("Instance exist")
         s = serializer(instance)
         result = self.es.index(index=self.index, doc_type=self.doc_type, body=s.data)
+        logging.debug("Index created")
         # Can be a bad idea,
         time.sleep(settings.INDEX_PREPARATION_TIME)
         return result
