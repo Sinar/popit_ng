@@ -12,3 +12,5 @@ apt-get install -y openjdk-7-jre unzip
 wget https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/zip/elasticsearch/2.1.0/elasticsearch-2.1.0.zip
 unzip elasticsearch-2.1.0.zip
 
+# Ensure when login via shell it goes to the code
+echo -e "\ncd /vagrant" >>~/.bashrc
