@@ -1,0 +1,47 @@
+common:
+  build: docker/data
+  env_file:
+    - ./.env
+#  stdin_open: true
+#  tty: true
+
+# data:
+#  build: docker/data
+#  hostname: data
+#  domainname: localdomain
+
+postgres:
+  extends: 
+    service: common
+  build: docker/postgres
+  hostname: postgres
+  domainname: localdomain
+  ports:
+    - "5432:5432"
+#  volumes_from:
+#    - data
+  environment:
+    - CKAN_PASS=ckan_pass
+    - DATASTORE_PASS=datastore_pass
+
+elastic:
+  extends: 
+    service: common
+  build: docker/elastic
+  hostname: elastic
+  domainname: localdomain
+  ports:
+    - "9200:9200"
+
+popit_ng:
+  extends: 
+    service: common
+  build: .
+  hostname: popit
+  domainname: localdomain
+  ports:
+    - "8000:8000"
+  links:
+    - postgres:postgres
+    - elastic:elastic
+  command: ./manage.py runserver 0.0.0.0:8000
