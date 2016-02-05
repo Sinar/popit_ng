@@ -18,18 +18,24 @@ This project depends on:
 * python
 * django
 * postgresql
+* elasticsearch
 
 If you have vagrant setup, you can just use it, if you don't, `bootstrap.sh` and `requirement.txt` have the dependencies you need. 
 
 Please do not use `bootstap.sh` in production without modification. 
 
-After setting up the dependencies, you can run it with the following command:
+After setting up the dependencies, you can run it with the following command, assuming that you are on vagrant:
 
 ```sh
 $ python manage.py migrate
 $ python manage.py createsuperuser
 $ python manage.py runserver 0.0.0.0:8000
+$ cd /home/vagrant/elasticsearch*
+$ bin/elasticsearch
 ```
+
+If you're not on vagrant, change to the directory you install elasticsearch on. I assume that you are doing a manual installation
+for development. 
 
 To load test data
 
@@ -40,6 +46,11 @@ $ python manage.py loaddata popit/fixtures/api_request_test_data.yaml
 * username is admin, password is rockgod. Don't use it for production
 * auth token is 04afcac1d644e3dbab187d8b2205d355c0d9b951.
 * token is set http header "Authorization: Token 04afcac1d644e3dbab187d8b2205d355c0d9b951"
+* test data is not loaded into elasticsearch. But there is a reindex command to add data to elasticsearch
+
+```sh
+$ python manage.py reindex
+```
 
 We are still doing heavy development on this project, so all the steps here are for testing and development only.
 
