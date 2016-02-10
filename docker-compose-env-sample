@@ -1,0 +1,2 @@
+# Rename/copy to .env before using ..
+POSTGRES_PASSWORD=passw0rd
