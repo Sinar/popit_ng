@@ -45,8 +45,8 @@ class PersonSerializer(TranslatableModelSerializer):
     memberships = PersonMembershipSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
-    birth_date = CharField(allow_null=True, default=None)
-    death_date = CharField(allow_null=True, default=None)
+    birth_date = CharField(allow_null=True, default=None, allow_blank=True)
+    death_date = CharField(allow_null=True, default=None, allow_blank=True)
 
     def create(self, validated_data):
         language_code=self.language

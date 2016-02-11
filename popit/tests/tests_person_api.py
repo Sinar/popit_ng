@@ -1225,3 +1225,50 @@ class PersonAPITestCase(APITestCase):
         person_serial.save()
         person = Person.objects.language("en").get(name="joe")
         self.assertEqual(person.given_name, "joe jambul")
+
+    def test_create_person_with_all_field_birthdate_deathdate_blank_serializer(self):
+        person_data = {
+            "name": "joe",
+            "family_name": "doe",
+            "given_name": "joe jambul",
+            "additional_name": "not john doe",
+            "gender": "unknown",
+            "summary": "person unit test api",
+            "honorific_prefix": "Chief",
+            "honorific_suffix": "of the fake people league",
+            "biography": "He does not exists!!!!",
+            "birth_date": "",
+            "death_data": "",
+            "email": "joejambul@sinarproject.org",
+            "contact_details":[
+                {
+                    "type":"twitter",
+                    "value": "sinarproject",
+                }
+            ],
+            "links":[
+                {
+                    "url":"http://sinarproject.org",
+                }
+            ],
+            "identifiers":[
+                {
+                    "identifier": "9089098098",
+                    "scheme": "rakyat",
+                }
+            ],
+            "other_names":[
+                {
+                    "name":"Jane",
+                    "family_name":"Jambul",
+                    "start_date": "1950-01-01",
+                    "end_date": "2010-01-01",
+                }
+            ]
+        }
+        person_serial = PersonSerializer(data=person_data, language='en')
+        person_serial.is_valid()
+        self.assertEqual(person_serial.errors, {})
+        person_serial.save()
+        person = Person.objects.language("en").get(name="joe")
+        self.assertEqual(person.given_name, "joe jambul")
