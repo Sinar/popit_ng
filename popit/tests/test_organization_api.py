@@ -11,7 +11,7 @@ import logging
 import requests
 from django.conf import settings
 import json
-
+import os
 
 class OrganizationAPITestCase(APITestCase):
 
@@ -622,9 +622,8 @@ class OrganizationAPITestCase(APITestCase):
         self.assertEqual(results["parent"]["language_code"], "ms")
 
     def test_import_error_organization(self):
-        source = "https://sinar-malaysia.popit.mysociety.org/api/v0.1/organizations/"
-        r = requests.get(source, verify=False)
-        data = r.json()
+        path = os.path.abspath(os.path.curdir)
+        data = json.load(open(os.path.join(path,"popit/fixtures/mysociety_popit_org_1.json")))
         target = None
         for item in data["result"]:
             if item["id"] == "5362fcc219ee29270d8a9e22":
