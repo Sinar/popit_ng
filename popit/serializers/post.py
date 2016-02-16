@@ -51,8 +51,8 @@ class PostSerializer(TranslatableModelSerializer):
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
-    start_date = CharField(allow_null=True, default=None)
-    end_date = CharField(allow_null=True, default=None)
+    start_date = CharField(allow_null=True, default=None, allow_blank=True)
+    end_date = CharField(allow_null=True, default=None, allow_blank=True)
 
 
     def create(self, validated_data):
