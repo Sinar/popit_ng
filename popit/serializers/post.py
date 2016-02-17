@@ -15,6 +15,7 @@ from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
 import re
 from rest_framework.serializers import ValidationError
+from popit.serializers.misc import IdentifierSerializer
 
 
 class PostMembershipSerializer(TranslatableModelSerializer):
@@ -38,11 +39,42 @@ class PostMembershipSerializer(TranslatableModelSerializer):
         exclude = ["person", "organization", "post", "area"]
 
 
+class PostParentOrganizationSerializer(TranslatableModelSerializer):
+    id = CharField(max_length=255, required=False)
+    other_names = OtherNameSerializer(many=True, required=False)
+    identifiers = IdentifierSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    area = AreaSerializer(required=False)
+
+    class Meta:
+        model = Organization
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
+class PostOrganizationSerializer(TranslatableModelSerializer):
+    id = CharField(max_length=255, required=False,  allow_null=True, allow_blank=True)
+    parent = PostParentOrganizationSerializer(required=False)
+    parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
+    other_names = OtherNameSerializer(many=True, required=False)
+    identifiers = IdentifierSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    area = AreaSerializer(required=False)
+    area_id = CharField(max_length=255, required=False)
+    founding_date = CharField(allow_null=True, default=None, allow_blank=True)
+    dissolution_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
+
+    class Meta:
+        model = Organization
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
 class PostSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     other_labels = OtherNameSerializer(many=True, required=False)
-    organization = OrganizationSerializer(required=False) # A post must tied to an organization
+    organization = PostOrganizationSerializer(required=False) # A post must tied to an organization
     organization_id = CharField(max_length=255, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
@@ -210,7 +242,7 @@ class PostSerializer(TranslatableModelSerializer):
 
         if instance.organization_id:
             organization_instance = instance.organization.__class__.objects.untranslated().get(id=instance.organization_id)
-            organization_serializer = OrganizationSerializer(instance=organization_instance, language=instance.language_code)
+            organization_serializer = PostOrganizationSerializer(instance=organization_instance, language=instance.language_code)
             data["organization"] = organization_serializer.data
 
         links_instance = instance.links.untranslated().all()
