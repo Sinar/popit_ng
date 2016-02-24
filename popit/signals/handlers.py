@@ -1,11 +1,16 @@
 from django.db.models.signals import pre_delete
 from django.db.models.signals import post_save
+from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from popit.models import Person
 from popit.models import Organization
 from popit.models import Membership
 from popit.models import Post
+from popit.models import Link
+from popit.models import ContactDetail
+from popit.models import Identifier
+from popit.models import OtherName
 from popit.serializers import PersonSerializer
 from popit.serializers import OrganizationSerializer
 from popit.serializers import MembershipSerializer
@@ -109,6 +114,280 @@ def post_delete_handler(sender, instance, using, **kwargs):
     for membership in instance.memberships.all():
         delete_entity_index("memberships", membership)
         update_entity_index("persons", membership.person, PersonSerializer)
+
+
+@receiver(post_save, sender=OtherName)
+def othername_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+
+    parent = instance.content_object
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Post:
+        update_entity_index("posts", parent, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+
+# The reason we use post_delete from here onward for deletion is because we do not actually index othername/indetifier/contactdetails/
+# and link. We index it together with the main parent entity
+@receiver(post_delete, sender=OtherName)
+def othername_delete_handler(sender, instance, using, **kwargs):
+    parent = instance.content_object
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Post:
+        update_entity_index("posts", parent, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+
+@receiver(post_save, sender=Identifier)
+def identifier_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+
+    parent = instance.content_object
+
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+
+@receiver(post_delete, sender=Identifier)
+def identifier_delete_handler(sender, instance, using, **kwargs):
+    parent = instance.content_object
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+
+@receiver(post_save, sender=Link)
+def link_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+
+    parent = instance.content_object
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Post:
+        update_entity_index("posts", parent, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Membership:
+        update_entity_index("memberships", parent, MembershipSerializer)
+        update_entity_index("persons", parent.person, PersonSerializer)
+        if parent.post:
+            update_entity_index("posts", parent.post, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+
+
+@receiver(post_delete, sender=Link)
+def link_delete_handler(sender, instance, using, **kwargs):
+
+    parent = instance.content_object
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Post:
+        update_entity_index("posts", parent, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Membership:
+        update_entity_index("memberships", parent, MembershipSerializer)
+        update_entity_index("persons", parent.person, PersonSerializer)
+        if parent.post:
+            update_entity_index("posts", parent.post, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+
+
+@receiver(post_save, sender=ContactDetail)
+def contactdetail_save_handler(sender, instance, created, raw, using, update_fields, **kwargs):
+    if raw:
+        return
+
+    parent = instance.content_object
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Post:
+        update_entity_index("posts", parent, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Membership:
+        update_entity_index("memberships", parent, MembershipSerializer)
+        update_entity_index("persons", parent.person, PersonSerializer)
+        if parent.post:
+            update_entity_index("posts", parent.post, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+
+
+@receiver(pre_delete, sender=ContactDetail)
+def contactdetail_delete_handler(sender, instance, using, **kwargs):
+
+    parent = instance.content_object
+    if type(parent) is Person:
+        update_entity_index("persons", parent, PersonSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            if membership.organization:
+                update_entity_index("organizations", membership.organization, OrganizationSerializer)
+            if membership.post:
+                update_entity_index("post", membership.post, PostSerializer)
+
+    if type(parent) is Organization:
+        update_entity_index("organizations", parent, OrganizationSerializer)
+
+        for post in parent.posts.all():
+            update_entity_index("posts", post, PostSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Post:
+        update_entity_index("posts", parent, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
+        for membership in parent.memberships.all():
+            update_entity_index("memberships", membership, MembershipSerializer)
+            update_entity_index("persons", membership.person, PersonSerializer)
+
+    if type(parent) is Membership:
+        update_entity_index("memberships", parent, MembershipSerializer)
+        update_entity_index("persons", parent.person, PersonSerializer)
+        if parent.post:
+            update_entity_index("posts", parent.post, PostSerializer)
+        if parent.organization:
+            update_entity_index("organizations", parent.organization, OrganizationSerializer)
 
 
 @receiver(post_save, sender=User)
