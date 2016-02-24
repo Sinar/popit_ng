@@ -22,6 +22,15 @@ class AreaAPITestCase(APITestCase):
         pre_delete.disconnect(membership_delete_handler, Membership)
         post_save.disconnect(post_save_handler, Post)
         pre_delete.disconnect(post_delete_handler, Post)
+        post_save.disconnect(othername_save_handler, OtherName)
+        post_delete.disconnect(othername_delete_handler, OtherName)
+        post_save.disconnect(identifier_save_handler, Identifier)
+        post_delete.disconnect(identifier_delete_handler, Identifier)
+        post_save.disconnect(contactdetail_save_handler, ContactDetail)
+        pre_delete.disconnect(contactdetail_delete_handler, ContactDetail)
+        post_delete.disconnect(contactdetail_delete_handler, ContactDetail)
+        post_save.disconnect(link_save_handler, Link)
+        post_delete.disconnect(link_delete_handler, Link)
 
     def tearDown(self):
         post_save.connect(person_save_handler, Person)
@@ -32,6 +41,15 @@ class AreaAPITestCase(APITestCase):
         pre_delete.connect(membership_delete_handler, Membership)
         post_save.connect(post_save_handler, Post)
         pre_delete.connect(post_delete_handler, Post)
+        post_save.connect(othername_save_handler, OtherName)
+        post_delete.connect(othername_delete_handler, OtherName)
+        post_save.connect(identifier_save_handler, Identifier)
+        post_delete.connect(identifier_delete_handler, Identifier)
+        post_save.connect(contactdetail_save_handler, ContactDetail)
+        pre_delete.connect(contactdetail_delete_handler, ContactDetail)
+        post_delete.connect(contactdetail_delete_handler, ContactDetail)
+        post_save.connect(link_save_handler, Link)
+        post_delete.connect(link_delete_handler, Link)
 
     def test_view_area_list(self):
         response = self.client.get("/en/areas/")
@@ -126,6 +144,14 @@ class AreaLinkAPITestCase(APITestCase):
         pre_delete.disconnect(membership_delete_handler, Membership)
         post_save.disconnect(post_save_handler, Post)
         pre_delete.disconnect(post_delete_handler, Post)
+        post_save.disconnect(othername_save_handler, OtherName)
+        post_delete.disconnect(othername_delete_handler, OtherName)
+        post_save.disconnect(identifier_save_handler, Identifier)
+        post_delete.disconnect(identifier_delete_handler, Identifier)
+        post_save.disconnect(contactdetail_save_handler, ContactDetail)
+        post_delete.disconnect(contactdetail_delete_handler, ContactDetail)
+        post_save.disconnect(link_save_handler, Link)
+        post_delete.disconnect(link_delete_handler, Link)
 
     def tearDown(self):
         post_save.connect(person_save_handler, Person)
@@ -136,6 +162,14 @@ class AreaLinkAPITestCase(APITestCase):
         pre_delete.connect(membership_delete_handler, Membership)
         post_save.connect(post_save_handler, Post)
         pre_delete.connect(post_delete_handler, Post)
+        post_save.connect(othername_save_handler, OtherName)
+        post_delete.connect(othername_delete_handler, OtherName)
+        post_save.connect(identifier_save_handler, Identifier)
+        post_delete.connect(identifier_delete_handler, Identifier)
+        post_save.connect(contactdetail_save_handler, ContactDetail)
+        post_delete.connect(contactdetail_delete_handler, ContactDetail)
+        post_save.connect(link_save_handler, Link)
+        post_delete.connect(link_delete_handler, Link)
 
     def test_list_area_link(self):
         response = self.client.get("/en/areas/640c0f1d-2305-4d17-97fe-6aa59f079cc4/links/")
