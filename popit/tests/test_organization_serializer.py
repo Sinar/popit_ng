@@ -18,6 +18,14 @@ class OrganizationSerializerTestCase(TestCase):
         pre_delete.disconnect(membership_delete_handler, Membership)
         post_save.disconnect(post_save_handler, Post)
         pre_delete.disconnect(post_delete_handler, Post)
+        post_save.disconnect(othername_save_handler, OtherName)
+        post_delete.disconnect(othername_delete_handler, OtherName)
+        post_save.disconnect(identifier_save_handler, Identifier)
+        post_delete.disconnect(identifier_delete_handler, Identifier)
+        post_save.disconnect(contactdetail_save_handler, ContactDetail)
+        post_delete.disconnect(contactdetail_delete_handler, ContactDetail)
+        post_save.disconnect(link_save_handler, Link)
+        post_delete.disconnect(link_delete_handler, Link)
 
     def tearDown(self):
         post_save.connect(person_save_handler, Person)
@@ -28,6 +36,15 @@ class OrganizationSerializerTestCase(TestCase):
         pre_delete.connect(membership_delete_handler, Membership)
         post_save.connect(post_save_handler, Post)
         pre_delete.connect(post_delete_handler, Post)
+        post_save.connect(othername_save_handler, OtherName)
+        post_delete.connect(othername_delete_handler, OtherName)
+        post_save.connect(identifier_save_handler, Identifier)
+        post_delete.connect(identifier_delete_handler, Identifier)
+        post_save.connect(contactdetail_save_handler, ContactDetail)
+        post_delete.connect(contactdetail_delete_handler, ContactDetail)
+        post_save.connect(link_save_handler, Link)
+        post_delete.connect(link_delete_handler, Link)
+
 
     def test_fetch_organization_serializer(self):
         organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")

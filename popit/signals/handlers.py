@@ -351,7 +351,7 @@ def contactdetail_save_handler(sender, instance, created, raw, using, update_fie
             update_entity_index("organizations", parent.organization, OrganizationSerializer)
 
 
-@receiver(pre_delete, sender=ContactDetail)
+@receiver(post_delete, sender=ContactDetail)
 def contactdetail_delete_handler(sender, instance, using, **kwargs):
 
     parent = instance.content_object
