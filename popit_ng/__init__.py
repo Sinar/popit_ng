@@ -1,0 +1,1 @@
+from .services import app as celery_app

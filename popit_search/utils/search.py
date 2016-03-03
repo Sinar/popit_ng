@@ -93,6 +93,18 @@ class SerializerSearch(object):
                 logging.warn("No index found, but it's fine")
                 continue
 
+    def delete_by_id(self, instance_id):
+        query = "id:%s" % instance_id
+        result = self.es.search(self.index, q=query)
+        hits = result["hits"]["hits"]
+        for hit in hits:
+            id = hit["_id"]
+            try:
+                self.es.delete(index=self.index, doc_type=self.doc_type, id=id)
+                time.sleep(settings.INDEX_PREPARATION_TIME)
+            except NotFoundError:
+                logging.warn("No index found, but it's fine")
+
     def raw_query(self, query):
         # Mostly for debugging, also allows for tuning of search.
         result = self.es.search(self.index, q=query)
