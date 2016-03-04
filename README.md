@@ -34,6 +34,19 @@ $ cd /home/vagrant/elasticsearch*
 $ bin/elasticsearch
 ```
 
+Now indexing is a separate service using celery, run it with the following command
+
+```sh
+$ celery worker -A popit_ng -l info
+```
+
+Currently index in elasticsearch is not cleaned after an entity is deleted. Run the following to clean it. 
+ In production this should be a cronjob
+
+```sh
+python manage.py clean_index
+```
+
 If you're not on vagrant, change to the directory you install elasticsearch on. I assume that you are doing a manual installation
 for development. 
 
