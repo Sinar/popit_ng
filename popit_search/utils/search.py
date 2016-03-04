@@ -60,6 +60,15 @@ class SerializerSearch(object):
             output.append(hit["_source"])
         return output
 
+    def list_all(self):
+        result = self.es.search(index=self.index)
+        hits = result["hits"]["hits"]
+        output = []
+        for hit in hits:
+            # To return only
+            output.append(hit["_source"])
+        return output
+
     def update(self, instance, serializer):
         assert isinstance(instance, models.Model)
         assert issubclass(serializer, Serializer)
@@ -105,9 +114,12 @@ class SerializerSearch(object):
             except NotFoundError:
                 logging.warn("No index found, but it's fine")
 
-    def raw_query(self, query):
+    def raw_query(self, query=None):
         # Mostly for debugging, also allows for tuning of search.
-        result = self.es.search(self.index, q=query)
+        if query:
+            result = self.es.search(self.index, q=query)
+        else:
+            result = self.es.search(self.index)
         return result
 
     def delete_index(self):
