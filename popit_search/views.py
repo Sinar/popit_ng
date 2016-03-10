@@ -91,7 +91,7 @@ class ResultFilters(object):
             if type(check) is list:
                 matched = False
                 for item in check:
-                    if item[key].lower() == value.lower():
+                    if value.lower() in item[key].lower():
                         matched = True
                 if not matched:
                     return True
@@ -103,7 +103,7 @@ class ResultFilters(object):
                 check = entry[key]
 
         # Because last key in the dict. Loop will end, so check for value
-        if check.lower() != value.lower():
+        if value.lower() not in check.lower():
             return True
         return False
 
