@@ -10,6 +10,10 @@ from popit.models import Organization
 from popit.models import Person
 from popit.models import Post
 from popit.models import Membership
+from popit.models import Identifier
+from popit.models import ContactDetail
+from popit.models import OtherName
+from popit.models import Link
 from popit.serializers import OrganizationSerializer
 from popit.serializers import PersonSerializer
 from popit.serializers import PostSerializer
@@ -20,6 +24,12 @@ ES_MODEL_MAP = {
     "persons": Person,
     "posts": Post,
     "memberships": Membership,
+    "identifiers": Identifier,
+    "other_names": OtherName,
+    "links": Link,
+    "contact_details": ContactDetail,
+    "parent": Organization,
+    "other_labels": OtherName
 }
 
 ES_SERIALIZER_MAP = {
@@ -29,8 +39,84 @@ ES_SERIALIZER_MAP = {
     "memberships": MembershipSerializer,
 }
 
+
+class ResultFilters(object):
+    def filter_result(self, result, index_name, language):
+        entity = ES_MODEL_MAP.get(index_name)
+        if not entity:
+            raise EntityNotIndexedException("Entity not indexed or entity is not valid")
+        output = []
+
+        for item in result:
+
+            instance = self.filter_instance(entity, item["id"], language)
+            if instance:
+                serializer_class = ES_SERIALIZER_MAP[index_name]
+                serializer = serializer_class(instance, language=language)
+                output.append(serializer.data)
+
+        return output
+
+    def filter_instance(self, entity, instance_id, language):
+        try:
+            instance = entity.objects.language(language).get(id=instance_id)
+            return instance
+        except entity.DoesNotExist:
+            return None
+
+    def filter_nested(self, item, language):
+        for key in item:
+            if key in ES_MODEL_MAP:
+                if type(item[key]) is list:
+                    temp = []
+                    for entry in item[key]:
+                        entity = ES_MODEL_MAP[key]
+                        instance = self.filter_instance(entity, entry["id"], language)
+                        if instance:
+                            temp.append(entry)
+                    item[key] = temp
+                elif type(item[key]) is dict:
+                    entity = ES_MODEL_MAP[key]
+                    instance = self.filter_instance(entity, item[key]["id"], language)
+                    if not instance:
+                        item[key] = {}
+        return item
+
+    # This is used on cleaned data
+    def drop_result(self, entry, query):
+        keys, value = self.parse_query(query)
+        check = entry
+        for key in keys:
+
+            if type(check) is list:
+                matched = False
+                for item in check:
+                    if item[key].lower() == value.lower():
+                        matched = True
+                if not matched:
+                    return True
+                else:
+                    return False
+
+            elif issubclass(type(check), dict):
+                # we are not sure if the next item is a list or not. Should not because I limit the depth
+                check = entry[key]
+
+        # Because last key in the dict. Loop will end, so check for value
+        if check.lower() != value.lower():
+            return True
+        return False
+
+
+    def parse_query(self, query):
+
+        key, value = query.split(":")
+        keys = key.split(".")
+        return keys, value
+
+
 # Create your views here.
-class GenericSearchView(BasePopitView):
+class GenericSearchView(BasePopitView, ResultFilters):
     index = None
 
     def get(self, request, language, index_name, **kwargs):
@@ -41,26 +127,22 @@ class GenericSearchView(BasePopitView):
         if not q:
             raise ParseError("q parameter is required, data format can be found at https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
 
-        instance = ES_MODEL_MAP.get(index_name)
-        if not instance:
-            raise EntityNotIndexedException("Entity not indexed or entity is not valid")
-
         result = search.search(query=q, language=language)
-
         output = []
-
-        for item in result:
-            try:
-                entity = instance.objects.language(language).get(id=item["id"])
-                serializer_class = ES_SERIALIZER_MAP[index_name]
-                serializer = serializer_class(entity, language=language)
-                output.append(serializer.data)
-            except instance.DoesNotExist:
-                continue
+        logging.warn(result)
+        temp = self.filter_result(result, index_name, language)
+        for entry in temp:
+            data = self.filter_nested(entry, language)
+            if not self.drop_result(data, q):
+                output.append(data)
 
         page = self.paginator.paginate_queryset(output, request, view=self)
         return self.paginator.get_paginated_response(page)
 
 
 class EntityNotIndexedException(Exception):
+    pass
+
+
+class OperationNotSupportedException(Exception):
     pass

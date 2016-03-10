@@ -9,7 +9,7 @@ class SearchAPITestCase(APITestCase):
 
     fixtures = [ "api_request_test_data.yaml" ]
 
-    @patch("popit_search.utils.search.SerializerSearch")
+    @patch("popit_search.views.SerializerSearch")
     def test_person_search(self, mock_search):
         params = {
             "q": "id:8497ba86-7485-42d2-9596-2ab14520f1f4"
@@ -142,7 +142,7 @@ class SearchAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])
 
-    @patch("popit_search.utils.search.SerializerSearch")
+    @patch("popit_search.views.SerializerSearch")
     def test_organization_search(self, mock_search):
         params = {
             "q": "id:3d62d9ea-0600-4f29-8ce6-f7720fd49aa3"
@@ -300,7 +300,7 @@ class SearchAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])
 
-    @patch("popit_search.utils.search.SerializerSearch")
+    @patch("popit_search.views.SerializerSearch")
     def test_membership_search(self, mock_search):
         params = {
             "q": "id:b351cdc2-6961-4fc7-9d61-08fca66e1d44"
@@ -664,7 +664,7 @@ class SearchAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])
 
-    @patch("popit_search.utils.search.SerializerSearch")
+    @patch("popit_search.views.SerializerSearch")
     def test_post_search(self, mock_search):
         params = {
             "q": "id:c1f0f86b-a491-4986-b48d-861b58a3ef6e"
@@ -839,7 +839,10 @@ class SearchAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])
 
-    def test_search_without_q_param(self):
+    @patch("popit_search.views.SerializerSearch")
+    def test_search_without_q_param(self, mock_search):
+
+        instance = mock_search.return_value
 
         params = {
             "name": "person"
