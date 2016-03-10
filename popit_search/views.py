@@ -88,7 +88,7 @@ class ResultFilters(object):
         check = entry
         for key in keys:
 
-            if type(check) is list:
+            if issubclass(type(check), list):
                 matched = False
                 for item in check:
                     if value.lower() in item[key].lower():
