@@ -10,6 +10,8 @@ from popit.models import ContactDetail
 from popit.serializers import LinkSerializer
 from popit.serializers import ContactDetailSerializer
 from popit.serializers import AreaSerializer
+from popit.serializers import OtherNameSerializer
+from popit.serializers import IdentifierSerializer
 from popit.serializers import OrganizationSerializer
 from popit.serializers import PersonSerializer
 from popit.serializers import PostSerializer
@@ -19,20 +21,63 @@ import re
 import logging
 
 
+class MembershipPersonSerializer(TranslatableModelSerializer):
+    id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
+    other_names = OtherNameSerializer(many=True, required=False)
+    identifiers = IdentifierSerializer(many=True, required=False)
+    birth_date = CharField(allow_null=True, default=None, allow_blank=True)
+    death_date = CharField(allow_null=True, default=None, allow_blank=True)
+    links = LinkSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
+
+    class Meta:
+        model = Person
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
+class MembershipOrganizationSerializer(TranslatableModelSerializer):
+    id = CharField(max_length=255, required=False,  allow_null=True, allow_blank=True)
+    parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
+    founding_date = CharField(allow_null=True, default=None, allow_blank=True)
+    dissolution_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
+    links = LinkSerializer(many=True, required=False)
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    area = AreaSerializer(required=False)
+
+    class Meta:
+        model = Organization
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
+class MembershipPostSerializer(TranslatableModelSerializer):
+    id = CharField(max_length=255, required=False)
+    organization_id = CharField(max_length=255, required=False)
+    area_id = CharField(max_length=255, required=False)
+    start_date = CharField(allow_null=True, default=None)
+    end_date = CharField(allow_null=True, default=None)
+    contact_details = ContactDetailSerializer(many=True, required=False)
+    links = LinkSerializer(many=True, required=False)
+
+    class Meta:
+        model = Post
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        exclude = [ "organization", "area"]
+
+
 class MembershipSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
-    person = PersonSerializer(required=False)
+    person = MembershipPersonSerializer(required=False)
     person_id = CharField(max_length=255, required=False)
-    organization = OrganizationSerializer(required=False)
+    organization = MembershipOrganizationSerializer(required=False)
     organization_id = CharField(max_length=255, required=False)
-    member = OrganizationSerializer(required=False)
+    member = MembershipOrganizationSerializer(required=False)
     member_id = CharField(max_length=255, required=False)
-    on_behalf_of = OrganizationSerializer(required=False)
+    on_behalf_of = MembershipOrganizationSerializer(required=False)
     on_behalf_of_id = CharField(max_length=255, required=False)
     area = AreaSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
-    post = PostSerializer(required=False)
+    post = MembershipPostSerializer(required=False)
     post_id = CharField(max_length=255, required=False)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
@@ -287,26 +332,26 @@ class MembershipSerializer(TranslatableModelSerializer):
 
         if instance.organization_id:
             organization_instance = instance.organization.__class__.objects.untranslated().get(id=instance.organization_id)
-            organization_serializer = OrganizationSerializer(instance=organization_instance, language=instance.language_code)
+            organization_serializer = MembershipOrganizationSerializer(instance=organization_instance, language=instance.language_code)
             data["organization"] = organization_serializer.data
 
         if instance.on_behalf_of_id:
             on_behalf_of_instance = instance.on_behalf_of.__class__.objects.untranslated().get(id=instance.on_behalf_of_id)
-            on_behalf_of_serializer = OrganizationSerializer(on_behalf_of_instance, language=instance.language_code)
+            on_behalf_of_serializer = MembershipOrganizationSerializer(on_behalf_of_instance, language=instance.language_code)
             data["on_behalf_of"] = on_behalf_of_serializer.data
 
         if instance.member_id:
             member_instance = instance.member.__class__.objects.untranslated().get(id=instance.member_id)
-            member_serializer = OrganizationSerializer(instance=member_instance, language=instance.language_code)
+            member_serializer = MembershipOrganizationSerializer(instance=member_instance, language=instance.language_code)
             data["member"] = member_serializer.data
 
         person_instance = instance.person.__class__.objects.untranslated().get(id=instance.person_id)
-        person_serializer = PersonSerializer(instance=person_instance, language=instance.language_code)
+        person_serializer = MembershipPersonSerializer(instance=person_instance, language=instance.language_code)
         data["person"] = person_serializer.data
 
         if instance.post_id:
             post_instance = instance.post.__class__.objects.untranslated().get(id=instance.post_id)
-            post_serializer = PostSerializer(instance=post_instance, language=instance.language_code)
+            post_serializer = MembershipPostSerializer(instance=post_instance, language=instance.language_code)
             data["post"] = post_serializer.data
 
         links_instance = instance.links.untranslated().all()
