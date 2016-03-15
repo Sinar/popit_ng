@@ -1,5 +1,0 @@
-popit_ng:
-#  volumes_from:
-#    - data
-  volumes:
-    - .:/usr/src/app

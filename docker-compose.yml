@@ -1,47 +1,39 @@
-common:
-  build: docker/data
-  env_file:
-    - ./.env
-#  stdin_open: true
-#  tty: true
+version: '2'
+services:
+  data:
+    build: docker/data
+    image: sinar/data
+    environment:
+      POSTGRES_PASSWORD: hunter2
 
-# data:
-#  build: docker/data
-#  hostname: data
-#  domainname: localdomain
+  postgres:
+    build: docker/postgres
+    image: sinar/postgres
+    ports:
+      - 5432:5432
+    volumes_from:
+      - data
+    environment:
+      - CKAN_PASS=ckan_pass
+      - DATASTORE_PASS=datastore_pass
 
-postgres:
-  extends: 
-    service: common
-  build: docker/postgres
-  hostname: postgres
-  domainname: localdomain
-  ports:
-    - "5432:5432"
-#  volumes_from:
-#    - data
-  environment:
-    - CKAN_PASS=ckan_pass
-    - DATASTORE_PASS=datastore_pass
+  elastic:
+    build: docker/elastic
+    image: sinar/elastic
+    volumes_from:
+      - data
+    ports:
+      - 9200:9200
 
-elastic:
-  extends: 
-    service: common
-  build: docker/elastic
-  hostname: elastic
-  domainname: localdomain
-  ports:
-    - "9200:9200"
-
-popit_ng:
-  extends: 
-    service: common
-  build: .
-  hostname: popit
-  domainname: localdomain
-  ports:
-    - "8000:8000"
-  links:
-    - postgres:postgres
-    - elastic:elastic
-  command: ./manage.py runserver 0.0.0.0:8000
+  popit_ng:
+    build: .
+    image: sinar/popit_ng
+    ports:
+      - 8000:8000
+    links:
+      - postgres:postgres
+      - elastic:elastic
+    # volumes_from:
+    #   - data
+    # command: ls
+    # command: runserver 0.0.0.0:8000

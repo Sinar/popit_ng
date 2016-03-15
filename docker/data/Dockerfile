@@ -11,7 +11,6 @@ RUN mkdir -p $POPIT_DATA
 
 RUN mkdir -p $PGDATA && chown -R postgres:postgres $PGDATA
 
-CMD "/bin/sh"
-
 VOLUME ["/usr/src/app", "/var/lib/postgresql/data"]
 
+CMD tail -f /dev/null
