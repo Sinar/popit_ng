@@ -21,6 +21,15 @@ from popit.views.misc import GenericLinkList
 from popit.views.base import BasePopitDetailUpdateView
 from popit.views.base import BasePopitListCreateView
 from popit.views.base import BasePopitView
+from popit.views.citation import BaseCitationDetailView
+from popit.views.citation import BaseCitationListCreateView
+from popit.views.citation import GenericContactDetailCitationListView
+from popit.views.citation import GenericContactDetailCitationDetailView
+from popit.views.citation import BaseSubItemCitationListView
+from popit.views.citation import BaseSubItemCitationDetailView
+from popit.views.citation import BaseFieldCitationView
+from popit.views.citation import GenericContactDetailFieldCitationView
+from popit.views.citation import BaseSubItemFieldCitationView
 
 
 class PostList(BasePopitListCreateView):
@@ -131,3 +140,63 @@ class PostLinkDetail(GenericLinkDetail):
 
 class PostLinkList(GenericLinkList):
     parent = Post
+
+
+class PostCitationListCreateView(BaseCitationListCreateView):
+    entity = Post
+
+
+class PostCitationDetailView(BaseCitationDetailView):
+    entity = Post
+
+
+class PostContactDetailCitationListView(GenericContactDetailCitationListView):
+    parent = Post
+
+
+class PostContactDetailCitationDetailView(GenericContactDetailCitationDetailView):
+    parent = Post
+
+
+class PostOtherLabelsCitationListView(BaseSubItemCitationListView):
+    parent = Post
+    entity = OtherName
+
+    def get_child(self, parent, child_pk, language):
+        try:
+            child = self.parent.other_labels.language(language).get(id=child_pk)
+            return child
+        except self.entity.DoesNotExist:
+            raise Http404
+
+
+class PostOtherLabelsCitationDetailView(BaseSubItemCitationDetailView):
+    parent = Post
+    entity = OtherName
+
+    def get_child(self, parent, child_pk, language):
+        try:
+            child = self.parent.other_labels.language(language).get(id=child_pk)
+            return child
+        except self.entity.DoesNotExist:
+            raise Http404
+
+
+class PostFieldCitationView(BaseFieldCitationView):
+    entity = Post
+
+
+class PostContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
+    entity = Post
+
+
+class PostOtherLabelFieldCitationView(BaseSubItemFieldCitationView):
+    parent = Post
+    entity = OtherName
+
+    def get_child(self, parent, child_pk, language):
+        try:
+            child = self.parent.other_labels.language(language).get(id=child_pk)
+            return child
+        except self.entity.DoesNotExist:
+            raise Http404

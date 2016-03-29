@@ -53,7 +53,7 @@ class LinkSerializerTestCase(TestCase):
         url = person.links.untranslated().all()
         serializer = LinkSerializer(url, many=True, language="en")
         # TODO: This will fail, find out the exact data
-        self.assertEqual(len(serializer.data), 2)
+        self.assertEqual(len(serializer.data), 10)
 
     def test_create_links(self):
         data = {

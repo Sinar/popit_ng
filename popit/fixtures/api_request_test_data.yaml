@@ -55,6 +55,30 @@
 - model: popit.linktranslation
   pk: 19
   fields: {note: '', language_code: en, master: adebb549-e7a0-4ba6-a9ff-60eb2656c15b}
+- model: popit.linktranslation
+  pk: 20
+  fields: {note: this is the note for email, language_code: en, master: 7e462cdea35840a28c20cf9fe79284fd}
+- model: popit.linktranslation
+  pk: 21
+  fields: {note: this is the note for created_at, language_code: en, master: f70c45abff5d4437a15bbd0ff93e2d49}
+- model: popit.linktranslation
+  pk: 22
+  fields: {note: this is the note for updated_at, language_code: en, master: f6cf442f72544c0fac06498ddb40af53}
+- model: popit.linktranslation
+  pk: 23
+  fields: {note: this is the note for family_name, language_code: en, master: f998e27f16844457a96bb38b0b44ccfa}
+- model: popit.linktranslation
+  pk: 24
+  fields: {note: this is the note for name, language_code: en, master: 8f24656900374499ad0f656dd54b4f7c}
+- model: popit.linktranslation
+  pk: 25
+  fields: {note: this is the note for summary, language_code: en, master: fc13097158ce4958ba1e87d4b3f16655}
+- model: popit.linktranslation
+  pk: 26
+  fields: {note: this is the note for language_code, language_code: en, master: 8290c619e9494837ad5179c6aab42c80}
+- model: popit.linktranslation
+  pk: 27
+  fields: {note: this is the note for biography, language_code: en, master: e233279e341a4a3ebd691527a3324d55}
 - model: popit.contacttranslation
   pk: 1
   fields: {label: sweemeng phone, note: my phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
@@ -165,7 +189,8 @@
 - model: popit.person
   pk: 8497ba86-7485-42d2-9596-2ab14520f1f4
   fields: {email: johndoe@sinarproject.org, birth_date: '1901-01-01', death_date: '2001-01-01',
-    image: '', created_at: ! '2015-10-06 00:00:00.00000+00:00', updated_at: ! '2015-10-06 00:00:00.00000+00:00'}
+    image: '', created_at: ! '2015-10-06 00:00:00+00:00', updated_at: ! '2015-10-06
+      00:00:00+00:00'}
 - model: popit.person
   pk: ab1a5788e5bae955c048748fa6af0e97
   fields: {email: sweester@sinarproject.org, birth_date: null, death_date: null, image: '',
@@ -756,8 +781,8 @@
     end_date: null
     object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
-    created_at: 2015-10-22
-    updated_at: 2015-10-22
+    created_at: 2015-10-22 00:00:00+00:00
+    updated_at: 2015-10-22 00:00:00+00:00
     note: really othername field don't seems appropriate for organization
 - model: popit.othername
   pk: aee39ddd-6785-4a36-9781-8e745c6359b7
@@ -766,8 +791,8 @@
     end_date: null
     object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     content_type: [popit, post]
-    created_at: 2015-11-03
-    updated_at: 2015-11-03
+    created_at: 2015-11-03 00:00:00+00:00
+    updated_at: 2015-11-03 00:00:00+00:00
     note: ''
 - model: popit.othername
   pk: cf93e73f-91b6-4fad-bf76-0782c80297a8
@@ -776,8 +801,8 @@
     end_date: '2000-01-01'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06 00:00:00.00000+00:00
-    updated_at: 2015-10-06 00:00:00.00000+00:00
+    created_at: 2015-10-06 00:00:00+00:00
+    updated_at: 2015-10-06 00:00:00+00:00
     note: Turn out that she had a sex change. People have right to decide their own
       gender asshole!
 - model: popit.identifier
@@ -786,24 +811,24 @@
     identifier: '3131312'
     object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
-    created_at: 2015-10-22
-    updated_at: 2015-10-22
+    created_at: 2015-10-22 00:00:00+00:00
+    updated_at: 2015-10-22 00:00:00+00:00
 - model: popit.identifier
   pk: 34b59cb9-607a-43c7-9d13-dfe258790ebf
   fields:
     identifier: '53110321'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06 00:00:00.00000+00:00
-    updated_at: 2015-10-06 00:00:00.00000+00:00
+    created_at: 2015-10-06 00:00:00+00:00
+    updated_at: 2015-10-06 00:00:00+00:00
 - model: popit.identifier
   pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
   fields:
     identifier: '12321223'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06 00:00:00.00000+00:00
-    updated_at: 2015-10-06 00:00:00.00000+00:00
+    created_at: 2015-10-06 00:00:00+00:00
+    updated_at: 2015-10-06 00:00:00+00:00
 - model: popit.contactdetail
   pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
   fields:
@@ -813,8 +838,8 @@
     valid_until: '2020-10-06'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06 00:00:00.00000+00:00
-    updated_at: 2015-11-09
+    created_at: 2015-10-06 00:00:00+00:00
+    updated_at: 2015-11-09 00:00:00+00:00
 - model: popit.contactdetail
   pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
   fields:
@@ -824,8 +849,8 @@
     valid_until: '2020-10-22'
     object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
-    created_at: 2015-10-22
-    updated_at: 2015-11-09
+    created_at: 2015-10-22 00:00:00+00:00
+    updated_at: 2015-11-09 00:00:00+00:00
 - model: popit.contactdetail
   pk: 78a35135-52e3-4af9-8c32-ea3f557354fd
   fields:
@@ -835,8 +860,8 @@
     valid_until: null
     object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
     content_type: [popit, membership]
-    created_at: 2015-11-16
-    updated_at: 2015-11-17
+    created_at: 2015-11-16 00:00:00+00:00
+    updated_at: 2015-11-17 00:00:00+00:00
 - model: popit.contactdetail
   pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
   fields:
@@ -846,8 +871,8 @@
     valid_until: '2015-11-03'
     object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     content_type: [popit, post]
-    created_at: 2015-11-03
-    updated_at: 2015-11-09
+    created_at: 2015-11-03 00:00:00+00:00
+    updated_at: 2015-11-09 00:00:00+00:00
 - model: popit.contactdetail
   pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
   fields:
@@ -857,19 +882,19 @@
     valid_until: '2020-10-05'
     object_id: ab1a5788e5bae955c048748fa6af0e97
     content_type: [popit, person]
-    created_at: 2015-10-05
-    updated_at: 2015-11-09
+    created_at: 2015-10-05 00:00:00+00:00
+    updated_at: 2015-11-09 00:00:00+00:00
 - model: popit.contact
   pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
   fields:
     type: phone
     value: '0123423424342'
-    valid_from: 2015-10-06 00:00:00.00000+00:00
+    valid_from: 2015-10-06
     valid_until: 2020-10-06
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06 00:00:00.00000+00:00
-    updated_at: 2015-10-06 00:00:00.00000+00:00
+    created_at: 2015-10-06 00:00:00+00:00
+    updated_at: 2015-10-06 00:00:00+00:00
 - model: popit.contact
   pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
   fields:
@@ -879,8 +904,8 @@
     valid_until: 2020-10-22
     object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
-    created_at: 2015-10-22
-    updated_at: 2015-10-22
+    created_at: 2015-10-22 00:00:00+00:00
+    updated_at: 2015-10-22 00:00:00+00:00
 - model: popit.contact
   pk: 7b1f49f7-34fd-483f-be57-4c75c6c93fb0
   fields:
@@ -890,8 +915,8 @@
     valid_until: null
     object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
     content_type: [popit, membership]
-    created_at: 2015-11-14
-    updated_at: 2015-11-14
+    created_at: 2015-11-14 00:00:00+00:00
+    updated_at: 2015-11-14 00:00:00+00:00
 - model: popit.contact
   pk: 7f3f67c4-6afd-4de9-880e-943560cf56c0
   fields:
@@ -901,8 +926,8 @@
     valid_until: 2015-11-03
     object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     content_type: [popit, post]
-    created_at: 2015-11-03
-    updated_at: 2015-11-03
+    created_at: 2015-11-03 00:00:00+00:00
+    updated_at: 2015-11-03 00:00:00+00:00
 - model: popit.contact
   pk: a66cb422-eec3-4861-bae1-a64ae5dbde61
   fields:
@@ -912,8 +937,8 @@
     valid_until: 2020-10-05
     object_id: ab1a5788e5bae955c048748fa6af0e97
     content_type: [popit, person]
-    created_at: 2015-10-05
-    updated_at: 2015-10-05
+    created_at: 2015-10-05 00:00:00+00:00
+    updated_at: 2015-10-05 00:00:00+00:00
 - model: popit.link
   pk: 02369098-7b46-4d62-9318-a5f1c2d385bd
   fields:
@@ -922,8 +947,8 @@
     url: http://ssm.com
     object_id: 2d3b8d2c-77b8-42f5-ac62-3e83d4408bda
     content_type: [popit, identifier]
-    created_at: 2015-10-26
-    updated_at: 2015-10-26
+    created_at: 2015-10-26 00:00:00+00:00
+    updated_at: 2015-10-26 00:00:00+00:00
 - model: popit.link
   pk: 10472346-59bf-40f9-95cc-e4cf2dea6e48
   fields:
@@ -932,8 +957,8 @@
     url: http://www.facebook.com
     object_id: http://127.0.0.1:8000/admin/popit/contact/7f3f67c4-6afd-4de9-880e-943560cf56c0/
     content_type: [popit, contact]
-    created_at: 2015-11-03
-    updated_at: 2015-11-03
+    created_at: 2015-11-03 00:00:00+00:00
+    updated_at: 2015-11-03 00:00:00+00:00
 - model: popit.link
   pk: 239edef4-af68-4ffb-adce-96d17cbea79d
   fields:
@@ -942,8 +967,8 @@
     url: http://sinarproject.org/the_captain
     object_id: b351cdc2-6961-4fc7-9d61-08fca66e1d44
     content_type: [popit, membership]
-    created_at: 2015-11-14
-    updated_at: 2015-11-14
+    created_at: 2015-11-14 00:00:00+00:00
+    updated_at: 2015-11-14 00:00:00+00:00
 - model: popit.link
   pk: 26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf
   fields:
@@ -952,8 +977,8 @@
     url: http://sinarproject.org/about/
     object_id: 651da7cd-f109-4aaa-b04c-df835fb6831f
     content_type: [popit, contactdetail]
-    created_at: 2015-10-26
-    updated_at: 2015-11-09
+    created_at: 2015-10-26 00:00:00+00:00
+    updated_at: 2015-11-09 00:00:00+00:00
 - model: popit.link
   pk: 45b0a790-8c9e-4553-844b-431ed34b6b12
   fields:
@@ -962,8 +987,8 @@
     url: https://github.com/sweemeng/
     object_id: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3
     content_type: [popit, organization]
-    created_at: 2015-10-22
-    updated_at: 2015-10-22
+    created_at: 2015-10-22 00:00:00+00:00
+    updated_at: 2015-10-22 00:00:00+00:00
 - model: popit.link
   pk: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6
   fields:
@@ -972,8 +997,8 @@
     url: http://google.com
     object_id: cf93e73f-91b6-4fad-bf76-0782c80297a8
     content_type: [popit, othername]
-    created_at: 2015-10-28
-    updated_at: 2015-10-28
+    created_at: 2015-10-28 00:00:00+00:00
+    updated_at: 2015-10-28 00:00:00+00:00
 - model: popit.link
   pk: 6c928027-4813-4770-80a5-ba413a43efae
   fields:
@@ -982,8 +1007,8 @@
     url: http://www.facebook.com
     object_id: aee39ddd-6785-4a36-9781-8e745c6359b7
     content_type: [popit, othername]
-    created_at: 2015-11-03
-    updated_at: 2015-11-03
+    created_at: 2015-11-03 00:00:00+00:00
+    updated_at: 2015-11-03 00:00:00+00:00
 - model: popit.link
   pk: 6d0afb46-67d4-4708-87c4-4d51ce99767e
   fields:
@@ -992,8 +1017,38 @@
     url: http://google.com
     object_id: 2256ec04-2d1d-4994-b1f1-16d3f5245441
     content_type: [popit, contactdetail]
-    created_at: 2015-10-28
-    updated_at: 2015-11-09
+    created_at: 2015-10-28 00:00:00+00:00
+    updated_at: 2015-11-09 00:00:00+00:00
+- model: popit.link
+  pk: 7e462cdea35840a28c20cf9fe79284fd
+  fields:
+    label: null
+    field: email
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:16.949660+00:00
+    updated_at: 2016-03-28 06:07:16.949708+00:00
+- model: popit.link
+  pk: 8290c619e9494837ad5179c6aab42c80
+  fields:
+    label: null
+    field: language_code
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:17.103060+00:00
+    updated_at: 2016-03-28 06:07:17.103107+00:00
+- model: popit.link
+  pk: 8f24656900374499ad0f656dd54b4f7c
+  fields:
+    label: null
+    field: name
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:17.056591+00:00
+    updated_at: 2016-03-28 06:07:17.056626+00:00
 - model: popit.link
   pk: 9c9a2093-c3eb-4b51-b869-0d3b4ab281fd
   fields:
@@ -1002,8 +1057,8 @@
     url: http://github.com/sinarproject/
     object_id: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
     content_type: [popit, identifier]
-    created_at: 2015-10-12 00:00:00.00000+00:00
-    updated_at: 2015-10-12 00:00:00.00000+00:00
+    created_at: 2015-10-12 00:00:00+00:00
+    updated_at: 2015-10-12 00:00:00+00:00
 - model: popit.link
   pk: a37256e6-eab7-417a-8ac8-32edc5031924
   fields:
@@ -1012,8 +1067,8 @@
     url: http://en.wikipedia.com
     object_id: 7f3f67c4-6afd-4de9-880e-943560cf56c0
     content_type: [popit, contactdetail]
-    created_at: 2015-11-06
-    updated_at: 2015-11-09
+    created_at: 2015-11-06 00:00:00+00:00
+    updated_at: 2015-11-09 00:00:00+00:00
 - model: popit.link
   pk: a4ffa24a9ef3cbcb8cfaa178c9329367
   fields:
@@ -1022,8 +1077,8 @@
     url: http://github.com/sweemeng/
     object_id: ab1a5788e5bae955c048748fa6af0e97
     content_type: [popit, person]
-    created_at: 2015-10-02
-    updated_at: 2015-10-02
+    created_at: 2015-10-02 00:00:00+00:00
+    updated_at: 2015-10-02 00:00:00+00:00
 - model: popit.link
   pk: abbd9287ec0b491d6e84dcbfd6f958fc
   fields:
@@ -1032,8 +1087,8 @@
     url: http://sinarproject.org/en/about/team
     object_id: ab1a5788e5bae955c048748fa6af0e97
     content_type: [popit, person]
-    created_at: 2015-10-02
-    updated_at: 2015-10-02
+    created_at: 2015-10-02 00:00:00+00:00
+    updated_at: 2015-10-02 00:00:00+00:00
 - model: popit.link
   pk: adebb549-e7a0-4ba6-a9ff-60eb2656c15b
   fields:
@@ -1042,8 +1097,8 @@
     url: http://pirateparty.com/captain
     object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
     content_type: [popit, contactdetail]
-    created_at: 2015-11-16
-    updated_at: 2015-11-17
+    created_at: 2015-11-16 00:00:00+00:00
+    updated_at: 2015-11-17 00:00:00+00:00
 - model: popit.link
   pk: c6e2349f-a180-4b44-81f6-804c25714cb1
   fields:
@@ -1052,8 +1107,8 @@
     url: http://pirateparty.com/captain
     object_id: 78a35135-52e3-4af9-8c32-ea3f557354fd
     content_type: [popit, contactdetail]
-    created_at: 2015-11-16
-    updated_at: 2015-11-16
+    created_at: 2015-11-16 00:00:00+00:00
+    updated_at: 2015-11-16 00:00:00+00:00
 - model: popit.link
   pk: ce15a9ee-6742-4467-bbfb-c86459ee685b
   fields:
@@ -1062,8 +1117,18 @@
     url: http://www.talklikeapirate.com/howto.html#basic
     object_id: c1f0f86b-a491-4986-b48d-861b58a3ef6e
     content_type: [popit, post]
-    created_at: 2015-11-03
-    updated_at: 2015-11-03
+    created_at: 2015-11-03 00:00:00+00:00
+    updated_at: 2015-11-03 00:00:00+00:00
+- model: popit.link
+  pk: e233279e341a4a3ebd691527a3324d55
+  fields:
+    label: null
+    field: biography
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:17.116586+00:00
+    updated_at: 2016-03-28 06:07:17.116623+00:00
 - model: popit.link
   pk: ed8a52d8-5503-45aa-a2ad-9931461172d2
   fields:
@@ -1072,8 +1137,18 @@
     url: http://en.wikipedia.com
     object_id: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
     content_type: [popit, area]
-    created_at: 2015-10-30
-    updated_at: 2015-10-30
+    created_at: 2015-10-30 00:00:00+00:00
+    updated_at: 2015-10-30 00:00:00+00:00
+- model: popit.link
+  pk: f6cf442f72544c0fac06498ddb40af53
+  fields:
+    label: null
+    field: updated_at
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:17.031989+00:00
+    updated_at: 2016-03-28 06:07:17.032057+00:00
 - model: popit.link
   pk: f70854dd-4e2e-4141-a2b8-051a36e5c9ee
   fields:
@@ -1082,8 +1157,38 @@
     url: http://github.com/sweemeng/
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]
-    created_at: 2015-10-06 00:00:00.00000+00:00
-    updated_at: 2015-10-06 00:00:00.00000+00:00
+    created_at: 2015-10-06 00:00:00+00:00
+    updated_at: 2015-10-06 00:00:00+00:00
+- model: popit.link
+  pk: f70c45abff5d4437a15bbd0ff93e2d49
+  fields:
+    label: null
+    field: created_at
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:17.015946+00:00
+    updated_at: 2016-03-28 06:07:17.016006+00:00
+- model: popit.link
+  pk: f998e27f16844457a96bb38b0b44ccfa
+  fields:
+    label: null
+    field: family_name
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:17.046270+00:00
+    updated_at: 2016-03-28 06:07:17.046310+00:00
+- model: popit.link
+  pk: fc13097158ce4958ba1e87d4b3f16655
+  fields:
+    label: null
+    field: summary
+    url: http://sinarproject.org
+    object_id: ab1a5788e5bae955c048748fa6af0e97
+    content_type: [popit, person]
+    created_at: 2016-03-28 06:07:17.076423+00:00
+    updated_at: 2016-03-28 06:07:17.076472+00:00
 - model: popit.link
   pk: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a
   fields:
@@ -1092,8 +1197,8 @@
     url: http://sinarproject.org/
     object_id: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec
     content_type: [popit, organization]
-    created_at: 2015-10-23
-    updated_at: 2015-10-23
+    created_at: 2015-10-23 00:00:00+00:00
+    updated_at: 2015-10-23 00:00:00+00:00
 - model: popit.link
   pk: fe662497-c24d-4bbb-a72d-feb77319782a
   fields:
@@ -1102,8 +1207,8 @@
     url: http://sinarproject.org
     object_id: 53a22b00-1383-4bf5-b4be-4753d8d16062
     content_type: [popit, othername]
-    created_at: 2015-10-26
-    updated_at: 2015-10-26
+    created_at: 2015-10-26 00:00:00+00:00
+    updated_at: 2015-10-26 00:00:00+00:00
 - model: auth.user
   fields:
     password: pbkdf2_sha256$24000$kqm8tnbp16sn$QB2jEr3NVg655eUePVGI3Jy3nmsOVzGMZrfI+LaON5Q=

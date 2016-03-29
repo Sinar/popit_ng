@@ -13,6 +13,12 @@ from popit.views.misc import GenericLinkList
 from popit.serializers import MembershipSerializer
 from popit.views.base import BasePopitDetailUpdateView
 from popit.views.base import BasePopitListCreateView
+from popit.views.citation import BaseCitationDetailView
+from popit.views.citation import BaseCitationListCreateView
+from popit.views.citation import GenericContactDetailCitationDetailView
+from popit.views.citation import GenericContactDetailCitationListView
+from popit.views.citation import BaseFieldCitationView
+from popit.views.citation import GenericContactDetailFieldCitationView
 
 
 class MembershipList(BasePopitListCreateView):
@@ -48,3 +54,27 @@ class MembershipLinkDetail(GenericLinkDetail):
 
 class MembershipLinkList(GenericLinkList):
     parent = Membership
+
+
+class MembershipCitationListCreateView(BaseCitationListCreateView):
+    entity = Membership
+
+
+class MembershipCitationDetailView(BaseCitationDetailView):
+    entity = Membership
+
+
+class MembershipContactDetailCitationListView(GenericContactDetailCitationListView):
+    parent = Membership
+
+
+class MembershipContactDetailCitationDetailView(GenericContactDetailCitationDetailView):
+    parent = Membership
+
+
+class MembershipFieldCitationView(BaseFieldCitationView):
+    entity = Membership
+
+
+class MembershipContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
+    entity = Membership
