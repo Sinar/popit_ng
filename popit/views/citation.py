@@ -93,7 +93,7 @@ class BaseSubItemCitationListView(BasePopitView):
 
     def get_parent(self, parent_pk, language):
         try:
-            parent = self.parent.objects.language(language).get(parent_pk)
+            parent = self.parent.objects.language(language).get(id=parent_pk)
             return parent
         except self.parent.DoesNotExist:
             raise Http404
@@ -134,7 +134,7 @@ class GenericOthernameCitationListView(BaseSubItemCitationListView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.other_names.language(language).get(id=child_pk)
+            child = parent.other_names.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -145,7 +145,7 @@ class GenericIdentifierCitationListView(BaseSubItemCitationListView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.identifiers.language(language).get(id=child_pk)
+            child = parent.identifiers.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -156,7 +156,7 @@ class GenericContactDetailCitationListView(BaseSubItemCitationListView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.contact_details.language(language).get(id=child_pk)
+            child = parent.contact_details.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -168,7 +168,7 @@ class BaseSubItemCitationDetailView(BasePopitView):
 
     def get_parent(self, parent_pk, language):
         try:
-            parent = self.parent.objects.language(language).get(parent_pk)
+            parent = self.parent.objects.language(language).get(id=parent_pk)
             return parent
         except self.parent.DoesNotExist:
             raise Http404
@@ -177,7 +177,7 @@ class BaseSubItemCitationDetailView(BasePopitView):
         try:
             parent = self.get_parent(parent_pk ,language)
             child = self.get_child(parent, child_pk, language)
-            links = child.links.language(language).get(link_id, field=field)
+            links = child.links.language(language).get(id=link_id, field=field)
             return links
         except Link.DoesNotExist:
             raise Http404
@@ -192,8 +192,9 @@ class BaseSubItemCitationDetailView(BasePopitView):
         return Response(result)
 
     def put(self, requests, language, parent_pk, child_pk, field, link_id):
+        data = requests.data
         citations = self.get_citations(parent_pk, child_pk, field, link_id, language)
-        serializer = self.serializer(citations, language=language)
+        serializer = self.serializer(citations, data=data, language=language)
         if serializer.is_valid():
             serializer.save()
             result = { "result": serializer.data }
@@ -213,7 +214,7 @@ class GenericOthernameCitationDetailView(BaseSubItemCitationDetailView):
     def get_child(self, parent, child_pk, language):
 
         try:
-            child = self.parent.other_names.language(language).get(id=child_pk)
+            child = parent.other_names.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -224,7 +225,7 @@ class GenericIdentifierCitationDetailView(BaseSubItemCitationDetailView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.identifiers.language(language).get(id=child_pk)
+            child = parent.identifiers.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -235,7 +236,7 @@ class GenericContactDetailCitationDetailView(BaseSubItemCitationDetailView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.contact_details.language(language).get(id=child_pk)
+            child = parent.contact_details.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -280,7 +281,7 @@ class BaseSubItemFieldCitationView(BasePopitView):
 
     def get_parent(self, parent_pk, language):
         try:
-            parent = self.parent.objects.language(language).get(parent_pk)
+            parent = self.parent.objects.language(language).get(id=parent_pk)
             return parent
         except self.parent.DoesNotExist:
             raise Http404
@@ -311,7 +312,7 @@ class GenericOtherNameFieldCitationView(BaseSubItemFieldCitationView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.other_names.language(language).get(id=child_pk)
+            child = parent.other_names.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -322,7 +323,7 @@ class GenericIdentifierFieldCitationView(BaseSubItemFieldCitationView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.identifiers.language(language).get(id=child_pk)
+            child = parent.identifiers.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -333,7 +334,7 @@ class GenericContactDetailFieldCitationView(BaseSubItemFieldCitationView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.contact_details.language(language).get(id=child_pk)
+            child = parent.contact_details.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404

@@ -142,12 +142,12 @@ class PersonFieldCitationView(BaseFieldCitationView):
 
 
 class PersonOtherNameFieldCitationView(GenericOtherNameFieldCitationView):
-    entity = Person
+    parent = Person
 
 
 class PersonIdentifierFieldCitationView(GenericIdentifierFieldCitationView):
-    entity = Person
+    parent = Person
 
 
 class PersonContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
-    entity = Person
+    parent = Person

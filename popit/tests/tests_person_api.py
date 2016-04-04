@@ -183,7 +183,7 @@ class PersonSerializerTestCase(TestCase):
         # There should be only 1 links in that contact
         contact = person_.contact_details.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
         links = contact.links.language('en').all()
-        self.assertEqual(links[0].url, "http://facebook.com")
+        self.assertEqual(links[0].url, "http://sinarproject.org")
 
     def test_update_update_nested_links_person_serializer(self):
         person_data = {
@@ -638,7 +638,7 @@ class PersonAPITestCase(APITestCase):
         # There should be only 1 links in that contact
         contact = person_.contact_details.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
         links = contact.links.language('en').all()
-        self.assertEqual(links[0].url, "http://facebook.com")
+        self.assertEqual(links[0].url, "http://sinarproject.org")
 
     def test_update_nested_person_links_unauthorized(self):
         person_data = {
