@@ -80,7 +80,7 @@ class BaseCitationDetailView(BasePopitView):
         errors = {"errors":serializer.errors}
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, language, parent, field, pk):
+    def delete(self, request, language, parent, field, pk):
         citations = self.get_object(parent, field, pk, language)
         citations.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

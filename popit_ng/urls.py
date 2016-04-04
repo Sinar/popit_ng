@@ -144,11 +144,11 @@ api_urls = [
     url(r'^(?P<language>\w{2})/persons/(?P<pk>[-\w]+)/?$', PersonDetail.as_view(), name="person-detail"),
     url(r'^(?P<language>\w{2})/persons/?$', PersonList.as_view(), name="person-list"),
 
-    url('^(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>[-\w]+)/?$',
+    url('^(?P<language>\w{2})/organizations/(?P<parent>[-\w]+)/citations/(?P<field>\w+)/(?P<pk>[-\w]+)/?$',
         OrganizationCitationDetailView.as_view(), name="organization-citation-detail-view"),
-    url('^(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/citations/(?P<field>\w+)/?$',
+    url('^(?P<language>\w{2})/organizations/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/?$',
         OrganizationCitationListCreateView.as_view(), name="organization-citation-list-view"),
-    url('^(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/citations/?$', OrganizationFieldCitationView.as_view(),
+    url('^(?P<language>\w{2})/organizations/(?P<pk>[-\w]+)/citations/?$', OrganizationFieldCitationView.as_view(),
         name="organization-citation-field-view"),
 
     url(r'^(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>[-\w]+)/?$',

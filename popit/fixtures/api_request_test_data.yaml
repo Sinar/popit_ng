@@ -265,6 +265,48 @@
 - model: popit.linktranslation
   pk: 89
   fields: {note: this is the note for language_code, language_code: en, master: fed1ae4985234010adb567c2768130eb}
+- model: popit.linktranslation
+  pk: 90
+  fields: {note: this is the note for id, language_code: en, master: 40c3094087a14fc0a1a1dcab4d9b1969}
+- model: popit.linktranslation
+  pk: 91
+  fields: {note: this is the note for parent_id, language_code: en, master: e645ccb7a4744e5da232b7ff41d8072e}
+- model: popit.linktranslation
+  pk: 92
+  fields: {note: this is the note for area_id, language_code: en, master: f79582d9e0dd4b939a36dc9ea77b7a23}
+- model: popit.linktranslation
+  pk: 93
+  fields: {note: this is the note for founding_date, language_code: en, master: 442faba3a3504aea966638e538f59247}
+- model: popit.linktranslation
+  pk: 94
+  fields: {note: this is the note for dissolution_date, language_code: en, master: 0155e6d2a9e7472eb2852e9779f283ce}
+- model: popit.linktranslation
+  pk: 95
+  fields: {note: this is the note for image, language_code: en, master: fb0553eac2c645db8ca4037932fc39e5}
+- model: popit.linktranslation
+  pk: 96
+  fields: {note: this is the note for created_at, language_code: en, master: 4d3395843c23466c9ec0c58084398ad0}
+- model: popit.linktranslation
+  pk: 97
+  fields: {note: this is the note for updated_at, language_code: en, master: 57d56c4123654a2ea06d49cb072a50a6}
+- model: popit.linktranslation
+  pk: 98
+  fields: {note: this is the note for description, language_code: en, master: 0a5d836f87b64bef908757736a60a670}
+- model: popit.linktranslation
+  pk: 99
+  fields: {note: this is the note for classification, language_code: en, master: fc4979ef1e874f93a9dabf29f173a3b1}
+- model: popit.linktranslation
+  pk: 100
+  fields: {note: this is the note for abstract, language_code: en, master: e9e88dcc830b428cb5f367b42a120fbd}
+- model: popit.linktranslation
+  pk: 101
+  fields: {note: this is the note for language_code, language_code: en, master: 1228c2c327874722b996df5a7fa678f4}
+- model: popit.linktranslation
+  pk: 102
+  fields: {note: this is the note for id, language_code: en, master: e313182b503a411f90b52b4407704f3c}
+- model: popit.linktranslation
+  pk: 103
+  fields: {note: this is the note for name, language_code: en, master: a9978227d40a4decb2fdc6387e085753}
 - model: popit.contacttranslation
   pk: 1
   fields: {label: sweemeng phone, note: my phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
@@ -1126,6 +1168,16 @@
     created_at: 2015-10-05 00:00:00+00:00
     updated_at: 2015-10-05 00:00:00+00:00
 - model: popit.link
+  pk: 0155e6d2a9e7472eb2852e9779f283ce
+  fields:
+    label: null
+    field: dissolution_date
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.145103+00:00
+    updated_at: 2016-04-04 11:25:23.145145+00:00
+- model: popit.link
   pk: 02369098-7b46-4d62-9318-a5f1c2d385bd
   fields:
     label: ''
@@ -1176,6 +1228,16 @@
     created_at: 2016-04-04 02:48:18.711748+00:00
     updated_at: 2016-04-04 02:48:18.711775+00:00
 - model: popit.link
+  pk: 0a5d836f87b64bef908757736a60a670
+  fields:
+    label: null
+    field: description
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.186906+00:00
+    updated_at: 2016-04-04 11:25:23.186939+00:00
+- model: popit.link
   pk: 0c46f08c25af4c6eb33ece4b2b79dcef
   fields:
     label: null
@@ -1225,6 +1287,16 @@
     content_type: [popit, othername]
     created_at: 2016-04-04 02:49:20.194660+00:00
     updated_at: 2016-04-04 02:49:20.194692+00:00
+- model: popit.link
+  pk: 1228c2c327874722b996df5a7fa678f4
+  fields:
+    label: null
+    field: language_code
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.211731+00:00
+    updated_at: 2016-04-04 11:25:23.211758+00:00
 - model: popit.link
   pk: 122a5771ad004eebace23acfa2e779a3
   fields:
@@ -1376,6 +1448,16 @@
     created_at: 2016-03-29 07:01:54.525049+00:00
     updated_at: 2016-03-29 07:01:54.525049+00:00
 - model: popit.link
+  pk: 40c3094087a14fc0a1a1dcab4d9b1969
+  fields:
+    label: null
+    field: id
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.027561+00:00
+    updated_at: 2016-04-04 11:25:23.027600+00:00
+- model: popit.link
   pk: 420234cfdb42490aaed7d500b0c26ef7
   fields:
     label: null
@@ -1395,6 +1477,16 @@
     content_type: [popit, contactdetail]
     created_at: 2016-03-29 07:01:54.502032+00:00
     updated_at: 2016-03-29 07:01:54.502071+00:00
+- model: popit.link
+  pk: 442faba3a3504aea966638e538f59247
+  fields:
+    label: null
+    field: founding_date
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.136319+00:00
+    updated_at: 2016-04-04 11:25:23.136361+00:00
 - model: popit.link
   pk: 45b0a790-8c9e-4553-844b-431ed34b6b12
   fields:
@@ -1435,6 +1527,16 @@
     content_type: [popit, othername]
     created_at: 2016-04-04 02:49:20.144540+00:00
     updated_at: 2016-04-04 02:49:20.144569+00:00
+- model: popit.link
+  pk: 4d3395843c23466c9ec0c58084398ad0
+  fields:
+    label: null
+    field: created_at
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.162856+00:00
+    updated_at: 2016-04-04 11:25:23.162907+00:00
 - model: popit.link
   pk: 4d8d71c4-20ea-4ed1-ae38-4b7d7550cdf6
   fields:
@@ -1485,6 +1587,16 @@
     content_type: [popit, identifier]
     created_at: 2016-04-04 06:03:32.020575+00:00
     updated_at: 2016-04-04 06:03:32.020602+00:00
+- model: popit.link
+  pk: 57d56c4123654a2ea06d49cb072a50a6
+  fields:
+    label: null
+    field: updated_at
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.178942+00:00
+    updated_at: 2016-04-04 11:25:23.178972+00:00
 - model: popit.link
   pk: 5b63bae8e3904c8399e05490081f0ade
   fields:
@@ -1706,6 +1818,16 @@
     created_at: 2015-10-02 00:00:00+00:00
     updated_at: 2015-10-02 00:00:00+00:00
 - model: popit.link
+  pk: a9978227d40a4decb2fdc6387e085753
+  fields:
+    label: null
+    field: name
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.228807+00:00
+    updated_at: 2016-04-04 11:25:23.228838+00:00
+- model: popit.link
   pk: abbd9287ec0b491d6e84dcbfd6f958fc
   fields:
     label: ''
@@ -1866,6 +1988,16 @@
     created_at: 2016-03-28 06:07:17.116586+00:00
     updated_at: 2016-03-28 06:07:17.116623+00:00
 - model: popit.link
+  pk: e313182b503a411f90b52b4407704f3c
+  fields:
+    label: null
+    field: id
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.219711+00:00
+    updated_at: 2016-04-04 11:25:23.219738+00:00
+- model: popit.link
   pk: e55d522c5a194366b85fc8ef02ab1d9a
   fields:
     label: null
@@ -1875,6 +2007,16 @@
     content_type: [popit, othername]
     created_at: 2016-04-04 02:49:20.116179+00:00
     updated_at: 2016-04-04 02:49:20.116216+00:00
+- model: popit.link
+  pk: e645ccb7a4744e5da232b7ff41d8072e
+  fields:
+    label: null
+    field: parent_id
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.112010+00:00
+    updated_at: 2016-04-04 11:25:23.112049+00:00
 - model: popit.link
   pk: e8b514b82fe64834b75d2092407ae7af
   fields:
@@ -1916,6 +2058,16 @@
     created_at: 2016-04-04 02:49:20.028879+00:00
     updated_at: 2016-04-04 02:49:20.028918+00:00
 - model: popit.link
+  pk: e9e88dcc830b428cb5f367b42a120fbd
+  fields:
+    label: null
+    field: abstract
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.203074+00:00
+    updated_at: 2016-04-04 11:25:23.203110+00:00
+- model: popit.link
   pk: ed8a52d8-5503-45aa-a2ad-9931461172d2
   fields:
     label: ''
@@ -1956,6 +2108,16 @@
     created_at: 2016-03-28 06:07:17.015946+00:00
     updated_at: 2016-03-28 06:07:17.016006+00:00
 - model: popit.link
+  pk: f79582d9e0dd4b939a36dc9ea77b7a23
+  fields:
+    label: null
+    field: area_id
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.124860+00:00
+    updated_at: 2016-04-04 11:25:23.124919+00:00
+- model: popit.link
   pk: f998e27f16844457a96bb38b0b44ccfa
   fields:
     label: null
@@ -1965,6 +2127,16 @@
     content_type: [popit, person]
     created_at: 2016-03-28 06:07:17.046270+00:00
     updated_at: 2016-03-28 06:07:17.046310+00:00
+- model: popit.link
+  pk: fb0553eac2c645db8ca4037932fc39e5
+  fields:
+    label: null
+    field: image
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.154633+00:00
+    updated_at: 2016-04-04 11:25:23.154660+00:00
 - model: popit.link
   pk: fb8d3215a0c947d68b48e457c48b4bf3
   fields:
@@ -1985,6 +2157,16 @@
     content_type: [popit, person]
     created_at: 2016-03-28 06:07:17.076423+00:00
     updated_at: 2016-03-28 06:07:17.076472+00:00
+- model: popit.link
+  pk: fc4979ef1e874f93a9dabf29f173a3b1
+  fields:
+    label: null
+    field: classification
+    url: http://sinarproject.org
+    object_id: 612943b1-864d-4188-8d79-ca387ed19b32
+    content_type: [popit, organization]
+    created_at: 2016-04-04 11:25:23.194796+00:00
+    updated_at: 2016-04-04 11:25:23.194835+00:00
 - model: popit.link
   pk: fd09e4aa-ccc6-4b0a-a339-b06feb81eb5a
   fields:
