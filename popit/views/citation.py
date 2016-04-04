@@ -59,6 +59,7 @@ class BaseCitationDetailView(BasePopitView):
                 citations = instance.links.get(id=pk, field=field)
             except Link.DoesNotExist:
                 raise Http404
+
             return citations
 
         except self.entity.DoesNotExist:

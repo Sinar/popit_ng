@@ -172,11 +172,11 @@ api_urls = [
     url(r'^(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/links/?$', OrganizationLinkList.as_view(),
         name="organization-link-list"),
 
-    url(r'(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>[-\w]+)/?$',
+    url(r'(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>[-\w]+)/?$',
         OrganizationOthernameCitationDetailView.as_view(), name="person-othername-citation-detail"),
-    url(r'(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/?$',
+    url(r'(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/?$',
         OrganizationOthernameCitationListView.as_view(), name="person-othername-citation-list"),
-    url(r'(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/citations/?$',
+    url(r'(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<child_pk>[-\w]+)/citations/?$',
         OrganizationOtherNameFieldCitationView.as_view(), name="person-othername-field-citation-view"),
 
     url(r'^(?P<language>\w{2})/organizations/(?P<parent_pk>[-\w]+)/othernames/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/?$',
