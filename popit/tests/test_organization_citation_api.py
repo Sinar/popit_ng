@@ -424,4 +424,4 @@ class OrganizationContactDetailCitationAPITestCase(APITestCase):
         response = self.client.delete(
             "/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/contact_details/651da7cd-f109-4aaa-b04c-df835fb6831f/citations/label/1a046be50da9448a970c940927732005"
         )
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

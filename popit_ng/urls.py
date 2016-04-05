@@ -53,11 +53,11 @@ api_urls = [
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/?$', PostContactDetailList.as_view(),
         name="post-contact-detail-list"),
 
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w]+)/citations/(?P<field>[-\w]+)/(?P<link_id>[-\w]+)/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<child_pk>[-\w]+)/citations/(?P<field>[-\w]+)/(?P<link_id>[-\w]+)/?$',
         PostOtherLabelsCitationDetailView.as_view(), name="post-other-labels-citation-detail-view"),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w]+)/citations/(?P<field>[-\w]+)/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<child_pk>[-\w]+)/citations/(?P<field>[-\w]+)/?$',
         PostOtherLabelsCitationListView.as_view(), name="post-other-labels-citation-list-view"),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w]+)/citations/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<child_pk>[-\w]+)/citations/?$',
         PostOtherLabelFieldCitationView.as_view(), name="post-other-labels-field-citation-view"),
 
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/other_labels/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/?$',

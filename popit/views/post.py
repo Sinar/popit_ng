@@ -164,7 +164,7 @@ class PostOtherLabelsCitationListView(BaseSubItemCitationListView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.other_labels.language(language).get(id=child_pk)
+            child = parent.other_labels.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -176,7 +176,7 @@ class PostOtherLabelsCitationDetailView(BaseSubItemCitationDetailView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.other_labels.language(language).get(id=child_pk)
+            child = parent.other_labels.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
@@ -196,7 +196,7 @@ class PostOtherLabelFieldCitationView(BaseSubItemFieldCitationView):
 
     def get_child(self, parent, child_pk, language):
         try:
-            child = self.parent.other_labels.language(language).get(id=child_pk)
+            child = parent.other_labels.language(language).get(id=child_pk)
             return child
         except self.entity.DoesNotExist:
             raise Http404
