@@ -119,8 +119,8 @@ class PostModelTestCase(TestCase):
         post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
         post.add_citation("label", "http://google.com", "Just a note")
 
-        link = post.links.language("en").get(field="label")
-        self.assertEqual(link.note, "Just a note")
+        link = post.links.language("en").filter(field="label")
+        self.assertEqual(link[0].note, "Just a note")
 
     def test_create_post_invalid_date(self):
         with self.assertRaises(ValidationError):
