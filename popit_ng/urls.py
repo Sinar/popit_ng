@@ -71,11 +71,11 @@ api_urls = [
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/links/(?P<pk>[-\w]+)/?$', PostLinkDetail.as_view(), name="posts-link-detail"),
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/links/?$', PostLinkList.as_view(), name="post-link-list"),
 
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>\w+)/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<parent>[-\w]+)/citations/(?P<field>\w+)/(?P<pk>\w+)/?$',
         PostCitationDetailView.as_view(), name="post-citation-detail-view"),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/citations/(?P<field>\w+)/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/?$',
         PostCitationListCreateView.as_view(), name="post-citation-list-views"),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/citations/?$', PostFieldCitationView.as_view(),
+    url(r'^(?P<language>\w{2})/posts/(?P<pk>[-\w]+)/citations/?$', PostFieldCitationView.as_view(),
         name="post-citation-field-view"),
 
     url(r'^(?P<language>\w{2})/posts/(?P<pk>[-\w]+)/?$', PostDetail.as_view(), name="post-detail"),
