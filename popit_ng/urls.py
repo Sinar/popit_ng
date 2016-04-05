@@ -221,12 +221,12 @@ api_urls = [
         name="membership-field-citation-view"),
 
     url(
-        r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>[-\w]+)/?$',
+        r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>[-\w]+)/?$',
         MembershipContactDetailCitationDetailView.as_view(), name="membership-contact-detail-citation-detail"
     ),
-    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/?$',
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/?$',
         MembershipContactDetailCitationListView.as_view(), name="membership-contact-detaion-citation-list"),
-    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/citations/?$',
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/?$',
         MembershipContactDetailFieldCitationView.as_view(), name="membership-contact-detail-field-citation"),
 
     url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/?$',

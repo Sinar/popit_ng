@@ -77,4 +77,4 @@ class MembershipFieldCitationView(BaseFieldCitationView):
 
 
 class MembershipContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
-    entity = Membership
+    parent = Membership
