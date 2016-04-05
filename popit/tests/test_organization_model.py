@@ -159,8 +159,8 @@ class OrganizationTestCase(TestCase):
 
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
-        link = contact.links.language("en").get(field="value")
-        self.assertEqual(link.url, "http://google.com")
+        link = contact.links.language("en").filter(field="value")
+        self.assertEqual(link[0].url, "http://google.com")
 
     def test_create_organization_area_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
