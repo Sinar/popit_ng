@@ -213,11 +213,11 @@ api_urls = [
     url(r'^(?P<language>\w{2})/areas/(?P<pk>[-\w]+)/?$', AreaDetail.as_view(), name="area-detail"),
     url(r'^(?P<language>\w{2})/areas/?$', AreaList.as_view(), name="area-list"),
 
-    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>[-\w]+)/?$',
+    url(r'^(?P<language>\w{2})/memberships/(?P<parent>[-\w]+)/citations/(?P<field>\w+)/(?P<pk>[-\w]+)/?$',
         MembershipCitationDetailView.as_view(), name="membership-citation-detail"),
-    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/citations/(?P<field>\w+)/?$',
+    url(r'^(?P<language>\w{2})/memberships/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/?$',
         MembershipCitationListCreateView.as_view(), name="membership-citation-list"),
-    url(r'^(?P<language>\w{2})/memberships/(?P<parent_pk>[-\w]+)/citations/?$', MembershipFieldCitationView.as_view(),
+    url(r'^(?P<language>\w{2})/memberships/(?P<pk>[-\w]+)/citations/?$', MembershipFieldCitationView.as_view(),
         name="membership-field-citation-view"),
 
     url(
