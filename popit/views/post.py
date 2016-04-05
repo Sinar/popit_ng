@@ -187,7 +187,7 @@ class PostFieldCitationView(BaseFieldCitationView):
 
 
 class PostContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
-    entity = Post
+    parent = Post
 
 
 class PostOtherLabelFieldCitationView(BaseSubItemFieldCitationView):

@@ -37,11 +37,11 @@ api_urls = [
     url(r'^api-token-auth/?$', token_view.obtain_auth_token),
     url(r'^(?P<language>\w{2})/search/(?P<index_name>\w+)/?$', GenericSearchView.as_view(), name="search"),
 
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>\w+)/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>\w+)/?$',
         PostContactDetailCitationDetailView.as_view(), name="post-contact-detail-citation-detail-view"),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/citations/(?P<field>\w+)/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/?$',
         PostContactDetailCitationListView.as_view(), name="post-contact-detail-citation-list-views"),
-    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/citations/?$',
+    url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/?$',
         PostContactDetailFieldCitationView.as_view(), name="post-contact-detail-field-citation-views"),
 
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<pk>[-\w]+)/links/(?P<link_pk>[-\w]+)/?$',
