@@ -131,8 +131,8 @@ class OrganizationTestCase(TestCase):
         organization.add_citation("name", "http://pirateparty.com", "just a link")
 
         organization_ = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        links=organization_.links.get(field="name")
-        self.assertEqual(links.url, "http://pirateparty.com")
+        links=organization_.links.filter(field="name")
+        self.assertEqual(links[0].url, "http://pirateparty.com")
 
     def test_create_organization_other_name_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
@@ -140,8 +140,8 @@ class OrganizationTestCase(TestCase):
         other_name.add_citation("family_name", "http://sinarproject.org", "just another note")
         organization_ = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         other_name = organization_.other_names.language("en").get(id="53a22b00-1383-4bf5-b4be-4753d8d16062")
-        link = other_name.links.language("en").get(field="family_name")
-        self.assertEqual(link.url, "http://sinarproject.org")
+        link = other_name.links.language("en").filter(field="family_name")
+        self.assertEqual(link[0].url, "http://sinarproject.org")
 
     def test_create_organization_identifier_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
@@ -149,8 +149,8 @@ class OrganizationTestCase(TestCase):
         identifier.add_citation("scheme", "http://sinarproject.org", "random source")
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         identifier = organization.identifiers.language("en").get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
-        link = identifier.links.language("en").get(field="scheme")
-        self.assertEqual(link.url, "http://sinarproject.org")
+        link = identifier.links.language("en").filter(field="scheme")
+        self.assertEqual(link[0].url, "http://sinarproject.org")
 
     def test_create_organization_contact_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
@@ -159,8 +159,8 @@ class OrganizationTestCase(TestCase):
 
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         contact = organization.contact_details.language("en").get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
-        link = contact.links.language("en").get(field="value")
-        self.assertEqual(link.url, "http://google.com")
+        link = contact.links.language("en").filter(field="value")
+        self.assertEqual(link[0].url, "http://google.com")
 
     def test_create_organization_area_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")

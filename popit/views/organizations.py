@@ -22,6 +22,18 @@ from popit.views.misc import GenericLinkDetail
 from popit.views.misc import GenericLinkList
 from popit.views.base import BasePopitDetailUpdateView
 from popit.views.base import BasePopitListCreateView
+from popit.views.citation import BaseCitationDetailView
+from popit.views.citation import BaseCitationListCreateView
+from popit.views.citation import GenericContactDetailCitationListView
+from popit.views.citation import GenericContactDetailCitationDetailView
+from popit.views.citation import GenericOthernameCitationListView
+from popit.views.citation import GenericOthernameCitationDetailView
+from popit.views.citation import GenericIdentifierCitationListView
+from popit.views.citation import GenericIdentifierCitationDetailView
+from popit.views.citation import BaseFieldCitationView
+from popit.views.citation import GenericContactDetailFieldCitationView
+from popit.views.citation import GenericIdentifierFieldCitationView
+from popit.views.citation import GenericOtherNameFieldCitationView
 
 
 class OrganizationList(BasePopitListCreateView):
@@ -91,4 +103,53 @@ class OrganizationLinkList(GenericLinkList):
 
 
 class OrganizationLinkDetail(GenericLinkDetail):
+    parent = Organization
+
+
+
+class OrganizationCitationListCreateView(BaseCitationListCreateView):
+    entity = Organization
+
+
+class OrganizationCitationDetailView(BaseCitationDetailView):
+    entity = Organization
+
+
+class OrganizationContactDetailCitationListView(GenericContactDetailCitationListView):
+    parent = Organization
+
+
+class OrganizationContactDetailCitationDetailView(GenericContactDetailCitationDetailView):
+    parent = Organization
+
+
+class OrganizationIdentifierCitationListView(GenericIdentifierCitationListView):
+    parent = Organization
+
+
+class OrganizationIdentifierCitationDetailView(GenericIdentifierCitationDetailView):
+    parent = Organization
+
+
+class OrganizationOthernameCitationListView(GenericOthernameCitationListView):
+    parent = Organization
+
+
+class OrganizationOthernameCitationDetailView(GenericOthernameCitationDetailView):
+    parent = Organization
+
+
+class OrganizationFieldCitationView(BaseFieldCitationView):
+    entity = Organization
+
+
+class OrganizationContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
+    parent = Organization
+
+
+class OrganizationIdentifierFieldCitationView(GenericIdentifierFieldCitationView):
+    parent = Organization
+
+
+class OrganizationOtherNameFieldCitationView(GenericOtherNameFieldCitationView):
     parent = Organization

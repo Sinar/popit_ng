@@ -22,6 +22,20 @@ from popit.views.misc import GenericLinkDetail
 from popit.views.misc import GenericLinkList
 from popit.views.base import BasePopitListCreateView
 from popit.views.base import BasePopitDetailUpdateView
+from popit.views.citation import BaseCitationDetailView
+from popit.views.citation import BaseCitationListCreateView
+from popit.views.citation import BaseSubItemCitationListView
+from popit.views.citation import BaseSubItemCitationDetailView
+from popit.views.citation import GenericOthernameCitationListView
+from popit.views.citation import GenericOthernameCitationDetailView
+from popit.views.citation import GenericIdentifierCitationListView
+from popit.views.citation import GenericIdentifierCitationDetailView
+from popit.views.citation import GenericContactDetailCitationListView
+from popit.views.citation import GenericContactDetailCitationDetailView
+from popit.views.citation import BaseFieldCitationView
+from popit.views.citation import GenericOtherNameFieldCitationView
+from popit.views.citation import GenericIdentifierFieldCitationView
+from popit.views.citation import GenericContactDetailFieldCitationView
 
 
 # Create your views here.
@@ -88,4 +102,52 @@ class PersonOtherNameLinkList(GenericOtherNameLinkList):
 
 
 class PersonOtherNameLinkDetail(GenericOtherNameLinkDetail):
+    parent = Person
+
+
+class PersonCitationListCreateView(BaseCitationListCreateView):
+    entity = Person
+
+
+class PersonCitationDetailView(BaseCitationDetailView):
+    entity = Person
+
+
+class PersonOthernameCitationListView(GenericOthernameCitationListView):
+    parent = Person
+
+
+class PersonOthernameCitationDetailView(GenericOthernameCitationDetailView):
+    parent = Person
+
+
+class PersonContactDetailCitationListView(GenericContactDetailCitationListView):
+    parent = Person
+
+
+class PersonContactDetailCitationDetailView(GenericContactDetailCitationDetailView):
+    parent = Person
+
+
+class PersonIdentifierCitationListView(GenericIdentifierCitationListView):
+    parent = Person
+
+
+class PersonIdentifierCitationDetailView(GenericIdentifierCitationDetailView):
+    parent = Person
+
+
+class PersonFieldCitationView(BaseFieldCitationView):
+    entity = Person
+
+
+class PersonOtherNameFieldCitationView(GenericOtherNameFieldCitationView):
+    parent = Person
+
+
+class PersonIdentifierFieldCitationView(GenericIdentifierFieldCitationView):
+    parent = Person
+
+
+class PersonContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
     parent = Person
