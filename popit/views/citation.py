@@ -33,13 +33,11 @@ class BaseCitationListCreateView(BasePopitView):
     def post(self, request, language, pk, field):
         instance = self.entity.objects.language(language).get(id=pk)
 
-        # Just add if not there, it is implied that field is based on url. Override if added
         data = request.data
-        data["field"] = field
 
         serializer = self.serializer(data=data, language=language)
         if serializer.is_valid():
-            serializer.save(content_object=instance)
+            serializer.save(content_object=instance, field=field)
             output = {
                 "result": serializer.data
             }
@@ -122,7 +120,7 @@ class BaseSubItemCitationListView(BasePopitView):
         child = self.get_child(parent, child_pk, language)
         serializer = self.serializer(data=request.data, language=language)
         if serializer.is_valid():
-            serializer.save(content_object=child)
+            serializer.save(content_object=child, field=field)
             data = { "result": serializer.data }
             return Response(data, status=status.HTTP_201_CREATED)
 
