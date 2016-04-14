@@ -72,6 +72,11 @@ class MembershipCitationAPITestCase(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+        membership = Membership.objects.language("en").get(id="b351cdc2-6961-4fc7-9d61-08fca66e1d44")
+
+        citations = membership.links.filter(field="label")
+        self.assertEqual(citations.count(), 2)
+
     def test_update_membership_citation_unauthorized(self):
         data = {
             "url": "http://www.sinarproject.org"
@@ -176,6 +181,10 @@ class MembershipContactDetailCitationAPITestCase(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        membership = Membership.objects.language("en").get(id="b351cdc2-6961-4fc7-9d61-08fca66e1d44")
+        contact_details = membership.contact_details.get(id="78a35135-52e3-4af9-8c32-ea3f557354fd")
+        citations = contact_details.links.filter(field="label")
+        self.assertEqual(citations.count(), 2)
 
     def test_update_membership_contactdetail_citation_unauthorized(self):
         data = {

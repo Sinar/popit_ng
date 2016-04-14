@@ -71,6 +71,9 @@ class PostCitationAPITestCase(APITestCase):
             data=data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        citations = post.links.filter(field="label")
+        self.assertEqual(citations.count(), 2)
 
     def test_update_post_citation_unauthorized(self):
         data = {
@@ -171,6 +174,10 @@ class PostOtherLabelsCitationAPITestCase(APITestCase):
             data=data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        otherlabels = post.other_labels.get(id="aee39ddd-6785-4a36-9781-8e745c6359b7")
+        citations = otherlabels.links.filter(field="name")
+        self.assertEqual(citations.count(),2)
 
     def test_update_post_otherlabels_citation_unauthorized(self):
         data = {
@@ -280,6 +287,10 @@ class PostContactDetailCitationAPITestCase(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        contact_detail = post.contact_details.get(id="7f3f67c4-6afd-4de9-880e-943560cf56c0")
+        citations = contact_detail.links.filter(field="label")
+        self.assertEqual(citations.count(), 2)
 
     def test_update_post_contactdetailks_citation_unauthorized(self):
         data = {

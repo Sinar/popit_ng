@@ -68,6 +68,9 @@ class OrganizationCitationAPITestCase(APITestCase):
             data=data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        organization = Organization.objects.language("en").get(id="612943b1-864d-4188-8d79-ca387ed19b32")
+        citation = organization.links.filter(field="name")
+        self.assertEqual(citation.count(), 2)
 
     def test_update_organization_citation_unauthorized(self):
         data = {
@@ -174,6 +177,11 @@ class OrganizationOtherNameCitationAPITestCase(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        othernames = organization.other_names.get(id="53a22b00-1383-4bf5-b4be-4753d8d16062")
+        citations = othernames.links.filter(field="name")
+        self.assertEqual(citations.count(), 3)
+
     def test_update_organization_othername_citation_unauthorized(self):
         data = {
             "url": "http://www.sinarproject.org"
@@ -277,6 +285,11 @@ class OrganizationIdentifierCitationAPITestCase(APITestCase):
             data=data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        identifiers = organization.identifiers.get(id="2d3b8d2c-77b8-42f5-ac62-3e83d4408bda")
+        citations = identifiers.links.filter(field="identifier")
+        self.assertEqual(citations.count(), 3)
 
     def test_update_organization_identifier_citation_unauthorized(self):
         data = {
@@ -385,6 +398,12 @@ class OrganizationContactDetailCitationAPITestCase(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        contact_details = organization.contact_details.get(id="651da7cd-f109-4aaa-b04c-df835fb6831f")
+        citations =  contact_details.links.filter(field="label")
+        self.assertEqual(citations.count(), 2)
+
 
     def test_update_organization_contactdetails_citation_unauthorized(self):
         data = {

@@ -78,6 +78,10 @@ class PersonCitationAPITestCase(APITestCase):
         response = self.client.post("/en/persons/ab1a5788e5bae955c048748fa6af0e97/citations/name/", data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+        person = Person.objects.language("en").get(id="ab1a5788e5bae955c048748fa6af0e97")
+        citations = person.links.filter(field="name")
+        self.assertEqual(citations.count(), 2)
+
     def test_update_person_citation_unauthorized(self):
         data = {
             "url": "http://www.sinarproject.org"
@@ -162,6 +166,11 @@ class TestPersonContactDetailCitationAPI(APITestCase):
             "/en/persons/ab1a5788e5bae955c048748fa6af0e97/contact_details/a66cb422-eec3-4861-bae1-a64ae5dbde61/citations/label/",
             data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        person = Person.objects.language("en").get(id="ab1a5788e5bae955c048748fa6af0e97")
+        contact_details = person.contact_details.get(id="a66cb422-eec3-4861-bae1-a64ae5dbde61")
+        citations = contact_details.links.filter(field="label")
+        self.assertEqual(citations.count(), 3)
 
     def test_update_person_contact_details_citation_unauthorized(self):
         data = {
@@ -259,6 +268,12 @@ class PersonOtherNameCitationsAPI(APITestCase):
             "/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/othernames/cf93e73f-91b6-4fad-bf76-0782c80297a8/citations/name/",
             data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        person = Person.objects.language("en").get(id="8497ba86-7485-42d2-9596-2ab14520f1f4")
+        othername = person.other_names.get(id="cf93e73f-91b6-4fad-bf76-0782c80297a8")
+        citations = othername.links.filter(field="name")
+        # TODO: This is horrible, find better way to check the amount
+        self.assertEqual(citations.count(), 4)
 
     def test_update_person_othername_citation_unauthorized(self):
         data = {
@@ -365,6 +380,10 @@ class PersonIdentifierAPITestCase(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        person = Person.objects.language("en").get(id="8497ba86-7485-42d2-9596-2ab14520f1f4")
+        identifier = person.identifiers.get(id="34b59cb9-607a-43c7-9d13-dfe258790ebf")
+        citations = identifier.links.filter(field="identifier")
+        self.assertEqual(citations.count(), 2)
 
     def test_update_person_identifier_citation_unauthorized(self):
         data = {
