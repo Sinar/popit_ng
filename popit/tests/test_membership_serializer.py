@@ -65,6 +65,8 @@ class MembershipSerializerTestCase(TestCase):
         membership = Membership.objects.language("en").get(label="test membership")
         self.assertEqual(membership.person_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")
 
+        self.assertEqual(membership.organization_id, "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+
     def test_create_membership_without_post_and_organization(self):
         data = {
             "label": "test membership",
