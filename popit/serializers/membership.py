@@ -125,6 +125,11 @@ class MembershipSerializer(TranslatableModelSerializer):
             post = Post.objects.untranslated().get(id=post_id)
             validated_data["post"] = post
 
+            # Do not override organization assigned by user
+            if not organization_id:
+                if post.organization:
+                    validated_data["organization"] = post.organization
+
         if not validated_data.get("start_date"):
             validated_data["start_date"] = None
 
@@ -206,6 +211,13 @@ class MembershipSerializer(TranslatableModelSerializer):
             instance.post = post
 
         instance.save()
+
+        if instance.post:
+            if not instance.organization:
+                # The spec make this optional, but in sinar we link all post to org
+                if instance.post.organization:
+                    instance.organization = instance.post.organization
+                    instance.save()
 
         for contact_detail in contact_details:
 
