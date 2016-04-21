@@ -104,3 +104,30 @@ class SearchUtilTestCase(TestCase):
 
         popit_search.delete(person)
         instance.delete.assert_called_with(index=popit_search.index, doc_type=popit_search.doc_type, id="random_key")
+
+    @patch("elasticsearch.Elasticsearch")
+    def test_sanitize_data(self, mock_es):
+        data = {
+            "name": "rocky",
+            "birth_date": "1999",
+            "contact_details": [
+                {
+                    "type":"email",
+                    "value":"test@sinarproject.org",
+                    "valid_from": "1999",
+                    "valid_until": "2000"
+                }
+            ],
+            "other_names": [
+                {
+                    "name": "the winner",
+                    "start_date": "2000"
+                }
+
+            ]
+        }
+        popit_search = search.SerializerSearch("persons", index="test_popit")
+        output = popit_search.sanitize_data(data)
+        self.assertEqual(output["birth_date"], "1999-01-01T000000")
+        self.assertEqual(output["contact_details"][0]["valid_from"], "1999-01-01T000000")
+        self.assertEqual(output["other_names"][0]["start_date"], "2000-01-01T000000")
