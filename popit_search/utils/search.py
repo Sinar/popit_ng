@@ -142,12 +142,6 @@ class SerializerSearch(object):
                 if data[key]:
                     new_date = parse(data[key], default=default_date)
                     output[key] = new_date.strftime("%Y-%m-%dT%H%M%S")
-                elif sub_key == "valid_from" or sub_key == "valid_until":
-                    if item[sub_key]:
-                        new_date = parse(item[sub_key], default=default_date)
-                        temp_output[sub_key] = new_date.strftime("%Y-%m-%dT%H%M%S")
-                    else:
-                        temp_output[sub_key] = item[sub_key]
                 else:
                     output[key] = data[key]
             elif type(data[key]) is list:
