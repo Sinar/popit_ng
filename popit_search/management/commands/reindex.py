@@ -66,10 +66,11 @@ class Command(BaseCommand):
         if entity:
             if entity_id:
                 for instance in entity_instances:
+
                     try:
                         logging.info("Add instance of %s with %s and language %s" % (entity, entity_id, instance.language_code))
                         entity_search.add(instance, SERIALIZER_DOC_MAP[entity])
-                        time.sleep(1)
+                        #time.sleep(1)
                     except SerializerSearchInstanceExist:
                         logging.warn("Oops instance exist in db")
                         continue

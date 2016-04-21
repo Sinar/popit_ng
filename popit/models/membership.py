@@ -91,7 +91,8 @@ class Membership(TranslatableModel):
         # Actually what could go wrong if we switch to bm
         if not self.label:
             if self.post:
-                return "%s of %s" % (self.person.name, self.post.role)
+                return "%s of %s" % (self.person.safe_translation_getter("name", self.person.id), self.post.safe_translation_getter("role", self.post.id))
             elif self.organization:
-                return "%s member of %s" % (self.person.name, self.organization.name)
-        return self.safe_translation_getter('label', self.label)
+                return "%s member of %s" % (self.person.safe_translation_getter("name", self.person.id),
+                                            self.organization.safe_translation_getter("name", self.organization.id))
+        return self.safe_translation_getter('label', self.id)

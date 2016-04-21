@@ -78,5 +78,5 @@ class Organization(TranslatableModel):
     def __unicode__(self):
         # Why is it that they do not find name, but need self.name
         # Actually what could go wrong if we switch to bm
-        return self.safe_translation_getter('name', self.name)
+        return self.safe_translation_getter('name', self.id)
 

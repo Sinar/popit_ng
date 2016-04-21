@@ -152,7 +152,7 @@ CORS_ORIGIN_WHITELIST = ()
 CORS_ORIGIN_REGEX_WHITELIST = (
     '^(https?://)?(\w+\.)?sinarproject\.org$', )
 
-INDEX_PREPARATION_TIME = 5
+INDEX_PREPARATION_TIME = 0.5
 LOG_PATH = os.path.join(BASE_DIR, "log")
 
 if not os.path.exists(LOG_PATH):

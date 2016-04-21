@@ -47,6 +47,7 @@ class MembershipOrganizationSerializer(TranslatableModelSerializer):
     class Meta:
         model = Organization
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        exclude = ["parent", "area"]
 
 
 class MembershipPostSerializer(TranslatableModelSerializer):
