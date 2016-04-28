@@ -13,6 +13,9 @@ from popit.serializers import MembershipSerializer
 from popit.serializers import PostSerializer
 from popit_search.utils import search
 from celery import shared_task
+from popit_search.consts import ES_MODEL_MAP
+from popit_search.consts import ES_SERIALIZER_MAP
+from popit_search.utils import dependency
 
 
 # Assume that the entity have enough information in es. if not it is a bug
@@ -203,6 +206,52 @@ def index_contactdetail(instance_id):
                 update_entity_index("posts", parent.post, PostSerializer)
             if parent.organization:
                 update_entity_index("organizations", parent.organization, OrganizationSerializer)
+
+
+# I don't trust that the serialization to work on celery
+@shared_task
+def prepare_delete(entity, entity_id):
+    instances = ES_MODEL_MAP[entity].objects.language("all").filter(id=entity_id)
+    # Do not assume that instance still exist
+    if instances:
+        dep_store = dependency.DependencyStore()
+        dep_store.build_dependency(instances[0], "delete")
+
+
+# Assuming instance from post_delete have enough information
+@shared_task
+def perform_delete(entity, entity_id):
+    dep_store = dependency.DependencyStore()
+    graph = dep_store.fetch_graph(entity, entity_id)
+    for node in graph:
+        update_node(node)
+
+
+# The reason why we have 2 phase update for delete is because we need to maintain relationship
+# update, we don't have to because entity still exist
+@shared_task
+def perform_update(entity, entity_id):
+    instances = ES_MODEL_MAP[entity].objects.language("all").filter(id=entity_id)
+    graph = dependency.build_graph(instances[0], "update")
+    for node in graph:
+        update_node(node)
+
+
+def update_node(node):
+    entity, entity_id, action = node
+    es = search.SerializerSearch(entity)
+    instances = ES_MODEL_MAP[entity].objects.language("all").filter(id=entity_id)
+    if not instances:
+        es.delete_by_id(entity_id)
+        return
+
+    if action == "delete":
+        es.delete_by_id(entity_id)
+    elif action == "update":
+
+        serializer = ES_SERIALIZER_MAP[entity]
+        for instance in instances:
+            es.update(instance, serializer)
 
 
 def update_entity_index(name, instance, serializer):

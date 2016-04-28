@@ -15,24 +15,62 @@ class PostModelTestCase(TestCase):
     fixtures = [ "api_request_test_data.yaml" ]
 
     def setUp(self):
-        post_save.disconnect(person_save_handler, Person)
-        post_save.disconnect(organization_save_handler, Organization)
-        post_save.disconnect(membership_save_handler, Membership)
-        post_save.disconnect(post_save_handler, Post)
-        post_save.disconnect(othername_save_handler, OtherName)
-        post_save.disconnect(identifier_save_handler, Identifier)
-        post_save.disconnect(contactdetail_save_handler, ContactDetail)
-        post_save.disconnect(link_save_handler, Link)
+        post_save.disconnect(entity_save_handler, sender=Person)
+        post_save.disconnect(entity_save_handler, sender=Organization)
+        post_save.disconnect(entity_save_handler, sender=Membership)
+        post_save.disconnect(entity_save_handler, sender=Post)
+        post_save.disconnect(entity_save_handler, sender=Membership)
+        post_save.disconnect(entity_save_handler, sender=ContactDetail)
+        post_save.disconnect(entity_save_handler, sender=Identifier)
+        post_save.disconnect(entity_save_handler, sender=OtherName)
+        post_save.disconnect(entity_save_handler, sender=Link)
+
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=Person)
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=Organization)
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=Membership)
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=Post)
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=ContactDetail)
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=Identifier)
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=OtherName)
+        pre_delete.disconnect(entity_prepare_delete_handler, sender=Link)
+
+        post_delete.disconnect(entity_perform_delete_handler, sender=Person)
+        post_delete.disconnect(entity_perform_delete_handler, sender=Organization)
+        post_delete.disconnect(entity_perform_delete_handler, sender=Membership)
+        post_delete.disconnect(entity_perform_delete_handler, sender=Post)
+        post_delete.disconnect(entity_perform_delete_handler, sender=ContactDetail)
+        post_delete.disconnect(entity_perform_delete_handler, sender=Identifier)
+        post_delete.disconnect(entity_perform_delete_handler, sender=OtherName)
+        post_delete.disconnect(entity_perform_delete_handler, sender=Link)
 
     def tearDown(self):
-        post_save.connect(person_save_handler, Person)
-        post_save.connect(organization_save_handler, Organization)
-        post_save.connect(membership_save_handler, Membership)
-        post_save.connect(post_save_handler, Post)
-        post_save.connect(othername_save_handler, OtherName)
-        post_save.connect(identifier_save_handler, Identifier)
-        post_save.connect(contactdetail_save_handler, ContactDetail)
-        post_save.connect(link_save_handler, Link)
+        post_save.connect(entity_save_handler, sender=Person)
+        post_save.connect(entity_save_handler, sender=Organization)
+        post_save.connect(entity_save_handler, sender=Membership)
+        post_save.connect(entity_save_handler, sender=Post)
+        post_save.connect(entity_save_handler, sender=Membership)
+        post_save.connect(entity_save_handler, sender=ContactDetail)
+        post_save.connect(entity_save_handler, sender=Identifier)
+        post_save.connect(entity_save_handler, sender=OtherName)
+        post_save.connect(entity_save_handler, sender=Link)
+
+        pre_delete.connect(entity_prepare_delete_handler, sender=Person)
+        pre_delete.connect(entity_prepare_delete_handler, sender=Organization)
+        pre_delete.connect(entity_prepare_delete_handler, sender=Membership)
+        pre_delete.connect(entity_prepare_delete_handler, sender=Post)
+        pre_delete.connect(entity_prepare_delete_handler, sender=ContactDetail)
+        pre_delete.connect(entity_prepare_delete_handler, sender=Identifier)
+        pre_delete.connect(entity_prepare_delete_handler, sender=OtherName)
+        pre_delete.connect(entity_prepare_delete_handler, sender=Link)
+
+        post_delete.connect(entity_perform_delete_handler, sender=Person)
+        post_delete.connect(entity_perform_delete_handler, sender=Organization)
+        post_delete.connect(entity_perform_delete_handler, sender=Membership)
+        post_delete.connect(entity_perform_delete_handler, sender=Post)
+        post_delete.connect(entity_perform_delete_handler, sender=ContactDetail)
+        post_delete.connect(entity_perform_delete_handler, sender=Identifier)
+        post_delete.connect(entity_perform_delete_handler, sender=OtherName)
+        post_delete.connect(entity_perform_delete_handler, sender=Link)
 
     def test_create_post_minimum_field(self):
         post = Post.objects.language("en").create(
@@ -117,10 +155,10 @@ class PostModelTestCase(TestCase):
 
     def test_create_post_citation(self):
         post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
-        post.add_citation("label", "http://google.com", "Just a note")
+        post.add_citation("label", "http://google.com", "Just a note for test_case")
 
-        link = post.links.language("en").filter(field="label")
-        self.assertEqual(link[0].note, "Just a note")
+        link = post.links.language("en").filter(field="label", note="Just a note for test_case")
+        self.assertEqual(link[0].url, "http://google.com")
 
     def test_create_post_invalid_date(self):
         with self.assertRaises(ValidationError):

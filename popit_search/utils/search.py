@@ -144,9 +144,15 @@ class SerializerSearch(object):
                     output[key] = new_date.strftime("%Y-%m-%dT%H%M%S")
                 else:
                     output[key] = data[key]
+
+            elif key == "valid_from" or key == "valid_until":
+                new_date = parse(data[key], default=default_date)
+                output[key] = new_date.strftime("%Y-%m-%dT%H%M%S")
+
             elif type(data[key]) is list:
                 temp = []
                 for item in data[key]:
+
                     temp_output = {}
                     for sub_key in item:
                         if re.match("\w+_date", sub_key):
@@ -186,62 +192,53 @@ class SerializerSearchInstanceExist(Exception):
 def popit_indexer(entity=""):
     count = 0
     if not entity or entity == "persons":
-        print(entity)
         person_indexer = SerializerSearch("persons")
         persons = Person.objects.language("all").all()
         for person in persons:
             try:
                 logging.warn("Indexing %s with %s for language %s" % (person.name, person.id, person.language_code))
                 count = count + 1
-                print(person)
                 status=person_indexer.add(person, PersonSerializer)
                 logging.warn(status)
             except SerializerSearchInstanceExist:
                 logging.warn("Instance %s with %s for language %s exist" % (person.name, person.id, person.language_code))
 
     if not entity or entity == "organizations":
-        print(entity)
         org_indexer = SerializerSearch("organizations")
         organizations = Organization.objects.language("all").all()
         for organization in organizations:
             try:
                 logging.warn("Indexing %s with %s for language %s" % (organization.name, organization.id, organization.language_code))
                 count = count + 1
-                print(organization)
                 status=org_indexer.add(organization, OrganizationSerializer)
                 logging.warn(status)
             except SerializerSearchInstanceExist:
                 logging.warn("Instance %s with %s for language %s exist" % (organization.name, organization.id, organization.language_code))
 
     if not entity or entity == "posts":
-        print(entity)
         post_indexer = SerializerSearch("posts")
         posts = Post.objects.language("all").all()
         for post in posts:
             try:
                 logging.warn("Indexing %s with %s for language %s" % (post.label, post.id, post.language_code))
                 count = count + 1
-                print(post)
                 status=post_indexer.add(post, PostSerializer)
                 logging.warn(status)
             except SerializerSearchInstanceExist:
                 logging.warn("Instance %s with %s for language %s exist" % (post.label, post.id, post.language_code))
 
     if not entity or entity == "memberships":
-        print(entity)
         mem_indexer = SerializerSearch("memberships")
         memberships = Membership.objects.language("all").all()
         for membership in memberships:
             try:
                 logging.warn("Indexing id %s for language %s" % (membership.id, membership.language_code))
                 count = count + 1
-                print(membership)
                 status=mem_indexer.add(membership, MembershipSerializer)
                 logging.warn(status)
             except SerializerSearchInstanceExist:
                 logging.warn("Instance with %s for language %s exist" % (membership.id, membership.language_code))
 
-    print(count)
 
 def remove_popit_index():
     person_indexer = SerializerSearch("persons")

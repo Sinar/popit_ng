@@ -1506,7 +1506,7 @@
   fields:
     type: phone
     value: '0123423424342'
-    valid_from: '2015-10-06 00:00:00.00000+00:00'
+    valid_from: '2015-10-06T00:00:00.00000+00:00'
     valid_until: '2020-10-06'
     object_id: 8497ba86-7485-42d2-9596-2ab14520f1f4
     content_type: [popit, person]

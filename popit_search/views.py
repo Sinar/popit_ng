@@ -40,6 +40,7 @@ ES_SERIALIZER_MAP = {
 }
 
 
+# TODO: We need to fix and deprecate this shit
 class ResultFilters(object):
     def filter_result(self, result, index_name, language):
         entity = ES_MODEL_MAP.get(index_name)
@@ -103,16 +104,20 @@ class ResultFilters(object):
                 check = entry[key]
 
         # Because last key in the dict. Loop will end, so check for value
-        if value.lower() not in check.lower():
+        if value.lower() not in check:
             return True
         return False
 
-
     def parse_query(self, query):
 
-        key, value = query.split(":")
-        keys = key.split(".")
-        return keys, value
+        q = query.split(":")
+        if len(q) > 1:
+
+            key, value = q
+            keys = key.split(".")
+            return keys, value
+        else:
+            return [], q[0]
 
 
 # Create your views here.
@@ -128,15 +133,7 @@ class GenericSearchView(BasePopitView, ResultFilters):
             raise ParseError("q parameter is required, data format can be found at https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
 
         result = search.search(query=q, language=language)
-        output = []
-        logging.warn(result)
-        temp = self.filter_result(result, index_name, language)
-        for entry in temp:
-            data = self.filter_nested(entry, language)
-            if not self.drop_result(data, q):
-                output.append(data)
-
-        page = self.paginator.paginate_queryset(output, request, view=self)
+        page = self.paginator.paginate_queryset(result, request, view=self)
         return self.paginator.get_paginated_response(page)
 
 
