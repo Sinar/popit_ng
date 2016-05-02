@@ -137,6 +137,18 @@ class GenericSearchView(BasePopitView, ResultFilters):
         return self.paginator.get_paginated_response(page)
 
 
+class GenericRawSearchView(BasePopitView):
+    index = None
+
+    def get(self, request, index_name, **kwargs):
+        search = SerializerSearch(index_name)
+        q = request.GET.get("q")
+        if not q:
+            raise ParseError(
+                "q parameter is required, data format can be found at https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
+        result = search.raw_query(q)
+        return Response(result)
+
 class EntityNotIndexedException(Exception):
     pass
 
