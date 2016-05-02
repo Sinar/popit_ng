@@ -140,8 +140,8 @@ class GenericSearchView(BasePopitView, ResultFilters):
 class GenericRawSearchView(BasePopitView):
     index = None
 
-    def get(self, request, index_name, **kwargs):
-        search = SerializerSearch(index_name)
+    def get(self, request, **kwargs):
+        search = SerializerSearch(None)
         q = request.GET.get("q")
         if not q:
             raise ParseError(

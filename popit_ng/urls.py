@@ -36,7 +36,7 @@ if "rosetta" in settings.INSTALLED_APPS:
 
 api_urls = [
     url(r'^api-token-auth/?$', token_view.obtain_auth_token),
-    url(r'^rawsearch/(?P<index_name>\w+)/?$', GenericRawSearchView.as_view(), name="rawsearch"),
+    url(r'^rawsearch/?$', GenericRawSearchView.as_view(), name="rawsearch"),
     url(r'^(?P<language>\w{2})/search/(?P<index_name>\w+)/?$', GenericSearchView.as_view(), name="search"),
 
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>\w+)/?$',

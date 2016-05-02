@@ -23,7 +23,7 @@ default_date = datetime.datetime(1957, 01, 01)
 # Big idea, since serializer already have json docs
 class SerializerSearch(object):
 
-    def __init__(self, doc_type, index=settings.ES_INDEX):
+    def __init__(self, doc_type=None, index=settings.ES_INDEX):
         self.es = elasticsearch.Elasticsearch(hosts=settings.ES_HOST)
         # The default parameter is for testing purposes.
         self.index = index
@@ -35,6 +35,8 @@ class SerializerSearch(object):
         logging.debug("Indexing %s and %s" % (str(instance), str(serializer)))
         assert isinstance(instance, models.Model)
         assert issubclass(serializer, Serializer)
+        if not self.doc_type:
+            raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for adding")
         query = "id:%s AND language_code:%s" % (instance.id, instance.language_code)
         logging.debug("Checking index")
         result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
@@ -59,6 +61,8 @@ class SerializerSearch(object):
         if "language_code" not in query and language:
             query += " AND language_code:%s" % language
         logging.warn(query)
+        if not self.doc_type:
+            raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for search")
         result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
         hits = result["hits"]["hits"]
         output = []
@@ -79,6 +83,8 @@ class SerializerSearch(object):
     def update(self, instance, serializer):
         assert isinstance(instance, models.Model)
         assert issubclass(serializer, Serializer)
+        if not self.doc_type:
+            raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for update")
         query = "id:%s AND language_code:%s" % (instance.id, instance.language_code)
         result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
         hits = result["hits"]["hits"]
@@ -97,6 +103,8 @@ class SerializerSearch(object):
     # delete all instance of same id. Because in ES it is stored as 2 documents
     def delete(self, instance):
         assert isinstance(instance, models.Model)
+        if not self.doc_type:
+            raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for delete")
         query = "id:%s" % instance.id
         result = self.es.search(self.index, q=query)
         hits = result["hits"]["hits"]
@@ -110,6 +118,8 @@ class SerializerSearch(object):
                 continue
 
     def delete_by_id(self, instance_id):
+        if not self.doc_type:
+            raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for delete")
         query = "id:%s" % instance_id
         result = self.es.search(self.index, q=query)
         hits = result["hits"]["hits"]
@@ -133,6 +143,8 @@ class SerializerSearch(object):
         self.es.indices.delete(index=self.index)
 
     def delete_document(self):
+        if not self.doc_type:
+            raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for delete")
         self.es.delete(index=self.index, doc_type=self.doc_type)
 
     def sanitize_data(self, data):
@@ -186,6 +198,10 @@ class SerializerSearchNotUniqueException(Exception):
 
 
 class SerializerSearchInstanceExist(Exception):
+    pass
+
+
+class SerializerSearchDocNotSetException(Exception):
     pass
 
 
