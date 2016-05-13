@@ -76,6 +76,7 @@ class OrganizationPostSerializer(TranslatableModelSerializer):
     id = CharField(max_length=255, required=False)
     other_labels = OtherNameSerializer(many=True, required=False)
     organization_id = CharField(max_length=255, required=False)
+    organization = OrganizationFlatSerializer(required=False)
     area_id = CharField(max_length=255, required=False)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
@@ -86,7 +87,7 @@ class OrganizationPostSerializer(TranslatableModelSerializer):
     class Meta:
         model = Post
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = [ "organization", "area"]
+        exclude = [ "area"]
 
 
 class OrganizationSerializer(TranslatableModelSerializer):
