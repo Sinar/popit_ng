@@ -3,6 +3,7 @@ from elasticsearch.exceptions import NotFoundError
 from django.conf import settings
 from django.db import models
 from rest_framework.serializers import Serializer
+from rest_framework.settings import api_settings
 import logging
 import time
 from popit.models import *
@@ -30,6 +31,8 @@ class SerializerSearch(object):
         self.doc_type = doc_type
         if not self.es.indices.exists(index=self.index):
             self.es.indices.create(index=self.index)
+        self.page_size = api_settings.PAGE_SIZE
+        self.result_count = 0
 
     def add(self, instance, serializer):
         logging.debug("Indexing %s and %s" % (str(instance), str(serializer)))
@@ -63,7 +66,7 @@ class SerializerSearch(object):
         logging.warn(query)
         if not self.doc_type:
             raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for search")
-        result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
+        result = self.es.search(index=self.index, doc_type=self.doc_type, q=query, size=api_settings.PAGE_SIZE)
         hits = result["hits"]["hits"]
         output = []
         for hit in hits:
@@ -187,6 +190,40 @@ class SerializerSearch(object):
             else:
                 output[key] = data[key]
         return output
+
+    # uurrggghh I hate it when elasticsearch do their own pagination.
+    def get_page(self, item_num):
+        # round it down, we start from zero anyway
+        # zero index is awesome
+        return item_num / self.page_size
+
+    def get_start(self, page):
+        # page_size 10 * 0 first page
+        # page_size 10 * 1 second page
+        # 0 indexed!
+        return page * self.page_size
+
+    def has_more(self, page):
+        count = page * self.page_size
+        if count >= self.result_count:
+            return False
+        return True
+
+    def get_next_page(self, page):
+        if page * self.page_size > self.result_count:
+            return None
+        return page + 1
+
+    def get_prev_page(self, page):
+        if page == 0:
+            return None
+        return page - 1
+
+    def response(self):
+
+        return {
+
+        }
 
 
 class SerializerSearchNotFoundException(Exception):
