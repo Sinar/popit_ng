@@ -13,6 +13,9 @@ from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
+from popit.serializers.flat import PersonFlatSerializer
+from popit.serializers.flat import OrganizationFlatSerializer
+from popit.serializers.flat import PostFlatSerializer
 import re
 from rest_framework.serializers import ValidationError
 from popit.serializers.misc import IdentifierSerializer
@@ -22,11 +25,14 @@ class PostMembershipSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     person_id = CharField(max_length=255, required=False)
+    person = PersonFlatSerializer(required=False)
     organization_id = CharField(max_length=255, required=False)
+    organization = OrganizationFlatSerializer(required=False)
     member_id = CharField(max_length=255, required=False)
     on_behalf_of_id = CharField(max_length=255, required=False)
     area_id = CharField(max_length=255, required=False, allow_null=True)
     post_id = CharField(max_length=255, required=False)
+    post = PostFlatSerializer(required=False)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
@@ -36,7 +42,7 @@ class PostMembershipSerializer(TranslatableModelSerializer):
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = ["person", "organization", "post", "area"]
+        exclude = ["area"]
 
 
 class PostParentOrganizationSerializer(TranslatableModelSerializer):
@@ -296,3 +302,5 @@ class PostSerializer(TranslatableModelSerializer):
     class Meta:
         model = Post
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+

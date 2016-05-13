@@ -7,6 +7,7 @@ from popit.models import OtherName
 from popit.models import Area
 from popit.models import Membership
 from popit.models import Post
+from popit.models import Person
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from rest_framework.serializers import ValidationError
@@ -15,6 +16,9 @@ from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
+from popit.serializers.flat import PersonFlatSerializer
+from popit.serializers.flat import PostFlatSerializer
+from popit.serializers.flat import OrganizationFlatSerializer
 import re
 
 
@@ -23,7 +27,6 @@ class ParentOrganizationSerializer(TranslatableModelSerializer):
     id = CharField(max_length=255, required=False)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
-    links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
 
@@ -32,15 +35,30 @@ class ParentOrganizationSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
+class OrganizationMembershipPersonSerializer(TranslatableModelSerializer):
+    id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
+    birth_date = CharField(allow_null=True, default=None, allow_blank=True)
+    death_date = CharField(allow_null=True, default=None, allow_blank=True)
+    contact_details = ContactDetailSerializer(many=True, required=False)
+
+    class Meta:
+        model = Person
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        exclude = [ "contact_details", ]
+
+
 class OrganizationMembershipSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     person_id = CharField(max_length=255, required=False)
+    person = PersonFlatSerializer(required=False)
     organization_id = CharField(max_length=255, required=False, allow_null=True)
+    organization = OrganizationFlatSerializer(required=False)
     member_id = CharField(max_length=255, required=False, allow_null=True)
     on_behalf_of_id = CharField(max_length=255, required=False, allow_null=True)
     area_id = CharField(max_length=255, required=False, allow_null=True)
     post_id = CharField(max_length=255, required=False, allow_null=True)
+    post = PostFlatSerializer(required=False)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
@@ -50,7 +68,7 @@ class OrganizationMembershipSerializer(TranslatableModelSerializer):
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = ["person", "organization", "post", "area"]
+        exclude = ["area"]
 
 
 class OrganizationPostSerializer(TranslatableModelSerializer):
@@ -76,7 +94,7 @@ class OrganizationSerializer(TranslatableModelSerializer):
     id = CharField(max_length=255, required=False,  allow_null=True, allow_blank=True)
     parent = ParentOrganizationSerializer(required=False)
     parent_id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
-    posts = OrganizationPostSerializer(many=True, required=False)
+    posts = PostFlatSerializer(many=True, required=False)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     memberships = OrganizationMembershipSerializer(many=True, required=False)

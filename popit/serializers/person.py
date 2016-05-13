@@ -12,6 +12,9 @@ from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
 from popit.serializers.misc import AreaSerializer
+from popit.serializers.flat import PersonFlatSerializer
+from popit.serializers.flat import OrganizationFlatSerializer
+from popit.serializers.flat import PostFlatSerializer
 from rest_framework.serializers import ValidationError
 import re
 
@@ -20,11 +23,14 @@ class PersonMembershipSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False)
     person_id = CharField(max_length=255, required=False)
+    person = PersonFlatSerializer(required=False)
     organization_id = CharField(max_length=255, required=False)
+    organization = OrganizationFlatSerializer(required=False)
     member_id = CharField(max_length=255, required=False)
     on_behalf_of_id = CharField(max_length=255, required=False)
     area_id = CharField(max_length=255, required=False, allow_null=True)
     post_id = CharField(max_length=255, required=False, allow_null=True)
+    post = PostFlatSerializer(required=False)
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
@@ -34,7 +40,7 @@ class PersonMembershipSerializer(TranslatableModelSerializer):
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = ["person", "organization", "post", "area"]
+        exclude = ["area"]
 
 
 class PersonSerializer(TranslatableModelSerializer):
@@ -225,5 +231,7 @@ class PersonSerializer(TranslatableModelSerializer):
     class Meta:
         model = Person
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
 
 
