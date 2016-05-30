@@ -13,6 +13,8 @@ import os
 import re
 import datetime
 from dateutil.parser import *
+from rest_framework.response import Response
+from collections import OrderedDict
 
 
 log_path = os.path.join(settings.BASE_DIR, "log/popit_search.log")
@@ -220,10 +222,22 @@ class SerializerSearch(object):
         return page - 1
 
     def response(self):
-
-        return {
-
-        }
+        """
+        OrderedDict([
+            ('page', int(self.page_number)),
+            ('total', self.page.paginator.count),
+            ('next', self.get_next_link()),
+            ('previous', self.get_previous_link()),
+            ('results', data),
+            ('per_page', self.page_size),
+            ('num_pages', self.page.paginator.num_pages),
+            ('has_more', has_more)
+        ])
+        :return:
+        """
+        return Response(OrderedDict([
+            ("page","")
+        ]))
 
 
 class SerializerSearchNotFoundException(Exception):
