@@ -251,7 +251,11 @@ def update_node(node):
 
         serializer = ES_SERIALIZER_MAP[entity]
         for instance in instances:
-            es.update(instance, serializer)
+            result = es.search("id:%s" % instance.id, language=instance.language_code)
+            if result:
+                es.update(instance, serializer)
+            else:
+                es.add(instance, serializer)
 
 
 def update_entity_index(name, instance, serializer):
