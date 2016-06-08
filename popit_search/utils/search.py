@@ -280,6 +280,7 @@ class SerializerSearch(object):
         :return:
         """
         num_page = self.get_page(self.result_count)
+        current_page = int(current_page)
         next_page = self.get_next_page(current_page)
         next_url = self.get_links(request, next_page)
         prev_page = self.get_prev_page(current_page)
