@@ -132,9 +132,8 @@ class GenericSearchView(BasePopitView, ResultFilters):
         if not q:
             raise ParseError("q parameter is required, data format can be found at https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
 
-        result = search.search(query=q, language=language)
-        page = self.paginator.paginate_queryset(result, request, view=self)
-        return self.paginator.get_paginated_response(page)
+        result = search.paginated_search(q, request, language)
+        return result
 
 
 class GenericRawSearchView(BasePopitView):
