@@ -15,6 +15,8 @@ import datetime
 from dateutil.parser import *
 from rest_framework.response import Response
 from collections import OrderedDict
+from urllib import urlencode
+from django.core.urlresolvers import reverse
 
 
 log_path = os.path.join(settings.BASE_DIR, "log/popit_search.log")
@@ -35,6 +37,7 @@ class SerializerSearch(object):
             self.es.indices.create(index=self.index)
         self.page_size = api_settings.PAGE_SIZE
         self.result_count = 0
+        self.start_from = 0
 
     def add(self, instance, serializer):
         logging.debug("Indexing %s and %s" % (str(instance), str(serializer)))
@@ -58,7 +61,7 @@ class SerializerSearch(object):
         time.sleep(settings.INDEX_PREPARATION_TIME)
         return result
 
-    def search(self, query, language=None):
+    def search(self, query, language=None, start_from=0):
         # Support only query string query for now.
         # e.g https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
 
@@ -68,7 +71,9 @@ class SerializerSearch(object):
         logging.warn(query)
         if not self.doc_type:
             raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for search")
-        result = self.es.search(index=self.index, doc_type=self.doc_type, q=query, size=api_settings.PAGE_SIZE)
+
+        result = self.es.search(index=self.index, doc_type=self.doc_type, q=query)
+
         hits = result["hits"]["hits"]
         output = []
         for hit in hits:
@@ -193,11 +198,41 @@ class SerializerSearch(object):
                 output[key] = data[key]
         return output
 
+    def paginated_search(self, query, request, language=None):
+        # Support only query string query for now.
+        # e.g https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html#query-string-syntax
+
+        # ewww but I am on a deadline
+        if "language_code" not in query and language:
+            query += " AND language_code:%s" % language
+        logging.warn(query)
+        if not self.doc_type:
+            raise SerializerSearchDocNotSetException("doc_type parameter need to be defined for search")
+
+        # Because page from view is 1 indexed, but start_from is best calculated starting with 0
+        page = request.GET.get("page", 1)
+        start_from = self.get_start(page - 1)
+
+        result = self.es.search(index=self.index, doc_type=self.doc_type, q=query, size=api_settings.PAGE_SIZE,
+                                from_=start_from)
+
+        self.result_count = result["hits"]["total"]
+
+        hits = result["hits"]["hits"]
+        output = []
+        for hit in hits:
+            # To return only
+            output.append(hit["_source"])
+        return self.response(output, request, page)
+
     # uurrggghh I hate it when elasticsearch do their own pagination.
     def get_page(self, item_num):
         # round it down, we start from zero anyway
         # zero index is awesome
-        return item_num / self.page_size
+        page = item_num / self.page_size
+        if page:
+            return page
+        return 1
 
     def get_start(self, page):
         # page_size 10 * 0 first page
@@ -217,11 +252,20 @@ class SerializerSearch(object):
         return page + 1
 
     def get_prev_page(self, page):
-        if page == 0:
+        if page <= 1:
             return None
         return page - 1
 
-    def response(self):
+    def get_links(self, request, page):
+        if not page:
+            return None
+        params = request.GET.copy()
+        params["page"] = page
+        url = "http://%s%s" % (request.get_host(), request.path)
+
+        return url + "?" + urlencode(params)
+
+    def response(self, result, request, current_page):
         """
         OrderedDict([
             ('page', int(self.page_number)),
@@ -235,8 +279,22 @@ class SerializerSearch(object):
         ])
         :return:
         """
+        num_page = self.get_page(self.result_count)
+        next_page = self.get_next_page(current_page)
+        next_url = self.get_links(request, next_page)
+        prev_page = self.get_prev_page(current_page)
+        prev_url = self.get_links(request, prev_page)
+        has_more = self.has_more(current_page)
+
         return Response(OrderedDict([
-            ("page","")
+            ("page", num_page),
+            ("total", self.result_count),
+            ("next", next_url),
+            ("previous", prev_url),
+            ("results", result),
+            ("per_page", self.page_size),
+            ("num_pages", num_page),
+            ("has_more", has_more),
         ]))
 
 
