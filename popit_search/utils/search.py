@@ -211,6 +211,7 @@ class SerializerSearch(object):
 
         # Because page from view is 1 indexed, but start_from is best calculated starting with 0
         page = request.GET.get("page", 1)
+        page = int(page)
         start_from = self.get_start(page - 1)
 
         result = self.es.search(index=self.index, doc_type=self.doc_type, q=query, size=api_settings.PAGE_SIZE,
