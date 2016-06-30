@@ -81,8 +81,9 @@ class SerializerSearch(object):
             output.append(hit["_source"])
         return output
 
-    def list_all(self):
-        result = self.es.search(index=self.index)
+    def list_all(self, page=1):
+        start_from = self.get_page(int(page))
+        result = self.es.search(index=self.index, from_=start_from)
         hits = result["hits"]["hits"]
         output = []
         for hit in hits:
