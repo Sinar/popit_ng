@@ -38,9 +38,16 @@ class Command(BaseCommand):
 
     def delete_in_es(self, entity):
         search = SerializerSearch(entity)
-        results = search.list_all()
-        for result in results:
-            instance = MODEL_DOC_MAP[entity].objects.language("all").filter(id=result["id"])
-            if not instance:
-                search.delete_by_id(result["id"])
+        page = 1
+        while True:
+
+            results = search.list_all(page)
+            print(results)
+            if not results:
+                break
+            for result in results:
+                instance = MODEL_DOC_MAP[entity].objects.language("all").filter(id=result["id"])
+                if not instance:
+                    search.delete_by_id(result["id"])
+            page = page + 1
 
