@@ -93,8 +93,8 @@ class MembershipSerializer(TranslatableModelSerializer):
         validated_data.pop("organization", None)
         organization_id = validated_data.pop("organization_id", None)
 
-        validated_data.pop("on_half_of", None)
-        on_behalf_of_id = validated_data.pop("on_half_of_id", None)
+        validated_data.pop("on_behalf_of", None)
+        on_behalf_of_id = validated_data.pop("on_behalf_of_id", None)
 
         validated_data.pop("area", None)
         area_id = validated_data.pop("area_id", None)
@@ -169,8 +169,8 @@ class MembershipSerializer(TranslatableModelSerializer):
         data.pop("organization", None)
         organization_id = data.pop("organization_id", None)
 
-        data.pop("on_half_of", None)
-        on_behalf_of_id = data.pop("on_half_of_id", None)
+        data.pop("on_behalf_of", None)
+        on_behalf_of_id = data.pop("on_behalf_of_id", None)
 
         data.pop("area", None)
         area_id = data.pop("area_id", None)

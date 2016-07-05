@@ -375,3 +375,31 @@ class MembershipSerializerTestCase(TestCase):
         serializer.save()
         membership = Membership.objects.language("ms").get(label="percubaan membership")
         self.assertEqual(membership.person_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")
+
+    def test_update_membership_on_behalf_of(self):
+        data = {
+            "on_behalf_of_id": "612943b1-864d-4188-8d79-ca387ed19b32"
+        }
+        membership = Membership.objects.untranslated().get(id="7185cab2521c4f6db18b40d8d6506d36")
+        serializer = MembershipSerializer(membership, language="en", data=data, partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        membership = Membership.objects.language("en").get(id="7185cab2521c4f6db18b40d8d6506d36")
+        self.assertEqual(membership.on_behalf_of_id, "612943b1-864d-4188-8d79-ca387ed19b32")
+        self.assertEqual(membership.on_behalf_of.id, "612943b1-864d-4188-8d79-ca387ed19b32")
+
+    def test_create_membership_on_behalf_of(self):
+        data = {
+            "label": "test membership",
+            "person_id": "8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "organization_id": "e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec",
+            "on_behalf_of_id": "612943b1-864d-4188-8d79-ca387ed19b32"
+        }
+
+        serializer = MembershipSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        membership = Membership.objects.language("en").get(label="test membership")
+        self.assertEqual(membership.on_behalf_of_id, "612943b1-864d-4188-8d79-ca387ed19b32")

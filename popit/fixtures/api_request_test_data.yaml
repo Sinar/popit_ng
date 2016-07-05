@@ -850,6 +850,12 @@
     honorific_prefix: '', honorific_suffix: '', patronymic_name: '', sort_name: '',
     gender: '', summary: '', biography: '', national_identity: '', language_code: en,
     master: 2439e472-10dc-4f9c-aa99-efddd9046b4a}
+- model: popit.persontranslation
+  pk: 16
+  fields: {name: mengster, family_name: null, given_name: null, additional_name: null,
+    honorific_prefix: null, honorific_suffix: null, patronymic_name: null, sort_name: null,
+    gender: null, summary: '', biography: '', national_identity: null, language_code: en,
+    master: c2a241a0d1fd4483b60af7dd219de22d}
 - model: popit.person
   pk: 078541c9-9081-4082-b28f-29cbb64440cb
   fields: {email: roger@sinarproject.org, birth_date: null, death_date: null, image: '',
@@ -867,6 +873,10 @@
   pk: ab1a5788e5bae955c048748fa6af0e97
   fields: {email: sweester@sinarproject.org, birth_date: null, death_date: null, image: '',
     created_at: ! '2015-10-02 00:00:00+00:00', updated_at: ! '2015-10-12 00:00:00+00:00'}
+- model: popit.person
+  pk: c2a241a0d1fd4483b60af7dd219de22d
+  fields: {email: null, birth_date: null, death_date: null, image: null, created_at: ! '2016-05-31
+      02:32:03.120373+00:00', updated_at: ! '2016-05-31 02:32:03.120410+00:00'}
 - model: popit.organizationtranslation
   pk: 3
   fields: {name: sinar project, classification: '', abstract: '', description: '',
@@ -953,12 +963,21 @@
 - model: popit.membershiptranslation
   pk: 4
   fields: {label: Kapten Jolly Roger, role: null, language_code: ms, master: b351cdc2-6961-4fc7-9d61-08fca66e1d44}
+- model: popit.membershiptranslation
+  pk: 5
+  fields: {label: null, role: null, language_code: en, master: 7185cab2521c4f6db18b40d8d6506d36}
 - model: popit.membership
   pk: 0a44195b-c3c9-4040-8dbf-be1aa250b700
   fields: {person: ab1a5788e5bae955c048748fa6af0e97, member: null, organization: null,
     post: c1f0f86b-a491-4986-b48d-861b58a3ef6e, on_behalf_of: null, area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4,
     start_date: null, end_date: null, created_at: ! '2015-11-13 01:37:07.640696+00:00',
     updated_at: ! '2015-11-13 01:41:47.306960+00:00'}
+- model: popit.membership
+  pk: 7185cab2521c4f6db18b40d8d6506d36
+  fields: {person: ab1a5788e5bae955c048748fa6af0e97, member: null, organization: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec,
+    post: null, on_behalf_of: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3, area: null, start_date: null,
+    end_date: null, created_at: ! '2016-07-05 01:29:07.999194+00:00', updated_at: ! '2016-07-05
+      01:29:07.999227+00:00'}
 - model: popit.membership
   pk: b351cdc2-6961-4fc7-9d61-08fca66e1d44
   fields: {person: 078541c9-9081-4082-b28f-29cbb64440cb, member: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
