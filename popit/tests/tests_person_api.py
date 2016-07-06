@@ -418,6 +418,14 @@ class PersonSerializerTestCase(TestCase):
         data = person_serializer.data
         for membership in data["memberships"]:
             self.assertEqual(membership["language_code"], "ms")
+
+    def test_load_translated_person_membership_organization(self):
+        person = Person.objects.untranslated().get(id="078541c9-9081-4082-b28f-29cbb64440cb")
+        person_serializer = PersonSerializer(person, language="ms")
+        data = person_serializer.data
+        for membership in data["memberships"]:
+            if membership["organization"]:
+                self.assertEqual(membership["organization"]["language_code"], "ms")
             
 
 # We have set parameter in client into json instead of multipart form, maybe we should explicitly set it.
