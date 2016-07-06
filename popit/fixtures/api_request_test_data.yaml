@@ -856,10 +856,16 @@
     honorific_prefix: null, honorific_suffix: null, patronymic_name: null, sort_name: null,
     gender: null, summary: '', biography: '', national_identity: null, language_code: en,
     master: c2a241a0d1fd4483b60af7dd219de22d}
+- model: popit.persontranslation
+  pk: 17
+  fields: {name: jolly a/l roger, family_name: null, given_name: null, additional_name: null,
+    honorific_prefix: null, honorific_suffix: null, patronymic_name: null, sort_name: null,
+    gender: null, summary: '', biography: '', national_identity: null, language_code: ms,
+    master: 078541c9-9081-4082-b28f-29cbb64440cb}
 - model: popit.person
   pk: 078541c9-9081-4082-b28f-29cbb64440cb
   fields: {email: roger@sinarproject.org, birth_date: null, death_date: null, image: '',
-    created_at: ! '2015-11-13 01:24:31.461419+00:00', updated_at: ! '2015-11-13 01:24:31.461449+00:00'}
+    created_at: ! '2015-11-13 01:24:31.461419+00:00', updated_at: ! '2016-07-06 01:58:11.697448+00:00'}
 - model: popit.person
   pk: 2439e472-10dc-4f9c-aa99-efddd9046b4a
   fields: {email: '', birth_date: '', death_date: '', image: '', created_at: ! '2015-12-08

@@ -1,10 +1,13 @@
 __author__ = 'sweemeng'
 from popit.models import Person
+from popit.models import Organization
+from popit.models import Post
 from popit.models import ContactDetail
 from popit.models import Link
 from popit.models import Identifier
 from popit.models import OtherName
 from popit.models import Membership
+from popit.models import Area
 from hvad.contrib.restframework import TranslatableModelSerializer
 from rest_framework.serializers import CharField
 from popit.serializers.misc import OtherNameSerializer
@@ -36,6 +39,32 @@ class PersonMembershipSerializer(TranslatableModelSerializer):
     links = LinkSerializer(many=True, required=False)
     start_date = CharField(allow_null=True, default=None, allow_blank=True)
     end_date = CharField(allow_null=True, default=None, allow_blank=True)
+
+    # We override the to_representation because the nested dictionary is not translated
+    def to_representation(self, instance):
+        data = super(PersonMembershipSerializer, self).to_representation(instance)
+        if instance.organization:
+            organization = Organization.objects.untranslated().get(id=instance.organization_id)
+            organization_serializer = OrganizationFlatSerializer(organization, language=instance.language_code)
+            data["organization"] = organization_serializer.data
+
+        person = Person.objects.untranslated().get(id=instance.person_id)
+        person_serializer = PersonFlatSerializer(person, language=instance.language_code)
+        data["person"] = person_serializer.data
+
+        if instance.post:
+            post = Post.objects.untranslated().get(id=instance.post_id)
+            post_serializer = PostFlatSerializer(post, language=instance.language_code)
+            data["post"] = post_serializer.data
+
+        contact_details = instance.contact_details.untranslated().all()
+        contact_details_serializer = ContactDetailSerializer(contact_details, many=True, language=instance.language_code)
+        data["contact_details"] = contact_details_serializer.data
+
+        links = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(links, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+        return data
 
     class Meta:
         model = Membership
@@ -211,6 +240,10 @@ class PersonSerializer(TranslatableModelSerializer):
         contact_details_serializer = ContactDetailSerializer(instance=contact_details_instance, many=True,
                                                              language=instance.language_code)
         data["contact_details"] = contact_details_serializer.data
+
+        memberships = instance.memberships.untranslated().all()
+        membership_serializers = PersonMembershipSerializer(memberships, many=True, language=instance.language_code)
+        data["memberships"] = membership_serializers.data
 
         return data
 
