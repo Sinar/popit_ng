@@ -465,3 +465,74 @@ class OrganizationSerializerTestCase(TestCase):
         serializer.save()
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         self.assertEqual(organization.abstract, "Cawangan KL Parti Lanun Malaysia")
+
+    def test_fetch_organization_membership_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+
+        data = organization_serializer.data
+
+        for membership in data["memberships"]:
+            self.assertEqual(membership["language_code"], "ms")
+
+    def test_fetch_organization_membership_post_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+
+        data = organization_serializer.data
+
+        for membership in data["memberships"]:
+            if membership["post"]:
+                self.assertEqual(membership["post"]["language_code"], "ms")
+
+    def test_fetch_organization_membership_person_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+
+        data = organization_serializer.data
+
+        for membership in data["memberships"]:
+            self.assertEqual(membership["person"]["language_code"], "ms")
+
+    def test_fetch_organization_post_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+        data = organization_serializer.data
+        for post in data["posts"]:
+            self.assertEqual(post["language_code"], "ms")
+
+    def test_fetch_organization_parent_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+        data = organization_serializer.data
+
+        self.assertEqual(data["parent"]["language_code"], "ms")
+
+    def test_fetch_organization_parent_othername_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+        data = organization_serializer.data
+
+        # If translated doesn't exist the list will be empty, thus false. This is to make sure translation is fetch
+        self.assertTrue(data["parent"]["other_names"])
+
+        for other_name in data["parent"]["other_names"]:
+            self.assertEqual(other_name["language_code"], "ms")
+
+    def test_fetch_organization_parent_contactdetails_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+        data = organization_serializer.data
+
+        # If translated doesn't exist the list will be empty, thus false. This is to make sure translation is fetch
+        self.assertTrue(data["parent"]["contact_details"])
+        for other_name in data["parent"]["contact_details"]:
+            self.assertEqual(other_name["language_code"], "ms")
+
+    def test_fetch_organization_parent_identifiers_translated(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = OrganizationSerializer(organization, language="ms")
+        data = organization_serializer.data
+        self.assertTrue(data["parent"]["identifiers"])
+        for identifier in data["parent"]["identifiers"]:
+            self.assertEqual(identifier["language_code"], "ms")
