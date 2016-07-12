@@ -1,6 +1,7 @@
 __author__ = 'sweemeng'
 from hvad.contrib.restframework import TranslatableModelSerializer
 from popit.models import Post
+from popit.models import Person
 from popit.models import Link
 from popit.models import Area
 from popit.models import OtherName
@@ -39,6 +40,30 @@ class PostMembershipSerializer(TranslatableModelSerializer):
     start_date = CharField(allow_null=True, default=None)
     end_date = CharField(allow_null=True, default=None)
 
+    def to_representation(self, instance):
+        data = super(PostMembershipSerializer, self).to_representation(instance)
+
+        person = Person.objects.untranslated().get(id=instance.person_id)
+        person_serializer = PersonFlatSerializer(person, language=instance.language_code)
+
+        data["person"] = person_serializer.data
+
+        # Now all organization saved should have organization, either derived from post, or assigned directly
+        if instance.organization:
+            organization = Organization.objects.untranslated().get(id=instance.organization_id)
+            organization_serializer = OrganizationFlatSerializer(organization, language=instance.language_code)
+            data["organization"] = organization_serializer.data
+
+        contact_details = instance.contact_details.untranslated().all()
+        contact_details_serializer = ContactDetailSerializer(contact_details, many=True, language=instance.language_code)
+
+        data["contact_details"] = contact_details_serializer.data
+
+        links = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(links, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+        return data
+
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
@@ -52,6 +77,32 @@ class PostParentOrganizationSerializer(TranslatableModelSerializer):
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
+
+    def to_representation(self, instance):
+        data = super(PostParentOrganizationSerializer, self).to_representation(instance)
+
+        other_names = instance.other_names.untranslated().all()
+        other_names_serializer = OtherNameSerializer(other_names, many=True, language=instance.language_code)
+        data["other_names"] = other_names_serializer.data
+
+        identifiers = instance.identifiers.untranslated().all()
+        identifiers_serializer = IdentifierSerializer(identifiers, many=True, language=instance.language_code)
+        data["identifiers"] = identifiers_serializer.data
+
+        contact_details = instance.contact_details.untranslated().all()
+        contact_details_serializer = ContactDetailSerializer(contact_details, many=True, language=instance.language_code)
+        data["contact_details"] = contact_details_serializer.data
+
+        links = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(links, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+
+        if instance.area:
+            area = Area.objects.untranslated().get(id=instance.area_id)
+            area_serializer = AreaSerializer(area, language=instance.language_code)
+            data["area"] = area_serializer.data
+
+        return data
 
     class Meta:
         model = Organization
@@ -71,6 +122,33 @@ class PostOrganizationSerializer(TranslatableModelSerializer):
     founding_date = CharField(allow_null=True, default=None, allow_blank=True)
     dissolution_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
 
+    def to_representation(self, instance):
+        data = super(PostOrganizationSerializer, self).to_representation(instance)
+        if instance.parent:
+            parent = Organization.objects.untranslated().get(id=instance.parent_id)
+            parent_serializer = PostParentOrganizationSerializer(parent, language=instance.language_code)
+            data["parent"] = parent_serializer.data
+
+        other_names = instance.other_names.untranslated().all()
+        other_names_serializer = OtherNameSerializer(other_names, many=True, language=instance.language_code)
+        data["other_names"] = other_names_serializer.data
+
+        identifiers = instance.identifiers.untranslated().all()
+        identifiers_serializer = IdentifierSerializer(identifiers, many=True, language=instance.language_code)
+        data["identifiers"] = identifiers_serializer.data
+
+        contact_details = instance.contact_details.untranslated().all()
+        contact_details_serializer = ContactDetailSerializer(contact_details, many=True, language=instance.language_code)
+        data["contact_details"] = contact_details_serializer.data
+
+        if instance.area:
+
+            area = Area.objects.untranslated().get(id=instance.area_id)
+            area_serializer = AreaSerializer(area, language=instance.language_code)
+            data["area"] = area_serializer.data
+
+        return data
+
     class Meta:
         model = Organization
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
@@ -79,6 +157,7 @@ class PostOrganizationSerializer(TranslatableModelSerializer):
 class PostSerializer(TranslatableModelSerializer):
 
     id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
+    label = CharField(max_length=255, required=False)
     other_labels = OtherNameSerializer(many=True, required=False)
     organization = PostOrganizationSerializer(required=False) # A post must tied to an organization
     organization_id = CharField(max_length=255, required=False)
@@ -246,8 +325,8 @@ class PostSerializer(TranslatableModelSerializer):
         else:
             data["other_labels"] = []
 
-        if instance.organization_id:
-            organization_instance = instance.organization.__class__.objects.untranslated().get(id=instance.organization_id)
+        if instance.organization:
+            organization_instance = Organization.objects.untranslated().get(id=instance.organization_id)
             organization_serializer = PostOrganizationSerializer(instance=organization_instance, language=instance.language_code)
             data["organization"] = organization_serializer.data
 
@@ -264,6 +343,10 @@ class PostSerializer(TranslatableModelSerializer):
             area_instance = instance.area.__class__.objects.untranslated().get(id=instance.area_id)
             area_serializer = AreaSerializer(area_instance, language=instance.language_code)
             data["area"] = area_serializer.data
+
+        memberships = instance.memberships.untranslated().all()
+        memberships_serializer = PostMembershipSerializer(memberships, many=True, language=instance.language_code)
+        data["memberships"] = memberships_serializer.data
         return data
 
     def validate_start_date(self, value):

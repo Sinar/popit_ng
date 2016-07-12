@@ -383,3 +383,31 @@ class PostSerializerTestCase(TestCase):
         serializer.save()
         post = Post.objects.language("ms").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
         self.assertEqual(post.label, "ahli")
+
+    def test_fetch_post_membership_translated(self):
+        post = Post.objects.untranslated().get(id="2c6982c2-504a-4e0d-8949-dade5f9e494e")
+        serializer = PostSerializer(post, language="ms")
+        data = serializer.data
+        for membership in data["memberships"]:
+            self.assertEqual(membership["language_code"], "ms")
+
+    def test_fetch_post_membership_organization_translated(self):
+        post = Post.objects.untranslated().get(id="2c6982c2-504a-4e0d-8949-dade5f9e494e")
+        serializer = PostSerializer(post, language="ms")
+        data = serializer.data
+        for membership in data["memberships"]:
+            if membership["organization"]:
+                self.assertEqual(membership["organization"]["language_code"], "ms")
+
+    def test_fetch_post_membership_person_translated(self):
+        post = Post.objects.untranslated().get(id="2c6982c2-504a-4e0d-8949-dade5f9e494e")
+        serializer = PostSerializer(post, language="ms")
+        data = serializer.data
+        for membership in data["memberships"]:
+            self.assertEqual(membership["person"]["language_code"], "ms")
+
+    def test_fetch_post_organization_translated(self):
+        post = Post.objects.untranslated().get(id="2c6982c2-504a-4e0d-8949-dade5f9e494e")
+        serializer = PostSerializer(post, language="ms")
+        data = serializer.data
+        self.assertEqual(data["organization"]["language_code"], "ms")
