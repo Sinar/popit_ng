@@ -376,7 +376,10 @@ class PostSerializerTestCase(TestCase):
         data = {
             "label": "ahli"
         }
-        post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        # When translation do not exist, the following is used in production
+        # post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        # But when translation exist, fetch existing translation
+        post = Post.objects.language("ms").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
         serializer = PostSerializer(post, data=data, language="ms", partial=True)
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})

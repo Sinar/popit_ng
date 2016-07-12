@@ -95,7 +95,7 @@ class PersonSerializerTestCase(TestCase):
         self.assertTrue(data["other_names"])
 
     def test_fetch_empty_relation_person_serializer(self):
-        person = Person.objects.untranslated().get(id='ab1a5788e5bae955c048748fa6af0e97')
+        person = Person.objects.untranslated().get(id='078541c9-9081-4082-b28f-29cbb64440cb')
         serializer = PersonSerializer(person, language='en')
         data = serializer.data
         self.assertFalse(data["other_names"])
