@@ -141,7 +141,7 @@ class PersonSerializer(TranslatableModelSerializer):
         # Now sure if save everytime we update a good idea. On the other hand, not like everyone can update anyway.
         # Also some field is not added, maybe I should add patronymic name and sort name =.=
         instance.name = validated_data.get("name", instance.name)
-        instance.family_name = validated_data.get("family_name", instance.name)
+        instance.family_name = validated_data.get("family_name", instance.family_name)
         instance.given_name = validated_data.get("given_name", instance.given_name)
         instance.additional_name = validated_data.get("additional_name", instance.additional_name)
         instance.honorific_prefix = validated_data.get("honorific_prefix", instance.honorific_prefix)
