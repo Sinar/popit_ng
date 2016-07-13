@@ -172,7 +172,7 @@ class SerializerSearch(object):
                 new_date = parse(data[key], default=default_date)
                 output[key] = new_date.strftime("%Y-%m-%dT%H%M%S")
 
-            elif type(data[key]) is list:
+            elif isinstance(data[key], list):
                 temp = []
                 for item in data[key]:
 
