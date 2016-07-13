@@ -3,6 +3,8 @@ from rest_framework import status
 from popit_search.utils.search import popit_indexer
 from popit_search.utils.search import remove_popit_index
 from mock import patch
+from rest_framework.response import Response
+from collections import OrderedDict
 
 
 class SearchAPITestCase(APITestCase):
@@ -15,7 +17,7 @@ class SearchAPITestCase(APITestCase):
             "q": "id:8497ba86-7485-42d2-9596-2ab14520f1f4"
         }
         instance = mock_search.return_value
-        instance.search.return_value = [
+        search_result = [
             {
                 "identifiers": [
                     {
@@ -138,6 +140,16 @@ class SearchAPITestCase(APITestCase):
                 "birth_date": "1901-01-01"
             }
         ]
+        instance.paginated_search.return_value = Response(OrderedDict([
+            ("page", 1),
+            ("total", 1),
+            ("next", None),
+            ("previous", None),
+            ("results", search_result),
+            ("per_page", 10),
+            ("num_pages", 1),
+            ("has_more", False),
+        ]))
         response = self.client.get("/en/search/persons/", params)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])
@@ -147,8 +159,7 @@ class SearchAPITestCase(APITestCase):
         params = {
             "q": "id:3d62d9ea-0600-4f29-8ce6-f7720fd49aa3"
         }
-        instance = mock_search.return_value
-        instance.search.return_value = [
+        search_result = [
             {
                 "id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
                 "parent": {
@@ -296,6 +307,17 @@ class SearchAPITestCase(APITestCase):
                 "language_code": "en"
             }
         ]
+        instance = mock_search.return_value
+        instance.paginated_search.return_value = Response(OrderedDict([
+            ("page", 1),
+            ("total", 1),
+            ("next", None),
+            ("previous", None),
+            ("results", search_result),
+            ("per_page", 10),
+            ("num_pages", 1),
+            ("has_more", False),
+        ]))
         response = self.client.get("/en/search/organizations/", params)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])
@@ -305,8 +327,7 @@ class SearchAPITestCase(APITestCase):
         params = {
             "q": "id:b351cdc2-6961-4fc7-9d61-08fca66e1d44"
         }
-        instance = mock_search.return_value
-        instance.search.return_value = [
+        search_data = [
             {
                 "id": "0a44195b-c3c9-4040-8dbf-be1aa250b700",
                 "person": {
@@ -660,6 +681,18 @@ class SearchAPITestCase(APITestCase):
                 "language_code": "en"
             }
         ]
+        instance = mock_search.return_value
+        instance.paginated_search.return_value = Response(OrderedDict([
+            ("page", 1),
+            ("total", 1),
+            ("next", None),
+            ("previous", None),
+            ("results", search_data),
+            ("per_page", 10),
+            ("num_pages", 1),
+            ("has_more", False),
+        ]))
+
         response = self.client.get("/en/search/memberships/", params)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])
@@ -670,8 +703,7 @@ class SearchAPITestCase(APITestCase):
             "q": "id:c1f0f86b-a491-4986-b48d-861b58a3ef6e"
         }
         instance = mock_search.return_value
-
-        instance.search.return_value = [
+        search_result = [
             {
                 "id": "2c6982c2-504a-4e0d-8949-dade5f9e494e",
                 "other_labels": [],
@@ -835,6 +867,17 @@ class SearchAPITestCase(APITestCase):
                 "language_code": "en"
             }
         ]
+
+        instance.paginated_search.return_value = Response(OrderedDict([
+            ("page", 1),
+            ("total", 1),
+            ("next", None),
+            ("previous", None),
+            ("results", search_result),
+            ("per_page", 10),
+            ("num_pages", 1),
+            ("has_more", False),
+        ]))
         response = self.client.get("/en/search/posts/", params)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertNotEqual(response.data, [])

@@ -27,7 +27,7 @@ class SearchUtilTestCase(TestCase):
         person = Person.objects.language("en").get(id="8497ba86-7485-42d2-9596-2ab14520f1f4")
         serializer = PersonSerializer(person)
         result = popit_search.add(person, PersonSerializer)
-        data=serializer.data
+        data=popit_search.sanitize_data(serializer.data)
         instance.index.assert_called_with(index=popit_search.index, doc_type=popit_search.doc_type, body=data)
 
     @patch("elasticsearch.Elasticsearch")
@@ -77,8 +77,9 @@ class SearchUtilTestCase(TestCase):
         person.given_name = "jerry jambul"
         person.save()
         result = popit_search.update(person, PersonSerializer)
+        data = popit_search.sanitize_data(serializer.data)
         instance.update.assert_called_with(index=popit_search.index, doc_type=popit_search.doc_type, id="random_key",
-                                           body={"doc":serializer.data})
+                                           body={"doc":data})
 
     @patch("elasticsearch.Elasticsearch")
     def test_delete_person_search(self, mock_es):
