@@ -854,14 +854,41 @@
 - model: popit.areatranslation
   pk: 2
   fields: {name: kuala lumpur, classification: '', language_code: en, master: 640c0f1d-2305-4d17-97fe-6aa59f079cc4}
+- model: popit.areatranslation
+  pk: 3
+  fields: {name: Selangor, classification: state, language_code: en, master: 5ea50458870942b1b2ed2370fa9c779b}
+- model: popit.areatranslation
+  pk: 4
+  fields: {name: Subang Jaya, classification: town, language_code: en, master: b0c2dbaba8ea476f91db1e3c2320dcb7}
+- model: popit.areatranslation
+  pk: 5
+  fields: {name: Batu Caves, classification: town, language_code: en, master: 802be15a7483442ab9ecd521410269fa}
+- model: popit.areatranslation
+  pk: 6
+  fields: {name: Batu Caves, classification: Bandar, language_code: ms, master: 802be15a7483442ab9ecd521410269fa}
+- model: popit.areatranslation
+  pk: 7
+  fields: {name: Selangor, classification: Negeri, language_code: ms, master: 5ea50458870942b1b2ed2370fa9c779b}
 - model: popit.area
   pk: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea
   fields: {identifier: '', parent: null, created_at: ! '2015-10-21 23:44:25.171028+00:00',
     updated_at: ! '2015-10-21 23:44:25.171048+00:00'}
 - model: popit.area
+  pk: 5ea50458870942b1b2ed2370fa9c779b
+  fields: {identifier: null, parent: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea, created_at: ! '2016-07-18
+      05:15:25.396264+00:00', updated_at: ! '2016-07-19 01:24:56.763235+00:00'}
+- model: popit.area
   pk: 640c0f1d-2305-4d17-97fe-6aa59f079cc4
   fields: {identifier: '', parent: 4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea, created_at: ! '2015-10-21
       23:44:40.750284+00:00', updated_at: ! '2015-10-21 23:44:40.750308+00:00'}
+- model: popit.area
+  pk: 802be15a7483442ab9ecd521410269fa
+  fields: {identifier: null, parent: 5ea50458870942b1b2ed2370fa9c779b, created_at: ! '2016-07-18
+      05:26:56.587658+00:00', updated_at: ! '2016-07-19 01:22:53.651922+00:00'}
+- model: popit.area
+  pk: b0c2dbaba8ea476f91db1e3c2320dcb7
+  fields: {identifier: null, parent: 5ea50458870942b1b2ed2370fa9c779b, created_at: ! '2016-07-18
+      05:24:39.903026+00:00', updated_at: ! '2016-07-18 05:24:39.903057+00:00'}
 - model: popit.persontranslation
   pk: 8
   fields: {name: Swee Meng, family_name: ng, given_name: '', additional_name: '',

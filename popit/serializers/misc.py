@@ -314,6 +314,9 @@ class AreaSerializer(TranslatableModelSerializer):
         Link.objects.language(language_code).create(**validated_data)
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
         links = data.pop("links", [])
         language = self.language
         data.pop("language", None)
