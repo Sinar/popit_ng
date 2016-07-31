@@ -26,6 +26,9 @@ class LinkSerializer(TranslatableModelSerializer):
         return link
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
         instance.label = data.get("label", instance.label)
         instance.field = data.get("field", instance.field)
         instance.url = data.get("url", instance.url)
@@ -65,6 +68,9 @@ class ContactDetailSerializer(TranslatableModelSerializer):
         Link.objects.language(language_code).create(**validated_data)
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
         links = data.pop("links", [])
         instance.label = data.get("label", instance.label)
         instance.note = data.get('note', instance.note)
@@ -146,6 +152,9 @@ class IdentifierSerializer(TranslatableModelSerializer):
         Link.objects.language(language_code).create(**validated_data)
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
         links = data.pop('links', [])
         instance.scheme = data.get('scheme', instance.scheme)
         instance.identifier = data.get('identifier', instance.identifier)
@@ -218,6 +227,9 @@ class OtherNameSerializer(TranslatableModelSerializer):
         Link.objects.language(language_code).create(**validated_data)
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
         links = data.pop('links', [])
         instance.name = data.get('name', instance.name)
         instance.family_name = data.get('family_name', instance.family_name)
@@ -314,8 +326,11 @@ class AreaSerializer(TranslatableModelSerializer):
         Link.objects.language(language_code).create(**validated_data)
 
     def update(self, instance, data):
+        available_languages = instance.get_available_languages()
+        if not self.language in available_languages:
+            instance = instance.translate(self.language)
         links = data.pop("links", [])
-        language = self.language
+
         data.pop("language", None)
         instance.name = data.get("name", instance.name)
         instance.identifier = data.get("identifier", instance.identifier)
