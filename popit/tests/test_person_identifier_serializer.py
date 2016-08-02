@@ -98,6 +98,12 @@ class PersonIdentifierTestCase(TestCase):
         data = serializer.data
         self.assertEqual(data["identifier"], "53110321")
 
+    def test_update_translation(self):
+        identifier = Identifier.objects.untranslated().get(id="23b470bbc1884c378e447718e92c920b")
+        serializer = IdentifierSerializer(identifier, language="ms")
+        data = serializer.data
+        self.assertEqual(data["language_code"], "ms")
+
 
 class PersonNestedIdentifierTestCase(TestCase):
     fixtures = ["api_request_test_data.yaml"]
@@ -207,3 +213,11 @@ class PersonNestedIdentifierTestCase(TestCase):
                 found = True
                 break
         self.assertTrue(found, "Item not found")
+
+    def test_fetch_person_identifier_nested_translated(self):
+        person = Person.objects.untranslated().get(id="ab1a5788e5bae955c048748fa6af0e97")
+        serializer = PersonSerializer(person, language="ms")
+        data = serializer.data
+        identifiers = data["identifiers"]
+        for identifier in identifiers:
+            self.assertEqual(identifier["language_code"], "ms")
