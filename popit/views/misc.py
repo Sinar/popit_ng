@@ -21,21 +21,34 @@ from popit.models import Identifier
 from popit.models import Area
 from popit.views.base import BasePopitView
 
-
+# TODO: Actually we can just use getattr to access the child objects. But we need to map of attributes :-/
 
 class GenericParentChildList(BasePopitView):
 
     serializer = None
     parent = None
+    # Used with getattr to write less code
+    # getattr(parent, child).language(language).get(id=id).
+    child_name = None
 
-    def get_query(self, parent_pk, language):
-        raise NotImplementedError()
 
-    def get_parent(self, parent_pk, language):
+    def get_query(self, parent_pk, language=None):
+        parent = self.get_parent(parent_pk, language)
+        if language:
+
+            child = getattr(parent, self.child_name).language(language).all()
+        else:
+            child = getattr(parent, self.child_name).untranslated().all()
+        return child
+
+    def get_parent(self, parent_pk, language=None):
         if not self.parent:
             raise ParentNotSetException("No parent object set")
         try:
-            return self.parent.objects.language(language).get(id=parent_pk)
+            if language:
+                return self.parent.objects.language(language).get(id=parent_pk)
+            else:
+                return self.parent.objects.untranslated().get(id=parent_pk)
         except Person.DoesNotExist:
             raise Http404
 
@@ -69,56 +82,42 @@ class GenericParentChildList(BasePopitView):
 class GenericContactDetailList(GenericParentChildList):
 
     serializer = ContactDetailSerializer
-
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
-
-        contact_details = parent.contact_details.untranslated().all()
-        return contact_details
+    child_name = "contact_details"
 
 
 class GenericOtherNameList(GenericParentChildList):
 
     serializer = OtherNameSerializer
-
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
-
-        other_names = parent.other_names.untranslated().all()
-        return other_names
+    child_name = "other_names"
 
 
 class GenericIdentifierList(GenericParentChildList):
 
     serializer = IdentifierSerializer
-
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
-
-        identifiers = parent.identifiers.untranslated().all()
-        return identifiers
+    child_name = "identifiers"
 
 
 class GenericLinkList(GenericParentChildList):
 
     serializer = LinkSerializer
-
-    def get_query(self, parent_pk, language):
-        parent = self.get_parent(parent_pk, language)
-
-        links = parent.links.untranslated().all()
-        return links
+    child_name = "links"
 
 
 class GenericParentChildDetail(BasePopitView):
 
     serializer = None
     parent = None
+    child_name = None
 
-    def get_object(self, parent, pk):
-        raise NotImplementedError()
+    def get_object(self, parent, pk, language=None):
+        try:
+            if language:
+                return getattr(parent, self.child_name).language(language).get(id=pk)
+            return getattr(parent, self.child_name).untranslated().get(id=pk)
+        except ContactDetail.DoesNotExist:
+            raise Http404
 
-    def get_parent(self, parent_pk, language):
+    def get_parent(self, parent_pk, language=None):
         if not self.parent:
             raise ParentNotSetException("Parent Not Set")
 
@@ -142,6 +141,8 @@ class GenericParentChildDetail(BasePopitView):
 
         parent = self.get_parent(parent_pk, language)
         obj = self.get_object(parent, pk)
+        if language in obj.get_available_languages():
+            obj = self.get_object(parent, pk, language)
         serializer = self.serializer(obj, data=request.data, partial=True, language=language)
         if serializer.is_valid():
             # We do not override where a link is point to.
@@ -164,45 +165,25 @@ class GenericParentChildDetail(BasePopitView):
 class GenericContactDetailDetail(GenericParentChildDetail):
 
     serializer = ContactDetailSerializer
-
-    def get_object(self, parent, pk):
-        try:
-            return parent.contact_details.untranslated().get(id=pk)
-        except ContactDetail.DoesNotExist:
-            raise Http404
+    child_name = "contact_details"
 
 
 class GenericOtherNameDetail(GenericParentChildDetail):
 
     serializer = OtherNameSerializer
-
-    def get_object(self, parent, pk):
-        try:
-            return parent.other_names.untranslated().get(id=pk)
-        except OtherName.DoesNotExist:
-            raise Http404
+    child_name = "other_names"
 
 
 class GenericIdentifierDetail(GenericParentChildDetail):
 
     serializer = IdentifierSerializer
-
-    def get_object(self, parent, pk):
-        try:
-            return parent.identifiers.untranslated().get(id=pk)
-        except Identifier.DoesNotExist:
-            raise Http404
+    child_name = "identifiers"
 
 
 class GenericLinkDetail(GenericParentChildDetail):
 
     serializer = LinkSerializer
-
-    def get_object(self, parent, pk):
-        try:
-            return parent.links.untranslated().get(id=pk)
-        except Link.DoesNotExist:
-            raise Http404
+    child_name = "links"
 
 
 class GenericParentChildLinkList(BasePopitView):
@@ -210,6 +191,7 @@ class GenericParentChildLinkList(BasePopitView):
     serializer = LinkSerializer
     parent = None
     child = None
+    child_name = None
 
     def get_parent(self, parent_pk, language):
         if not self.parent:
@@ -219,8 +201,19 @@ class GenericParentChildLinkList(BasePopitView):
         except self.parent.DoesNotExist:
             raise Http404
 
-    def get_child(self, parent, pk, language):
-        raise NotImplementedError()
+    def get_child(self, parent, pk, language=None):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        if not self.child_name:
+            raise ChildNotSetException("Need to set child name")
+
+        try:
+            if language:
+                return parent.contact_details.language(language).get(id=pk)
+            return parent.contact_details.untranslated().get(id=pk)
+
+        except self.child.DoesNotExist:
+            raise Http404
 
     def get(self, request, language, parent_pk, pk, format=None):
         parent = self.get_parent(parent_pk, language)
@@ -249,40 +242,19 @@ class GenericParentChildLinkList(BasePopitView):
 class GenericContactDetailLinkList(GenericParentChildLinkList):
 
     child = ContactDetail
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.contact_details.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            raise Http404
+    child_name = "contact_details"
 
 
 class GenericIdentifierLinkList(GenericParentChildLinkList):
 
     child = Identifier
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.identifiers.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            raise Http404
+    child_name = "identifiers"
 
 
 class GenericOtherNameLinkList(GenericParentChildLinkList):
 
     child = OtherName
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.other_names.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            raise Http404
+    child_name = "other_names"
 
 
 class GenericParentChildLinkDetail(BasePopitView):
@@ -290,6 +262,7 @@ class GenericParentChildLinkDetail(BasePopitView):
     serializer = LinkSerializer
     parent = None
     child = None
+    child_name = None
 
     def get_parent(self, parent_pk, language):
         if not self.parent:
@@ -299,8 +272,17 @@ class GenericParentChildLinkDetail(BasePopitView):
         except self.parent.DoesNotExist:
             raise Http404
 
-    def get_child(self, parent, pk, language):
-        raise NotImplementedError()
+    def get_child(self, parent, pk, language=None):
+        if not self.child:
+            raise ChildNotSetException("Need to set child object")
+        if not self.child_name:
+            raise ChildNotSetException("Need to set child name")
+        try:
+            if language:
+                return getattr(parent, self.child_name).language(language).get(id=pk)
+            return getattr(parent, self.child_name).untranslated().get(id=pk)
+        except self.child.DoesNotExist:
+            raise Http404
 
     def get(self, request, language, parent_pk, pk, link_pk, format=None):
         parent = self.get_parent(parent_pk, language)
@@ -324,7 +306,7 @@ class GenericParentChildLinkDetail(BasePopitView):
         if serializer.is_valid():
             serializer.save()
             data = { "results": serializer.data }
-            return Response(serializer.data, status.HTTP_200_OK)
+            return Response(data, status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, language, parent_pk, pk, link_pk, format=None):
@@ -341,40 +323,19 @@ class GenericParentChildLinkDetail(BasePopitView):
 class GenericContactDetailLinkDetail(GenericParentChildLinkDetail):
 
     child = ContactDetail
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.contact_details.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            raise Http404
+    child_name = "contact_details"
 
 
 class GenericIdentifierLinkDetail(GenericParentChildLinkDetail):
 
     child = Identifier
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.identifiers.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            raise Http404
+    child_name = "identifiers"
 
 
 class GenericOtherNameLinkDetail(GenericParentChildLinkDetail):
 
     child = OtherName
-
-    def get_child(self, parent, pk, language):
-        if not self.child:
-            raise ChildNotSetException("Need to set child object")
-        try:
-            return parent.other_names.language(language).get(id=pk)
-        except self.child.DoesNotExist:
-            raise Http404
+    child_name = "other_names"
 
 
 class AreaList(BasePopitView):
