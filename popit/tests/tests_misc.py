@@ -565,7 +565,7 @@ class AreaSerializerTestCase(TestCase):
         area = Area.objects.language("en").all()
         print area
         serializer = AreaSerializer(area, language="en", many=True)
-        self.assertEqual(len(serializer.data), 2)
+        self.assertEqual(len(serializer.data), 5)
 
     def test_view_area(self):
         area = Area.objects.language("en").get(id="640c0f1d-2305-4d17-97fe-6aa59f079cc4")
