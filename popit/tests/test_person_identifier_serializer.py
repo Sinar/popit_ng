@@ -3,6 +3,7 @@ from popit.serializers import PersonSerializer
 from django.test import TestCase
 from popit.signals.handlers import *
 from popit.models import *
+from popit.serializers.exceptions import ContentObjectNotAvailable
 
 
 class PersonIdentifierTestCase(TestCase):
@@ -98,11 +99,28 @@ class PersonIdentifierTestCase(TestCase):
         data = serializer.data
         self.assertEqual(data["identifier"], "53110321")
 
-    def test_update_translation(self):
+    def test_update_person_identifier_translation(self):
         identifier = Identifier.objects.untranslated().get(id="23b470bbc1884c378e447718e92c920b")
         serializer = IdentifierSerializer(identifier, language="ms")
         data = serializer.data
         self.assertEqual(data["language_code"], "ms")
+
+    def test_fetch_person_identifier_list(self):
+        person = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
+        identifiers = person.identifiers.untranslated().all()
+        serializer = IdentifierSerializer(identifiers, many=True, language="en")
+        self.assertEqual(len(serializer.data), 2)
+
+    def test_create_identifier_without_parent(self):
+        data = {
+            "scheme": "IC",
+            "identifier": "129031309",
+        }
+        serializer = IdentifierSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        with self.assertRaises(ContentObjectNotAvailable):
+            serializer.save()
 
 
 class PersonNestedIdentifierTestCase(TestCase):
