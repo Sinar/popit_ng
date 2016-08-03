@@ -221,3 +221,37 @@ class PersonNestedIdentifierTestCase(TestCase):
         identifiers = data["identifiers"]
         for identifier in identifiers:
             self.assertEqual(identifier["language_code"], "ms")
+
+    def test_create_person_identifier_nested_translated(self):
+        person = Person.objects.untranslated().get(id="078541c9-9081-4082-b28f-29cbb64440cb")
+        data = {
+            "identifiers": [
+                {
+                    "identifier": "123121231",
+                    "scheme": "id_percubaan"
+                }
+            ]
+        }
+        serializer = PersonSerializer(person, data=data, language="ms", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        identifier = person.identifiers.language("ms").get(identifier="123121231")
+        self.assertEqual(identifier.scheme, "id_percubaan")
+
+    def test_update_person_identifier_nested_translated(self):
+        data = {
+            "identifiers": [
+                {
+                    "id": "94318759d80c4533bcca0971bc516500",
+                    "scheme": "Kad Pengenalan"
+                }
+            ]
+        }
+        person = Person.objects.untranslated().get(id="ab1a5788e5bae955c048748fa6af0e97")
+        serializer = PersonSerializer(person,data=data, language="ms", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        identifier = person.identifiers.language("ms").get(id="94318759d80c4533bcca0971bc516500")
+        self.assertEqual(identifier.scheme, "Kad Pengenalan")

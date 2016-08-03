@@ -84,7 +84,7 @@ class ContactDetailSerializer(TranslatableModelSerializer):
         return instance
 
     def update_links(self, validated_data, parent):
-        language_code = parent.language_code
+        language_code = self.language
 
         if validated_data.get("id"):
             links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
@@ -165,7 +165,7 @@ class IdentifierSerializer(TranslatableModelSerializer):
         return instance
 
     def update_links(self, validated_data, parent):
-        language_code = parent.language_code
+        language_code = self.language
 
         if validated_data.get("id"):
             links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
@@ -252,7 +252,7 @@ class OtherNameSerializer(TranslatableModelSerializer):
         return instance
 
     def update_links(self, validated_data, parent):
-        language_code = parent.language_code
+        language_code = self.language
 
         if validated_data.get("id"):
             links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
@@ -363,7 +363,7 @@ class AreaSerializer(TranslatableModelSerializer):
         return area
 
     def update_links(self, validated_data, parent):
-        language_code = parent.language_code
+        language_code = self.language
 
         if validated_data.get("id"):
             links = Link.objects.language(language_code).filter(id=validated_data.get("id"))

@@ -276,7 +276,7 @@ class PostSerializer(TranslatableModelSerializer):
 
     def update_childs(self, validated_data, child, parent):
         # parent mostly exist at create,
-        language_code = parent.language_code
+        language_code = self.language
         if validated_data.get("id"):
             objs = child.objects.language(language_code).filter(id=validated_data.get("id"))
             if not objs:
@@ -299,7 +299,7 @@ class PostSerializer(TranslatableModelSerializer):
             self.create_child(validated_data, child, parent)
 
     def update_links(self, validated_data, parent):
-        language_code = parent.language_code
+        language_code = self.language
 
         if validated_data.get("id"):
             links = Link.objects.language(language_code).filter(id=validated_data.get("id"))

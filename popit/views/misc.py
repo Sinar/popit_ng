@@ -30,6 +30,7 @@ class GenericParentChildList(BasePopitView):
     # Used with getattr to write less code
     # getattr(parent, child).language(language).get(id=id).
     child_name = None
+    child = None
 
 
     def get_query(self, parent_pk, language=None):
@@ -83,24 +84,28 @@ class GenericContactDetailList(GenericParentChildList):
 
     serializer = ContactDetailSerializer
     child_name = "contact_details"
+    child = ContactDetail
 
 
 class GenericOtherNameList(GenericParentChildList):
 
     serializer = OtherNameSerializer
     child_name = "other_names"
+    child = OtherName
 
 
 class GenericIdentifierList(GenericParentChildList):
 
     serializer = IdentifierSerializer
     child_name = "identifiers"
+    child = Identifier
 
 
 class GenericLinkList(GenericParentChildList):
 
     serializer = LinkSerializer
     child_name = "links"
+    child = Link
 
 
 class GenericParentChildDetail(BasePopitView):
@@ -108,13 +113,14 @@ class GenericParentChildDetail(BasePopitView):
     serializer = None
     parent = None
     child_name = None
+    child = None
 
     def get_object(self, parent, pk, language=None):
         try:
             if language:
                 return getattr(parent, self.child_name).language(language).get(id=pk)
             return getattr(parent, self.child_name).untranslated().get(id=pk)
-        except ContactDetail.DoesNotExist:
+        except self.child.DoesNotExist:
             raise Http404
 
     def get_parent(self, parent_pk, language=None):
@@ -166,24 +172,28 @@ class GenericContactDetailDetail(GenericParentChildDetail):
 
     serializer = ContactDetailSerializer
     child_name = "contact_details"
+    child = ContactDetail
 
 
 class GenericOtherNameDetail(GenericParentChildDetail):
 
     serializer = OtherNameSerializer
     child_name = "other_names"
+    child = OtherName
 
 
 class GenericIdentifierDetail(GenericParentChildDetail):
 
     serializer = IdentifierSerializer
     child_name = "identifiers"
+    child = Identifier
 
 
 class GenericLinkDetail(GenericParentChildDetail):
 
     serializer = LinkSerializer
     child_name = "links"
+    child = Link
 
 
 class GenericParentChildLinkList(BasePopitView):
@@ -209,8 +219,8 @@ class GenericParentChildLinkList(BasePopitView):
 
         try:
             if language:
-                return parent.contact_details.language(language).get(id=pk)
-            return parent.contact_details.untranslated().get(id=pk)
+                return getattr(parent, self.child_name).language(language).get(id=pk)
+            return getattr(parent, self.child_name).untranslated().get(id=pk)
 
         except self.child.DoesNotExist:
             raise Http404

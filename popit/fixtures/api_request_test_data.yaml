@@ -814,6 +814,9 @@
 - model: popit.identifiertranslation
   pk: 8
   fields: {scheme: ic, language_code: ms, master: 94318759d80c4533bcca0971bc516500}
+- model: popit.identifiertranslation
+  pk: 9
+  fields: {scheme: ic, language_code: en, master: a53af5402570442ebac547bb69c3a5a5}
 - model: popit.othernametranslation
   pk: 1
   fields: {name: Jane, family_name: Doe, given_name: Lucky Jane, additional_name: something,
@@ -1633,6 +1636,14 @@
     content_type: [popit, person]
     created_at: 2016-08-02 05:31:47.611617+00:00
     updated_at: 2016-08-02 05:37:15.551347+00:00
+- model: popit.identifier
+  pk: a53af5402570442ebac547bb69c3a5a5
+  fields:
+    identifier: 1321i32190
+    object_id: 078541c9-9081-4082-b28f-29cbb64440cb
+    content_type: [popit, person]
+    created_at: 2016-08-02 06:25:25.314278+00:00
+    updated_at: 2016-08-02 06:25:25.314582+00:00
 - model: popit.identifier
   pk: af7c01b5-1c4f-4c08-9174-3de5ff270bdb
   fields:
@@ -4286,3 +4297,8 @@
     date_joined: 2015-10-02 02:01:13.495365+00:00
     groups: []
     user_permissions: []
+- model: authtoken.token
+  pk: 04afcac1d644e3dbab187d8b2205d355c0d9b951
+  fields:
+    user: [admin]
+    created: 2015-10-12 05:24:56.057275+00:00
