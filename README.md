@@ -48,7 +48,13 @@ python manage.py clean_index
 ```
 
 If you're not on vagrant, change to the directory you install elasticsearch on. I assume that you are doing a manual installation
-for development. 
+for development.
+
+To create new test data
+
+```sh
+$ python manage.py dumpdata popit auth authtoken contenttypes --output popit/fixtures/api_request_test_data.yaml --format yaml --natural-foreign --natural-primary
+```
 
 To load test data
 
