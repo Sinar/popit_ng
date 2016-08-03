@@ -770,66 +770,6 @@ class PersonAPITestCase(APITestCase):
         link = identifier.links.language('en').get(id="9c9a2093-c3eb-4b51-b869-0d3b4ab281fd")
         self.assertEqual(link.note, "this is just a test note")
 
-    def test_create_identifier_unauthorized(self):
-        person_data = {
-            "identifiers": [
-                {
-                    "scheme": "IC",
-                    "identifier": "129031309",
-                }
-            ]
-        }
-        response = self.client.put("/en/persons/ab1a5788e5bae955c048748fa6af0e97/", person_data)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_create_identifier_authorized(self):
-        person_data = {
-            "identifiers": [
-                {
-                    "scheme": "IC",
-                    "identifier": "129031309",
-                }
-            ]
-        }
-        token = Token.objects.get(user__username="admin")
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.put("/en/persons/ab1a5788e5bae955c048748fa6af0e97/", person_data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
-
-        identifier = person_.identifiers.language('en').get(identifier="129031309")
-        self.assertEqual(identifier.scheme, "IC")
-
-    def test_update_identifier_unauthorized(self):
-        person_data = {
-            "identifiers": [
-                {
-                    "id": "34b59cb9-607a-43c7-9d13-dfe258790ebf",
-                    "identifier": "53110322",
-                }
-            ]
-        }
-        # 8497ba86-7485-42d2-9596-2ab14520f1f4
-        response = self.client.put("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/", person_data)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_update_identifier_authorized(self):
-        person_data = {
-            "identifiers": [
-                {
-                    "id": "34b59cb9-607a-43c7-9d13-dfe258790ebf",
-                    "identifier": "53110322",
-                }
-            ]
-        }
-        token = Token.objects.get(user__username="admin")
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.put("/en/persons/8497ba86-7485-42d2-9596-2ab14520f1f4/", person_data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        person_ = Person.objects.language('en').get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
-        identifier = person_.identifiers.language('en').get(id="34b59cb9-607a-43c7-9d13-dfe258790ebf")
-        self.assertEqual(identifier.identifier, '53110322')
-
     def test_create_contact_unauthorized(self):
         person_data = {
             "contact_details": [
