@@ -790,6 +790,12 @@
 - model: popit.contactdetailtranslation
   pk: 17
   fields: {label: null, note: null, language_code: ms, master: 651da7cd-f109-4aaa-b04c-df835fb6831f}
+- model: popit.contactdetailtranslation
+  pk: 18
+  fields: {label: mengster email, note: null, language_code: en, master: 2525224ad1d94ccfac0f1aa38bf3c2de}
+- model: popit.contactdetailtranslation
+  pk: 19
+  fields: {label: telefon sweemeng, note: null, language_code: ms, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
 - model: popit.identifiertranslation
   pk: 1
   fields: {scheme: random, language_code: en, master: af7c01b5-1c4f-4c08-9174-3de5ff270bdb}
@@ -941,6 +947,12 @@
     honorific_prefix: null, honorific_suffix: null, patronymic_name: null, sort_name: null,
     gender: null, summary: '', biography: '', national_identity: null, language_code: ms,
     master: 078541c9-9081-4082-b28f-29cbb64440cb}
+- model: popit.persontranslation
+  pk: 18
+  fields: {name: mengster, family_name: null, given_name: null, additional_name: null,
+    honorific_prefix: null, honorific_suffix: null, patronymic_name: null, sort_name: null,
+    gender: null, summary: '', biography: '', national_identity: null, language_code: ms,
+    master: c2a241a0d1fd4483b60af7dd219de22d}
 - model: popit.person
   pk: 078541c9-9081-4082-b28f-29cbb64440cb
   fields: {email: roger@sinarproject.org, birth_date: null, death_date: null, image: '',
@@ -961,7 +973,7 @@
 - model: popit.person
   pk: c2a241a0d1fd4483b60af7dd219de22d
   fields: {email: null, birth_date: null, death_date: null, image: null, created_at: ! '2016-05-31
-      02:32:03.120373+00:00', updated_at: ! '2016-05-31 02:32:03.120410+00:00'}
+      02:32:03.120373+00:00', updated_at: ! '2016-08-04 01:10:43.550829+00:00'}
 - model: popit.organizationtranslation
   pk: 3
   fields: {name: sinar project, classification: '', abstract: '', description: '',
@@ -1664,6 +1676,17 @@
     created_at: 2015-10-06 00:00:00+00:00
     updated_at: 2015-11-09 00:00:00+00:00
 - model: popit.contactdetail
+  pk: 2525224ad1d94ccfac0f1aa38bf3c2de
+  fields:
+    type: email
+    value: mengster@sinarproject.org
+    valid_from: null
+    valid_until: null
+    object_id: c2a241a0d1fd4483b60af7dd219de22d
+    content_type: [popit, person]
+    created_at: 2016-08-04 01:20:54.249628+00:00
+    updated_at: 2016-08-04 01:20:54.249658+00:00
+- model: popit.contactdetail
   pk: 651da7cd-f109-4aaa-b04c-df835fb6831f
   fields:
     type: phone
@@ -1717,7 +1740,7 @@
     object_id: ab1a5788e5bae955c048748fa6af0e97
     content_type: [popit, person]
     created_at: 2015-10-05 00:00:00+00:00
-    updated_at: 2015-11-09 00:00:00+00:00
+    updated_at: 2016-08-04 01:22:01.797426+00:00
 - model: popit.contact
   pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
   fields:

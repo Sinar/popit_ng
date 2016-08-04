@@ -20,6 +20,7 @@ from popit.serializers.flat import PostFlatSerializer
 import re
 from rest_framework.serializers import ValidationError
 from popit.serializers.misc import IdentifierSerializer
+from popit.serializers.base import BasePopitSerializer
 
 
 class PostMembershipSerializer(TranslatableModelSerializer):
@@ -154,7 +155,7 @@ class PostOrganizationSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
-class PostSerializer(TranslatableModelSerializer):
+class PostSerializer(BasePopitSerializer):
 
     id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     label = CharField(max_length=255, required=False)
@@ -212,25 +213,6 @@ class PostSerializer(TranslatableModelSerializer):
 
         return post
 
-    def create_links(self, validated_data, entity):
-        language_code = self.language
-        validated_data["content_object"] = entity
-        Link.objects.language(language_code).create(**validated_data)
-
-    def create_child(self, validated_data, child, parent):
-        links = validated_data.pop("links", [])
-        language_code = self.language
-        validated_data["content_object"] = parent
-        obj = child.objects.language(language_code).create(**validated_data)
-        for link in links:
-            self.create_links(link, obj)
-
-    def create_area(self, validated_data):
-        language_code = self.language
-        validated_data.pop("language_code", None)
-        area = Area.objects.language(language_code).create(**validated_data)
-        return area
-
     def update(self, instance, data):
         available_language = instance.get_available_languages()
         if not self.language in available_language:
@@ -273,47 +255,6 @@ class PostSerializer(TranslatableModelSerializer):
             self.update_links(link, instance)
 
         return instance
-
-    def update_childs(self, validated_data, child, parent):
-        # parent mostly exist at create,
-        language_code = self.language
-        if validated_data.get("id"):
-            objs = child.objects.language(language_code).filter(id=validated_data.get("id"))
-            if not objs:
-                self.create_child(validated_data, child, parent)
-            else:
-                obj = objs[0]
-
-                links = validated_data.pop("links", [])
-
-                for key, value in validated_data.iteritems():
-                    if key in ("id", "language_code", "created_at" "updated_at"):
-                        continue
-                    setattr(obj, key, value)
-
-                obj.save()
-
-                for link in links:
-                    self.update_links(link, obj)
-        else:
-            self.create_child(validated_data, child, parent)
-
-    def update_links(self, validated_data, parent):
-        language_code = self.language
-
-        if validated_data.get("id"):
-            links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
-            if not links:
-                self.create_links(validated_data, parent)
-            else:
-                link = links[0]
-                link.label = validated_data.get("label", link.label)
-                link.field = validated_data.get("field", link.field)
-                link.url = validated_data.get("url", link.url)
-                link.note = validated_data.get("note", link.note)
-                link.save()
-        else:
-            self.create_links(validated_data, parent)
 
     def to_representation(self, instance):
         data = super(PostSerializer, self).to_representation(instance)
