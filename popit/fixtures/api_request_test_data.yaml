@@ -1066,12 +1066,21 @@
 - model: popit.membershiptranslation
   pk: 5
   fields: {label: null, role: null, language_code: en, master: 7185cab2521c4f6db18b40d8d6506d36}
+- model: popit.membershiptranslation
+  pk: 6
+  fields: {label: null, role: null, language_code: en, master: 62f111b2baae45edbfb2de7282580078}
 - model: popit.membership
   pk: 0a44195b-c3c9-4040-8dbf-be1aa250b700
   fields: {person: ab1a5788e5bae955c048748fa6af0e97, member: null, organization: null,
     post: c1f0f86b-a491-4986-b48d-861b58a3ef6e, on_behalf_of: null, area: 640c0f1d-2305-4d17-97fe-6aa59f079cc4,
     start_date: null, end_date: null, created_at: ! '2015-11-13 01:37:07.640696+00:00',
     updated_at: ! '2015-11-13 01:41:47.306960+00:00'}
+- model: popit.membership
+  pk: 62f111b2baae45edbfb2de7282580078
+  fields: {person: 2439e472-10dc-4f9c-aa99-efddd9046b4a, member: null, organization: null,
+    post: 3eb967bb-23e3-41b6-8cba-54aadac8d918, on_behalf_of: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
+    area: null, start_date: null, end_date: null, created_at: ! '2016-08-04 03:08:04.494723+00:00',
+    updated_at: ! '2016-08-04 03:08:04.494830+00:00'}
 - model: popit.membership
   pk: 7185cab2521c4f6db18b40d8d6506d36
   fields: {person: ab1a5788e5bae955c048748fa6af0e97, member: null, organization: e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec,

@@ -90,6 +90,7 @@ class OrganizationMembershipSerializer(TranslatableModelSerializer):
     organization = OrganizationFlatSerializer(required=False)
     member_id = CharField(max_length=255, required=False, allow_null=True)
     on_behalf_of_id = CharField(max_length=255, required=False, allow_null=True)
+    on_behalf_of = OrganizationFlatSerializer(required=False)
     area_id = CharField(max_length=255, required=False, allow_null=True)
     post_id = CharField(max_length=255, required=False, allow_null=True)
     post = PostFlatSerializer(required=False)

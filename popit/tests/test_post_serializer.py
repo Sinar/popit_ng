@@ -414,3 +414,10 @@ class PostSerializerTestCase(TestCase):
         serializer = PostSerializer(post, language="ms")
         data = serializer.data
         self.assertEqual(data["organization"]["language_code"], "ms")
+
+    def test_fetch_post_membership_on_behalf_of_expanded(self):
+        post = Post.objects.untranslated().get(id="3eb967bb-23e3-41b6-8cba-54aadac8d918")
+        serializer = PostSerializer(post, language="en")
+        data = serializer.data
+        membership = data["memberships"][0]
+        self.assertEqual(membership["on_behalf_of"]["id"],"3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")

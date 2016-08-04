@@ -536,3 +536,10 @@ class OrganizationSerializerTestCase(TestCase):
         self.assertTrue(data["parent"]["identifiers"])
         for identifier in data["parent"]["identifiers"]:
             self.assertEqual(identifier["language_code"], "ms")
+
+    def test_fetch_organization_membership_on_behalf_of_expanded(self):
+        organization = Organization.objects.untranslated().get(id="e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec")
+        serializer = OrganizationSerializer(organization, language="en")
+        data = serializer.data
+        memberships = data["memberships"]
+        self.assertEqual(memberships[0]["on_behalf_of"]["id"],"3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
