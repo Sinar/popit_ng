@@ -10,6 +10,7 @@ from rest_framework.serializers import CharField
 from popit.serializers.exceptions import ContentObjectNotAvailable
 from popit.models import Area
 from rest_framework.serializers import ValidationError
+from popit.serializers.base import BasePopitSerializer
 import re
 
 
@@ -42,7 +43,7 @@ class LinkSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
-class ContactDetailSerializer(TranslatableModelSerializer):
+class ContactDetailSerializer(BasePopitSerializer):
 
     id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
@@ -62,11 +63,6 @@ class ContactDetailSerializer(TranslatableModelSerializer):
             self.create_links(link, contact)
         return contact
 
-    def create_links(self, validated_data, entity):
-        language_code = self.language
-        validated_data["content_object"] = entity
-        Link.objects.language(language_code).create(**validated_data)
-
     def update(self, instance, data):
         available_languages = instance.get_available_languages()
         if not self.language in available_languages:
@@ -82,23 +78,6 @@ class ContactDetailSerializer(TranslatableModelSerializer):
         for link in links:
             self.update_links(link, instance)
         return instance
-
-    def update_links(self, validated_data, parent):
-        language_code = self.language
-
-        if validated_data.get("id"):
-            links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
-            if not links:
-                self.create_links(validated_data, parent)
-            else:
-                link = links[0]
-                link.label = validated_data.get("label", link.label)
-                link.field = validated_data.get("field", link.field)
-                link.url = validated_data.get("url", link.url)
-                link.note = validated_data.get("note", link.note)
-                link.save()
-        else:
-            self.create_links(validated_data, parent)
 
     def to_representation(self, instance):
         data = super(ContactDetailSerializer, self).to_representation(instance)
@@ -125,7 +104,7 @@ class ContactDetailSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
-class IdentifierSerializer(TranslatableModelSerializer):
+class IdentifierSerializer(BasePopitSerializer):
 
     id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
@@ -144,13 +123,6 @@ class IdentifierSerializer(TranslatableModelSerializer):
 
         return identifier
 
-    def create_links(self, validated_data, entity):
-        language_code = self.language
-        # Really where there language code come from!
-        validated_data.pop("language_code", None)
-        validated_data["content_object"] = entity
-        Link.objects.language(language_code).create(**validated_data)
-
     def update(self, instance, data):
         available_languages = instance.get_available_languages()
         if not self.language in available_languages:
@@ -163,23 +135,6 @@ class IdentifierSerializer(TranslatableModelSerializer):
             self.update_links(link, instance)
 
         return instance
-
-    def update_links(self, validated_data, parent):
-        language_code = self.language
-
-        if validated_data.get("id"):
-            links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
-            if not links:
-                self.create_links(validated_data, parent)
-            else:
-                link = links[0]
-                link.label = validated_data.get("label", link.label)
-                link.field = validated_data.get("field", link.field)
-                link.url = validated_data.get("url", link.url)
-                link.note = validated_data.get("note", link.note)
-                link.save()
-        else:
-            self.create_links(validated_data, parent)
 
     def to_representation(self, instance):
         data = super(IdentifierSerializer, self).to_representation(instance)
@@ -196,7 +151,7 @@ class IdentifierSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
-class OtherNameSerializer(TranslatableModelSerializer):
+class OtherNameSerializer(BasePopitSerializer):
 
     id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
@@ -220,11 +175,6 @@ class OtherNameSerializer(TranslatableModelSerializer):
         for link in links:
             self.create_links(link, othername)
         return othername
-
-    def create_links(self, validated_data, entity):
-        language_code = self.language
-        validated_data["content_object"] = entity
-        Link.objects.language(language_code).create(**validated_data)
 
     def update(self, instance, data):
         available_languages = instance.get_available_languages()
@@ -250,23 +200,6 @@ class OtherNameSerializer(TranslatableModelSerializer):
         for link in links:
             self.update_links(link, instance)
         return instance
-
-    def update_links(self, validated_data, parent):
-        language_code = self.language
-
-        if validated_data.get("id"):
-            links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
-            if not links:
-                self.create_links(validated_data, parent)
-            else:
-                link = links[0]
-                link.label = validated_data.get("label", link.label)
-                link.field = validated_data.get("field", link.field)
-                link.url = validated_data.get("url", link.url)
-                link.note = validated_data.get("note", link.note)
-                link.save()
-        else:
-            self.create_links(validated_data, parent)
 
     def to_representation(self, instance):
         data = super(OtherNameSerializer, self).to_representation(instance)
@@ -297,7 +230,7 @@ class OtherNameSerializer(TranslatableModelSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
-class AreaSerializer(TranslatableModelSerializer):
+class AreaSerializer(BasePopitSerializer):
     id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     links = LinkSerializer(many=True, required=False)
 
@@ -319,11 +252,6 @@ class AreaSerializer(TranslatableModelSerializer):
             self.create_links(link, area)
 
         return area
-
-    def create_links(self, validated_data, parent):
-        language_code = self.language
-        validated_data["content_object"] = parent
-        Link.objects.language(language_code).create(**validated_data)
 
     def update(self, instance, data):
         available_languages = instance.get_available_languages()
@@ -361,23 +289,6 @@ class AreaSerializer(TranslatableModelSerializer):
         for link in links:
             self.update_links(link, area)
         return area
-
-    def update_links(self, validated_data, parent):
-        language_code = self.language
-
-        if validated_data.get("id"):
-            links = Link.objects.language(language_code).filter(id=validated_data.get("id"))
-            if not links:
-                self.create_links(validated_data, parent)
-            else:
-                link = links[0]
-                link.label = validated_data.get("label", link.label)
-                link.field = validated_data.get("field", link.field)
-                link.url = validated_data.get("url", link.url)
-                link.note = validated_data.get("note", link.note)
-                link.save()
-        else:
-            self.create_links(validated_data, parent)
 
     def to_representation(self, instance):
         data = super(AreaSerializer, self).to_representation(instance)
