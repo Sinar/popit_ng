@@ -381,13 +381,7 @@ class BulkIndexer(object):
                 '_type': doc_type,
                 '_id': es_id,
             }
-        elif ops == "index":
-            data = {
-                '_op_type': ops,
-                '_index': self.index,
-                '_type': doc_type,
-                '_source': body
-            }
+        
         else:
             if es_id:
                 data = {
