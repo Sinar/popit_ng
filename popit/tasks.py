@@ -223,8 +223,13 @@ def prepare_delete(entity, entity_id):
 def perform_delete(entity, entity_id):
     dep_store = dependency.DependencyStore()
     graph = dep_store.fetch_graph(entity, entity_id)
-    for node in graph:
-        update_node(node)
+
+    if len(graph) > 1:
+        bulk_indexer = search.BulkIndexer()
+        bulk_indexer.index_data(graph)
+    else:
+        for node in graph:
+            update_node(node)
 
 
 # The reason why we have 2 phase update for delete is because we need to maintain relationship
@@ -233,8 +238,12 @@ def perform_delete(entity, entity_id):
 def perform_update(entity, entity_id):
     instances = ES_MODEL_MAP[entity].objects.language("all").filter(id=entity_id)
     graph = dependency.build_graph(instances[0], "update")
-    for node in graph:
-        update_node(node)
+    if len(graph) > 1:
+        bulk_indexer = search.BulkIndexer()
+        bulk_indexer.index_data(graph)
+    else:
+        for node in graph:
+            update_node(node)
 
 
 def update_node(node):

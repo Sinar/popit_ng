@@ -17,7 +17,12 @@ from rest_framework.response import Response
 from collections import OrderedDict
 from urllib import urlencode
 from django.core.urlresolvers import reverse
+import sys
+import json
+from popit_search.consts import ES_MODEL_MAP
+from popit_search.consts import ES_SERIALIZER_MAP
 
+MAX_DOC_SIZE = settings.MAX_DOC_SIZE
 
 log_path = os.path.join(settings.BASE_DIR, "log/popit_search.log")
 logging.basicConfig(filename=log_path, level=logging.DEBUG)
@@ -301,6 +306,118 @@ class SerializerSearch(object):
         ]))
 
 
+class BulkIndexer(object):
+    '''
+    Data is run in this format
+    {
+        '_op_type': 'delete',
+        '_index': 'index-name',
+        '_type': 'document',
+        '_id': 42,
+    }
+    {
+        '_op_type': 'update',
+        '_index': 'index-name',
+        '_type': 'document',
+        '_id': 42,
+        'doc': {'question': 'The life, universe and everything.'}
+    }
+
+    input data is in this format
+    [('persons', u'078541c9-9081-4082-b28f-29cbb64440cb', 'update'),
+     ('memberships', u'b351cdc2-6961-4fc7-9d61-08fca66e1d44', 'update'),
+     ('organizations', u'3d62d9ea-0600-4f29-8ce6-f7720fd49aa3', 'update'),
+     ('posts', u'c1f0f86b-a491-4986-b48d-861b58a3ef6e', 'update'),
+     ('memberships', u'0a44195b-c3c9-4040-8dbf-be1aa250b700', 'update'),
+     ('persons', u'ab1a5788e5bae955c048748fa6af0e97', 'update'),
+     ('memberships', u'7185cab2521c4f6db18b40d8d6506d36', 'update'),
+     ('organizations', u'e4e9fcbf-cccf-44ff-acf6-1c5971ec85ec', 'update'),
+     ('posts', u'3eb967bb-23e3-41b6-8cba-54aadac8d918', 'update'),
+     ('memberships', u'62f111b2baae45edbfb2de7282580078', 'update'),
+     ('persons', u'2439e472-10dc-4f9c-aa99-efddd9046b4a', 'update'),
+     ('posts', u'2c6982c2-504a-4e0d-8949-dade5f9e494e', 'update'),
+     ('memberships', u'b5464931-d3a9-4250-a645-204740c1bd9e', 'update'),
+     ('persons', u'8497ba86-7485-42d2-9596-2ab14520f1f4', 'update'),
+     ('organizations', u'612943b1-864d-4188-8d79-ca387ed19b32', 'update')]
+    '''
+    def __init__(self, index=settings.ES_INDEX):
+        self.es = elasticsearch.Elasticsearch(hosts=settings.ES_HOST)
+        self.index = index
+
+    def index_data(self, data, max_size=MAX_DOC_SIZE):
+        for item in data:
+
+            entity_name, entity_id, ops = item
+            entities = ES_MODEL_MAP[entity_name].objects.language("all").filter(id=entity_id)
+            current_size = 0
+            to_index = []
+            for entity in entities:
+                es_id = self.fetch_es_id(entity)
+                serializer = ES_SERIALIZER_MAP[entity_name](entity, language=entity.language_code)
+                body = serializer.data
+                entry = self.create_bulk_entry(
+                    es_id=es_id, doc_type=entity, ops=ops, body=body
+                )
+                to_index.append(entry)
+                json_str = json.dumps(body)
+                current_size = current_size + sys.getsizeof(json_str)
+                if current_size > max_size:
+                    self.es.bulk(index=self.index, body=to_index, refresh=True)
+                    to_index = []
+                    current_size = 0
+
+            # To index remaining item not being index
+            if to_index:
+                self.es.bulk(index=self.index, body=to_index, refresh=True)
+
+    def create_bulk_entry(self, es_id, doc_type, ops, body=None):
+        if ops == "delete":
+            data = {
+                '_op_type': ops,
+                '_index': self.index,
+                '_type': doc_type,
+                '_id': es_id,
+            }
+        elif ops == "index":
+            data = {
+                '_op_type': ops,
+                '_index': self.index,
+                '_type': doc_type,
+                '_source': body
+            }
+        else:
+            if es_id:
+                data = {
+                    '_op_type': ops,
+                    '_index': self.index,
+                    '_type': doc_type,
+                    '_id': es_id,
+                    '_source': body
+                }
+            else:
+                data = {
+                    '_op_type': 'index',
+                    '_index': self.index,
+                    '_type': doc_type,
+                    '_source': body
+                }
+
+        return data
+
+    def fetch_es_id(self, entity):
+        query = "id:%s AND language:%s" % (entity.id, entity.language_code)
+        result = self.es.search(index=self.index, doc_type=entity, q=query)
+        _id = None
+        # should have multiple id if have multiple translation
+        hits = result["hits"]["hits"]
+
+        if not hits:
+            # There should only be 1 instance of data with entity.id for 1 language.
+            # Only consider the first one if multiple exist, and fix the first
+            _id = hits[0]["_id"]
+        return _id
+
+
 class SerializerSearchNotFoundException(Exception):
     pass
 
@@ -319,53 +436,34 @@ class SerializerSearchDocNotSetException(Exception):
 
 def popit_indexer(entity=""):
     count = 0
+    bulk_indexer = BulkIndexer()
     if not entity or entity == "persons":
         person_indexer = SerializerSearch("persons")
         persons = Person.objects.language("all").all()
+        to_index = []
         for person in persons:
-            try:
-                logging.warn("Indexing %s with %s for language %s" % (person.name, person.id, person.language_code))
-                count = count + 1
-                status=person_indexer.add(person, PersonSerializer)
-                logging.warn(status)
-            except SerializerSearchInstanceExist:
-                logging.warn("Instance %s with %s for language %s exist" % (person.name, person.id, person.language_code))
+            to_index.append(("persons", person.id, "create"))
 
     if not entity or entity == "organizations":
         org_indexer = SerializerSearch("organizations")
+        to_index = []
         organizations = Organization.objects.language("all").all()
         for organization in organizations:
-            try:
-                logging.warn("Indexing %s with %s for language %s" % (organization.name, organization.id, organization.language_code))
-                count = count + 1
-                status=org_indexer.add(organization, OrganizationSerializer)
-                logging.warn(status)
-            except SerializerSearchInstanceExist:
-                logging.warn("Instance %s with %s for language %s exist" % (organization.name, organization.id, organization.language_code))
+            to_index.append(("organizations", organization.id, "create"))
 
     if not entity or entity == "posts":
         post_indexer = SerializerSearch("posts")
+        to_index = []
         posts = Post.objects.language("all").all()
         for post in posts:
-            try:
-                logging.warn("Indexing %s with %s for language %s" % (post.label, post.id, post.language_code))
-                count = count + 1
-                status=post_indexer.add(post, PostSerializer)
-                logging.warn(status)
-            except SerializerSearchInstanceExist:
-                logging.warn("Instance %s with %s for language %s exist" % (post.label, post.id, post.language_code))
+            to_index.append(("posts", post.id, "create"))
 
     if not entity or entity == "memberships":
         mem_indexer = SerializerSearch("memberships")
+        to_index = []
         memberships = Membership.objects.language("all").all()
         for membership in memberships:
-            try:
-                logging.warn("Indexing id %s for language %s" % (membership.id, membership.language_code))
-                count = count + 1
-                status=mem_indexer.add(membership, MembershipSerializer)
-                logging.warn(status)
-            except SerializerSearchInstanceExist:
-                logging.warn("Instance with %s for language %s exist" % (membership.id, membership.language_code))
+            to_index.append(("memberships", membership.id, "create"))
 
 
 def remove_popit_index():

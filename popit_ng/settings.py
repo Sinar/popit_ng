@@ -187,6 +187,8 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
 # Where we tell the system how to dispose data
 ES_DATA_BIN = "redis://localhost:6379/2"
 
+MAX_DOC_SIZE = 1000000 * 10 # In bytes, get from sys.getsizeof
+
 try:
     from settings_local import *
 except:
