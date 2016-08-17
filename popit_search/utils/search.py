@@ -349,10 +349,12 @@ class BulkIndexer(object):
         for item in data:
 
             entity_name, entity_id, ops = item
+            logging.info("Logging %s with %s for %s" % (entity_name, entity_id, ops))
             entities = ES_MODEL_MAP[entity_name].objects.language("all").filter(id=entity_id)
             current_size = 0
             to_index = []
             for entity in entities:
+                logging.info("using %s version" % entity.language_code)
                 es_id = self.fetch_es_id(entity)
                 serializer = ES_SERIALIZER_MAP[entity_name](entity, language=entity.language_code)
                 body = serializer.data
@@ -362,6 +364,8 @@ class BulkIndexer(object):
                 to_index.append(entry)
                 json_str = json.dumps(body)
                 current_size = current_size + sys.getsizeof(json_str)
+                logging.info("Current batch size %s" % current_size)
+                logging.info("%s item in current batch" % len(to_index))
                 if current_size > max_size:
                     helpers.bulk(self.es, to_index)
                     to_index = []
