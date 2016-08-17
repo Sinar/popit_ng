@@ -112,6 +112,11 @@ class OrganizationMembershipSerializer(TranslatableModelSerializer):
             organization_serializer = OrganizationFlatSerializer(organization, language=instance.language_code)
             data["organization"] = organization_serializer.data
 
+        if instance.on_behalf_of:
+            on_behalf_of = Organization.objects.untranslated().get(id=instance.on_behalf_of_id)
+            on_behalf_of_serializer = OrganizationFlatSerializer(on_behalf_of, language=instance.language_code)
+            data["on_behalf_of"] = on_behalf_of_serializer.data
+
         if instance.post:
             post = Post.objects.untranslated().get(id=instance.post_id)
             post_serializer = PostFlatSerializer(post, language=instance.language_code)

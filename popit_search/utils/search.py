@@ -411,7 +411,6 @@ class BulkIndexer(object):
         query = "id:%s AND language:%s" % (entity.id, entity.language_code)
         result = self.es.search(index=self.index, doc_type=entity, q=query)
         _id = None
-        # should have multiple id if have multiple translation
         hits = result["hits"]["hits"]
 
         if hits:
@@ -442,30 +441,23 @@ def popit_indexer(entity=""):
     bulk_indexer = BulkIndexer()
     to_index = []
     if not entity or entity == "persons":
-        person_indexer = SerializerSearch("persons")
-        persons = Person.objects.language("all").all()
+        persons = Person.objects.untranslated().all()
 
         for person in persons:
             to_index.append(("persons", person.id, "create"))
 
     if not entity or entity == "organizations":
-        org_indexer = SerializerSearch("organizations")
-
-        organizations = Organization.objects.language("all").all()
+        organizations = Organization.objects.untranslated().all()
         for organization in organizations:
             to_index.append(("organizations", organization.id, "create"))
 
     if not entity or entity == "posts":
-        post_indexer = SerializerSearch("posts")
-
-        posts = Post.objects.language("all").all()
+        posts = Post.objects.untranslated().all()
         for post in posts:
             to_index.append(("posts", post.id, "create"))
 
     if not entity or entity == "memberships":
-        mem_indexer = SerializerSearch("memberships")
-
-        memberships = Membership.objects.language("all").all()
+        memberships = Membership.objects.untranslated().all()
         for membership in memberships:
             to_index.append(("memberships", membership.id, "create"))
 
