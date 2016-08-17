@@ -359,7 +359,7 @@ class BulkIndexer(object):
 
             for entity in entities:
                 logging.info("using %s version" % entity.language_code)
-                es_id = self.fetch_es_id(entity)
+                es_id = self.fetch_es_id(entity, entity_name)
                 serializer = ES_SERIALIZER_MAP[entity_name](entity, language=entity.language_code)
                 body = serializer.data
                 entry = self.create_bulk_entry(
@@ -409,9 +409,9 @@ class BulkIndexer(object):
 
         return data
 
-    def fetch_es_id(self, entity):
+    def fetch_es_id(self, entity, entity_name):
         query = "id:%s AND language:%s" % (entity.id, entity.language_code)
-        result = self.es.search(index=self.index, doc_type=entity, q=query)
+        result = self.es.search(index=self.index, doc_type=entity_name, q=query)
         _id = None
         hits = result["hits"]["hits"]
 
