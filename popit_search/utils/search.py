@@ -1,4 +1,5 @@
 import elasticsearch
+from elasticsearch import helpers
 from elasticsearch.exceptions import NotFoundError
 from django.conf import settings
 from django.db import models
@@ -356,21 +357,23 @@ class BulkIndexer(object):
                 serializer = ES_SERIALIZER_MAP[entity_name](entity, language=entity.language_code)
                 body = serializer.data
                 entry = self.create_bulk_entry(
-                    es_id=es_id, doc_type=entity, ops=ops, body=body
+                    es_id=es_id, doc_type=entity_name, ops=ops, body=body
                 )
                 to_index.append(entry)
                 json_str = json.dumps(body)
                 current_size = current_size + sys.getsizeof(json_str)
                 if current_size > max_size:
-                    self.es.bulk(index=self.index, body=to_index, refresh=True)
+                    helpers.bulk(self.es, to_index)
                     to_index = []
                     current_size = 0
 
             # To index remaining item not being index
             if to_index:
-                self.es.bulk(index=self.index, body=to_index, refresh=True)
+                helpers.bulk(self.es, to_index)
 
     def create_bulk_entry(self, es_id, doc_type, ops, body=None):
+        if body:
+            body = sanitize_data(body)
         if ops == "delete":
             data = {
                 '_op_type': ops,
@@ -411,7 +414,7 @@ class BulkIndexer(object):
         # should have multiple id if have multiple translation
         hits = result["hits"]["hits"]
 
-        if not hits:
+        if hits:
             # There should only be 1 instance of data with entity.id for 1 language.
             # Only consider the first one if multiple exist, and fix the first
             _id = hits[0]["_id"]
@@ -437,35 +440,80 @@ class SerializerSearchDocNotSetException(Exception):
 def popit_indexer(entity=""):
     count = 0
     bulk_indexer = BulkIndexer()
+    to_index = []
     if not entity or entity == "persons":
         person_indexer = SerializerSearch("persons")
         persons = Person.objects.language("all").all()
-        to_index = []
+
         for person in persons:
             to_index.append(("persons", person.id, "create"))
 
     if not entity or entity == "organizations":
         org_indexer = SerializerSearch("organizations")
-        to_index = []
+
         organizations = Organization.objects.language("all").all()
         for organization in organizations:
             to_index.append(("organizations", organization.id, "create"))
 
     if not entity or entity == "posts":
         post_indexer = SerializerSearch("posts")
-        to_index = []
+
         posts = Post.objects.language("all").all()
         for post in posts:
             to_index.append(("posts", post.id, "create"))
 
     if not entity or entity == "memberships":
         mem_indexer = SerializerSearch("memberships")
-        to_index = []
+
         memberships = Membership.objects.language("all").all()
         for membership in memberships:
             to_index.append(("memberships", membership.id, "create"))
+
+    bulk_indexer.index_data(to_index)
 
 
 def remove_popit_index():
     person_indexer = SerializerSearch("persons")
     person_indexer.delete_index()
+
+
+def sanitize_data(data):
+    output = {}
+    for key in data:
+        if re.match("\w+_date", key):
+            if data[key]:
+                new_date = parse(data[key], default=default_date)
+                output[key] = new_date.strftime("%Y-%m-%dT%H%M%S")
+            else:
+                output[key] = data[key]
+
+        elif key == "valid_from" or key == "valid_until":
+            new_date = parse(data[key], default=default_date)
+            output[key] = new_date.strftime("%Y-%m-%dT%H%M%S")
+
+        elif isinstance(data[key], list):
+            temp = []
+            for item in data[key]:
+
+                temp_output = {}
+                for sub_key in item:
+                    if re.match("\w+_date", sub_key):
+                        if item[sub_key]:
+                            new_date = parse(item[sub_key], default=default_date)
+                            temp_output[sub_key] = new_date.strftime("%Y-%m-%dT%H%M%S")
+                        else:
+                            temp_output[sub_key] = item[sub_key]
+                    elif sub_key == "valid_from" or sub_key == "valid_until":
+                        if item[sub_key]:
+                            new_date = parse(item[sub_key], default=default_date)
+                            temp_output[sub_key] = new_date.strftime("%Y-%m-%dT%H%M%S")
+                        else:
+                            temp_output[sub_key] = item[sub_key]
+                    else:
+                        temp_output[sub_key] = item[sub_key]
+                temp.append(temp_output)
+            output[key] = temp
+
+        else:
+            output[key] = data[key]
+    return output
