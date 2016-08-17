@@ -345,14 +345,18 @@ class BulkIndexer(object):
         self.es = elasticsearch.Elasticsearch(hosts=settings.ES_HOST)
         self.index = index
 
+        if not self.es.indices.exists(index=self.index):
+            self.es.indices.create(index=self.index)
+
     def index_data(self, data, max_size=MAX_DOC_SIZE):
+        current_size = 0
+        to_index = []
         for item in data:
 
             entity_name, entity_id, ops = item
             logging.info("Logging %s with %s for %s" % (entity_name, entity_id, ops))
             entities = ES_MODEL_MAP[entity_name].objects.language("all").filter(id=entity_id)
-            current_size = 0
-            to_index = []
+
             for entity in entities:
                 logging.info("using %s version" % entity.language_code)
                 es_id = self.fetch_es_id(entity)
@@ -371,9 +375,9 @@ class BulkIndexer(object):
                     to_index = []
                     current_size = 0
 
-            # To index remaining item not being index
-            if to_index:
-                helpers.bulk(self.es, to_index)
+        # To index remaining item not being index
+        if to_index:
+            helpers.bulk(self.es, to_index)
 
     def create_bulk_entry(self, es_id, doc_type, ops, body=None):
         if body:
