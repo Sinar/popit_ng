@@ -13,7 +13,7 @@ class DependencyGraphTestCase(TestCase):
     def test_instance_exist_from_graph(self):
         # It can be any language version, the foreign key are not translated, why would they?
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        graph = dependency.build_graph(organization, "update", memory=set())
+        graph = dependency.build_graph(organization, "update")
 
         for node in graph:
             entity, entity_id, action = node
@@ -23,7 +23,7 @@ class DependencyGraphTestCase(TestCase):
 
     def test_instance_exist_in_graph(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        graph = dependency.build_graph(organization, "update", memory=set())
+        graph = dependency.build_graph(organization, "update")
         memory = set(graph)
 
         # Just a sample of what is in the the graph is good enough
@@ -40,7 +40,7 @@ class DependencyGraphTestCase(TestCase):
 
     def test_delete_action(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
-        graph = dependency.build_graph(organization, "delete", memory=set())
+        graph = dependency.build_graph(organization, "delete")
         memory = set(graph)
 
         for membership in organization.memberships.all():

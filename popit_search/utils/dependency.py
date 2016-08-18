@@ -8,42 +8,56 @@ from django.db import models
 
 
 # a dependency graph is essentially a list of tuple to show all entity
-def build_graph(entity, action, memory=set()):
-    graph = []
-    current_object = entity._meta.model_name + "s" # Pluralize the name, i think it might fail. ES Refer object this way
+def build_graph(entity, action):
+    graph = set()
+
+    current_object = entity._meta.model_name + "s"  # Pluralize the name, ES Refer object this way
     current_id = entity.id
     current_node = (current_object, current_id, action)
 
-    # TODO: Find a more elegant way to have a stop condition
-    # Not memory efficient, but I don't care I am on a schedule.
-    # Big idea, if this node is processed, stop!
-    if current_node in memory:
-        return graph
-    memory.add(current_node)
-    graph.append(current_node)
+    graph.add(current_node)
 
-
-    # content_type, content_object comes hand in hand
+    # this should show all field that show relationship, foreign key and what not
+    # I don't care about translated field, the goal is to traverse through relationship
     fields = entity._meta.get_fields()
+
     for field in fields:
         field_name = field.name
-
-        # The reason to check this way is because some are related object not the actual object
         if field_name in ("organization", "on_behalf_of", "parent", "person", "post", "content_object"):
             temp_entity = getattr(entity, field_name)
             if not isinstance(temp_entity, models.Model):
                 continue
             if temp_entity:
-                temp = build_graph(temp_entity, "update", memory=memory)
-                graph.extend(temp)
-        # This is a child relationship, so if parent deleted, therefore child is deleted
-        elif field_name in ("memberships", "posts", "children"):
+                current_node = (temp_entity._meta.model_name + "s", temp_entity.id, "update")
+                graph.add(current_node)
+
+        elif field_name == "memberships":
             temp_entities = getattr(entity, field_name)
             for temp_entity in temp_entities.all():
-                temp = build_graph(temp_entity, action, memory=memory)
-                graph.extend(temp)
+                # add current item to be index
+                current_node = ("memberships", temp_entity.id, action)
+                graph.add(current_node)
 
-    return graph
+                # Now membership have organization, person, post or both
+                person_node = ("persons", temp_entity.person.id, "update")
+                graph.add(person_node)
+
+                # It might not have, because post have org. We kind of automatically populate it, except for old entry
+                if temp_entity.organization:
+                    org_node = ("organizations", temp_entity.organization_id, "update")
+                    graph.add(org_node)
+
+                if temp_entity.post:
+                    post_node = ("posts", temp_entity.post_id, "update")
+                    graph.add(post_node)
+
+        elif field_name in ("posts", "children"): # For post and children org just index this post or org
+            temp_entities = getattr(entity, field_name)
+            for temp_entity in temp_entities.all():
+                current_node = (temp_entity._meta.model_name + "s", temp_entity.id, action)
+                graph.add(current_node)
+
+    return list(graph)
 
 
 class DependencyStore(object):
