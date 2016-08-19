@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from popit_search.utils.search import SerializerSearch
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny
 from rest_framework.exceptions import ParseError
 import logging
 from popit.views.base import BasePopitView
@@ -147,6 +148,39 @@ class GenericRawSearchView(BasePopitView):
                 "q parameter is required, data format can be found at https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
         result = search.raw_query(q)
         return Response(result)
+
+    def post(self, request, **kwargs):
+        data = request.data
+        search = SerializerSearch(None)
+        result = search.raw_query(query_body=data)
+        return Response(result)
+
+
+class AdvanceSearchView(APIView):
+    permission_classes = (
+        AllowAny,
+    )
+
+    def get(self, request, entity, **kwargs):
+        search = SerializerSearch(None)
+        q = request.query_params.get("q")
+        size = request.query_params.get("size", "10")
+        from_ = request.query_params.get("from", "0")
+        if not q:
+            raise ParseError(
+                "q parameter is required, data format can be found at https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
+        result = search.raw_query(query=q, entity=entity, size=int(size), from_=int(from_))
+        return Response(result)
+
+    def post(self, request, entity, **kwargs):
+        data = request.data
+        
+        size = request.query_params.get("size", "10")
+        from_ = request.query_params.get("from", "0")
+        search = SerializerSearch(None)
+        result = search.raw_query(query_body=data, entity=entity, size=int(size), from_=int(from_))
+        return Response(result)
+
 
 class EntityNotIndexedException(Exception):
     pass

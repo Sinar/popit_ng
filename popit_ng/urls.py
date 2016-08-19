@@ -20,6 +20,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from popit.views import *
 from popit_search.views import GenericSearchView
 from popit_search.views import GenericRawSearchView
+from popit_search.views import AdvanceSearchView
 from rest_framework.authtoken import views as token_view
 
 
@@ -37,6 +38,7 @@ if "rosetta" in settings.INSTALLED_APPS:
 api_urls = [
     url(r'^api-token-auth/?$', token_view.obtain_auth_token),
     url(r'^rawsearch/?$', GenericRawSearchView.as_view(), name="rawsearch"),
+    url(r'^advancesearch/(?P<entity>\w+)/?$', AdvanceSearchView.as_view(), name="advance_search"),
     url(r'^(?P<language>\w{2})/search/(?P<index_name>\w+)/?$', GenericSearchView.as_view(), name="search"),
 
     url(r'^(?P<language>\w{2})/posts/(?P<parent_pk>[-\w]+)/contact_details/(?P<child_pk>[-\w]+)/citations/(?P<field>\w+)/(?P<link_id>\w+)/?$',

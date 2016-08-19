@@ -148,12 +148,23 @@ class SerializerSearch(object):
             except NotFoundError:
                 logging.warn("No index found, but it's fine")
 
-    def raw_query(self, query=None):
+    def raw_query(self, query=None, query_body=None, entity=None, size=api_settings.PAGE_SIZE, from_=0):
         # Mostly for debugging, also allows for tuning of search.
         if query:
-            result = self.es.search(self.index, q=query)
+            if entity:
+                result = self.es.search(self.index, doc_type=entity, q=query, size=size, from_=from_)
+            else:
+                result = self.es.search(self.index, q=query, size=size, from_=from_)
+        elif query_body:
+            if entity:
+                result = self.es.search(self.index, body=query_body, doc_type=entity, size=size, from_=from_)
+            else:
+                result = self.es.search(self.index, body=query_body, doc_type=entity, size=size, from_=from_)
         else:
-            result = self.es.search(self.index)
+            if entity:
+                result = self.es.search(self.index, doc_type=entity, size=size, from_=from_)
+            else:
+                result = self.es.search(self.index, size=size, from_=from_)
         return result
 
     def delete_index(self):

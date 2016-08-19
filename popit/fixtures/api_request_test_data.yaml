@@ -959,7 +959,7 @@
     created_at: ! '2015-11-13 01:24:31.461419+00:00', updated_at: ! '2016-07-06 01:58:11.697448+00:00'}
 - model: popit.person
   pk: 2439e472-10dc-4f9c-aa99-efddd9046b4a
-  fields: {email: '', birth_date: '', death_date: '', image: '', created_at: ! '2015-12-08
+  fields: {email: '', birth_date: null, death_date: null, image: '', created_at: ! '2015-12-08
       12:04:52.113864+00:00', updated_at: ! '2015-12-08 12:04:52.113886+00:00'}
 - model: popit.person
   pk: 8497ba86-7485-42d2-9596-2ab14520f1f4
