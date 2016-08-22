@@ -69,8 +69,23 @@ class AreaSerializerTestCase(TestCase):
         area = Area.objects.language("ms").get(id="b0c2dbaba8ea476f91db1e3c2320dcb7")
         self.assertEqual(area.classification, "bandar")
 
+    def test_parent_area_exist(self):
+        area = Area.objects.untranslated().get(id="802be15a7483442ab9ecd521410269fa")
+        serializer = AreaSerializer(area, language="en")
 
+        data = serializer.data
+        self.assertTrue("parent" in data)
+        self.assertEqual(data["parent"]["id"], "5ea50458870942b1b2ed2370fa9c779b")
 
+    def test_children_area_exist(self):
+        area = Area.objects.untranslated().get(id="5ea50458870942b1b2ed2370fa9c779b")
+        serializer = AreaSerializer(area, language="en")
 
+        data = serializer.data
+        self.assertTrue("children" in data)
+        test_list = []
+        for i in data["children"]:
+            test_list.append(i["id"])
 
+        self.assertTrue("802be15a7483442ab9ecd521410269fa" in test_list)
 
