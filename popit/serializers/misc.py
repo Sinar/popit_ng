@@ -230,8 +230,21 @@ class OtherNameSerializer(BasePopitSerializer):
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 
+class AreaFlatSerializer(BasePopitSerializer):
+    id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
+
+    links = LinkSerializer(many=True, required=False)
+
+    class Meta:
+        model = Area
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
 class AreaSerializer(BasePopitSerializer):
     id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
+
+    parent = AreaFlatSerializer(required=False)
+    children = AreaFlatSerializer(required=False, many=True)
     links = LinkSerializer(many=True, required=False)
 
     # Why create and update? Because we need to create an API endpoint to import data from mapit
