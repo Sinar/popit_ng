@@ -2,68 +2,10 @@ from rest_framework.test import APITestCase
 from popit.signals.handlers import *
 from popit.models import *
 from rest_framework import status
+from popit.tests.base_testcase import BasePopitAPITestCase
 
 
-class OrganizationCitationAPITestCase(APITestCase):
-    fixtures = ["api_request_test_data.yaml"]
-
-    def setUp(self):
-        post_save.disconnect(entity_save_handler, sender=Person)
-        post_save.disconnect(entity_save_handler, sender=Organization)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=Post)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=ContactDetail)
-        post_save.disconnect(entity_save_handler, sender=Identifier)
-        post_save.disconnect(entity_save_handler, sender=OtherName)
-        post_save.disconnect(entity_save_handler, sender=Link)
-
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.disconnect(entity_perform_delete_handler, sender=Person)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Organization)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Membership)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Post)
-        post_delete.disconnect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.disconnect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Link)
-
-    def tearDown(self):
-        post_save.connect(entity_save_handler, sender=Person)
-        post_save.connect(entity_save_handler, sender=Organization)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=Post)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=ContactDetail)
-        post_save.connect(entity_save_handler, sender=Identifier)
-        post_save.connect(entity_save_handler, sender=OtherName)
-        post_save.connect(entity_save_handler, sender=Link)
-
-        pre_delete.connect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.connect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.connect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.connect(entity_perform_delete_handler, sender=Person)
-        post_delete.connect(entity_perform_delete_handler, sender=Organization)
-        post_delete.connect(entity_perform_delete_handler, sender=Membership)
-        post_delete.connect(entity_perform_delete_handler, sender=Post)
-        post_delete.connect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.connect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.connect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.connect(entity_perform_delete_handler, sender=Link)
+class OrganizationCitationAPITestCase(BasePopitAPITestCase):
 
     def test_fetch_organization_field_citations(self):
         requests = self.client.get(
@@ -148,66 +90,7 @@ class OrganizationCitationAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
-class OrganizationOtherNameCitationAPITestCase(APITestCase):
-    fixtures = ["api_request_test_data.yaml"]
-
-    def setUp(self):
-        post_save.disconnect(entity_save_handler, sender=Person)
-        post_save.disconnect(entity_save_handler, sender=Organization)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=Post)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=ContactDetail)
-        post_save.disconnect(entity_save_handler, sender=Identifier)
-        post_save.disconnect(entity_save_handler, sender=OtherName)
-        post_save.disconnect(entity_save_handler, sender=Link)
-
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.disconnect(entity_perform_delete_handler, sender=Person)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Organization)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Membership)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Post)
-        post_delete.disconnect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.disconnect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Link)
-
-    def tearDown(self):
-        post_save.connect(entity_save_handler, sender=Person)
-        post_save.connect(entity_save_handler, sender=Organization)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=Post)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=ContactDetail)
-        post_save.connect(entity_save_handler, sender=Identifier)
-        post_save.connect(entity_save_handler, sender=OtherName)
-        post_save.connect(entity_save_handler, sender=Link)
-
-        pre_delete.connect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.connect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.connect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.connect(entity_perform_delete_handler, sender=Person)
-        post_delete.connect(entity_perform_delete_handler, sender=Organization)
-        post_delete.connect(entity_perform_delete_handler, sender=Membership)
-        post_delete.connect(entity_perform_delete_handler, sender=Post)
-        post_delete.connect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.connect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.connect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.connect(entity_perform_delete_handler, sender=Link)
+class OrganizationOtherNameCitationAPITestCase(BasePopitAPITestCase):
 
     def test_fetch_organization_othername_field_citation(self):
         response = self.client.get(
@@ -296,66 +179,7 @@ class OrganizationOtherNameCitationAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
-class OrganizationIdentifierCitationAPITestCase(APITestCase):
-    fixtures = ["api_request_test_data.yaml"]
-
-    def setUp(self):
-        post_save.disconnect(entity_save_handler, sender=Person)
-        post_save.disconnect(entity_save_handler, sender=Organization)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=Post)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=ContactDetail)
-        post_save.disconnect(entity_save_handler, sender=Identifier)
-        post_save.disconnect(entity_save_handler, sender=OtherName)
-        post_save.disconnect(entity_save_handler, sender=Link)
-
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.disconnect(entity_perform_delete_handler, sender=Person)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Organization)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Membership)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Post)
-        post_delete.disconnect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.disconnect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Link)
-
-    def tearDown(self):
-        post_save.connect(entity_save_handler, sender=Person)
-        post_save.connect(entity_save_handler, sender=Organization)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=Post)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=ContactDetail)
-        post_save.connect(entity_save_handler, sender=Identifier)
-        post_save.connect(entity_save_handler, sender=OtherName)
-        post_save.connect(entity_save_handler, sender=Link)
-
-        pre_delete.connect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.connect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.connect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.connect(entity_perform_delete_handler, sender=Person)
-        post_delete.connect(entity_perform_delete_handler, sender=Organization)
-        post_delete.connect(entity_perform_delete_handler, sender=Membership)
-        post_delete.connect(entity_perform_delete_handler, sender=Post)
-        post_delete.connect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.connect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.connect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.connect(entity_perform_delete_handler, sender=Link)
+class OrganizationIdentifierCitationAPITestCase(BasePopitAPITestCase):
 
     def test_fetch_organization_identifier_field_citation(self):
         response = self.client.get(
@@ -445,66 +269,7 @@ class OrganizationIdentifierCitationAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
-class OrganizationContactDetailCitationAPITestCase(APITestCase):
-    fixtures = ["api_request_test_data.yaml"]
-
-    def setUp(self):
-        post_save.disconnect(entity_save_handler, sender=Person)
-        post_save.disconnect(entity_save_handler, sender=Organization)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=Post)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=ContactDetail)
-        post_save.disconnect(entity_save_handler, sender=Identifier)
-        post_save.disconnect(entity_save_handler, sender=OtherName)
-        post_save.disconnect(entity_save_handler, sender=Link)
-
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.disconnect(entity_perform_delete_handler, sender=Person)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Organization)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Membership)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Post)
-        post_delete.disconnect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.disconnect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Link)
-
-    def tearDown(self):
-        post_save.connect(entity_save_handler, sender=Person)
-        post_save.connect(entity_save_handler, sender=Organization)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=Post)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=ContactDetail)
-        post_save.connect(entity_save_handler, sender=Identifier)
-        post_save.connect(entity_save_handler, sender=OtherName)
-        post_save.connect(entity_save_handler, sender=Link)
-
-        pre_delete.connect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.connect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.connect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.connect(entity_perform_delete_handler, sender=Person)
-        post_delete.connect(entity_perform_delete_handler, sender=Organization)
-        post_delete.connect(entity_perform_delete_handler, sender=Membership)
-        post_delete.connect(entity_perform_delete_handler, sender=Post)
-        post_delete.connect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.connect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.connect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.connect(entity_perform_delete_handler, sender=Link)
+class OrganizationContactDetailCitationAPITestCase(BasePopitAPITestCase):
 
     def test_fetch_organization_contactdetails_field_citation(self):
         response = self.client.get(

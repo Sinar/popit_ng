@@ -1,77 +1,14 @@
 __author__ = "sweemeng"
-from django.test import TestCase
 from django.core.validators import ValidationError
-from rest_framework.test import APIRequestFactory
-from popit.models import Person
-from popit.models import Link
-from popit.models import OtherName
-from popit.models import ContactDetail
-from popit.models import Identifier
 from popit.models.exception import PopItFieldNotExist
-from popit.signals.handlers import *
 from popit.models import *
+from popit.tests.base_testcase import BasePopitTestCase
 
 
 # Unit test only have to test for attribute
 # The reason is a model should map into popolo standard, unittest is a good way to show that
-class PersonTestCase(TestCase):
-    def setUp(self):
-        post_save.disconnect(entity_save_handler, sender=Person)
-        post_save.disconnect(entity_save_handler, sender=Organization)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=Post)
-        post_save.disconnect(entity_save_handler, sender=Membership)
-        post_save.disconnect(entity_save_handler, sender=ContactDetail)
-        post_save.disconnect(entity_save_handler, sender=Identifier)
-        post_save.disconnect(entity_save_handler, sender=OtherName)
-        post_save.disconnect(entity_save_handler, sender=Link)
-
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.disconnect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.disconnect(entity_perform_delete_handler, sender=Person)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Organization)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Membership)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Post)
-        post_delete.disconnect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.disconnect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.disconnect(entity_perform_delete_handler, sender=Link)
-
-    def tearDown(self):
-        post_save.connect(entity_save_handler, sender=Person)
-        post_save.connect(entity_save_handler, sender=Organization)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=Post)
-        post_save.connect(entity_save_handler, sender=Membership)
-        post_save.connect(entity_save_handler, sender=ContactDetail)
-        post_save.connect(entity_save_handler, sender=Identifier)
-        post_save.connect(entity_save_handler, sender=OtherName)
-        post_save.connect(entity_save_handler, sender=Link)
-
-        pre_delete.connect(entity_prepare_delete_handler, sender=Person)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Organization)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Membership)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Post)
-        pre_delete.connect(entity_prepare_delete_handler, sender=ContactDetail)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Identifier)
-        pre_delete.connect(entity_prepare_delete_handler, sender=OtherName)
-        pre_delete.connect(entity_prepare_delete_handler, sender=Link)
-
-        post_delete.connect(entity_perform_delete_handler, sender=Person)
-        post_delete.connect(entity_perform_delete_handler, sender=Organization)
-        post_delete.connect(entity_perform_delete_handler, sender=Membership)
-        post_delete.connect(entity_perform_delete_handler, sender=Post)
-        post_delete.connect(entity_perform_delete_handler, sender=ContactDetail)
-        post_delete.connect(entity_perform_delete_handler, sender=Identifier)
-        post_delete.connect(entity_perform_delete_handler, sender=OtherName)
-        post_delete.connect(entity_perform_delete_handler, sender=Link)
+class PersonTestCase(BasePopitTestCase):
+    fixtures = []
 
     def test_minimum_fields_to_create_person(self):
             # This is mostly to show people what is the required field

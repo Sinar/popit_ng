@@ -1,11 +1,9 @@
-from django.test import TestCase
 from popit.serializers import AreaSerializer
 from popit.models import Area
+from popit.tests.base_testcase import BasePopitTestCase
 
 
-class AreaSerializerTestCase(TestCase):
-
-    fixtures = [ "api_request_test_data.yaml" ]
+class AreaSerializerTestCase(BasePopitTestCase):
 
     def test_create_area(self):
         data = {

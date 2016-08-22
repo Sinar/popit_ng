@@ -1,11 +1,9 @@
-from rest_framework.test import APITestCase
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from popit.models import *
+from popit.tests.base_testcase import BasePopitAPITestCase
 
 
-class AreaAPITestCase(APITestCase):
-    fixtures = [ "api_request_test_data.yaml" ]
+class AreaAPITestCase(BasePopitAPITestCase):
 
     def test_create_area_api(self):
         data = {

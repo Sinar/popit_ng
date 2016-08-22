@@ -6,10 +6,12 @@ from popit.models import Identifier
 from popit.models import ContactDetail
 from popit.models import OtherName
 from popit.models import Link
+from popit.models import Area
 from popit.serializers import OrganizationSerializer
 from popit.serializers import PersonSerializer
 from popit.serializers import PostSerializer
 from popit.serializers import MembershipSerializer
+from popit.serializers import AreaSerializer
 
 
 ES_MODEL_MAP = {
@@ -24,6 +26,7 @@ ES_MODEL_MAP = {
     "parent": Organization,
     "other_labels": OtherName,
     "contactdetails": ContactDetail,
+    "areas": Area
 }
 
 ES_SERIALIZER_MAP = {
@@ -31,4 +34,5 @@ ES_SERIALIZER_MAP = {
     "persons": PersonSerializer,
     "posts": PostSerializer,
     "memberships": MembershipSerializer,
+    "area": AreaSerializer
 }
