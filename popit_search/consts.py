@@ -34,5 +34,5 @@ ES_SERIALIZER_MAP = {
     "persons": PersonSerializer,
     "posts": PostSerializer,
     "memberships": MembershipSerializer,
-    "area": AreaSerializer
+    "areas": AreaSerializer
 }
