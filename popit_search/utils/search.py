@@ -278,8 +278,9 @@ class SerializerSearch(object):
     def get_links(self, request, page):
         if not page:
             return None
-        params = request.GET.copy()
+        params = dict(request.GET)
         params["page"] = page
+        params["q"] = params["q"][0].encode("utf-8")
         url = "http://%s%s" % (request.get_host(), request.path)
 
         return url + "?" + urlencode(params)

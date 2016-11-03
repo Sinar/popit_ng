@@ -79,7 +79,6 @@ class DependencyStore(object):
     def fetch_graph(self, entity, entity_id):
         key = "%s, %s" % (entity, entity_id)
         data = self.store.get(key)
-        print(data)
         if data:
             return json.loads(data)
         # Graph is a list. Silent error is bad, but in this case, if entity is already deleted I don't care

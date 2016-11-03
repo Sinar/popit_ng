@@ -85,3 +85,11 @@ class PaginatedSearch(TestCase):
         url = s.get_links(request, 5)
         self.assertEqual("http://testserver/en/search/persons/?q=id%3A121213&page=5", url)
 
+    @patch("elasticsearch.Elasticsearch")
+    def test_get_links_i18f(self, mock_es):
+        instance = mock_es.return_value
+        request = self.factory.get("/en/search/persons/?q=name:%E1%80%A1%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA*")
+        s = search.SerializerSearch("persons")
+        url = s.get_links(request, 5)
+        self.assertEqual("http://testserver/en/search/persons/?q=name%3A%E1%80%A1%E1%80%B1%E1%80%AC%E1%80%84%E1%80%BA%2A&page=5", url)
+
