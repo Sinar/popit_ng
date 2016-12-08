@@ -253,6 +253,7 @@ class AreaSerializer(BasePopitSerializer):
         validated_data.pop("language_code", None)
         parent_data = validated_data.pop("parent", {})
         links = validated_data.pop("links", [])
+        validated_data.pop("children", None)
 
         if parent_data:
             if not "id" in parent_data:
