@@ -501,7 +501,6 @@ class PostAPITestCase(BasePopitAPITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.post("/en/posts/", data["result"])
-        print(response.data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_post_api_invalid_organization(self):

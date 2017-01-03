@@ -12,3 +12,4 @@ six==1.10.0
 celery==3.1.20
 redis==2.10.5
 python-dateutil==2.5.2
+drfdocs==0.0.11

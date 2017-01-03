@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'popit',
     'popit_search',
     'corsheaders',
+    'rest_framework_docs',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -188,6 +189,11 @@ CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
 ES_DATA_BIN = "redis://localhost:6379/2"
 
 MAX_DOC_SIZE = 1000000 * 10 # In bytes, get from sys.getsizeof
+
+REST_FRAMEWORK_DOCS = {
+    'HIDE_DOCS': False
+}
+
 
 try:
     from settings_local import *

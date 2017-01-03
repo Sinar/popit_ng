@@ -131,7 +131,6 @@ class AreaSerializerTestCase(BasePopitTestCase):
 
     def test_list_area(self):
         area = Area.objects.language("en").all()
-        print area
         serializer = AreaSerializer(area, language="en", many=True)
         self.assertEqual(len(serializer.data), 5)
 
