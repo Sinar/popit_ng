@@ -30,6 +30,9 @@ class BasePopitView(APIView):
             self._paginator = self.paginator_class()
         return self._paginator
 
+    def get_serializer_class(self):
+        return self.serializer
+
 
 class BasePopitListCreateView(BasePopitView):
 
