@@ -62,6 +62,7 @@ class PostContactDetailLinkList(GenericContactDetailLinkList):
 
 # Because the specification uses other_label but It is easier to just use OtherName object Yes I am lazy
 class PostOtherLabelsDetail(BasePopitView):
+    serializer = OtherNameSerializer
 
     def get_object(self, parent_pk, pk):
         try:
@@ -101,6 +102,7 @@ class PostOtherLabelsList(BasePopitView):
         IsAuthenticatedOrReadOnly,
     )
 
+    serializer = OtherNameSerializer
     def get_query(self, parent_pk):
         try:
             post = Post.objects.untranslated().get(id=parent_pk)
