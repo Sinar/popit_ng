@@ -53,8 +53,7 @@ api_urls = [
     url(r'^(?P<language>\w{2})/memberships', include('popit.urls.memberships')),
     url(r'^(?P<language>\w{2})/areas', include('popit.urls.areas')),
 
-    url(r'^(?P<language>\w{2})', api_root, name="api-root"),
-    url(r'^$', api_root_all),
+    url(r'^', include('popit.urls.rooturls')),
  ]
 
 api_urls = format_suffix_patterns(api_urls)
