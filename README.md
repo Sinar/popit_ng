@@ -82,3 +82,7 @@ We are still doing heavy development on this project, so all the steps here are 
 6. Support for API to be displayed on browser.
 7. Extensive supporting unit test for supported feature.
 8. Extend links to support citation by having an optional field value. There no API to easily browse citations yet.
+
+## API Documentation
+
+http://api.popit.sinarproject.org/docs
