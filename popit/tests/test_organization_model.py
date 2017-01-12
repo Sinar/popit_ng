@@ -103,7 +103,12 @@ class OrganizationTestCase(BasePopitTestCase):
 
         organization_ = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         links=organization_.links.filter(field="name")
-        self.assertEqual(links[0].url, "http://pirateparty.com")
+        check = False
+        for i in links:
+            if i.url == "http://pirateparty.com":
+                check = True
+                break
+        self.assertTrue(check, "http://pirateparty.com does not exist")
 
     def test_create_organization_other_name_citation(self):
         organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")

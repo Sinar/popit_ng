@@ -25,6 +25,7 @@ from rest_framework.authtoken import views as token_view
 
 
 urlpatterns = [
+    url(r'^api-token-auth/?$', token_view.obtain_auth_token),
     url(r'^admin/?', include(admin.site.urls)),
 ]
 
@@ -42,10 +43,9 @@ if "rest_framework_docs" in settings.INSTALLED_APPS:
 # TODO: the parameter in url is wrong
 
 api_urls = [
-    url(r'^api-token-auth/?$', token_view.obtain_auth_token),
-    url(r'^rawsearch/?$', GenericRawSearchView.as_view(), name="rawsearch"),
-    url(r'^advancesearch/(?P<entity>\w+)/?$', AdvanceSearchView.as_view(), name="advance_search"),
-    url(r'^(?P<language>\w{2})/search/(?P<index_name>\w+)/?$', GenericSearchView.as_view(), name="search"),
+    url(r'^rawsearch/?$', include('popit_search.urls.rawsearch')),
+    url(r'^advancesearch', include('popit_search.urls.advancesearch')),
+    url(r'^(?P<language>\w{2})/search', include('popit_search.urls.generic_search')),
 
     url(r'^(?P<language>\w{2})/posts', include('popit.urls.posts')),
     url(r'^(?P<language>\w{2})/persons', include('popit.urls.persons')),

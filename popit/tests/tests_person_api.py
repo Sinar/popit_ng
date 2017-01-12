@@ -612,7 +612,11 @@ class PersonAPITestCase(BasePopitAPITestCase):
         # There should be only 1 links in that contact
         contact = person_.contact_details.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
         links = contact.links.language('en').all()
-        self.assertEqual(links[0].url, "http://sinarproject.org")
+        check = False
+        for i in links:
+            if i.url == "http://sinarproject.org":
+                check = True
+        self.assertTrue(check, "http://sinarproject.org does not exist")
 
     def test_update_nested_person_links_unauthorized(self):
         person_data = {
