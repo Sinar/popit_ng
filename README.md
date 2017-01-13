@@ -85,4 +85,4 @@ We are still doing heavy development on this project, so all the steps here are 
 
 ## API Documentation
 
-http://api.popit.sinarproject.org/docs
+https://api.popit.sinarproject.org/docs
