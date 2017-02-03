@@ -364,6 +364,10 @@ class AreaList(BasePopitView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
+    def get_serializer_class(self):
+        return AreaSerializer
+
+
 
 class AreaDetail(APIView):
     permission_classes = (
@@ -395,6 +399,10 @@ class AreaDetail(APIView):
         area = self.get_object(pk)
         area.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+       
+    def get_serializer_class(self):
+        return AreaSerializer
+
 
 
 class AreaLinkList(GenericLinkList):
