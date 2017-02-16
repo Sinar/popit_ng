@@ -30,18 +30,21 @@ from popit.views.citation import BaseSubItemCitationDetailView
 from popit.views.citation import BaseFieldCitationView
 from popit.views.citation import GenericContactDetailFieldCitationView
 from popit.views.citation import BaseSubItemFieldCitationView
+from popit.serializers.minimized import MinPostSerializer
 
 
 class PostList(BasePopitListCreateView):
 
     entity = Post
     serializer = PostSerializer
+    mini_serializer = MinPostSerializer
 
 
 class PostDetail(BasePopitDetailUpdateView):
 
     entity = Post
     serializer = PostSerializer
+    mini_serializer = MinPostSerializer
 
 
 class PostContactDetailDetail(GenericContactDetailDetail):

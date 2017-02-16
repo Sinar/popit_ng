@@ -34,18 +34,21 @@ from popit.views.citation import BaseFieldCitationView
 from popit.views.citation import GenericContactDetailFieldCitationView
 from popit.views.citation import GenericIdentifierFieldCitationView
 from popit.views.citation import GenericOtherNameFieldCitationView
+from popit.serializers.minimized import MinOrganizationSerializer
 
 
 class OrganizationList(BasePopitListCreateView):
 
     entity = Organization
     serializer = OrganizationSerializer
+    mini_serializer = MinOrganizationSerializer
 
 
 class OrganizationDetail(BasePopitDetailUpdateView):
 
     entity = Organization
     serializer = OrganizationSerializer
+    mini_serializer = MinOrganizationSerializer
 
 
 # This might be able to make into the constructor

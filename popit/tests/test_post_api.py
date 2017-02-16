@@ -601,3 +601,8 @@ class PostAPITestCase(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         post = Post.objects.language("en").get(role="Honorary Member")
         self.assertEqual(post.organization_id, "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+
+
+    def test_minify_post_api(self):
+        response = self.client.get("/en/posts/c1f0f86b-a491-4986-b48d-861b58a3ef6e/", {"minify":"True"})
+        self.assertTrue("memberships" not in response.data)

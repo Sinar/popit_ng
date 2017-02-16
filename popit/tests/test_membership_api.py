@@ -512,3 +512,5 @@ class MembershipAPITestCasse(BasePopitAPITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.put("/en/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/", data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        

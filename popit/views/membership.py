@@ -19,16 +19,19 @@ from popit.views.citation import GenericContactDetailCitationDetailView
 from popit.views.citation import GenericContactDetailCitationListView
 from popit.views.citation import BaseFieldCitationView
 from popit.views.citation import GenericContactDetailFieldCitationView
+from popit.serializers.minimized import MinMembershipSerializer
 
 
 class MembershipList(BasePopitListCreateView):
     serializer = MembershipSerializer
+    mini_serializer = MinMembershipSerializer
     entity = Membership
 
 
 class MembershipDetail(BasePopitDetailUpdateView):
 
     serializer = MembershipSerializer
+    mini_serializer = MinMembershipSerializer
     entity = Membership
 
 

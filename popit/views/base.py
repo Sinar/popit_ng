@@ -11,6 +11,7 @@ from popit.views.exception import EntityNotSetException
 
 
 # Maybe we should extract this to a general view to be used by others
+# Mini serializer is for view only, maintain old serializer for data entry
 class BasePopitView(APIView):
 
     paginator_class = api_settings.DEFAULT_PAGINATION_CLASS
@@ -23,6 +24,7 @@ class BasePopitView(APIView):
 
     entity = None
     serializer = None
+    mini_serializer = None
 
     @property
     def paginator(self):
@@ -32,6 +34,16 @@ class BasePopitView(APIView):
 
     def get_serializer_class(self):
         return self.serializer
+
+    def get_minify(self, request):
+        minify = request.query_params.get("minify")
+        if minify:
+            minify = minify.lower()
+            if minify == "true":
+                return True
+            else:
+                return False
+        return False
 
 
 class BasePopitListCreateView(BasePopitView):
@@ -43,9 +55,18 @@ class BasePopitListCreateView(BasePopitView):
         if not self.entity:
             raise EntityNotSetException("Please set an entity in views")
 
+        if not self.mini_serializer:
+            raise SerializerNotSetException("Need to set mini_serializer in class")
+        
+        minify = self.get_minify(request)
+
         entities = self.entity.objects.untranslated().all()
         page = self.paginator.paginate_queryset(entities, request, view=self)
-        serializer = self.serializer(page, language=language, many=True)
+
+        if minify:
+            serializer = self.mini_serializer(page, language=language, many=True)
+        else:
+            serializer = self.serializer(page, language=language, many=True)
         return self.paginator.get_paginated_response(serializer.data)
 
     def post(self, request, language, format=True):
@@ -72,6 +93,9 @@ class BasePopitDetailUpdateView(BasePopitView):
         if not self.serializer:
             raise SerializerNotSetException("Please set serializer in class")
 
+        if not self.mini_serializer:
+            raise SerializerNotSetException("Need to set mini_serializer in class")
+
         try:
             if not language:
                 return self.entity.objects.untranslated().get(id=pk)
@@ -83,7 +107,12 @@ class BasePopitDetailUpdateView(BasePopitView):
     def get(self, request, language, pk, format=True):
         instance = self.get_object(pk)
 
-        serializer = self.serializer(instance, language=language)
+        minify = self.get_minify(request)
+
+        if minify:
+            serializer = self.mini_serializer(instance, language=language)
+        else:
+            serializer = self.serializer(instance, language=language)
         data = { "result": serializer.data }
         return Response(data)
 

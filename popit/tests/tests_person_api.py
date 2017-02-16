@@ -157,7 +157,7 @@ class PersonSerializerTestCase(BasePopitTestCase):
         person_ = Person.objects.language('en').get(id='ab1a5788e5bae955c048748fa6af0e97')
         # There should be only 1 links in that contact
         contact = person_.contact_details.language('en').get(id='a66cb422-eec3-4861-bae1-a64ae5dbde61')
-        links = contact.links.language('en').all()
+        links = contact.links.language('en').filter(url="http://sinarproject.org")
         self.assertEqual(links[0].url, "http://sinarproject.org")
 
     def test_update_update_nested_links_person_serializer(self):
@@ -1130,3 +1130,9 @@ class PersonAPITestCase(BasePopitAPITestCase):
         person_serial.save()
         person = Person.objects.language("en").get(name="joe")
         self.assertEqual(person.given_name, "joe jambul")
+
+    def test_minify_person_api(self):
+        
+        response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97", {"minify":"True"})
+
+        self.assertTrue("memberships" not in response.data["result"])

@@ -874,3 +874,7 @@ class OrganizationAPITestCase(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         organization = Organization.objects.language("en").get(name="acme corp")
         self.assertEqual(organization.name, "acme corp")
+
+    def test_minify_organization_api(self):
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/", {"minify":"True"})
+        self.assertTrue("memberships" not in response.data["result"])

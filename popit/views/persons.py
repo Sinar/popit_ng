@@ -36,17 +36,20 @@ from popit.views.citation import BaseFieldCitationView
 from popit.views.citation import GenericOtherNameFieldCitationView
 from popit.views.citation import GenericIdentifierFieldCitationView
 from popit.views.citation import GenericContactDetailFieldCitationView
+from popit.serializers.minimized import MinPersonSerializer
 
 
 # Create your views here.
 class PersonList(BasePopitListCreateView):
     entity = Person
     serializer = PersonSerializer
+    mini_serializer = MinPersonSerializer
 
 
 class PersonDetail(BasePopitDetailUpdateView):
     entity = Person
     serializer = PersonSerializer
+    mini_serializer = MinPersonSerializer
 
 
 class PersonContactDetailList(GenericContactDetailList):
