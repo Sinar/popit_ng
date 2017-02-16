@@ -2,6 +2,7 @@ __author__ = 'sweemeng'
 from popit.signals.handlers import *
 from popit.models import *
 from popit.tests.base_testcase import BasePopitTestCase
+from popit.serializers.minimized import MinOrganizationSerializer
 
 
 class OrganizationSerializerTestCase(BasePopitTestCase):
@@ -481,3 +482,9 @@ class OrganizationSerializerTestCase(BasePopitTestCase):
         data = serializer.data
         memberships = data["memberships"]
         self.assertEqual(memberships[0]["on_behalf_of"]["id"],"3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+
+    def test_minimized_organization_serializer(self):
+
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        organization_serializer = MinOrganizationSerializer(organization)
+        self.assertTrue("memberships" not in organization_serializer.data)

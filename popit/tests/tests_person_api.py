@@ -7,6 +7,7 @@ import json
 import logging
 from popit.tests.base_testcase import BasePopitTestCase
 from popit.tests.base_testcase import BasePopitAPITestCase
+from popit.serializers.minimized import MinPersonSerializer
 
 
 # TODO: Test multilingual behavior. To make behavior clear
@@ -369,6 +370,11 @@ class PersonSerializerTestCase(BasePopitTestCase):
         person_serializer = PersonSerializer(person, language="en")
         data = person_serializer.data
         self.assertEqual(data["memberships"][0]["on_behalf_of"]["id"], "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+
+    def test_fetch_person_minimized_serializer(self):
+        person = Person.objects.untranslated().get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
+        person_serializer = MinPersonSerializer(person)
+        self.assertTrue("memberships" not in person_serializer.data)
             
 
 # We have set parameter in client into json instead of multipart form, maybe we should explicitly set it.

@@ -2,6 +2,7 @@ __author__ = 'sweemeng'
 from popit.signals.handlers import *
 from popit.models import *
 from popit.tests.base_testcase import BasePopitTestCase
+from popit.serializers.minimized import MinPostSerializer
 
 
 class PostSerializerTestCase(BasePopitTestCase):
@@ -359,3 +360,8 @@ class PostSerializerTestCase(BasePopitTestCase):
         data = serializer.data
         membership = data["memberships"][0]
         self.assertEqual(membership["on_behalf_of"]["id"],"3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+
+    def test_minify_post_serializer(self):
+        post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        post_serializer = MinPostSerializer(post)
+        self.assertTrue("memberships" not in post_serializer.data)
