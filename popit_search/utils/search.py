@@ -86,10 +86,11 @@ class SerializerSearch(object):
         output = []
         for hit in hits:
             data = hit["_source"]
+            print(self.minify)
             if self.minify:
                 data = self.minify_data(data)
             # To return only
-            output.append(hit["_source"])
+            output.append(data)
         return output
 
     def list_all(self, page=1):
@@ -249,7 +250,11 @@ class SerializerSearch(object):
         output = []
         for hit in hits:
             # To return only
-            output.append(hit["_source"])
+            data = hit["_source"]
+            if self.minify:
+                data = self.minify_data(data)
+
+            output.append(data)
         return self.response(output, request, page)
 
     # uurrggghh I hate it when elasticsearch do their own pagination.
