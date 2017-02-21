@@ -13,6 +13,7 @@ from popit.serializers.misc import OtherNameSerializer
 from popit.serializers.misc import IdentifierSerializer
 from popit.serializers.misc import LinkSerializer
 from popit.serializers.misc import ContactDetailSerializer
+from rest_framework.serializers import PrimaryKeyRelatedField
 
 
 # Why not flat? Because it is not truly flat, we just remove some relationship, but not all
@@ -22,6 +23,7 @@ class MinPersonSerializer(TranslatableModelSerializer):
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
+    memberships = PrimaryKeyRelatedField(many=True, read_only=True)
  
     class Meta:
         model = Person
@@ -33,6 +35,7 @@ class MinOrganizationSerializer(TranslatableModelSerializer):
     identifiers = IdentifierSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
+    memberships = PrimaryKeyRelatedField(many=True, read_only=True)
  
     class Meta:
         model = Organization
@@ -52,6 +55,7 @@ class MinPostSerializer(TranslatableModelSerializer):
     other_labels = OtherNameSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
+    memberships = PrimaryKeyRelatedField(many=True, read_only=True)
  
     class Meta:
         model = Post
