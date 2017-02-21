@@ -892,3 +892,174 @@ class SearchAPITestCase(APITestCase):
         }
         response = self.client.get("/en/search/posts/", params)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    @patch("popit_search.views.SerializerSearch")
+    def test_minify_search_request(self, mock_search):
+        params = {
+            "q": "id:3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
+            "minify": "True"
+        }
+        search_result = [
+            {
+                "id": "3d62d9ea-0600-4f29-8ce6-f7720fd49aa3",
+                "parent": {
+                    "id": "612943b1-864d-4188-8d79-ca387ed19b32",
+                    "other_names": [],
+                    "identifiers": [],
+                    "links": [],
+                    "contact_details": [],
+                    "area": None,
+                    "founding_date": "2013-09-01",
+                    "dissolution_date": "2020-09-01",
+                    "image": "",
+                    "created_at": "2015-10-21T23:22:00.443496Z",
+                    "updated_at": "2015-10-21T23:22:44.583911Z",
+                    "parent": None,
+                    "name": "Pirate Party",
+                    "classification": "political party",
+                    "abstract": "pirates",
+                    "description": "arrrrrr",
+                    "language_code": "en"
+                },
+                "parent_id": "612943b1-864d-4188-8d79-ca387ed19b32",
+                "other_names": [
+                    {
+                        "id": "53a22b00-1383-4bf5-b4be-4753d8d16062",
+                        "links": [
+                            {
+                                "id": "fe662497-c24d-4bbb-a72d-feb77319782a",
+                                "label": "",
+                                "field": "name",
+                                "url": "http://sinarproject.org",
+                                "created_at": "2015-10-26",
+                                "updated_at": "2015-10-26",
+                                "note": "",
+                                "language_code": "en"
+                            }
+                        ],
+                        "start_date": None,
+                        "end_date": None,
+                        "created_at": "2015-10-22",
+                        "updated_at": "2015-10-22",
+                        "note": "really othername field don't seems appropriate for organization",
+                        "name": "Not Sinar Project",
+                        "family_name": "",
+                        "given_name": "",
+                        "additional_name": "",
+                        "honorific_prefix": "",
+                        "honorific_suffix": "",
+                        "patronymic_name": "",
+                        "language_code": "en"
+                    }
+                ],
+                "identifiers": [
+                    {
+                        "id": "2d3b8d2c-77b8-42f5-ac62-3e83d4408bda",
+                        "links": [
+                            {
+                                "id": "02369098-7b46-4d62-9318-a5f1c2d385bd",
+                                "label": "",
+                                "field": "identifier",
+                                "url": "http://ssm.com",
+                                "created_at": "2015-10-26",
+                                "updated_at": "2015-10-26",
+                                "note": "",
+                                "language_code": "en"
+                            }
+                        ],
+                        "identifier": "3131312",
+                        "created_at": "2015-10-22",
+                        "updated_at": "2015-10-22",
+                        "scheme": "ssm",
+                        "language_code": "en"
+                    }
+                ],
+                "links": [
+                    {
+                        "id": "45b0a790-8c9e-4553-844b-431ed34b6b12",
+                        "label": "",
+                        "field": "",
+                        "url": "https://github.com/sweemeng/",
+                        "created_at": "2015-10-22",
+                        "updated_at": "2015-10-22",
+                        "note": "Web page of the party leader",
+                        "language_code": "en"
+                    }
+                ],
+                "contact_details": [
+                    {
+                        "id": "651da7cd-f109-4aaa-b04c-df835fb6831f",
+                        "links": [
+                            {
+                                "id": "26b8aa4b-2011-493d-bd74-e5e2d6ccd7cf",
+                                "label": "",
+                                "field": "type",
+                                "url": "http://sinarproject.org/about/",
+                                "created_at": "2015-10-26",
+                                "updated_at": "2015-11-09",
+                                "note": "",
+                                "language_code": "en"
+                            }
+                        ],
+                        "type": "phone",
+                        "value": "0129123132112",
+                        "valid_from": "2015-10-22",
+                        "valid_until": "2020-10-22",
+                        "created_at": "2015-10-22",
+                        "updated_at": "2015-11-09",
+                        "label": "sinar project phone",
+                        "note": "just a phone",
+                        "language_code": "en"
+                    }
+                ],
+                "area": {
+                    "id": "640c0f1d-2305-4d17-97fe-6aa59f079cc4",
+                    "links": [
+                        {
+                            "id": "ed8a52d8-5503-45aa-a2ad-9931461172d2",
+                            "label": "",
+                            "field": "",
+                            "url": "http://en.wikipedia.com",
+                            "created_at": "2015-10-30",
+                            "updated_at": "2015-10-30",
+                            "note": "",
+                            "language_code": "en"
+                        }
+                    ],
+                    "identifier": "",
+                    "created_at": "2015-10-21T23:44:40.750284Z",
+                    "updated_at": "2015-10-21T23:44:40.750308Z",
+                    "parent": "4775c9b6-f8fd-4cdc-bda8-a1844fa7f8ea",
+                    "name": "kuala lumpur",
+                    "classification": "",
+                    "language_code": "en"
+                },
+                "area_id": "640c0f1d-2305-4d17-97fe-6aa59f079cc4",
+                "founding_date": "2015-10-22",
+                "dissolution_date": "2020-10-22",
+                "image": "",
+                "created_at": "2015-10-21T23:46:14.589608Z",
+                "updated_at": "2015-10-21T23:48:16.167211Z",
+                "name": "Pirate Party KL",
+                "classification": "political party",
+                "abstract": "KL Branch of Pirate Party",
+                "description": "KL Branch of Pirate Party",
+                "language_code": "en"
+            }
+        ]
+        instance = mock_search.return_value
+        instance.paginated_search.return_value = Response(OrderedDict([
+            ("page", 1),
+            ("total", 1),
+            ("next", None),
+            ("previous", None),
+            ("results", search_result),
+            ("per_page", 10),
+            ("num_pages", 1),
+            ("has_more", False),
+        ]))
+        response = self.client.get("/en/search/organizations/", params)
+        results = response.data["results"]
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue("memberships" not in results[0])
+

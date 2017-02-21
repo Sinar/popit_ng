@@ -34,7 +34,7 @@ default_date = datetime.datetime(1957, 01, 01)
 # Big idea, since serializer already have json docs
 class SerializerSearch(object):
 
-    def __init__(self, doc_type=None, index=settings.ES_INDEX):
+    def __init__(self, doc_type=None, index=settings.ES_INDEX, minify=False):
         self.es = elasticsearch.Elasticsearch(hosts=settings.ES_HOST)
         # The default parameter is for testing purposes.
         self.index = index
@@ -44,6 +44,8 @@ class SerializerSearch(object):
         self.page_size = api_settings.PAGE_SIZE
         self.result_count = 0
         self.start_from = 0
+        
+        self.minify = minify
 
     def add(self, instance, serializer):
         logging.debug("Indexing %s and %s" % (str(instance), str(serializer)))
@@ -83,6 +85,9 @@ class SerializerSearch(object):
         hits = result["hits"]["hits"]
         output = []
         for hit in hits:
+            data = hit["_source"]
+            if self.minify:
+                data = self.minify_data(data)
             # To return only
             output.append(hit["_source"])
         return output
@@ -94,7 +99,10 @@ class SerializerSearch(object):
         output = []
         for hit in hits:
             # To return only
-            output.append(hit["_source"])
+            data = hit["_source"]
+            if self.minify:
+                data = self.minify_data(data)
+            output.append(data)
         return output
 
     def update(self, instance, serializer):
@@ -317,6 +325,24 @@ class SerializerSearch(object):
             ("num_pages", num_page),
             ("has_more", has_more),
         ]))
+
+    def minify_data(self, data):
+        if "memberships" in data:
+            del data["memberships"]
+
+        if "person" in data:
+            del data["person"]
+
+        if "organization" in data:
+            del data["organization"]
+
+        if "posts" in data:
+            del data["posts"]
+
+        if "parent" in data:
+            del data["parent"]
+
+        return data
 
 
 class BulkIndexer(object):

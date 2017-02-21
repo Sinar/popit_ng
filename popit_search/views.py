@@ -126,9 +126,11 @@ class GenericSearchView(BasePopitView, ResultFilters):
     index = None
 
     def get(self, request, language, index_name, **kwargs):
-        search = SerializerSearch(index_name)
+        minify = self.get_minify(request)
 
-        q = request.GET.get("q")
+        search = SerializerSearch(index_name, minify=minify)
+
+        q = request.query_params.get("q")
         logging.warn(q)
         if not q:
             raise ParseError("q parameter is required, data format can be found at https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html")
