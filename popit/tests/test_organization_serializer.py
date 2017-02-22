@@ -487,4 +487,6 @@ class OrganizationSerializerTestCase(BasePopitTestCase):
 
         organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
         organization_serializer = MinOrganizationSerializer(organization)
-        self.assertTrue("memberships" not in organization_serializer.data)
+        membership_count = organization.memberships.count()
+        serializer_membership = organization_serializer.data["memberships"]
+        self.assertEqual(len(serializer_membership), membership_count)

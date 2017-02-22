@@ -877,4 +877,8 @@ class OrganizationAPITestCase(BasePopitAPITestCase):
 
     def test_minify_organization_api(self):
         response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/", {"minify":"True"})
-        self.assertTrue("memberships" not in response.data["result"])
+
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        membership_count = organization.memberships.count()
+
+        self.assertEqual(len(response.data["result"]["memberships"]), membership_count)

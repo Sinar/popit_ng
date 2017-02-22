@@ -333,7 +333,11 @@ class SerializerSearch(object):
 
     def minify_data(self, data):
         if "memberships" in data:
+            memberships = []
+            for i in data["memberships"]:
+                memberships.append(i.id)
             del data["memberships"]
+            data["memberships"] = memberships
 
         if "person" in data:
             del data["person"]

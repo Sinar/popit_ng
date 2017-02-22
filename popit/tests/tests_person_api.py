@@ -374,7 +374,9 @@ class PersonSerializerTestCase(BasePopitTestCase):
     def test_fetch_person_minimized_serializer(self):
         person = Person.objects.untranslated().get(id='8497ba86-7485-42d2-9596-2ab14520f1f4')
         person_serializer = MinPersonSerializer(person)
-        self.assertTrue("memberships" not in person_serializer.data)
+        membership_count = person.memberships.count()
+
+        self.assertTrue(len(person_serializer.data["memberships"]), membership_count)
             
 
 # We have set parameter in client into json instead of multipart form, maybe we should explicitly set it.
@@ -1141,4 +1143,7 @@ class PersonAPITestCase(BasePopitAPITestCase):
         
         response = self.client.get("/en/persons/ab1a5788e5bae955c048748fa6af0e97", {"minify":"True"})
 
-        self.assertTrue("memberships" not in response.data["result"])
+        person = Person.objects.get(id="ab1a5788e5bae955c048748fa6af0e97")
+        membership_count = person.memberships.count()
+
+        self.assertEqual(len(response.data["result"]["memberships"]), membership_count)

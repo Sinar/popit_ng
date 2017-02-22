@@ -364,4 +364,6 @@ class PostSerializerTestCase(BasePopitTestCase):
     def test_minify_post_serializer(self):
         post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
         post_serializer = MinPostSerializer(post)
-        self.assertTrue("memberships" not in post_serializer.data)
+        membership_count = post.memberships.count()
+        serializer_memberships = post_serializer.data["memberships"]
+        self.assertEqual(len(serializer_memberships), membership_count)
