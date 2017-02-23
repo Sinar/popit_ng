@@ -335,7 +335,7 @@ class SerializerSearch(object):
         if "memberships" in data:
             memberships = []
             for i in data["memberships"]:
-                memberships.append(i.id)
+                memberships.append(i["id"])
             del data["memberships"]
             data["memberships"] = memberships
 
