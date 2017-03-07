@@ -86,6 +86,17 @@ class AreaAPITestCase(BasePopitAPITestCase):
         response = self.client.delete("/en/areas/640c0f1d-2305-4d17-97fe-6aa59f079cc4/")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
+    def test_create_area_classification_over_20_char(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        data = {
+                "identifier":"p003 ",
+                "name":"arau",
+                "classification":"Parliamentary Constituency"
+        }
+        response = self.client.post("/en/areas/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
 class AreaLinkAPITestCase(BasePopitAPITestCase):
 
