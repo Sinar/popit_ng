@@ -270,7 +270,7 @@ class Area(TranslatableModel):
     id = models.CharField(max_length=255, primary_key=True, blank=True)
     translations = TranslatedFields(
         name = models.CharField(max_length=255, verbose_name=_("name")),
-        classification = models.CharField(max_length=20, verbose_name=_("classification"), null=True, blank=True),
+        classification = models.CharField(max_length=255, verbose_name=_("classification"), null=True, blank=True),
 
     )
     identifier = models.CharField(max_length=255, verbose_name=_('identifier'), null=True, blank=True)
