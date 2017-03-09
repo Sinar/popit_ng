@@ -9,4 +9,5 @@ from person import Person
 from organization import Organization
 from post import Post
 from membership import Membership
+from relation import Relation
 

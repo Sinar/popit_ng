@@ -3,6 +3,7 @@ from popit.models import Person
 from popit.models import Organization
 from popit.models import Post
 from popit.models import Membership
+from popit.models import Relation
 from popit.models import ContactDetail
 from popit.models import Link
 from popit.models import Identifier
@@ -48,6 +49,14 @@ class MinMembershipSerializer(TranslatableModelSerializer):
 
     class Meta:
         model = Membership
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
+class MinRelationSerializer(TranslatableModelSerializer):
+    links = LinkSerializer(many=True, required=False)
+
+    class Meta:
+        model = Relation
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
 
 

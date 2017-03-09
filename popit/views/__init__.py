@@ -94,5 +94,12 @@ from popit.views.membership import MembershipFieldCitationView
 from popit.views.membership import MembershipContactDetailCitationListView
 from popit.views.membership import MembershipContactDetailCitationDetailView
 from popit.views.membership import MembershipContactDetailFieldCitationView
+from popit.views.relation import RelationLinkDetail
+from popit.views.relation import RelationLinkList
+from popit.views.relation import RelationDetail
+from popit.views.relation import RelationList
+from popit.views.relation import RelationCitationListCreateView
+from popit.views.relation import RelationCitationDetailView
+from popit.views.relation import RelationFieldCitationView
 from popit.views.root_view import api_root
 from popit.views.root_view import api_root_all
