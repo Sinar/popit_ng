@@ -339,3 +339,21 @@ class MembershipSerializerTestCase(BasePopitTestCase):
         serializer.save()
         membership = Membership.objects.language("en").get(label="test membership")
         self.assertEqual(membership.on_behalf_of_id, "612943b1-864d-4188-8d79-ca387ed19b32")
+
+    def test_update_membership_organization_post_to_null_serializer(self):
+        data = {
+            "post_id":None
+        }
+        membership = Membership.objects.untranslated().get(id="b351cdc2-6961-4fc7-9d61-08fca66e1d44")
+        serializer = MembershipSerializer(membership, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+
+    def test_update_membership_on_behalf_of_to_null(self):
+        data = {
+            "on_behalf_of_id": None
+        }
+        membership = Membership.objects.untranslated().get(id="7185cab2521c4f6db18b40d8d6506d36")
+        serializer = MembershipSerializer(membership, language="en", data=data, partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
