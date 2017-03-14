@@ -751,6 +751,9 @@
 - model: popit.linktranslation
   pk: 251
   fields: {note: this is the note for id, language_code: en, master: 1adc1b1b5e99457dbccdf51c2ef09a5c}
+- model: popit.linktranslation
+  pk: 254
+  fields: {note: just an example citation, language_code: en, master: 31812ed9d2fa405882f6f300a7f8c843}
 - model: popit.contacttranslation
   pk: 1
   fields: {label: sweemeng phone, note: my phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
@@ -2469,6 +2472,16 @@
     content_type: [popit, contactdetail]
     created_at: 2016-04-05 03:19:40.924568+00:00
     updated_at: 2016-04-05 03:19:40.924600+00:00
+- model: popit.link
+  pk: 31812ed9d2fa405882f6f300a7f8c843
+  fields:
+    label: null
+    field: label
+    url: http://example.com
+    object_id: 732d7ea706024973aa364b0ffa9dc2a1
+    content_type: [popit, relation]
+    created_at: 2017-03-14 05:12:04.749473+00:00
+    updated_at: 2017-03-14 05:12:04.749521+00:00
 - model: popit.link
   pk: 32a530bc967f4a23aae9ea5fba7f16c4
   fields:
