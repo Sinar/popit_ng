@@ -89,6 +89,7 @@ class PersonSerializer(BasePopitSerializer):
     contact_details = ContactDetailSerializer(many=True, required=False)
     birth_date = CharField(allow_null=True, default=None, allow_blank=True)
     death_date = CharField(allow_null=True, default=None, allow_blank=True)
+    biography = CharField(allow_null=True, default=None, allow_blank=True)
 
     def create(self, validated_data):
         language_code=self.language

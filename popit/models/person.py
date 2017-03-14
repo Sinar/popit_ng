@@ -30,7 +30,7 @@ class Person(TranslatableModel):
         sort_name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("sort name")), # What on earth....
         gender = models.CharField(max_length=25, null=True, blank=True, verbose_name=_("gender")),
         summary = models.TextField(blank=True, verbose_name=_("summary")), # Member of the human race
-        biography = models.TextField(blank=True, verbose_name=_("biography")),
+        biography = models.TextField(blank=True, verbose_name=_("biography"), null=True),
         # Actually should should validate this? Easier if we don't though
         # Also dual citizenship
         national_identity = models.CharField(max_length=255, null=True, blank=True, verbose_name=_("national identify")),
