@@ -751,6 +751,9 @@
 - model: popit.linktranslation
   pk: 251
   fields: {note: this is the note for id, language_code: en, master: 1adc1b1b5e99457dbccdf51c2ef09a5c}
+- model: popit.linktranslation
+  pk: 254
+  fields: {note: just an example citation, language_code: en, master: 31812ed9d2fa405882f6f300a7f8c843}
 - model: popit.contacttranslation
   pk: 1
   fields: {label: sweemeng phone, note: my phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
@@ -1098,6 +1101,41 @@
   fields: {person: 8497ba86-7485-42d2-9596-2ab14520f1f4, member: null, organization: 3d62d9ea-0600-4f29-8ce6-f7720fd49aa3,
     post: null, on_behalf_of: null, area: null, start_date: null, end_date: null,
     created_at: ! '2015-11-13 02:44:58.358098+00:00', updated_at: ! '2015-11-13 02:44:58.358117+00:00'}
+- model: popit.relationtranslation
+  pk: 1
+  fields: {label: Placeholder Name Buddies, language_code: en, master: a35a711117464567995644e9be2e1b9f}
+- model: popit.relationtranslation
+  pk: 2
+  fields: {label: Pirate Buddies, language_code: en, master: 732d7ea706024973aa364b0ffa9dc2a1}
+- model: popit.relationtranslation
+  pk: 3
+  fields: {label: Test Data Buddies, language_code: en, master: fd0e33a2b1f649c2af29d50237ced17b}
+- model: popit.relationtranslation
+  pk: 4
+  fields: {label: Dashless ID Buddies, language_code: en, master: 0d41f7b50df743db95982a2b3c20e999}
+- model: popit.relationtranslation
+  pk: 5
+  fields: {label: Kawan Lanun, language_code: ms, master: 732d7ea706024973aa364b0ffa9dc2a1}
+- model: popit.relation
+  pk: 0d41f7b50df743db95982a2b3c20e999
+  fields: {object: c2a241a0d1fd4483b60af7dd219de22d, subject: ab1a5788e5bae955c048748fa6af0e97,
+    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:51.182085+00:00',
+    updated_at: ! '2017-03-10 08:41:51.182130+00:00'}
+- model: popit.relation
+  pk: 732d7ea706024973aa364b0ffa9dc2a1
+  fields: {object: ab1a5788e5bae955c048748fa6af0e97, subject: 078541c9-9081-4082-b28f-29cbb64440cb,
+    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:50.560679+00:00',
+    updated_at: ! '2017-03-10 08:41:50.560755+00:00'}
+- model: popit.relation
+  pk: a35a711117464567995644e9be2e1b9f
+  fields: {object: ab1a5788e5bae955c048748fa6af0e97, subject: 8497ba86-7485-42d2-9596-2ab14520f1f4,
+    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:49.744092+00:00',
+    updated_at: ! '2017-03-10 08:41:49.744140+00:00'}
+- model: popit.relation
+  pk: fd0e33a2b1f649c2af29d50237ced17b
+  fields: {object: 2439e472-10dc-4f9c-aa99-efddd9046b4a, subject: ab1a5788e5bae955c048748fa6af0e97,
+    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:50.902526+00:00',
+    updated_at: ! '2017-03-10 08:41:50.902571+00:00'}
 - model: contenttypes.contenttype
   fields: {app_label: admin, model: logentry}
 - model: contenttypes.contenttype
@@ -1152,6 +1190,10 @@
   fields: {app_label: popit, model: membershiptranslation}
 - model: contenttypes.contenttype
   fields: {app_label: popit, model: membership}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: relationtranslation}
+- model: contenttypes.contenttype
+  fields: {app_label: popit, model: relation}
 - model: contenttypes.contenttype
   fields: {app_label: corsheaders, model: corsmodel}
 - model: auth.permission
@@ -1409,6 +1451,21 @@
     name: Can delete membership
     content_type: [popit, membership]
     codename: delete_membership
+- model: auth.permission
+  fields:
+    name: Can add relation
+    content_type: [popit, relation]
+    codename: add_relation
+- model: auth.permission
+  fields:
+    name: Can change relation
+    content_type: [popit, relation]
+    codename: change_relation
+- model: auth.permission
+  fields:
+    name: Can delete relation
+    content_type: [popit, relation]
+    codename: delete_relation
 - model: auth.permission
   fields:
     name: Can add cors model
@@ -2415,6 +2472,16 @@
     content_type: [popit, contactdetail]
     created_at: 2016-04-05 03:19:40.924568+00:00
     updated_at: 2016-04-05 03:19:40.924600+00:00
+- model: popit.link
+  pk: 31812ed9d2fa405882f6f300a7f8c843
+  fields:
+    label: null
+    field: label
+    url: http://example.com
+    object_id: 732d7ea706024973aa364b0ffa9dc2a1
+    content_type: [popit, relation]
+    created_at: 2017-03-14 05:12:04.749473+00:00
+    updated_at: 2017-03-14 05:12:04.749521+00:00
 - model: popit.link
   pk: 32a530bc967f4a23aae9ea5fba7f16c4
   fields:

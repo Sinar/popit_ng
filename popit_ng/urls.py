@@ -51,6 +51,7 @@ api_urls = [
     url(r'^(?P<language>\w{2})/persons', include('popit.urls.persons')),
     url(r'^(?P<language>\w{2})/organizations', include('popit.urls.organizations')),
     url(r'^(?P<language>\w{2})/memberships', include('popit.urls.memberships')),
+    url(r'^(?P<language>\w{2})/relations', include('popit.urls.relations')),
     url(r'^(?P<language>\w{2})/areas', include('popit.urls.areas')),
 
     url(r'^', include('popit.urls.rooturls')),

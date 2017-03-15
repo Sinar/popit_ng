@@ -15,6 +15,7 @@ def api_root(request, language, format=None):
         "organizations": reverse("organization-list", request=request, format=format, args=(language,)),
         "posts": reverse("post-list", request=request, format=format, args=(language,)),
         "memberships": reverse("membership-list", request=request, format=format, args=(language,)),
+        "relations": reverse("relation-list", request=request, format=format, args=(language,)),
     }
     return Response(data)
 
