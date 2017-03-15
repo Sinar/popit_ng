@@ -152,22 +152,22 @@ class MembershipSerializer(BasePopitSerializer):
         if not self.language in available_languages:
             instance = instance.translate(self.language)
         data.pop("person", None)
-        person_id = data.pop("person_id", None)
+        person_id = data.get("person_id", None)
 
         data.pop("organization", None)
-        organization_id = data.pop("organization_id", None)
+        organization_id = data.get("organization_id", None)
 
         data.pop("on_behalf_of", None)
-        on_behalf_of_id = data.pop("on_behalf_of_id", None)
+        on_behalf_of_id = data.get("on_behalf_of_id", None)
 
         data.pop("area", None)
-        area_id = data.pop("area_id", None)
+        area_id = data.get("area_id", None)
 
         data.pop("post", None)
-        post_id = data.pop("post_id", None)
+        post_id = data.get("post_id", None)
 
-        contact_details = data.pop("contact_details", [])
-        links = data.pop("links", [])
+        contact_details = data.get("contact_details", [])
+        links = data.get("links", [])
         data.pop("language_code", None)
 
         instance.label = data.get("label", instance.label)
@@ -179,25 +179,41 @@ class MembershipSerializer(BasePopitSerializer):
         if not instance.end_date:
             instance.end_date = None
 
-        if person_id:
-            person = Person.objects.untranslated().get(id=person_id)
-            instance.person = person
+        if "person_id" in data:
+            if person_id:
+                person = Person.objects.untranslated().get(id=person_id)
+                instance.person = person
+            else:
+                instance.person = None
 
-        if organization_id:
-            organization = Organization.objects.untranslated().get(id=organization_id)
-            instance.organization = organization
+        if "organization_id" in data:
+            if organization_id:
+                organization = Organization.objects.untranslated().get(id=organization_id)
+                instance.organization = organization
+            else:
+                instance.organization = None
 
-        if on_behalf_of_id:
-            on_behalf_of = Organization.objects.untranslated().get(id=on_behalf_of_id)
-            instance.on_behalf_of = on_behalf_of
+        if "on_behalf_of_id" in data:
 
-        if area_id:
-            area = Area.objects.untranslated().get(id=area_id)
-            instance.area = area
+            if on_behalf_of_id:
+                on_behalf_of = Organization.objects.untranslated().get(id=on_behalf_of_id)
+                instance.on_behalf_of = on_behalf_of
+            else:
+                instance.on_behalf_of = None
 
-        if post_id:
-            post = Post.objects.untranslated().get(id=post_id)
-            instance.post = post
+        if "area_id" in data:
+            if area_id:
+                area = Area.objects.untranslated().get(id=area_id)
+                instance.area = area
+            else:
+                instance.area = None
+
+        if "post_id" in data:
+            if post_id:
+                post = Post.objects.untranslated().get(id=post_id)
+                instance.post = post
+            else:
+                instance.post = None
 
         instance.save()
 

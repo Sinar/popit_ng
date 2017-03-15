@@ -87,3 +87,16 @@ class AreaSerializerTestCase(BasePopitTestCase):
 
         self.assertTrue("802be15a7483442ab9ecd521410269fa" in test_list)
 
+    def test_set_parent_area_null(self):
+        data = {
+            "parent_id": None
+        }
+
+        area = Area.objects.untranslated().get(id="802be15a7483442ab9ecd521410269fa")
+        serializer = AreaSerializer(area, data=data, language="en", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+
+        area = Area.objects.language("en").get(id="802be15a7483442ab9ecd521410269fa")
+        self.assertEqual(area.parent, None)

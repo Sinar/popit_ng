@@ -144,7 +144,7 @@ class OrganizationPostSerializer(TranslatableModelSerializer):
     other_labels = OtherNameSerializer(many=True, required=False)
     organization_id = CharField(max_length=255, required=False)
     organization = OrganizationFlatSerializer(required=False)
-    area_id = CharField(max_length=255, required=False)
+    area_id = CharField(max_length=255, required=False, allow_null=True )
 
     contact_details = ContactDetailSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
@@ -190,7 +190,7 @@ class OrganizationSerializer(BasePopitSerializer):
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     area = AreaSerializer(required=False)
-    area_id = CharField(max_length=255, required=False)
+    area_id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
     founding_date = CharField(allow_null=True, default=None, allow_blank=True)
     dissolution_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
 
@@ -264,10 +264,10 @@ class OrganizationSerializer(BasePopitSerializer):
         identifiers = data.pop("identifiers", [])
         contact_details = data.pop("contact_details", [])
         area = data.pop("area", None)
-        area_id = data.pop("area_id", None)
+        area_id = data.get("area_id", None)
 
         parent = data.pop("parent", None)
-        parent_id = data.pop("parent_id", None)
+        parent_id = data.get("parent_id", None)
 
         instance.name = data.get("name", instance.name)
         instance.classification = data.get("classification", instance.classification)
@@ -281,19 +281,27 @@ class OrganizationSerializer(BasePopitSerializer):
             instance.dissolution_date = None
 
         # We only allow pointing to new parent and area not create a new parent and area
-        if area_id:
-            try:
-                area = Area.objects.language(instance.language_code).get(id=area_id)
-                instance.area = area
-            except Area.DoesNotExist:
-                pass
+        if "area_id" in data:
+            if area_id:
+                try:
+                    area = Area.objects.language(instance.language_code).get(id=area_id)
+                    instance.area = area
+                except Area.DoesNotExist:
+                    pass
+            else:
+                instance.area = None
 
-        if parent_id:
-            try:
-                parent = Organization.objects.language(instance.language_code).get(id=parent_id)
-                instance.parent = parent
-            except Organization.DoesNotExist:
-                pass
+        if "parent_id" in data:
+
+            if parent_id:
+                # This might be because it will raise the wrong exception
+                try:
+                    parent = Organization.objects.language(instance.language_code).get(id=parent_id)
+                    instance.parent = parent
+                except Organization.DoesNotExist:
+                    pass
+            else:
+                instance.parent = None
 
         instance.save()
 

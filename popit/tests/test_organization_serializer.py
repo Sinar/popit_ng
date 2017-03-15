@@ -490,3 +490,46 @@ class OrganizationSerializerTestCase(BasePopitTestCase):
         membership_count = organization.memberships.count()
         serializer_membership = organization_serializer.data["memberships"]
         self.assertEqual(len(serializer_membership), membership_count)
+
+    def test_update_organization_value_null(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        data = {
+                "abstract": None
+        }
+        serializer = OrganizationSerializer(organization, partial=True, language="en", data=data)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        self.assertEqual(organization.abstract, None)
+
+    def test_update_organization_area_id_null(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        data = {
+                "area_id": None
+        }
+
+        serializer = OrganizationSerializer(organization, partial=True, language="en", data=data)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        self.assertEqual(organization.area, None)
+
+    def test_update_organization_parent_id_null(self):
+        organization = Organization.objects.untranslated().get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        data = {
+                "parent_id": None
+        }
+
+        serializer = OrganizationSerializer(organization, partial=True, language="en", data=data)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+
+        organization = Organization.objects.language("en").get(id="3d62d9ea-0600-4f29-8ce6-f7720fd49aa3")
+        self.assertEqual(organization.parent, None)
+
+

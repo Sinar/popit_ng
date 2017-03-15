@@ -357,3 +357,7 @@ class MembershipSerializerTestCase(BasePopitTestCase):
         serializer = MembershipSerializer(membership, language="en", data=data, partial=True)
         serializer.is_valid()
         self.assertEqual(serializer.errors, {})
+        serializer.save()
+
+        membership = Membership.objects.language("en").get(id="7185cab2521c4f6db18b40d8d6506d36")
+        self.assertEqual(membership.on_behalf_of_id, None)

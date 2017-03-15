@@ -367,3 +367,31 @@ class PostSerializerTestCase(BasePopitTestCase):
         membership_count = post.memberships.count()
         serializer_memberships = post_serializer.data["memberships"]
         self.assertEqual(len(serializer_memberships), membership_count)
+
+    def test_update_post_null_value(self):
+        data = {
+            "role": None
+        }
+        post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        serializer = PostSerializer(post, data=data, language="en", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        self.assertEqual(post.role, None)
+
+
+    def test_update_post_area_null(self):
+        data = {
+            "area_id": None
+        }
+
+        post = Post.objects.untranslated().get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        serializer = PostSerializer(post, data=data, language="en", partial=True)
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        post = Post.objects.language("en").get(id="c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+        self.assertEqual(post.area, None)
+
+

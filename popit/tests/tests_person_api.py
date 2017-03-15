@@ -377,7 +377,22 @@ class PersonSerializerTestCase(BasePopitTestCase):
         membership_count = person.memberships.count()
 
         self.assertTrue(len(person_serializer.data["memberships"]), membership_count)
-            
+
+    def test_update_person_serializer_null_value(self):
+        person = Person.objects.untranslated().get(id="ab1a5788e5bae955c048748fa6af0e97")
+        data = {
+            "biography": None,
+        }
+
+        person_serializer = PersonSerializer(person, data=data, partial=True, language='en')
+        person_serializer.is_valid()
+
+        self.assertEqual(person_serializer.errors, {})
+        person_serializer.save()
+
+        person = Person.objects.language("en").get(id="ab1a5788e5bae955c048748fa6af0e97")
+        self.assertEqual(person.biography, None)
+
 
 # We have set parameter in client into json instead of multipart form, maybe we should explicitly set it.
 class PersonAPITestCase(BasePopitAPITestCase):
