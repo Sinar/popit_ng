@@ -244,6 +244,7 @@ class AreaSerializer(BasePopitSerializer):
     id = CharField(max_length=255, required=False, allow_blank=True, allow_null=True)
 
     parent = AreaFlatSerializer(required=False)
+    parent_id = CharField(allow_null=True, default=None, allow_blank=True)
     children = AreaFlatSerializer(required=False, many=True)
     links = LinkSerializer(many=True, required=False)
 
@@ -273,6 +274,13 @@ class AreaSerializer(BasePopitSerializer):
             instance = instance.translate(self.language)
         links = data.pop("links", [])
 
+        if "parent_id" in data:
+            if data.get("parent_id"):
+                parent_area = Area.objects.untranslated().get(id=data.get("parent_id"))
+                instance.parent = parent_area
+            else:
+                instance.parent = None
+
         data.pop("language", None)
         instance.name = data.get("name", instance.name)
         instance.identifier = data.get("identifier", instance.identifier)
@@ -299,6 +307,7 @@ class AreaSerializer(BasePopitSerializer):
             else:
                 parent = self.create(parent_data)
             area.parent = parent
+        
         area.save()
         for link in links:
             self.update_links(link, area)

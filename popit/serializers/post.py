@@ -169,7 +169,7 @@ class PostSerializer(BasePopitSerializer):
     organization = PostOrganizationSerializer(required=False) # A post must tied to an organization
     organization_id = CharField(max_length=255, required=False)
     area = AreaSerializer(required=False)
-    area_id = CharField(max_length=255, required=False)
+    area_id = CharField(max_length=255, required=False, allow_null=True)
 
     memberships = PostMembershipSerializer(required=False, many=True)
 
@@ -235,9 +235,13 @@ class PostSerializer(BasePopitSerializer):
         if not instance.end_date:
             instance.end_date = None
 
-        if data.get("area_id"):
-            area = Area.objects.untranslated().get(id=data.get("area_id"))
-            instance.area = area
+        # Maybe I should use try.... except
+        if "area_id" in data:
+            if data.get("area_id"):
+                area = Area.objects.untranslated().get(id=data.get("area_id"))
+                instance.area = area
+            else:
+                instance.area = None
 
         if data.get("organization_id"):
             organization = Organization.objects.untranslated().get(id=data.get("area_id"))
