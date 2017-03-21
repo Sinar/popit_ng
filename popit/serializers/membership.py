@@ -260,7 +260,7 @@ class MembershipSerializer(BasePopitSerializer):
 
         if data.get("post_id") and not data.get("organization_id"):
             if self.instance:
-                if self.instance.organization_id and self.instance.post.organization_id:
+                if self.instance.organization_id and self.instance.post:
                     post = Post.objects.untranslated().get(id=data.get("post_id"))
                     if post.organization_id != self.instance.organization_id:
                         raise serializers.ValidationError("Post Organization ID does not match organization id")
