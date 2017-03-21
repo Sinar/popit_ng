@@ -409,6 +409,9 @@ class BulkIndexer(object):
                 es_id = self.fetch_es_id(entity, entity_name)
                 serializer = ES_SERIALIZER_MAP[entity_name](entity, language=entity.language_code)
                 body = serializer.data
+                # This only exist on index
+                now = datetime.datetime.now()
+                body["indexed_at"] = now.isoformat()
                 entry = self.create_bulk_entry(
                     es_id=es_id, doc_type=entity_name, ops=ops, body=body
                 )
