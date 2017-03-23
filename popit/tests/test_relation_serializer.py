@@ -168,3 +168,34 @@ class RelationSerializerTestCase(BasePopitTestCase):
         serializer.save()
         relation = Relation.objects.language("ms").get(label="percubaan relation")
         self.assertEqual(relation.object_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")
+
+    def test_create_relation_same_object_subject(self):
+        data = {
+            "label": "Self Relation",
+            "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
+            "subject_id":"078541c9-9081-4082-b28f-29cbb64440cb",
+        }
+
+        serializer = RelationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_update_relation_replace_same_object(self):
+        data = {
+            "object_id": "078541c9-9081-4082-b28f-29cbb64440cb",
+        }
+
+        relation = Relation.objects.untranslated().get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        serializer = RelationSerializer(relation, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
+
+    def test_update_relation_replace_same_subject(self):
+        data = {
+            "subject_id": "ab1a5788e5bae955c048748fa6af0e97",
+        }
+
+        relation = Relation.objects.untranslated().get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        serializer = RelationSerializer(relation, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})
