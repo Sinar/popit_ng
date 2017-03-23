@@ -130,7 +130,7 @@ class RelationSerializerTestCase(BasePopitTestCase):
         serializer.is_valid()
         self.assertNotEqual(serializer.errors, {})
 
-    def test_create_relation_invalid_object(self):
+    def test_create_relation_invalid_subject(self):
         data = {
             "label": "test relation",
             "object_id": "8497ba86-7485-42d2-9596-2ab14520f1f4",
