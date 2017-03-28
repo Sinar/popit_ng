@@ -8,6 +8,7 @@ from popit.models import Identifier
 from popit.models import OtherName
 from popit.models import Membership
 from popit.models import Area
+from popit.models import Relation
 from hvad.contrib.restframework import TranslatableModelSerializer
 from popit.serializers.base import BasePopitSerializer
 from rest_framework.serializers import CharField
@@ -79,12 +80,74 @@ class PersonMembershipSerializer(TranslatableModelSerializer):
         exclude = ["area"]
 
 
+class PersonRelationAsObjectSerializer(TranslatableModelSerializer):
+
+    id = CharField(max_length=255, required=False)
+    object_id = CharField(max_length=255, required=False)
+    subject_id = CharField(max_length=255, required=False)
+    subject = PersonFlatSerializer(required=False)
+
+    links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None, allow_blank=True)
+    end_date = CharField(allow_null=True, default=None, allow_blank=True)
+
+    # We override the to_representation because the nested dictionary is not translated
+    def to_representation(self, instance):
+        data = super(PersonRelationAsObjectSerializer, self).to_representation(instance)
+
+        subject = Person.objects.untranslated().get(id=instance.subject_id)
+        subject_serializer = PersonFlatSerializer(subject, language=instance.language_code)
+        data["subject"] = subject_serializer.data
+        del data["object"]
+
+        links = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(links, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+        return data
+
+    class Meta:
+        model = Relation
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
+class PersonRelationAsSubjectSerializer(TranslatableModelSerializer):
+
+    id = CharField(max_length=255, required=False)
+    object_id = CharField(max_length=255, required=False)
+    object = PersonFlatSerializer(required=False)
+    subject_id = CharField(max_length=255, required=False)
+
+    links = LinkSerializer(many=True, required=False)
+    start_date = CharField(allow_null=True, default=None, allow_blank=True)
+    end_date = CharField(allow_null=True, default=None, allow_blank=True)
+
+    # We override the to_representation because the nested dictionary is not translated
+    def to_representation(self, instance):
+        data = super(PersonRelationAsSubjectSerializer, self).to_representation(instance)
+
+        object = Person.objects.untranslated().get(id=instance.object_id)
+        object_serializer = PersonFlatSerializer(object, language=instance.language_code)
+        data["object"] = object_serializer.data
+        del data["subject"]
+
+        links = instance.links.untranslated().all()
+        links_serializer = LinkSerializer(links, many=True, language=instance.language_code)
+        data["links"] = links_serializer.data
+        return data
+
+    class Meta:
+        model = Relation
+        extra_kwargs = {'id': {'read_only': False, 'required': False}}
+
+
 class PersonSerializer(BasePopitSerializer):
 
     id = CharField(max_length=255, required=False, allow_null=True, allow_blank=True)
     other_names = OtherNameSerializer(many=True, required=False)
     identifiers = IdentifierSerializer(many=True, required=False)
     memberships = PersonMembershipSerializer(many=True, required=False)
+    relations_as_object = PersonRelationAsObjectSerializer(many=True, required=False)
+    relations_as_subject = PersonRelationAsSubjectSerializer(many=True, required=False)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
     birth_date = CharField(allow_null=True, default=None, allow_blank=True)
@@ -197,6 +260,14 @@ class PersonSerializer(BasePopitSerializer):
         memberships = instance.memberships.untranslated().all()
         membership_serializers = PersonMembershipSerializer(memberships, many=True, language=instance.language_code)
         data["memberships"] = membership_serializers.data
+
+        relations_as_object = instance.relations_as_object.untranslated().all()
+        relations_as_object_serializers = PersonRelationAsObjectSerializer(relations_as_object, many=True, language=instance.language_code)
+        data["relations_as_object"] = relations_as_object_serializers.data
+        relations_as_subject = instance.relations_as_subject.untranslated().all()
+        relations_as_subject_serializers = PersonRelationAsSubjectSerializer(relations_as_subject, many=True, language=instance.language_code)
+        data["relations_as_subject"] = relations_as_subject_serializers.data
+
 
         return data
 
