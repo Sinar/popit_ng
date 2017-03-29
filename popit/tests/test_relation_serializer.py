@@ -199,3 +199,14 @@ class RelationSerializerTestCase(BasePopitTestCase):
         serializer = RelationSerializer(relation, data=data, partial=True, language="en")
         serializer.is_valid()
         self.assertNotEqual(serializer.errors, {})
+
+    def test_update_relation_replace_same_object_subject(self):
+        data = {
+            "object_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+            "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+        }
+
+        relation = Relation.objects.untranslated().get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        serializer = RelationSerializer(relation, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertNotEqual(serializer.errors, {})

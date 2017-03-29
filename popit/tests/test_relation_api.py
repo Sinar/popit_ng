@@ -347,3 +347,14 @@ class RelationAPITestCasse(BasePopitAPITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         response = self.client.put("/en/relations/732d7ea706024973aa364b0ffa9dc2a1/", data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_update_relation_replace_same_object_subject(self):
+        data = {
+            "object_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+            "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put("/en/relations/732d7ea706024973aa364b0ffa9dc2a1/", data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

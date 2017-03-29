@@ -129,7 +129,7 @@ class RelationSerializer(BasePopitSerializer):
             except Person.DoesNotExist:
                 raise serializers.ValidationError("Person %s does not exist" % data.get("subject_id"))
 
-        if not self.partial:
+        if data.get("object_id") and data.get("subject_id"):
             if data.get("object_id") == data.get("subject_id"):
                 raise serializers.ValidationError("object_id and subject_id must not be the same")
         elif data.get("object_id"):
