@@ -510,6 +510,11 @@ def popit_indexer(entity=""):
         for membership in memberships:
             to_index.append(("memberships", membership.id, "create"))
 
+    if not entity or entity == "relations":
+        relations = Relation.objects.untranslated().all()
+        for relation in relations:
+            to_index.append(("relations", relation.id, "create"))
+
     if not entity or entity == "areas":
         areas = Area.objects.untranslated().all()
         for area in areas:

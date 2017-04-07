@@ -6,24 +6,11 @@ from django.core.management.base import BaseCommand
 from django.core.management.base import CommandError
 from popit.models import *
 from popit.serializers import *
+from popit_search.consts import ES_MODEL_MAP, ES_SERIALIZER_MAP
 import time
 import logging
 
 logging.getLogger().setLevel(logging.INFO)
-
-MODEL_DOC_MAP = {
-    "persons": Person,
-    "organizations": Organization,
-    "posts": Post,
-    "memberships": Membership
-}
-
-SERIALIZER_DOC_MAP = {
-    "persons": PersonSerializer,
-    "organizations": OrganizationSerializer,
-    "posts": PostSerializer,
-    "memberships": MembershipSerializer,
-}
 
 
 class Command(BaseCommand):
@@ -41,7 +28,7 @@ class Command(BaseCommand):
         entity_id = options.get("entity_id")
 
         if entity_id:
-            entity_instances = MODEL_DOC_MAP[entity].objects.language("all").filter(id=entity_id)
+            entity_instances = ES_MODEL_MAP[entity].objects.language("all").filter(id=entity_id)
         else:
             entity_instances = []
 
@@ -54,7 +41,7 @@ class Command(BaseCommand):
                         time.sleep(1)
                 else:
                     logging.info("Destroying all instance of %s" % entity)
-                    instances = MODEL_DOC_MAP[entity].objects.language("all").all()
+                    instances = ES_MODEL_MAP[entity].objects.language("all").all()
                     for instance in instances:
                         entity_search.delete(instance)
         else:
@@ -69,7 +56,7 @@ class Command(BaseCommand):
 
                     try:
                         logging.info("Add instance of %s with %s and language %s" % (entity, entity_id, instance.language_code))
-                        entity_search.add(instance, SERIALIZER_DOC_MAP[entity])
+                        entity_search.add(instance, ES_SERIALIZER_MAP[entity])
                         #time.sleep(1)
                     except SerializerSearchInstanceExist:
                         logging.warn("Oops instance exist in db")

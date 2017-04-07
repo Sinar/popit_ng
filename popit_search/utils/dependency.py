@@ -23,7 +23,7 @@ def build_graph(entity, action):
 
     for field in fields:
         field_name = field.name
-        if field_name in ("organization", "on_behalf_of", "parent", "person", "post", "content_object"):
+        if field_name in ("organization", "on_behalf_of", "parent", "person", "object", "subject", "post", "content_object"):
             temp_entity = getattr(entity, field_name)
             if not isinstance(temp_entity, models.Model):
                 continue
@@ -50,6 +50,19 @@ def build_graph(entity, action):
                 if temp_entity.post:
                     post_node = ("posts", temp_entity.post_id, "update")
                     graph.add(post_node)
+
+        elif field_name in ("relations_as_object", "relations_as_subject"):
+            temp_entities = getattr(entity, field_name)
+            for temp_entity in temp_entities.all():
+                # add current item to be index
+                current_node = ("relations", temp_entity.id, action)
+                graph.add(current_node)
+
+                # Relations have two persons
+                object_node = ("persons", temp_entity.object.id, action)
+                subject_node = ("persons", temp_entity.subject.id, action)
+                graph.add(object_node)
+                graph.add(subject_node)
 
         elif field_name in ("posts", "children"): # For post and children org just index this post or org
             temp_entities = getattr(entity, field_name)
