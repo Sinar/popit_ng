@@ -17,8 +17,8 @@ class Relation(TranslatableModel):
         label = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Label")),
     )
 
-    object = models.ForeignKey(Person, verbose_name=_("object"), related_name="relationships_as_object")
-    subject = models.ForeignKey(Person, verbose_name=_("subject"), related_name="relationships_as_subject")
+    object = models.ForeignKey(Person, verbose_name=_("object"), related_name="relations_as_object")
+    subject = models.ForeignKey(Person, verbose_name=_("subject"), related_name="relations_as_subject")
     start_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("start date"),
                                   validators=[
                                       RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
