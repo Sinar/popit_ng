@@ -29,8 +29,9 @@ class BulkIndexTestCase(TestCase):
         self.assertEqual(entry["_id"], es_id)
         # Pick field to test, it is not exactly the same object
         self.assertEqual(entry["_op_type"], "update")
-        self.assertEqual(entry["_source"]["id"], body["id"])
-        self.assertEqual(entry["_source"]["name"], body["name"])
+        # Because only index/create use _source update uses doc
+        self.assertEqual(entry["doc"]["id"], body["id"])
+        self.assertEqual(entry["doc"]["name"], body["name"])
 
     @patch("elasticsearch.Elasticsearch")
     def test_generate_bulk_delete_entry(self, mock_search):
