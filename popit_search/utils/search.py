@@ -445,7 +445,7 @@ class BulkIndexer(object):
         else:
             if es_id:
                 data = {
-                    '_op_type': ops,
+                    '_op_type': 'update', # Always update when elasticsearch id exist
                     '_index': self.index,
                     '_type': doc_type,
                     '_id': es_id,
