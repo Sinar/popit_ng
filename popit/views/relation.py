@@ -8,6 +8,10 @@ from popit.views.misc import GenericContactDetailDetail
 from popit.views.misc import GenericContactDetailList
 from popit.views.misc import GenericContactDetailLinkDetail
 from popit.views.misc import GenericContactDetailLinkList
+from popit.views.misc import GenericIdentifierDetail
+from popit.views.misc import GenericIdentifierLinkDetail
+from popit.views.misc import GenericIdentifierLinkList
+from popit.views.misc import GenericIdentifierList
 from popit.views.misc import GenericLinkDetail
 from popit.views.misc import GenericLinkList
 from popit.serializers import RelationSerializer
@@ -17,8 +21,11 @@ from popit.views.citation import BaseCitationDetailView
 from popit.views.citation import BaseCitationListCreateView
 from popit.views.citation import GenericContactDetailCitationDetailView
 from popit.views.citation import GenericContactDetailCitationListView
+from popit.views.citation import GenericIdentifierCitationListView
+from popit.views.citation import GenericIdentifierCitationDetailView
 from popit.views.citation import BaseFieldCitationView
 from popit.views.citation import GenericContactDetailFieldCitationView
+from popit.views.citation import GenericIdentifierFieldCitationView
 from popit.serializers.minimized import MinRelationSerializer
 
 
@@ -43,6 +50,22 @@ class RelationLinkList(GenericLinkList):
     parent = Relation
 
 
+class RelationIdentifierList(GenericIdentifierList):
+    parent = Relation
+
+
+class RelationIdentifierDetail(GenericIdentifierDetail):
+    parent = Relation
+
+
+class RelationIdentifierLinkList(GenericIdentifierLinkList):
+    parent = Relation
+
+
+class RelationIdentifierLinkDetail(GenericIdentifierLinkDetail):
+    parent = Relation
+
+
 class RelationCitationListCreateView(BaseCitationListCreateView):
     entity = Relation
 
@@ -56,4 +79,16 @@ class RelationFieldCitationView(BaseFieldCitationView):
 
 
 class RelationContactDetailFieldCitationView(GenericContactDetailFieldCitationView):
+    parent = Relation
+
+
+class RelationIdentifierCitationListView(GenericIdentifierCitationListView):
+    parent = Relation
+
+
+class RelationIdentifierCitationDetailView(GenericIdentifierCitationDetailView):
+    parent = Relation
+
+
+class RelationIdentifierFieldCitationView(GenericIdentifierFieldCitationView):
     parent = Relation

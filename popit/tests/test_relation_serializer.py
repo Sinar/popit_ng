@@ -14,7 +14,7 @@ class RelationSerializerTestCase(BasePopitTestCase):
         self.assertEqual(data["object"]["id"], "ab1a5788e5bae955c048748fa6af0e97")
         self.assertEqual(data["subject"]["id"], "078541c9-9081-4082-b28f-29cbb64440cb")
 
-    def test_create_relation_with_organization_serializer(self):
+    def test_create_relation_serializer(self):
         data = {
             "label": "test relation",
             "object_id": "8497ba86-7485-42d2-9596-2ab14520f1f4",
@@ -28,6 +28,40 @@ class RelationSerializerTestCase(BasePopitTestCase):
         relation = Relation.objects.language("en").get(label="test relation")
         self.assertEqual(relation.object_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")
         self.assertEqual(relation.subject_id, "078541c9-9081-4082-b28f-29cbb64440cb")
+
+    def test_create_relation_with_post_serializer(self):
+        data = {
+            "label": "test relation",
+            "object_id": "8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "subject_id": "078541c9-9081-4082-b28f-29cbb64440cb",
+            "post_id": "c1f0f86b-a491-4986-b48d-861b58a3ef6e",
+        }
+
+        serializer = RelationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        relation = Relation.objects.language("en").get(label="test relation")
+        self.assertEqual(relation.object_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")
+        self.assertEqual(relation.subject_id, "078541c9-9081-4082-b28f-29cbb64440cb")
+        self.assertEqual(relation.post_id, "c1f0f86b-a491-4986-b48d-861b58a3ef6e")
+
+    def test_create_relation_with_classification_serializer(self):
+        data = {
+            "label": "test relation",
+            "object_id": "8497ba86-7485-42d2-9596-2ab14520f1f4",
+            "subject_id": "078541c9-9081-4082-b28f-29cbb64440cb",
+            "classification": "test classification",
+        }
+
+        serializer = RelationSerializer(data=data, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        relation = Relation.objects.language("en").get(label="test relation")
+        self.assertEqual(relation.object_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")
+        self.assertEqual(relation.subject_id, "078541c9-9081-4082-b28f-29cbb64440cb")
+        self.assertEqual(relation.classification, "test classification")
 
     def test_create_relation_without_subject(self):
         data = {
@@ -210,3 +244,89 @@ class RelationSerializerTestCase(BasePopitTestCase):
         serializer = RelationSerializer(relation, data=data, partial=True, language="en")
         serializer.is_valid()
         self.assertNotEqual(serializer.errors, {})
+
+    def test_create_relation_identifier_serializer(self):
+        data = {
+            "identifiers": [
+                {
+                    "scheme": "testing",
+                    "identifier": "12319021390"
+                }
+            ]
+        }
+        relation = Relation.objects.untranslated().get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        serializer = RelationSerializer(relation, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        relation = Relation.objects.language("en").get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        identifier = relation.identifiers.language("en").get(identifier="12319021390")
+        self.assertEqual(identifier.scheme, "testing")
+
+    def test_update_relation_identifier_serializer(self):
+        data = {
+            "identifiers": [
+                {
+                    "id": "ea7a6f409d6d4352ab02b0a099792653",
+                    "identifier": "3131313"
+                }
+            ]
+        }
+        relation = Relation.objects.untranslated().get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        serializer = RelationSerializer(relation, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        relation = Relation.objects.language("en").get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        identifier = relation.identifiers.language("en").get(id="ea7a6f409d6d4352ab02b0a099792653")
+        self.assertEqual(identifier.identifier, "3131313")
+
+    def test_create_relation_identifier_citation_serializer(self):
+        data = {
+
+            "identifiers": [
+                {
+                    "id": "ea7a6f409d6d4352ab02b0a099792653",
+                    "links": [
+                        {
+                            "url": "http://google.com"
+                        }
+                    ]
+                }
+            ]
+        }
+        relation = Relation.objects.untranslated().get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        serializer = RelationSerializer(relation, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        relation = Relation.objects.language("en").get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        identifier = relation.identifiers.language("en").get(id="ea7a6f409d6d4352ab02b0a099792653")
+        link = identifier.links.language("en").get(url="http://google.com")
+        self.assertEqual(link.url, "http://google.com")
+
+    def test_update_relation_identifier_citation_serializer(self):
+        data = {
+
+            "identifiers": [
+                {
+                    "id": "ea7a6f409d6d4352ab02b0a099792653",
+                    "links": [
+                        {
+                            "id": "c1ebcf50235a48e89ae5f949f97a4472",
+                            "note": "Just a link",
+
+                        }
+                    ]
+                }
+            ]
+        }
+        relation = Relation.objects.untranslated().get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        serializer = RelationSerializer(relation, data=data, partial=True, language="en")
+        serializer.is_valid()
+        self.assertEqual(serializer.errors, {})
+        serializer.save()
+        relation = Relation.objects.language("en").get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        identifier = relation.identifiers.language("en").get(id="ea7a6f409d6d4352ab02b0a099792653")
+        link = identifier.links.language("en").get(id="c1ebcf50235a48e89ae5f949f97a4472")
+        self.assertEqual(link.note, "Just a link")

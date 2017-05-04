@@ -754,6 +754,9 @@
 - model: popit.linktranslation
   pk: 254
   fields: {note: just an example citation, language_code: en, master: 31812ed9d2fa405882f6f300a7f8c843}
+- model: popit.linktranslation
+  pk: 255
+  fields: {note: Example Citation, language_code: en, master: c1ebcf50235a48e89ae5f949f97a4472}
 - model: popit.contacttranslation
   pk: 1
   fields: {label: sweemeng phone, note: my phone, language_code: en, master: a66cb422-eec3-4861-bae1-a64ae5dbde61}
@@ -826,6 +829,9 @@
 - model: popit.identifiertranslation
   pk: 9
   fields: {scheme: ic, language_code: en, master: a53af5402570442ebac547bb69c3a5a5}
+- model: popit.identifiertranslation
+  pk: 10
+  fields: {scheme: testing, language_code: en, master: ea7a6f409d6d4352ab02b0a099792653}
 - model: popit.othernametranslation
   pk: 1
   fields: {name: Jane, family_name: Doe, given_name: Lucky Jane, additional_name: something,
@@ -1103,38 +1109,39 @@
     created_at: ! '2015-11-13 02:44:58.358098+00:00', updated_at: ! '2015-11-13 02:44:58.358117+00:00'}
 - model: popit.relationtranslation
   pk: 1
-  fields: {label: Placeholder Name Buddies, language_code: en, master: a35a711117464567995644e9be2e1b9f}
+  fields: {label: Placeholder Name Buddies, classification: null, language_code: en,
+    master: a35a711117464567995644e9be2e1b9f}
 - model: popit.relationtranslation
   pk: 2
-  fields: {label: Pirate Buddies, language_code: en, master: 732d7ea706024973aa364b0ffa9dc2a1}
+  fields: {label: Pirate Buddies, classification: null, language_code: en, master: 732d7ea706024973aa364b0ffa9dc2a1}
 - model: popit.relationtranslation
   pk: 3
-  fields: {label: Test Data Buddies, language_code: en, master: fd0e33a2b1f649c2af29d50237ced17b}
+  fields: {label: Test Data Buddies, classification: null, language_code: en, master: fd0e33a2b1f649c2af29d50237ced17b}
 - model: popit.relationtranslation
   pk: 4
-  fields: {label: Dashless ID Buddies, language_code: en, master: 0d41f7b50df743db95982a2b3c20e999}
+  fields: {label: Dashless ID Buddies, classification: null, language_code: en, master: 0d41f7b50df743db95982a2b3c20e999}
 - model: popit.relationtranslation
   pk: 5
-  fields: {label: Kawan Lanun, language_code: ms, master: 732d7ea706024973aa364b0ffa9dc2a1}
+  fields: {label: Kawan Lanun, classification: null, language_code: ms, master: 732d7ea706024973aa364b0ffa9dc2a1}
 - model: popit.relation
   pk: 0d41f7b50df743db95982a2b3c20e999
   fields: {object: c2a241a0d1fd4483b60af7dd219de22d, subject: ab1a5788e5bae955c048748fa6af0e97,
-    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:51.182085+00:00',
+    post: null, start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:51.182085+00:00',
     updated_at: ! '2017-03-10 08:41:51.182130+00:00'}
 - model: popit.relation
   pk: 732d7ea706024973aa364b0ffa9dc2a1
   fields: {object: ab1a5788e5bae955c048748fa6af0e97, subject: 078541c9-9081-4082-b28f-29cbb64440cb,
-    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:50.560679+00:00',
+    post: null, start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:50.560679+00:00',
     updated_at: ! '2017-03-10 08:41:50.560755+00:00'}
 - model: popit.relation
   pk: a35a711117464567995644e9be2e1b9f
   fields: {object: ab1a5788e5bae955c048748fa6af0e97, subject: 8497ba86-7485-42d2-9596-2ab14520f1f4,
-    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:49.744092+00:00',
+    post: null, start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:49.744092+00:00',
     updated_at: ! '2017-03-10 08:41:49.744140+00:00'}
 - model: popit.relation
   pk: fd0e33a2b1f649c2af29d50237ced17b
   fields: {object: 2439e472-10dc-4f9c-aa99-efddd9046b4a, subject: ab1a5788e5bae955c048748fa6af0e97,
-    start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:50.902526+00:00',
+    post: null, start_date: null, end_date: null, created_at: ! '2017-03-10 08:41:50.902526+00:00',
     updated_at: ! '2017-03-10 08:41:50.902571+00:00'}
 - model: contenttypes.contenttype
   fields: {app_label: admin, model: logentry}
@@ -1730,6 +1737,14 @@
     content_type: [popit, person]
     created_at: 2015-10-06 00:00:00+00:00
     updated_at: 2015-10-06 00:00:00+00:00
+- model: popit.identifier
+  pk: ea7a6f409d6d4352ab02b0a099792653
+  fields:
+    identifier: '76573'
+    object_id: 732d7ea706024973aa364b0ffa9dc2a1
+    content_type: [popit, relation]
+    created_at: 2017-04-25 04:58:28.364235+00:00
+    updated_at: 2017-04-25 04:58:28.364282+00:00
 - model: popit.contactdetail
   pk: 2256ec04-2d1d-4994-b1f1-16d3f5245441
   fields:
@@ -3682,6 +3697,16 @@
     content_type: [popit, organization]
     created_at: 2016-04-04 12:20:52.579930+00:00
     updated_at: 2016-04-04 12:20:52.579957+00:00
+- model: popit.link
+  pk: c1ebcf50235a48e89ae5f949f97a4472
+  fields:
+    label: null
+    field: identifier
+    url: http://example.com/
+    object_id: ea7a6f409d6d4352ab02b0a099792653
+    content_type: [popit, identifier]
+    created_at: 2017-04-28 15:35:58.728237+00:00
+    updated_at: 2017-04-28 15:35:58.728294+00:00
 - model: popit.link
   pk: c3f27c4f8a8042bb91c348fb839509e6
   fields:

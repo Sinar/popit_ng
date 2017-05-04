@@ -92,3 +92,91 @@ class RelationCitationAPITestCase(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
+class RelationIdentifierCitationAPITestCase(BasePopitAPITestCase):
+
+    def test_fetch_relation_identifier_field_citation(self):
+        response = self.client.get(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_fetch_relation_identifier_citation_list(self):
+        response = self.client.get(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_fetch_relation_identifier_citation_detail(self):
+        response = self.client.get(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/c1ebcf50235a48e89ae5f949f97a4472/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_relation_identifier_citation_unauthorized(self):
+        data = {
+            "url": "http://twitter.com/sinarproject",
+            "note": "just the twitter page"
+        }
+
+        response = self.client.post(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/",
+            data=data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_relation_identifier_citation_authorized(self):
+        data = {
+            "url": "http://twitter.com/sinarproject",
+            "note": "just the twitter page"
+        }
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/",
+            data=data
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        relation = Relation.objects.language("en").get(id="732d7ea706024973aa364b0ffa9dc2a1")
+        identifiers = relation.identifiers.get(id="ea7a6f409d6d4352ab02b0a099792653")
+        citations = identifiers.links.filter(field="identifier")
+        self.assertEqual(citations.count(), 2)
+
+    def test_update_relation_identifier_citation_unauthorized(self):
+        data = {
+            "url": "http://www.sinarproject.org"
+        }
+        response = self.client.put(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/c1ebcf50235a48e89ae5f949f97a4472/",
+            data=data
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_update_relation_identifier_citation_authorized(self):
+        data = {
+            "url": "http://www.sinarproject.org"
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.put(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/c1ebcf50235a48e89ae5f949f97a4472/",
+            data=data
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_relation_identifier_citation_unauthorized(self):
+        response = self.client.delete(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/c1ebcf50235a48e89ae5f949f97a4472/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_relation_identifier_citation_authorized(self):
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.delete(
+            "/en/relations/732d7ea706024973aa364b0ffa9dc2a1/identifiers/ea7a6f409d6d4352ab02b0a099792653/citations/identifier/c1ebcf50235a48e89ae5f949f97a4472/"
+        )
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

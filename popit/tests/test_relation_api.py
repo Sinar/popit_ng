@@ -21,7 +21,7 @@ class RelationAPITestCasse(BasePopitAPITestCase):
         response = self.client.get("/en/relations/not_exist/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
-    def test_create_relation_unauthorized(self):
+    def test_create_relation_without_post_unauthorized(self):
         data = {
             "label": "test relation",
             "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
@@ -30,11 +30,59 @@ class RelationAPITestCasse(BasePopitAPITestCase):
         response = self.client.post("/en/relations/", data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_create_relation_authorized(self):
+    def test_create_relation_without_post_authorized(self):
         data = {
             "label": "test relation",
             "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
             "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/relations/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_relation_with_post_unauthorized(self):
+        data = {
+            "label": "test relation",
+            "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
+            "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+            "post_id": "c1f0f86b-a491-4986-b48d-861b58a3ef6e",
+        }
+        response = self.client.post("/en/relations/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_relation_with_post_authorized(self):
+        data = {
+            "label": "test relation",
+            "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
+            "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+            "post_id": "c1f0f86b-a491-4986-b48d-861b58a3ef6e",
+        }
+
+        token = Token.objects.get(user__username="admin")
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.post("/en/relations/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_relation_with_classification_unauthorized(self):
+        data = {
+            "label": "test relation",
+            "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
+            "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+            "classification": "test classification",
+        }
+        response = self.client.post("/en/relations/", data)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_create_relation_with_classification_authorized(self):
+        data = {
+            "label": "test relation",
+            "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
+            "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
+            "classification": "test classification",
         }
 
         token = Token.objects.get(user__username="admin")
@@ -288,7 +336,7 @@ class RelationAPITestCasse(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["result"]["label"], "percubaan relation")
 
-    def test_create_relation_with_post_blank_id_authorized(self):
+    def test_create_relation_blank_id_authorized(self):
         data = {
             "id": "",
             "label": "test relation",

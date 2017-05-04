@@ -7,7 +7,9 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from popit.models.exception import PopItFieldNotExist
 from popit.models import Person
+from popit.models import Post
 from popit.models import Link
+from popit.models.misc import Identifier
 import uuid
 
 
@@ -15,10 +17,12 @@ class Relation(TranslatableModel):
     id = models.CharField(max_length=255, blank=True, primary_key=True)
     translated = TranslatedFields(
         label = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Label")),
+        classification = models.CharField(max_length=255, verbose_name=_('classification'), null=True, blank=True),
     )
 
     object = models.ForeignKey(Person, verbose_name=_("object"), related_name="relations_as_object")
     subject = models.ForeignKey(Person, verbose_name=_("subject"), related_name="relations_as_subject")
+    post = models.ForeignKey(Post, null=True, blank=True, verbose_name=_("post"), related_name="relations")
     start_date = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("start date"),
                                   validators=[
                                       RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
@@ -29,6 +33,7 @@ class Relation(TranslatableModel):
                                       RegexValidator("^[0-9]{4}(-[0-9]{2}){0,2}$")
                                   ]
                                 )
+    identifiers = GenericRelation(Identifier)
     links = GenericRelation(Link)
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))

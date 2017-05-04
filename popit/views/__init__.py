@@ -98,8 +98,15 @@ from popit.views.relation import RelationLinkDetail
 from popit.views.relation import RelationLinkList
 from popit.views.relation import RelationDetail
 from popit.views.relation import RelationList
+from popit.views.relation import RelationIdentifierDetail
+from popit.views.relation import RelationIdentifierList
+from popit.views.relation import RelationIdentifierLinkDetail
+from popit.views.relation import RelationIdentifierLinkList
 from popit.views.relation import RelationCitationListCreateView
 from popit.views.relation import RelationCitationDetailView
 from popit.views.relation import RelationFieldCitationView
+from popit.views.relation import RelationIdentifierCitationListView
+from popit.views.relation import RelationIdentifierCitationDetailView
+from popit.views.relation import RelationIdentifierFieldCitationView
 from popit.views.root_view import api_root
 from popit.views.root_view import api_root_all
