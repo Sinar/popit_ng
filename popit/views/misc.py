@@ -374,8 +374,10 @@ class AreaDetail(APIView):
         IsAuthenticatedOrReadOnly,
     )
 
-    def get_object(self, pk):
+    def get_object(self, pk, language=None):
         try:
+            if language:
+                return Area.objects.language(language).get(id=pk)
             return Area.objects.untranslated().get(id=pk)
         except Area.DoesNotExist:
             raise Http404
@@ -388,6 +390,9 @@ class AreaDetail(APIView):
 
     def put(self, request, language, pk, format=None):
         area = self.get_object(pk)
+        if language in area.get_available_languages():
+            area = self.get_object(pk, language)
+
         serializer = AreaSerializer(area, data=request.data, language=language, partial=True)
         if serializer.is_valid():
             serializer.save()
