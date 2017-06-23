@@ -18,6 +18,7 @@ class Relation(TranslatableModel):
     translated = TranslatedFields(
         label = models.CharField(max_length=255, blank=True, null=True, verbose_name=_("Label")),
         classification = models.CharField(max_length=255, verbose_name=_('classification'), null=True, blank=True),
+        subclassification = models.CharField(max_length=255, verbose_name=_('subclassification'), null=True, blank=True),
     )
 
     object = models.ForeignKey(Person, verbose_name=_("object"), related_name="relations_as_object")

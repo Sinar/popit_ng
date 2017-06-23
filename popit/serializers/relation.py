@@ -117,6 +117,7 @@ class RelationSerializer(BasePopitSerializer):
 
         instance.label = data.get("label", instance.label)
         instance.classification = data.get("classification", instance.classification)
+        instance.subclassification = data.get("subclassification", instance.subclassification)
         instance.start_date = data.get("start_date", instance.start_date)
         if not instance.start_date:
             instance.start_date = None
