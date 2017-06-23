@@ -52,6 +52,7 @@ class RelationSerializerTestCase(BasePopitTestCase):
             "object_id": "8497ba86-7485-42d2-9596-2ab14520f1f4",
             "subject_id": "078541c9-9081-4082-b28f-29cbb64440cb",
             "classification": "test classification",
+            "subclassification": "test subclassification",
         }
 
         serializer = RelationSerializer(data=data, language="en")
@@ -62,6 +63,7 @@ class RelationSerializerTestCase(BasePopitTestCase):
         self.assertEqual(relation.object_id, "8497ba86-7485-42d2-9596-2ab14520f1f4")
         self.assertEqual(relation.subject_id, "078541c9-9081-4082-b28f-29cbb64440cb")
         self.assertEqual(relation.classification, "test classification")
+        self.assertEqual(relation.subclassification, "test subclassification")
 
     def test_create_relation_without_subject(self):
         data = {

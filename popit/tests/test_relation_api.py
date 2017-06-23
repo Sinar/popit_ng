@@ -73,6 +73,7 @@ class RelationAPITestCasse(BasePopitAPITestCase):
             "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
             "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
             "classification": "test classification",
+            "subclassification": "test subclassification",
         }
         response = self.client.post("/en/relations/", data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -83,6 +84,7 @@ class RelationAPITestCasse(BasePopitAPITestCase):
             "object_id":"078541c9-9081-4082-b28f-29cbb64440cb",
             "subject_id": "2439e472-10dc-4f9c-aa99-efddd9046b4a",
             "classification": "test classification",
+            "subclassification": "test subclassification",
         }
 
         token = Token.objects.get(user__username="admin")
