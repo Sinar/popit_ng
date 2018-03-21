@@ -23,7 +23,7 @@ class OrganizationAPITestCase(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_view_organization_detail(self):
-        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/")
+        response = self.client.get("/en/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/", {"minify": False})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue("memberships" in response.data["result"])
         self.assertTrue("posts" in response.data["result"])
@@ -587,7 +587,7 @@ class OrganizationAPITestCase(BasePopitAPITestCase):
         self.assertEqual(results["language_code"], "ms")
 
     def test_fetch_organization_translated_nested(self):
-        response = self.client.get("/ms/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/")
+        response = self.client.get("/ms/organizations/3d62d9ea-0600-4f29-8ce6-f7720fd49aa3/", {"minify": False})
         results = response.data["result"]
         self.assertEqual(results["parent"]["language_code"], "ms")
 

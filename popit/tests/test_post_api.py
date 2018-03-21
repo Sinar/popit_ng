@@ -447,7 +447,7 @@ class PostAPITestCase(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_fetch_post_translated_nested(self):
-        response = self.client.get("/ms/posts/2c6982c2-504a-4e0d-8949-dade5f9e494e/")
+        response = self.client.get("/ms/posts/2c6982c2-504a-4e0d-8949-dade5f9e494e/", {"minify": False})
         results = response.data["result"]
         self.assertEqual(results["organization"]["name"], "Parti Lanun KL")
         self.assertEqual(results["organization"]["language_code"], "ms")

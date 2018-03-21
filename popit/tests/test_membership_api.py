@@ -331,7 +331,7 @@ class MembershipAPITestCasse(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_fetch_membership_translated_nested(self):
-        response = self.client.get("/ms/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/")
+        response = self.client.get("/ms/memberships/b351cdc2-6961-4fc7-9d61-08fca66e1d44/", {"minify": False})
         results = response.data["result"]
 
         self.assertEqual(results["organization"]["name"], "Parti Lanun KL")

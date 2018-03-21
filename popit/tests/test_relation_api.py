@@ -243,7 +243,7 @@ class RelationAPITestCasse(BasePopitAPITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_fetch_relation_translated_nested(self):
-        response = self.client.get("/ms/relations/732d7ea706024973aa364b0ffa9dc2a1/")
+        response = self.client.get("/ms/relations/732d7ea706024973aa364b0ffa9dc2a1/", { "minify": False })
         results = response.data["result"]
 
         self.assertEqual(results["subject"]["name"], "jolly a/l roger")
