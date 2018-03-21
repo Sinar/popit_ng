@@ -43,7 +43,7 @@ class BasePopitView(APIView):
                 return True
             else:
                 return False
-        return False
+        return True
 
 
 class BasePopitListCreateView(BasePopitView):

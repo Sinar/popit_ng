@@ -34,7 +34,7 @@ default_date = datetime.datetime(1957, 01, 01)
 # Big idea, since serializer already have json docs
 class SerializerSearch(object):
 
-    def __init__(self, doc_type=None, index=settings.ES_INDEX, minify=False):
+    def __init__(self, doc_type=None, index=settings.ES_INDEX, minify=True):
         self.es = elasticsearch.Elasticsearch(hosts=settings.ES_HOST)
         # The default parameter is for testing purposes.
         self.index = index
