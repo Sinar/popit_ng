@@ -77,7 +77,8 @@ class PersonMembershipSerializer(TranslatableModelSerializer):
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = ["area"]
+        fields = [ "id", "person_id", "person", "organization_id", "organization", "member_id", "on_behalf_of_id", "on_behalf_of",
+                "area_id", "post_id", "post", "contact_details", "links", "start_date", "end_date" ]
 
 
 class PersonRelationAsObjectSerializer(TranslatableModelSerializer):
@@ -108,6 +109,7 @@ class PersonRelationAsObjectSerializer(TranslatableModelSerializer):
     class Meta:
         model = Relation
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "object_id", "subject_id", "subject", "links", "start_date", "end_date" ]
 
 
 class PersonRelationAsSubjectSerializer(TranslatableModelSerializer):
@@ -138,6 +140,7 @@ class PersonRelationAsSubjectSerializer(TranslatableModelSerializer):
     class Meta:
         model = Relation
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "object_id", "object", "subject_id", "links", "start_date", "end_date" ]
 
 
 class PersonSerializer(BasePopitSerializer):
@@ -289,7 +292,6 @@ class PersonSerializer(BasePopitSerializer):
     class Meta:
         model = Person
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-
-
-
-
+        fields = [ "id", "name", "family_name", "given_name", "additional_name", "honorific_prefix", "honorific_suffix", "email", "gender",
+                "birth_date", "death_date", "image", "summary", "biography", "national_identity", "other_names", "identifiers", "links",
+                "contact_details", "memberships", "relations_as_object", "relations_as_subject" ]

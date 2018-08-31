@@ -29,6 +29,7 @@ class MinPersonSerializer(TranslatableModelSerializer):
     class Meta:
         model = Person
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "name", "other_names", "identifiers", "links", "contact_details", "memberships" ]
 
 
 class MinOrganizationSerializer(TranslatableModelSerializer):
@@ -50,6 +51,7 @@ class MinMembershipSerializer(TranslatableModelSerializer):
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "label", "links", "contact_details" ]
 
 
 class MinRelationSerializer(TranslatableModelSerializer):

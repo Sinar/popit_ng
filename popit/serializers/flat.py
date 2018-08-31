@@ -16,6 +16,7 @@ class PostFlatSerializer(TranslatableModelSerializer):
     class Meta:
         model = Post
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "label", "organization_id", "area_id", "start_date", "end_date" ]
 
 
 class PersonFlatSerializer(TranslatableModelSerializer):
@@ -27,6 +28,7 @@ class PersonFlatSerializer(TranslatableModelSerializer):
     class Meta:
         model = Person
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "name", "birth_date", "death_date" ]
 
 
 class OrganizationFlatSerializer(TranslatableModelSerializer):
@@ -39,3 +41,4 @@ class OrganizationFlatSerializer(TranslatableModelSerializer):
     class Meta:
         model = Organization
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "name", "parent_id", "area_id", "founding_date", "dissolution_date" ]

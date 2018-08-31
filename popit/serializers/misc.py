@@ -238,6 +238,7 @@ class AreaFlatSerializer(BasePopitSerializer):
     class Meta:
         model = Area
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "links", "name" ]
 
 
 class AreaSerializer(BasePopitSerializer):
@@ -325,3 +326,4 @@ class AreaSerializer(BasePopitSerializer):
     class Meta:
         model = Area
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "links", "name" , "classification", "identifier", "parent", "parent_id", "children" ]

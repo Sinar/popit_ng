@@ -34,6 +34,8 @@ class MembershipPersonSerializer(TranslatableModelSerializer):
     class Meta:
         model = Person
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "name", "other_names", "identifiers", "birth_date", "death_date", "links", 
+                "contact_details" ]
 
 
 class MembershipOrganizationSerializer(TranslatableModelSerializer):
@@ -43,12 +45,11 @@ class MembershipOrganizationSerializer(TranslatableModelSerializer):
     dissolution_date = CharField(allow_null=True, default=None, required=False, allow_blank=True)
     links = LinkSerializer(many=True, required=False)
     contact_details = ContactDetailSerializer(many=True, required=False)
-    area = AreaSerializer(required=False)
 
     class Meta:
         model = Organization
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = ["parent", "area"]
+        fields = [ "id", "name", "parent_id", "founding_date", "dissolution_date", "links", "contact_details" ]
 
 
 class MembershipPostSerializer(TranslatableModelSerializer):
@@ -63,7 +64,7 @@ class MembershipPostSerializer(TranslatableModelSerializer):
     class Meta:
         model = Post
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
-        exclude = [ "organization", "area"]
+        fields = [ "id", "label", "organization_id", "area_id", "start_date", "end_date", "contact_details", "links"]
 
 
 class MembershipSerializer(BasePopitSerializer):
@@ -348,3 +349,6 @@ class MembershipSerializer(BasePopitSerializer):
     class Meta:
         model = Membership
         extra_kwargs = {'id': {'read_only': False, 'required': False}}
+        fields = [ "id", "person", "person_id", "organization", "organization_id", "member", 
+                "member_id", "post", "post_id", "on_behalf_of", "on_behalf_of_id", "area",
+                "area_id", "contact_details", "links", "start_date", "end_date" ]
