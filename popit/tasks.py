@@ -16,6 +16,7 @@ from celery import shared_task
 from popit_search.consts import ES_MODEL_MAP
 from popit_search.consts import ES_SERIALIZER_MAP
 from popit_search.utils import dependency
+from django.conf import settings
 
 
 # Assume that the entity have enough information in es. if not it is a bug
@@ -215,7 +216,10 @@ def prepare_delete(entity, entity_id):
     # Do not assume that instance still exist
     if instances:
         dep_store = dependency.DependencyStore()
-        dep_store.build_dependency(instances[0], "delete")
+        if settings.INDEX_ROOT_ONLY:
+            dep_store.store_root(instances[0], "delete")
+        else:
+            dep_store.build_dependency(instances[0], "delete")
 
 
 # Assuming instance from post_delete have enough information
@@ -237,7 +241,12 @@ def perform_delete(entity, entity_id):
 @shared_task
 def perform_update(entity, entity_id):
     instances = ES_MODEL_MAP[entity].objects.language("all").filter(id=entity_id)
-    graph = dependency.build_graph(instances[0], "update")
+    if settings.INDEX_ROOT_ONLY:
+        graph = set()
+        current_object = instances[0]._meta.model_name + "s"
+        graph.add((current_object, entity_id, "update"))
+    else:
+        graph = dependency.build_graph(instances[0], "update")
     if len(graph) > 1:
         bulk_indexer = search.BulkIndexer()
         bulk_indexer.index_data(graph)

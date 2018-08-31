@@ -111,3 +111,9 @@ class DependencyStore(object):
         id_ = entity.id
         graph = self.fetch_graph(name, id_)
         return graph
+
+    def store_root(self, entity, action):
+        name = entity._meta.model_name
+        id_ = entity.id
+
+        self.store_graph(name, id_, [(name, id_, action)])

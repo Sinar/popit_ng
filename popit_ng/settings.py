@@ -194,6 +194,8 @@ REST_FRAMEWORK_DOCS = {
     'HIDE_DOCS': False
 }
 
+INDEX_ROOT_ONLY = True
+
 
 try:
     from settings_local import *
