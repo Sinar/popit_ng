@@ -1,5 +1,5 @@
 Django==1.11.19
-PyYAML==4.2b2
+PyYAML==5.4
 django-cors-headers==1.1.0
 django-hvad==1.4.0
 django-rosetta==0.7.8
